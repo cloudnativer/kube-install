@@ -2,7 +2,7 @@
 This is a one click rapid deployment tool for highly available kubernetes clusters.
 <br>
 ![avatar](docs/images/kube-install-logo.jpg)
-![avatar](../docs/img/large-networks01.jpg)
+
 <br>
 <br>
 <br><br>
