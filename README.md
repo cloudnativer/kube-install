@@ -12,12 +12,14 @@
 <br>
 <br>
 <b>Installation instructions:</b><br>
-1,Install dependent tools<br>
+<br>
+<br>
+1.Install dependent tools<br>
 <table>
 <tr><td>yum -y install ansible git</td>
 </table>
 <br>
-2,Download Kube install package<br>
+2.Download Kube install package<br>
 Select a k8s-master and execute:<br>
 <table>
 <tr><td>
@@ -31,13 +33,13 @@ Download the kube-install-pkg-*.*.tgz package from this link https://github.com/
 <tr><td>tar -zxvf kube-install-pkg-*.*.tgz</td>
 </table>
 <br>
-3,Deploy k8s cluster<br>
+3.Deploy k8s cluster<br>
 Execute on the k8s master selected above:<br>
 <table>
 <tr><td>ansible-playbook -i inventory k8scluster-install.yml</td>
 </table>
 <br>
-4,Add k8s-node to k8s cluster<br>
+4.Add k8s-node to k8s cluster<br>
 Execute on the k8s master selected above:<br>
 <table>
 <tr><td>ansible-playbook -i inventory k8scluster-addnode.yml</td>
