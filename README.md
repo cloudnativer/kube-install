@@ -1,8 +1,8 @@
 <br>
- # One key tool for rapid deployment of highly available kubernetes clusters <br>
+<b> One key tool for rapid deployment of highly available kubernetes clusters </b><br>
 <br>
 <br>
- # Kube-install and kubernetes version correspondence: <br>
+<b> Kube-install and kubernetes version correspondence: </b><br>
 <table>
 <tr><td>Kube-install version</td><td>Corresponding installation</td><td>kubernetes version</td>
 <tr><td>v0.1.*</td><td>-----></td><td>v1.14.*</td>
@@ -11,7 +11,7 @@
 <br>
 <br>
 <br>
-<font size="4">**Installation instructions:**</font><br>
+<b>Installation instructions:</b><br>
 1,Install dependent tools<br>
 <table>
 <tr><td>yum -y install ansible git</td>
