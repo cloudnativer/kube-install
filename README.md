@@ -2,6 +2,7 @@
 This is a one click rapid deployment tool for highly available kubernetes clusters.
 <br>
 <br>
+<br><br>
 <b> Kube-install and kubernetes version correspondence: </b><br>
 <table>
 <tr><td>Kube-install version</td><td>Corresponding installation</td><td>kubernetes version</td>
