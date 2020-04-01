@@ -28,26 +28,32 @@ This is a one click rapid deployment tool for highly available kubernetes cluste
 Select a k8s-master and execute:<br>
 <table>
 <tr><td>
-cd /root/<br>
+cd /opt/<br>
 git clone https://github.com/cloudnativer/kube-install.git <br>
-cd /root/kube-install <br>
+cd /opt/kube-install <br>
  </td>
 </table>
 Download the kube-install-pkg-*.*.tgz package from this link https://github.com/cloudnative/kube-install/releases <br>
 <table>
-<tr><td>tar -zxvf kube-install-pkg-*.*.tgz</td>
+<tr><td>
+ cd /opt/kube-install <br>
+ tar -zxvf kube-install-pkg-*.*.tgz<br></td>
 </table>
 <br>
 3.Deploy k8s cluster<br>
 Execute on the k8s-master selected above:<br>
 <table>
-<tr><td>ansible-playbook -i inventory k8scluster-install.yml</td>
+<tr><td>
+ cd /opt/kube-install <br>
+ ansible-playbook -i inventory k8scluster-install.yml <br></td>
 </table>
 <br>
 4.Add k8s-node to k8s cluster<br>
 Execute on the k8s-master selected above:<br>
 <table>
-<tr><td>ansible-playbook -i inventory k8scluster-addnode.yml</td>
+<tr><td>
+ cd /opt/kube-install <br>
+ ansible-playbook -i inventory k8scluster-addnode.yml <br></td>
 </table>
 <br>
 <br>
