@@ -39,13 +39,13 @@ Download the kube-install-pkg-*.*.tgz package from this link https://github.com/
 </table>
 <br>
 3.Deploy k8s cluster<br>
-Execute on the k8s master selected above:<br>
+Execute on the k8s-master selected above:<br>
 <table>
 <tr><td>ansible-playbook -i inventory k8scluster-install.yml</td>
 </table>
 <br>
 4.Add k8s-node to k8s cluster<br>
-Execute on the k8s master selected above:<br>
+Execute on the k8s-master selected above:<br>
 <table>
 <tr><td>ansible-playbook -i inventory k8scluster-addnode.yml</td>
 </table>
