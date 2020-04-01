@@ -1,0 +1,35 @@
+- remote_user: root
+  hosts: addnode
+  gather_facts: no
+  roles:
+    - ./bin/0.base/kernel
+- remote_user: root
+  hosts: addnode
+  gather_facts: no
+  roles:
+    - ./bin/0.base/all
+- remote_user: root
+  hosts: addnode
+  gather_facts: no
+  roles:
+    - ./bin/0.base/docker
+- remote_user: root
+  hosts: addnode
+  gather_facts: no
+  roles:
+    - ./bin/3.network/flanneld
+- remote_user: root
+  hosts: addnode
+  gather_facts: no
+  roles:
+    - ./bin/6.kube-node/kubelet
+- remote_user: root
+  hosts: addnode
+  gather_facts: no
+  roles:
+    - ./bin/6.kube-node/kube-proxy
+- remote_user: root
+  hosts: addnode
+  gather_facts: no
+  roles:
+    - ./bin/8.finish/addnode

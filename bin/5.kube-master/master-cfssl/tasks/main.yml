@@ -1,0 +1,77 @@
+#### kubectl ####
+- name: 1.复制admin-csr.json配置
+  copy: 
+    src: ../templates/admin-csr.json.j2
+    dest: "{{ansible_home}}/cert/admin-csr.json"
+- name: 2.生成证书和私钥
+  shell: "cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes admin-csr.json | cfssljson -bare admin chdir={{ansible_home}}/cert"
+- name: 3.创建~/.kube/config文件
+  shell: "kubectl config set-cluster kubernetes --certificate-authority=ca.pem --embed-certs=true --server=https://{{keepalived_vip}}:8443 --kubeconfig=kubectl.kubeconfig chdir={{ansible_home}}/cert"
+- name: 4.设置客户端认证参数
+  shell: "kubectl config set-credentials admin --client-certificate=admin.pem --client-key=admin-key.pem --embed-certs=true --kubeconfig=kubectl.kubeconfig chdir={{ansible_home}}/cert"
+- name: 5.设置上下文参数
+  shell: "kubectl config set-context kubernetes --cluster=kubernetes --user=admin --kubeconfig=kubectl.kubeconfig chdir={{ansible_home}}/cert"
+- name: 6.设置默认上下文
+  shell: "kubectl config use-context kubernetes --kubeconfig=kubectl.kubeconfig chdir={{ansible_home}}/cert"
+- name: 7.拷贝kubectl.kubeconfig文件
+  copy: 
+    src: "{{ansible_home}}/cert/kubectl.kubeconfig"
+    dest: /etc/kubernetes/
+- name: 8.复制admin证书到证书目录
+  shell: "cp {{ansible_home}}/cert/admin*pem /etc/kubernetes/ssl"
+#### kube-api-server ####
+- name: 1.复制kubernetes-csr.json配置
+  template:
+    src: ../templates/kubernetes-csr.json.j2
+    dest: "{{ansible_home}}/cert/kubernetes-csr.json"
+- name: 2.生成证书和密钥
+  shell: "cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes kubernetes-csr.json | cfssljson -bare kubernetes chdir={{ansible_home}}/cert"
+- name: 3.复制kubernetes证书到证书目录
+  shell: "cp {{ansible_home}}/cert/kubernetes*pem /etc/kubernetes/ssl"
+- name: 4.加密token密钥
+  shell: "head -c 32 /dev/urandom | base64"
+  register: secret
+- name: 5.d时间
+  shell: date
+- name: 6.复制encryption-config.yaml配置
+  template:
+    src: ../templates/encryption-config.yaml.j2
+    dest: /etc/kubernetes/encryption-config.yaml
+#### kube-controller-manager ####
+- name: 1.复制kube-controller-manager-csr.json配置
+  template:
+    src: ../templates/kube-controller-manager-csr.json.j2
+    dest: "{{ansible_home}}/cert/kube-controller-manager-csr.json"
+- name: 2.生成证书和密钥
+  shell: "cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes kube-controller-manager-csr.json | cfssljson -bare kube-controller-manager chdir={{ansible_home}}/cert"
+- name: 3.复制kube-controller-manager证书到证书目录
+  shell: "cp {{ansible_home}}/cert/kube-controller-manager*pem /etc/kubernetes/ssl"
+- name: 4.创建kubeconfig文件
+  shell: "kubectl config set-cluster kubernetes --certificate-authority=ca.pem --embed-certs=true --server=https://{{keepalived_vip}}:8443 --kubeconfig=kube-controller-manager.kubeconfig chdir={{ansible_home}}/cert"
+- name: 5.设置客户端认证参数
+  shell: "kubectl config set-credentials system:kube-controller-manager --client-certificate=kube-controller-manager.pem --client-key=kube-controller-manager-key.pem --embed-certs=true --kubeconfig=kube-controller-manager.kubeconfig chdir={{ansible_home}}/cert"
+- name: 6.设置上下文配置
+  shell: "kubectl config set-context system:kube-controller-manager --cluster=kubernetes --user=system:kube-controller-manager --kubeconfig=kube-controller-manager.kubeconfig chdir={{ansible_home}}/cert"
+- name: 7.设置用户默认上下文
+  shell: "kubectl config use-context system:kube-controller-manager --kubeconfig=kube-controller-manager.kubeconfig chdir={{ansible_home}}/cert"
+- name: 8.复制kube-controller-manager.kubeconfig
+  shell: "cp {{ansible_home}}/cert/kube-controller-manager.kubeconfig /etc/kubernetes/"
+#### kube-scheduler ####
+- name: 1.复制kube-scheduler-csr.json配置
+  template:
+    src: ../templates/kube-scheduler-csr.json.j2
+    dest: "{{ansible_home}}/cert/kube-scheduler-csr.json"
+- name: 2.生成证书和密钥
+  shell: "cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes kube-scheduler-csr.json | cfssljson -bare kube-scheduler chdir={{ansible_home}}/cert"
+- name: 3.创建kube-scheduler.kubeconfig
+  shell: "kubectl config set-cluster kubernetes --certificate-authority=ca.pem --embed-certs=true --server=https://{{keepalived_vip}}:8443 --kubeconfig=kube-scheduler.kubeconfig chdir={{ansible_home}}/cert"
+- name: 4.设置客户端认证参数
+  shell: "kubectl config set-credentials system:kube-scheduler --client-certificate=kube-scheduler.pem --client-key=kube-scheduler-key.pem --embed-certs=true --kubeconfig=kube-scheduler.kubeconfig chdir={{ansible_home}}/cert"
+- name: 5.设置上下文配置
+  shell: "kubectl config set-context system:kube-scheduler --cluster=kubernetes --user=system:kube-scheduler --kubeconfig=kube-scheduler.kubeconfig chdir={{ansible_home}}/cert"
+- name: 6.设置用户默认上下文
+  shell: "kubectl config use-context system:kube-scheduler --kubeconfig=kube-scheduler.kubeconfig chdir={{ansible_home}}/cert"
+- name: 7.复制kube-scheduler.kubeconfig
+  shell: "cp {{ansible_home}}/cert/kube-scheduler.kubeconfig /etc/kubernetes/"
+- name: 8.复制kube-scheduler证书到证书目录
+  shell: "cp {{ansible_home}}/cert/kube-scheduler*pem /etc/kubernetes/ssl/"

@@ -1,0 +1,22 @@
+- name: 1.创建内核包
+  file:
+    path: "{{ansible_home}}/temp"
+    state: directory
+- name: 3.解压内核包
+  #update os to kernel4.19
+  unarchive:
+    src: "{{ansible_home}}/pkg/kernel4.19.tar.gz"
+    dest: "{{ansible_home}}"
+    mode: 0744
+- name: 4.解开grub权限
+  shell: "chattr -ai /boot/grub2/grub.cfg"
+- name: 5.安装内核包
+  shell: "rpm -Uvh {{ansible_home}}/kernel4.19/*.rpm --force"
+- name: 6.更新grub配置
+  template: 
+    src: ../templates/updategrub.sh
+    dest: "{{ansible_home}}/temp/updategrub.sh"
+    mode: 0755
+- shell: "/bin/bash {{ansible_home}}/temp/updategrub.sh"
+- name: 7.恢复grub权限
+  shell: "chattr +ai /boot/grub2/grub.cfg"

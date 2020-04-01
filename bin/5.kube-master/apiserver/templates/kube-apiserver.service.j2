@@ -1,0 +1,55 @@
+[Unit]
+Description=Kubernetes API Server
+Documentation=https://github.com/GoogleCloudPlatform/kubernetes
+After=network.target
+
+[Service]
+WorkingDirectory={{k8s_install_home}}/kubernetes/kube-apiserver
+ExecStart=/usr/local/bin/kube-apiserver \
+ --enable-admission-plugins=NamespaceLifecycle,NodeRestriction,LimitRanger,ServiceAccount,DefaultStorageClass,ResourceQuota \
+ --experimental-encryption-provider-config=/etc/kubernetes/encryption-config.yaml \
+ --anonymous-auth=false \
+ --advertise-address={{ip}} \
+ --bind-address={{ip}} \
+ --insecure-bind-address={{ip}} \
+ --secure-port=6443 \
+ --insecure-port=0 \
+ --authorization-mode=Node,RBAC \
+ --runtime-config=api/all \
+ --enable-bootstrap-token-auth \
+ --service-cluster-ip-range={{service_cidr}} \
+ --service-node-port-range=5000-50000 \
+ --service-account-key-file=/etc/kubernetes/ssl/ca-key.pem \
+ --tls-cert-file=/etc/kubernetes/ssl/kubernetes.pem \
+ --tls-private-key-file=/etc/kubernetes/ssl/kubernetes-key.pem \
+ --client-ca-file=/etc/kubernetes/ssl/ca.pem \
+ --kubelet-client-certificate=/etc/kubernetes/ssl/kubernetes.pem \
+ --kubelet-client-key=/etc/kubernetes/ssl/kubernetes-key.pem \
+ --etcd-cafile=/etc/kubernetes/ssl/ca.pem \
+ --etcd-certfile=/etc/kubernetes/ssl/kubernetes.pem \
+ --etcd-keyfile=/etc/kubernetes/ssl/kubernetes-key.pem \
+ --etcd-servers=https://{{etcd1}}:2379,https://{{etcd2}}:2379,https://{{etcd3}}:2379 \
+ --enable-swagger-ui=true \
+ --allow-privileged=true \
+ --apiserver-count=3 \
+ --audit-log-maxage=30 \
+ --audit-log-maxbackup=3 \
+ --audit-log-maxsize=100 \
+ --audit-log-path={{k8s_install_home}}/kubernetes/kube-apiserver/log/audit.log \
+ --requestheader-client-ca-file=/etc/kubernetes/ssl/ca.pem \
+ --requestheader-allowed-names=aggregator \
+ --requestheader-extra-headers-prefix=X-Remote-Extra- \
+ --requestheader-group-headers=X-Remote-Group \
+ --requestheader-username-headers=X-Remote-User \
+ --event-ttl=48h \
+ --alsologtostderr=true \
+ --logtostderr=false \
+ --log-dir={{k8s_install_home}}/kubernetes/kube-apiserver \
+ --v=2
+Restart=on-failure
+RestartSec=5
+Type=notify
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target

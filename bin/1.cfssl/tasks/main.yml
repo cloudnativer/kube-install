@@ -1,0 +1,43 @@
+- name: 1.创建{{ansible_home}}/cert目录
+  file:
+    path: "{{ansible_home}}/cert"
+    state: directory
+- name: 2.解压cfssl程序包
+  unarchive:
+    src: "{{ansible_home}}/pkg/cfssl-linux.tar.gz"
+    dest: /usr/local/bin/
+    mode: 0755
+- name: 3.生成ca-config.json配置
+  copy: 
+    src: ../templates/ca-config.json.j2
+    dest: "{{ansible_home}}/cert/ca-config.json"
+- name: 4.生成ca-csr.json配置
+  copy: 
+    src: ../templates/ca-csr.json.j2
+    dest: "{{ansible_home}}/cert/ca-csr.json"
+- name: 5.创建ca证书
+  shell: "cfssl gencert -initca ca-csr.json | cfssljson -bare ca chdir={{ansible_home}}/cert"
+- name: 6.创建证书目录
+  file: 
+    path: /etc/kubernetes/ssl
+    state: directory
+- name: 7.将ca移植到证书目录
+  shell: "cp {{ansible_home}}/cert/ca*.pem /etc/kubernetes/ssl"
+#####etcd#####
+- name: 8.生成etcd-csr.json配置
+  template: 
+    src: ../templates/etcd-csr.json.j2
+    dest: "{{ansible_home}}/cert/etcd-csr.json"
+- name: 9.创建etcd证书
+  shell: "cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes etcd-csr.json | cfssljson -bare etcd chdir={{ansible_home}}/cert"
+- name: 10.将etcd证书移植到证书目录
+  shell: "cp {{ansible_home}}/cert/etcd*pem /etc/kubernetes/ssl"
+##### metrics-server #####
+#- name: 1.创建metrics-server-csr.json配置
+#  template: 
+#    src: ../templates/metrics-server-csr.json.j2
+#    dest: "{{ansible_home}}/cert/metrics-server-csr.json"
+#- name: 2.生成证书
+#  shell: "cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes metrics-server-csr.json | cfssljson -bare metrics-server chdir={{ansible_home}}/cert"
+#- name: 3.cp 证书
+#  shell: "cp {{ansible_home}}/cert/metrics-server*pem /etc/kubernetes/ssl"

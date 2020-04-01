@@ -1,0 +1,20 @@
+[Unit]
+Description=kube-apiserver nginx proxy
+After=network.target
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=forking
+PIDFile={{k8s_install_home}}/nginx/logs/nginx.pid
+ExecStart={{k8s_install_home}}/nginx/sbin/nginx
+ExecReload={{k8s_install_home}}/nginx/sbin/nginx -s reload
+ExecStop={{k8s_install_home}}/nginx/sbin/nginx -s stop
+PrivateTmp=true
+Restart=always
+RestartSec=5
+StartLimitInterval=0
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target

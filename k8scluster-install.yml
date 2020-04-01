@@ -1,0 +1,114 @@
+#- remote_user: paasadmin   普通用户
+#  become: yes
+#  become_method: sudo  切换成root用户
+#  become_user: root
+- remote_user: root
+  hosts: node
+  gather_facts: no
+  roles:
+    - ./bin/0.base/kernel
+- remote_user: root
+  hosts: master,node,nginx
+  gather_facts: no
+  roles:
+    - ./bin/0.base/all
+- remote_user: root
+  hosts: master,node,nginx
+  gather_facts: no
+  roles:
+    - ./bin/0.base/docker
+- remote_user: root
+  hosts: master1
+  gather_facts: no
+  roles:
+    - ./bin/1.cfssl
+- remote_user: root
+  hosts: etcd
+  gather_facts: no
+  roles:
+    - ./bin/2.etcd
+- remote_user: root
+  hosts: master1
+  gather_facts: no
+  roles:
+    - ./bin/3.network/etcd_network
+- remote_user: root
+  hosts: master,node
+  gather_facts: no
+  roles:
+    - ./bin/3.network/flanneld
+- remote_user: root
+  hosts: nginx
+  gather_facts: no
+  roles:
+    - ./bin/4.kube-nginx/nginx
+- remote_user: root
+  hosts: master1
+  gather_facts: no
+  roles:
+    - ./bin/5.kube-master/master-cfssl
+- remote_user: root
+  hosts: master,node
+  gather_facts: no
+  roles:
+    - ./bin/5.kube-master/kubectl
+- remote_user: root
+  hosts: master
+  gather_facts: no
+  roles:
+    - ./bin/5.kube-master/apiserver
+- remote_user: root
+  hosts: nginx
+  gather_facts: no
+  roles:
+    - ./bin/4.kube-nginx/keepalived
+- remote_user: root
+  hosts: master1
+  gather_facts: no
+  roles:
+    - ./bin/5.kube-master/api-rbac
+- remote_user: root
+  hosts: master
+  gather_facts: no
+  roles:
+    - ./bin/5.kube-master/controller-manager
+- remote_user: root
+  hosts: master
+  gather_facts: no
+  roles:
+    - ./bin/5.kube-master/scheduler
+- remote_user: root
+  hosts: master1
+  gather_facts: no
+  roles:
+    - ./bin/6.kube-node/node-cfssl
+- remote_user: root
+  hosts: node
+  gather_facts: no
+  roles:
+    - ./bin/6.kube-node/kubelet
+- remote_user: root
+  hosts: master1
+  gather_facts: no
+  roles:
+    - ./bin/6.kube-node/approve-csr
+- remote_user: root
+  hosts: node
+  gather_facts: no
+  roles:
+    - ./bin/6.kube-node/kube-proxy
+- remote_user: root
+  hosts: master1
+  gather_facts: no
+  roles:
+    - ./bin/7.kube-addons/
+- remote_user: root
+  hosts: nginx
+  gather_facts: no
+  roles:
+    - ./bin/4.kube-nginx/alter
+- remote_user: root
+  hosts: node
+  gather_facts: no
+  roles:
+    - ./bin/8.finish/install

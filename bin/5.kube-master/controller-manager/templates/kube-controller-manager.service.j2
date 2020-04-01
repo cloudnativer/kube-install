@@ -1,0 +1,37 @@
+[Unit]
+Description=Kubernetes Controller Manager
+Documentation=https://github.com/GoogleCloudPlatform/kubernetes
+
+[Service]
+WorkingDirectory={{k8s_install_home}}/kubernetes/kube-controller-manager/
+ExecStart=/usr/local/bin/kube-controller-manager \
+  --address=127.0.0.1 \
+  --master=https://{{keepalived_vip}}:8443 \
+  --kubeconfig=/etc/kubernetes/kube-controller-manager.kubeconfig \
+  --allocate-node-cidrs=true \
+  --authentication-kubeconfig=/etc/kubernetes/kube-controller-manager.kubeconfig \
+  --service-cluster-ip-range={{service_cidr}} \
+  --cluster-cidr={{pod_cidr}} \
+  --cluster-name=kubernetes \
+  --cluster-signing-cert-file=/etc/kubernetes/ssl/ca.pem \
+  --cluster-signing-key-file=/etc/kubernetes/ssl/ca-key.pem \
+  --experimental-cluster-signing-duration=87600h \
+  --leader-elect=true \
+  --feature-gates=RotateKubeletServerCertificate=true \
+  --controllers=*,bootstrapsigner,tokencleaner \
+  --horizontal-pod-autoscaler-use-rest-clients=true \
+  --horizontal-pod-autoscaler-sync-period=10s \
+  --tls-cert-file=/etc/kubernetes/ssl/kube-controller-manager.pem \
+  --tls-private-key-file=/etc/kubernetes/ssl/kube-controller-manager-key.pem \
+  --service-account-private-key-file=/etc/kubernetes/ssl/ca-key.pem \
+  --root-ca-file=/etc/kubernetes/ssl/ca.pem \
+  --use-service-account-credentials=true \
+  --alsologtostderr=true \
+  --logtostderr=false \
+  --log-dir={{k8s_install_home}}/kubernetes/kube-controller-manager/ \
+  --v=2
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

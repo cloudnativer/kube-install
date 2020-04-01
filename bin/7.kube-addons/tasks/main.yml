@@ -1,0 +1,130 @@
+### 
+- name: 1.创建addons文件夹
+  file:
+    path: "{{ansible_home}}/addons/{{item}}"
+    state: directory
+  with_items:
+    - coredns
+    - dashboard
+    - metrics-server
+    - EFK
+    - helm
+    - traefik
+    - registry
+    - temp
+### 1.部署coredns
+- name: 1.拷贝coredns.yaml文件
+  template:
+    src: "../templates/1.coredns/coredns.yaml.j2"
+    dest: "{{ansible_home}}/addons/coredns/coredns.yaml"
+- name: 2.部署coredns
+  shell: "kubectl apply -f {{ansible_home}}/addons/coredns/coredns.yaml"
+### 2.部署dashboard
+- name: 1.拷贝dashboard.yaml文件
+  template:
+    src: "../templates/2.dashboard/dashboard-controller.yaml.j2"
+    dest: "{{ansible_home}}/addons/dashboard/dashboard-controller.yaml"
+- copy:
+    src: "../templates/2.dashboard/{{item}}"
+    dest: "{{ansible_home}}/addons/dashboard/{{item}}"
+  with_items:
+    - dashboard-configmap.yaml
+    - dashboard-rbac.yaml
+    - dashboard-secret.yaml
+    - dashboard-service.yaml
+- name: 2.部署dashboard
+  shell: "kubectl apply -f {{ansible_home}}/addons/dashboard/"
+### 2.1创建dashboard的token
+- name: 1.创建dashboard-admin
+  shell: "kubectl create sa dashboard-admin -n kube-system"  
+- shell: "kubectl create clusterrolebinding dashboard-admin --clusterrole=cluster-admin --serviceaccount=kube-system:dashboard-admin"
+- name: 2.查看ADMIN_SECRET
+  shell: "kubectl get secrets -n kube-system | grep dashboard-admin | awk '{print $1}'"
+  register: admin_secret
+- name: 3.查看DASHBOARD_LOGIN_TOKEN
+  shell: "kubectl describe secret -n kube-system {{admin_secret.stdout}} | grep -E '^token' | awk '{print $2}'"
+  register: dashboard_login_token
+- shell: "echo {{dashboard_login_token.stdout}} > {{ansible_home}}/addons/temp/tokentmp"
+- name: 4.创建dashboard的KubeConfig 文件
+  shell: "kubectl config set-cluster kubernetes --certificate-authority=ca.pem --embed-certs=true --server=https://{{keepalived_vip}}:8443 --kubeconfig=dashboard.kubeconfig chdir={{ansible_home}}/cert"
+- shell: "kubectl config set-credentials dashboard_user --token={{dashboard_login_token.stdout}} --kubeconfig=dashboard.kubeconfig chdir={{ansible_home}}/cert"
+- shell: "kubectl config set-context default --cluster=kubernetes --user=dashboard_user --kubeconfig=dashboard.kubeconfig chdir={{ansible_home}}/cert"
+- shell: "kubectl config use-context default --kubeconfig=dashboard.kubeconfig chdir={{ansible_home}}/cert"
+- name: 5.复制KubeConfig
+  copy:
+    src: "{{ansible_home}}/cert/dashboard.kubeconfig"
+    dest: /etc/kubernetes/dashboard.kubeconfig
+### 3.部署metrics-server
+- name: 1.拷贝metrics-server.yaml文件
+  template:
+    src: "../templates/3.metrics-server/metrics-server-deployment.yaml.j2"
+    dest: "{{ansible_home}}/addons/metrics-server/metrics-server-deployment.yaml"
+- copy:
+    src: "../templates/3.metrics-server/{{item}}"
+    dest: "{{ansible_home}}/addons/metrics-server/{{item}}"
+  with_items:
+    - aggregated-metrics-reader.yaml
+    - auth-delegator.yaml
+    - auth-reader.yaml
+    - metrics-apiservice.yaml
+    - metrics-server-service.yaml
+    - resource-reader.yaml
+- name: 2.部署metrics-server
+  shell: "kubectl apply -f {{ansible_home}}/addons/metrics-server/"
+- name: 3.创建metrics-server用户权限
+  shell: "kubectl create clusterrolebinding the-boss --user system:anonymous --clusterrole cluster-admin"
+### 4.部署traefik
+- name: 1.拷贝traefik.yaml文件
+  template:
+    src: "../templates/4.traefik/{{item}}.j2"
+    dest: "{{ansible_home}}/addons/traefik/{{item}}"
+  with_items:
+    - traefik-ds.yaml
+    - traefik-ui.yaml
+- copy:
+    src: "../templates/4.traefik/{{item}}"
+    dest: "{{ansible_home}}/addons/traefik/{{item}}"
+  with_items:
+    - traefik-config.yaml
+    - traefik-rbac.yaml
+- name: 2.部署traefik
+  shell: "kubectl apply -f {{ansible_home}}/addons/traefik/"
+### 5.部署EFK
+- name: 1.拷贝EFK.yaml文件
+  template:
+    src: "../templates/5.EFK/{{item}}.j2"
+    dest: "{{ansible_home}}/addons/EFK/{{item}}"
+  with_items:
+    - es-statefulset.yaml
+    - fluentd-es-ds.yaml
+    - kibana-deployment.yaml
+- copy:
+    src: "../templates/5.EFK/{{item}}"
+    dest: "{{ansible_home}}/addons/EFK/{{item}}"
+  with_items:
+    - es-service.yaml
+    - kibana-service.yaml
+    - fluentd-es-configmap.yaml
+- name: 2.部署EFK
+  shell: "kubectl apply -f {{ansible_home}}/addons/EFK/"
+### 6.部署registry
+- name: 1.拷贝docker-registry.yaml文件
+  template:
+    src: "../templates/6.registry/docker-registry.yaml.j2"
+    dest: "{{ansible_home}}/addons/registry/docker-registry.yaml"
+- name: 2.部署registry
+  shell: "kubectl apply -f {{ansible_home}}/addons/registry/docker-registry.yaml"
+### 7.部署helm
+#
+#Helm 2 是 C/S 架构，主要分为客户端 helm 和服务端 Tiller; 与之前版本相同，Helm 3 同样在 Release 页面提供了预编译好的二进制文件。差别在于原先的二进制包下载下来你会看到 helm 和 tiller 。而 Helm 3 则只有 helm 的存在了。Tiller 主要用于在 Kubernetes 集群中管理各种应用发布的版本，在 Helm 3 中移除了 Tiller, 版本相关的数据直接存储在了 Kubernetes 中。Helm 3 的改动还是比较大的，但是去除掉 Tiller 的选择是非常正确的，这让集群权限的管理更加简单清晰。
+#原先由于有 RBAC 的存在，我们在开始使用时，必须先创建一个 ServiceAccount 而现在 Helm3 的权限与当前的 KUBECONFIG 中配置用户的权限相同，非常容易进行控制。
+#本段注释的代码是用于helm2部署的，很显然已经不适合helm3的部署了。
+#- name: 1.拷贝rbac.yaml
+#  copy:
+#    src: "../template/6.helm/rbac-config.yaml"
+#    dest: "{{ansible_home}}/addons/helm/rbac-config.yaml"
+#- shell: "kubectl apply -f {{ansible_home}}/addons/helm/rbac-config.yaml"
+#- shell: "helm init --service-account tiller --history-max 200 --tiller-image {{registry_ip}}:5000/tiller:v3.0.1 --skip-refresh"
+#
+#
+#### 部署完成

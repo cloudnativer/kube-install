@@ -1,0 +1,23 @@
+- name: 1.生成csr-crb.yaml配置
+  copy: 
+    src: ../templates/csr-crb.yaml.j2
+    dest: "/etc/kubernetes/csr-crb.yaml"
+- name: 2.使csr-crb配置生效
+  shell: "kubectl apply -f /etc/kubernetes/csr-crb.yaml"
+- name: 3.等待120秒
+  wait_for:
+    timeout: 120
+- name: 4.测试kubelet-api
+  shell: "kubectl create sa kubelet-api-test"
+- name: 5.配置clusterrolebinding
+  shell: "kubectl create clusterrolebinding kubelet-api-test --clusterrole=system:kubelet-api-admin --serviceaccount=default:kubelet-api-test"
+- name: 6.查看secret信息
+  shell: kubectl get secrets | grep kubelet-api-test | awk '{print $1}'
+  register: secret
+- name: 7.显示{{secret.stdout}}
+  shell: "echo {{secret.stdout}} >> /opt/secret.txt"
+- name: 8.查看TOKEN信息
+  shell: "kubectl describe secret {{secret.stdout}} | grep -E '^token' | awk '{print $2}'"
+  register: token
+- name: 9.显示token信息
+  shell: "echo {{token.stdout}} >> /opt/token.txt"

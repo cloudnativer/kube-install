@@ -1,0 +1,4 @@
+- name: 恭喜您，node成功加入k8s集群！操作系统将在300秒后自动重启以生效集群配置。如果您不想现在重启，也可以直接CTCL+C退出。
+  shell: "date"
+- shell: "sleep 305 && sync && reboot"
+  ignore_errors: yes

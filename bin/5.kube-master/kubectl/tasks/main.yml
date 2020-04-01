@@ -1,0 +1,14 @@
+- name: 1.分发kubectl admin证书
+  copy:
+    src: /etc/kubernetes/
+    dest: /etc/kubernetes/
+- name: 2.创建/root/.kube
+  file: 
+    path: /root/.kube
+    state: directory
+- name: 3.生成kubectl.kubeconfig
+  copy:
+    src: "{{ansible_home}}/cert/kubectl.kubeconfig"
+    dest: "/root/.kube/config"
+- name: 4.时间
+  shell: date

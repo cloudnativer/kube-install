@@ -1,0 +1,37 @@
+- name: 1.生成kubeletbootstrap脚本
+  template:
+    src: ../templates/kubeletbootstrap.sh.j2
+    dest: "{{ansible_home}}/cert/kubeletbootstrap.sh"
+- name: 2.执行kubeletbootstrap脚本
+  shell: "bash kubeletbootstrap.sh chdir={{ansible_home}}/cert"
+- name: 3.时间
+  shell: date
+- name: 4.复制kubelet-bootstrap.kubeconfig
+  shell: "cat {{ansible_home}}/cert/kubelet-bootstrap-*.kubeconfig >> /etc/kubernetes/kubelet-bootstrap.kubeconfig"
+- name: 5.Bootstrap Token Auth 和授予权限
+  shell: "kubectl create clusterrolebinding kubelet-bootstrap --clusterrole=system:node-bootstrapper --group=system:bootstrappers"
+  #### kube-proxy ####
+- name: 1.复制kube-proxy-csr.json配置
+  template: 
+    src: ../templates/kube-proxy-csr.json.j2
+    dest: "{{ansible_home}}/cert/kube-proxy-csr.json"
+- name: 2.生成kube-proxy证书
+  shell: "cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes  kube-proxy-csr.json | cfssljson -bare kube-proxy chdir={{ansible_home}}/cert"
+- name: 3.创建kubeconfig文件
+  shell: "kubectl config set-cluster kubernetes --certificate-authority=ca.pem --embed-certs=true --server=https://{{keepalived_vip}}:8443 --kubeconfig=kube-proxy.kubeconfig chdir={{ansible_home}}/cert"
+- name: 4.设置客户端认证参数
+  shell: "kubectl config set-credentials kube-proxy --client-certificate=kube-proxy.pem --client-key=kube-proxy-key.pem --embed-certs=true --kubeconfig=kube-proxy.kubeconfig chdir={{ansible_home}}/cert"
+- name: 5.设置上下文参数
+  shell: "kubectl config set-context default --cluster=kubernetes --user=kube-proxy --kubeconfig=kube-proxy.kubeconfig chdir={{ansible_home}}/cert"
+- name: 6.设置默认上下文
+  shell: "kubectl config use-context default --kubeconfig=kube-proxy.kubeconfig chdir={{ansible_home}}/cert"
+- name: 7.将kube-proxy证书移植到证书目录
+  shell: "cp {{ansible_home}}/cert/kube-proxy*.pem /etc/kubernetes/ssl/"
+- name: 8.复制kube-proxy.kubeconfig
+  shell: "cp {{ansible_home}}/cert/kube-proxy.kubeconfig /etc/kubernetes/"
+### 打包证书
+- name: 1.打包k8s集群的证书
+  archive:
+    path: /etc/kubernetes/*
+    format: gz
+    dest: "{{ansible_home}}/cert/ssl.tar.gz"
