@@ -1,5 +1,5 @@
-<center><b>kube-install instructions:</b></center><br>
-This is a one click rapid deployment tool for highly available kubernetes clusters
+<center><b>kube-install description:</b></center><br>
+This is a one click rapid deployment tool for highly available kubernetes clusters.
 <br>
 <br>
 <b> Kube-install and kubernetes version correspondence: </b><br>
