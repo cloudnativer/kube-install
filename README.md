@@ -28,7 +28,7 @@ This is a one click rapid deployment tool for highly available kubernetes cluste
   <tr><td>192.168.122.15</td><td>k8s-node</td><td>root</td><td>cloudnativer</td></tr>
 </table>
 The operating system version is centos 7.* .
-<br>
+<br><br>
 2.Install dependent tools<br>
 <table>
 <tr><td>yum -y install ansible git</td></tr>
