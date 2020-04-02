@@ -24,8 +24,25 @@ This is a one click rapid deployment tool for highly available kubernetes cluste
 <tr><td>yum -y install ansible git</td>
 </table>
 <br>
-2.Download Kube install package<br>
+2.Set SSH password free login<br>
 Select a k8s-master and execute:<br>
+<table>
+<tr><td>
+cat <<EOF> hostname.txt
+192.168.122.11 22 123456789
+192.168.122.12 22 123456789
+192.168.122.13 22 123456789
+192.168.122.14 22 123456789
+192.168.122.15 22 123456789
+EOF
+cat hostname.txt | while read ip port pawd;do sshpass -p $pawd ssh-copy-id -p $port root@$ip;done
+sed -i '/StrictHostKeyChecking/s/^#//; /StrictHostKeyChecking/s/ask/no/' /etc/ssh/ssh_config
+systemctl restart sshd 
+</td>
+</table>
+<br>
+3.Download Kube install package<br>
+Execute on the k8s-master selected above:<br>
 <table>
 <tr><td>
 cd /opt/<br>
@@ -40,7 +57,7 @@ Download the kube-install-pkg-*.*.tgz package from this link https://github.com/
  tar -zxvf kube-install-pkg-*.*.tgz<br></td>
 </table>
 <br>
-3.Deploy k8s cluster<br>
+4.Deploy k8s cluster<br>
 Execute on the k8s-master selected above:<br>
 <table>
 <tr><td>
@@ -48,7 +65,7 @@ Execute on the k8s-master selected above:<br>
  ansible-playbook -i inventory k8scluster-install.yml <br></td>
 </table>
 <br>
-4.Add k8s-node to k8s cluster<br>
+5.Add k8s-node to k8s cluster<br>
 Execute on the k8s-master selected above:<br>
 <table>
 <tr><td>
