@@ -1,4 +1,3 @@
-<center><b>kube-install description:</b></center><br>
 This is a one click rapid deployment tool for highly available kubernetes clusters.
 <br>
 
@@ -28,7 +27,8 @@ This is a one click rapid deployment tool for highly available kubernetes cluste
   <tr><td>192.168.122.14</td><td>k8s-node</td><td>root</td><td>cloudnativer</td></tr>
   <tr><td>192.168.122.15</td><td>k8s-node</td><td>root</td><td>cloudnativer</td></tr>
 </table>
-<br>
+The operating system version is centos 7.* .
+<br><br>
 2.Install dependent tools<br>
 <table>
 <tr><td>yum -y install ansible git</td></tr>
@@ -60,7 +60,7 @@ git clone https://github.com/cloudnativer/kube-install.git <br>
 cd /opt/kube-install <br>
  </td></tr>
 </table>
-Download the kube-install-pkg-*.*.tgz package from this link https://github.com/cloudnative/kube-install/releases <br>
+Download the kube-install-pkg-*.*.tgz package from this link https://github.com/cloudnativer/kube-install/releases <br>
 <table>
 <tr><td>
  cd /opt/kube-install <br>
