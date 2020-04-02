@@ -60,7 +60,7 @@ git clone https://github.com/cloudnativer/kube-install.git <br>
 cd /opt/kube-install <br>
  </td></tr>
 </table>
-Download the kube-install-pkg-*.*.tgz package from this link https://github.com/cloudnative/kube-install/releases <br>
+Download the kube-install-pkg-*.*.tgz package from this link https://github.com/cloudnativer/kube-install/releases <br>
 <table>
 <tr><td>
  cd /opt/kube-install <br>
