@@ -4,7 +4,7 @@ Documentation=https://github.com/GoogleCloudPlatform/kubernetes
 After=network.target
 
 [Service]
-WorkingDirectory=/var/lib/k8s/kubernetes/kube-apiserver
+WorkingDirectory={{k8s_install_home}}/kubernetes/kube-apiserver
 ExecStart=/usr/local/bin/kube-apiserver \
 --admission-control=NamespaceLifecycle,LimitRanger,ServiceAccount,DefaultStorageClass,ResourceQuota,NodeRestriction \
 --feature-gates=ExpandInUsePersistentVolumes=true \
