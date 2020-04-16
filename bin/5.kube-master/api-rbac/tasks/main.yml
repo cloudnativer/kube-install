@@ -1,8 +1,0 @@
-- name: 1.等待30秒
-  wait_for:
-    timeout: 30
-- name: 2.创建clusterrolebinding
-  shell: "kubectl create clusterrolebinding kube-apiserver:kubelet-apis --clusterrole=system:kubelet-api-admin --user kubernetes"
-- name: 3.显示kubelet-api-admin角色信息
-  shell: "kubectl describe clusterrole system:kubelet-api-admin"
-  ignore_errors: yes
