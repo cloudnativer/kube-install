@@ -5,8 +5,6 @@ This is a one click rapid deployment tool for highly available kubernetes cluste
 ![avatar](docs/images/kube-install-logo.jpg)
 
 <br>
-<br>
-<br><br>
 <b>[1] Corresponding relation: </b><br>
 <br>
 Kube-install and kubernetes version correspondence:
