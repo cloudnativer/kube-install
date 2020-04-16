@@ -15,8 +15,6 @@ The parameters about kube-install can be viewed using the "kube-install --help" 
 <tr><td bgcolor=#000000><font color=#C0FF3E>-opt</font></td><td bgcolor=#000000><font color=#C0FF3E> string </font></td><td bgcolor=#000000><font color=#C0FF3E>Available options：init | install | addnode | delnode | rebuildmaster | delmaster</font></td></tr>
 <tr><td bgcolor=#000000><font color=#C0FF3E>-rebuildmaster</font></td><td bgcolor=#000000><font color=#C0FF3E> string </font></td><td bgcolor=#000000><font color=#C0FF3E>IP address of k8s master server to be rebuilt.</font></td></tr>
 <tr><td bgcolor=#000000><font color=#C0FF3E>-sshpwd</font></td><td bgcolor=#000000><font color=#C0FF3E> string </font></td><td bgcolor=#000000><font color=#C0FF3E>SSH login root password of each server.</font></td></tr>
-<tr><td bgcolor=#000000><font color=#C0FF3E>-k8sdir</font></td><td bgcolor=#000000><font color=#C0FF3E> string </font></td><td bgcolor=#000000><font color=#C0FF3E>Target path of k8s cluster software installation.</font></
-td></tr>
 <tr><td colspan="3" bgcolor=#000000></td></tr>
 </table>
 <br>
