@@ -53,7 +53,7 @@ If your server environment is as follows:<br>
 </table>
 Well,Execute on the k8s-master selected above:<br>
 <table>
-<tr><td bgcolor=#000000><font color=#C0FF3E># ./kube-install -opt install -master "192.168.122.11,192.168.122.12,192.168.122.13" -node "192.168.122.11,192.168.122.12,192.168.122.13,192.168.122.14" -mvip "192.168.122.100" -sshpwd "cloudnativer" -k8sdir "/opt/k8soft"</font></td></tr>
+<tr><td bgcolor=#000000><font color=#C0FF3E># ./kube-install -opt install -master "192.168.122.11,192.168.122.12,192.168.122.13" -node "192.168.122.11,192.168.122.12,192.168.122.13,192.168.122.14" -mvip "192.168.122.100" -sshpwd "cloudnativer"</font></td></tr>
 </table>
 <br>
 <br>
@@ -63,25 +63,25 @@ Well,Execute on the k8s-master selected above:<br>
 3.1 Add k8s-node to k8s cluster<br>
 Select any k8s-mkaster server, and execute the following command on it:<br>
 <table>
-<tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt addnode -addnode "192.168.122.15,192.168.122.16" -sshpwd "cloudnativer" -k8sdir "/opt/k8soft"</font></td></tr>
+<tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt addnode -addnode "192.168.122.15,192.168.122.16" -sshpwd "cloudnativer"</font></td></tr>
 </table>
 <br>
 3.2 Delete k8s-node from k8s cluster<br>
 Select any k8s-mkaster server, and execute the following command on it:<br>
 <table>
-<tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt delnode -delnode "192.168.122.13,192.168.122.15" -sshpwd "cloudnativer" -k8sdir "/opt/k8soft"</font></td></tr>
+<tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt delnode -delnode "192.168.122.13,192.168.122.15" -sshpwd "cloudnativer"</font></td></tr>
 </table>
 <br>
 3.3 Delete k8s-master from k8s cluster<br>
 Select any k8s-mkaster server, and execute the following command on it:<br>
 <table>
-<tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt delnode -delnode "192.168.122.13,192.168.122.15" -sshpwd "cloudnativer" -k8sdir "/opt/k8soft"</font></td></tr>
+<tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt delnode -delnode "192.168.122.13,192.168.122.15" -sshpwd "cloudnativer"</font></td></tr>
 </table>
 <br>
 3.4 Rebuild k8s-master to k8s cluster<br>
 Select any k8s-mkaster server, and execute the following command on it:<br>
 <table>
-<tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt rebuildmaster -rebuildmaster "192.168.122.13" -sshpwd "cloudnativer" -k8sdir "/opt/k8soft"</font></td></tr>
+<tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt rebuildmaster -rebuildmaster "192.168.122.13" -sshpwd "cloudnativer"</font></td></tr>
 </table>
 <br>
 <br>
