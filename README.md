@@ -1,4 +1,4 @@
-<center><font size=5>kube-install description</font></center><br>
+<center><font size=5><b>kube-install description</b></font></center><br>
 This is a one click rapid deployment tool for highly available kubernetes clusters.
 <br>
 
