@@ -29,6 +29,7 @@ Select a k8s-master and execute:<br>
 <font color=#C0FF3E># cd /root/kube-install</font><br>
  </td></tr>
 </table>
+<br>
 2.2 Download the kube-install-pkg-*.*.tgz package from this link https://github.com/cloudnative/kube-install/releases <br>
 <table>
 <tr><td bgcolor=#000000><font color=#C0FF3E># tar -zxvf kube-install-pkg-*.*.tgz</font></td></tr>
