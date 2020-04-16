@@ -1,0 +1,24 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: centos-ssh
+  namespace: default
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: centos-ssh
+        group: ssh-group
+    spec:
+      containers:
+      - name: centos-ssh
+        image: {{registry_ip}}:5000/centos7-ssh:v1.0
+        imagePullPolicy: IfNotPresent
+        args:
+        - /bin/sh
+        - -c
+        - /usr/sbin/sshd && sleep 360000
+        ports:
+        - containerPort: 22
+

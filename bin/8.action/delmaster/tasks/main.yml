@@ -1,0 +1,68 @@
+- name: 1.停止keepalived服务
+  service:
+    name: keepalived
+    state: stopped
+    enabled: false
+  ignore_errors: yes
+- name: 2.停止nginx服务   
+  service:
+    name: nginx
+    state: stopped
+    enabled: false
+  ignore_errors: yes
+- name: 3.停止kube-controller-manager服务
+  service:
+    name: kube-controller-manager
+    state: stopped
+    enabled: false
+  ignore_errors: yes
+- name: 4.停止kube-scheduler服务
+  service:
+    name: kube-scheduler
+    state: stopped
+    enabled: false
+  ignore_errors: yes
+- name: 5.停止kube-apiserver服务
+  service:
+    name: kube-apiserver
+    state: stopped
+    enabled: false
+  ignore_errors: yes
+- name: 6.停止etcd服务
+  service:
+    name: etcd
+    state: stopped
+    enabled: false
+  ignore_errors: yes
+- name: 7.删除keepalived服务文件
+  file:
+    path: /lib/systemd/system/keepalived.service
+    state: absent
+  ignore_errors: yes
+- name: 8.删除nginx服务文件
+  file:
+    path: /etc/systemd/system/nginx.service
+    state: absent
+  ignore_errors: yes
+- name: 9.删除kube-controller-manager服务文件      
+  file:
+    path: /etc/systemd/system/kube-controller-manager.service
+    state: absent
+  ignore_errors: yes
+- name: 10.删除kube-scheduler服务文件        
+  file:
+    path: /etc/systemd/system/kube-scheduler.service
+    state: absent
+  ignore_errors: yes
+- name: 11.删除kube-apiserver服务文件        
+  file:
+    path: /etc/systemd/system/kube-apiserver.service
+    state: absent
+  ignore_errors: yes
+- name: 12.删除etcd服务文件
+  file:
+    path: /etc/systemd/system/etcd.service 
+    state: absent
+  ignore_errors: yes
+
+

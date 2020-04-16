@@ -1,0 +1,40 @@
+- name: 1.创建{{software_home}}目录
+  file:
+    path: "{{software_home}}/{{item}}"
+    state: directory
+  with_items:
+    - bin
+    - docs
+    - pkg
+    - workflow
+    - yaml
+- name: 2.正在将部署文件分发到k8s-master
+  copy:
+    src: "/root/kube-install/bin"
+    dest: "{{software_home}}/"
+- copy:
+    src: "/root/kube-install/docs"
+    dest: "{{software_home}}/"
+- copy:
+    src: "/root/kube-install/pkg"
+    dest: "{{software_home}}/"
+- copy:
+    src: "/root/kube-install/workflow"
+    dest: "{{software_home}}/"
+- copy:
+    src: "/root/kube-install/yaml"
+    dest: "{{software_home}}/"
+- copy:
+    src: "/root/kube-install/kube-install"
+    dest: "{{software_home}}/"
+- copy:
+    src: "/root/kube-install/kube-install"
+    dest: "/usr/local/bin/kube-install"
+    mode: 0755
+- name: 3.配置可执行文件的权限
+  file: path={{software_home}}/{{ item }} mode=755 owner=root group=root
+  with_items:
+    - workflow/sshkey-init.sh
+    - workflow/sshops-init.sh
+    - workflow/getmasterconfig.sh
+

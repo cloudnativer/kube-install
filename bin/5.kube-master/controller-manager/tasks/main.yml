@@ -1,0 +1,20 @@
+- name: 1.分发kube-controller-manager证书
+  copy: 
+    src: /etc/kubernetes/
+    dest: /etc/kubernetes/
+- name: 2.生成kube-controller-manager服务启动文件
+  template:
+    src: ../templates/kube-controller-manager.service.j2
+    dest: /etc/systemd/system/kube-controller-manager.service
+- name: 3.创建{{k8s_install_home}}/kubernetes/kube-controller-manager
+  file: 
+    path: "{{k8s_install_home}}/kubernetes/kube-controller-manager"
+    state: directory
+- name: 4.设置服务开机自启动
+  shell: "systemctl enable kube-controller-manager"
+- name: 5.启动kube-controller-manager服务
+  systemd:
+    daemon_reload: true
+    name: kube-controller-manager
+    state: restarted
+    enabled: true

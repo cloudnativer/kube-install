@@ -1,0 +1,20 @@
+- name: 1.创建ca证书
+  shell: "cfssl gencert --initca=true k8s-root-ca-csr.json | cfssljson --bare k8s-root-ca chdir=/etc/kubernetes/ssl"
+- shell: "cfssl gencert --ca /etc/kubernetes/ssl/k8s-root-ca.pem --ca-key /etc/kubernetes/ssl/k8s-root-ca-key.pem --config /etc/kubernetes/ssl/k8s-gencert.json --profile kubernetes /etc/kubernetes/ssl/kubernetes-csr.json | cfssljson --bare kubernetes chdir=/etc/kubernetes/ssl"
+- shell: "cfssl gencert --ca /etc/kubernetes/ssl/k8s-root-ca.pem --ca-key /etc/kubernetes/ssl/k8s-root-ca-key.pem --config /etc/kubernetes/ssl/k8s-gencert.json --profile kubernetes /etc/kubernetes/ssl/admin-csr.json | cfssljson --bare admin chdir=/etc/kubernetes/ssl"
+- shell: "cfssl gencert --ca /etc/kubernetes/ssl/k8s-root-ca.pem --ca-key /etc/kubernetes/ssl/k8s-root-ca-key.pem --config /etc/kubernetes/ssl/k8s-gencert.json --profile kubernetes /etc/kubernetes/ssl/kube-proxy-csr.json | cfssljson --bare kube-proxy chdir=/etc/kubernetes/ssl"
+- name: 2.创建bootstrap.kubeconfig
+  shell: "kubectl config set-cluster kubernetes --certificate-authority=/etc/kubernetes/ssl/k8s-root-ca.pem --embed-certs=true --server=https://{{master_vip}}:{{master_vport}} --kubeconfig=/etc/kubernetes/ssl/bootstrap.kubeconfig"
+- shell: "kubectl config set-credentials kubelet-bootstrap --token=706127e2ed6ea0f8d85944d232b29099 --kubeconfig=/etc/kubernetes/ssl/bootstrap.kubeconfig"
+- shell: "kubectl config set-context default --cluster=kubernetes --user=kubelet-bootstrap --kubeconfig=/etc/kubernetes/ssl/bootstrap.kubeconfig"
+- shell: "kubectl config use-context default --kubeconfig=/etc/kubernetes/ssl/bootstrap.kubeconfig"
+- name: 3.创建kubectl.kubeconfig
+  shell: "kubectl config set-cluster kubernetes --certificate-authority=/etc/kubernetes/ssl/k8s-root-ca.pem --embed-certs=true --server=https://{{master_vip}}:{{master_vport}} --kubeconfig=/etc/kubernetes/ssl/kubectl.kubeconfig"
+- shell: "kubectl config set-credentials kubernetes-admin --client-certificate=/etc/kubernetes/ssl/admin.pem --client-key=/etc/kubernetes/ssl/admin-key.pem --embed-certs=true --kubeconfig=/etc/kubernetes/ssl/kubectl.kubeconfig"
+- shell: "kubectl config set-context kubernetes-admin@kubernetes --cluster=kubernetes --user=kubernetes-admin --kubeconfig=/etc/kubernetes/ssl/kubectl.kubeconfig"
+- shell: "kubectl config use-context kubernetes-admin@kubernetes --kubeconfig=/etc/kubernetes/ssl/kubectl.kubeconfig"
+- name: 4.创建kube-proxy.kubeconfig
+  shell: "kubectl config set-cluster kubernetes --certificate-authority=/etc/kubernetes/ssl/k8s-root-ca.pem --embed-certs=true --server=https://{{master_vip}}:{{master_vport}} --kubeconfig=/etc/kubernetes/ssl/kube-proxy.kubeconfig"
+- shell: "kubectl config set-credentials kube-proxy --client-certificate=/etc/kubernetes/ssl/kube-proxy.pem --client-key=/etc/kubernetes/ssl/kube-proxy-key.pem --embed-certs=true --kubeconfig=/etc/kubernetes/ssl/kube-proxy.kubeconfig"
+- shell: "kubectl config set-context default --cluster=kubernetes --user=kube-proxy --kubeconfig=/etc/kubernetes/ssl/kube-proxy.kubeconfig"
+- shell: "kubectl config use-context default --kubeconfig=/etc/kubernetes/ssl/kube-proxy.kubeconfig"

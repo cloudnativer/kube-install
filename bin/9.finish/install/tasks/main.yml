@@ -1,0 +1,13 @@
+- name: 恭喜您，k8s集群已经部署完成！操作系统将在300秒后自动重启以生效集群配置。如果您不想现在重启，也可以直接CTCL+C退出。
+  shell: "date"
+- file:
+    path: "{{software_home}}/temp"
+    state: directory
+- copy:
+    src: ../../templates/tempreboot.sh
+    dest: "{{software_home}}/temp/tempreboot.sh"
+    mode: 0755
+- wait_for:
+    timeout: 250
+- shell: "nohup {{software_home}}/temp/tempreboot.sh 1>2&"
+  ignore_errors: yes

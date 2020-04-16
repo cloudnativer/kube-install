@@ -1,0 +1,96 @@
+- name: 1.创建基础包目录
+  file:
+    path: "{{software_home}}/temp/"
+    state: directory
+- name: 2.执行安装预处理
+  copy: 
+    src: ../templates/preinstall.sh
+    dest: "{{software_home}}/temp/preinstall.sh"
+    mode: 0755
+- shell: "{{software_home}}/temp/preinstall.sh"
+  ignore_errors: yes
+- name: 3.解压基础包
+  #包含telnet expect ntp curl net-tools lrzsz gcc gcc-c++ yum-utils psmisc pcre-devel openssl-devel wget tree vim conntrack sysstat libseccomp lsof traceroute
+  unarchive:
+    src: "{{software_home}}/pkg/basepkg.tgz"
+    dest: "{{software_home}}"
+    mode: 0744
+- name: 4.安装基础包
+  shell: "rpm -U {{software_home}}/basepkg/*.rpm --force"
+  ignore_errors: yes
+- name: 5.关闭防火墙
+  service: 
+    name: firewalld 
+    state: stopped 
+    enabled: false
+- name: 6.关闭selinux
+  lineinfile:
+    dest: /etc/selinux/config
+    regexp: '^SELINUX='
+    line: 'SELINUX=disabled'
+- name: 7.关闭postfix
+  shell: "systemctl stop postfix && systemctl disable postfix"
+- name: 8.设置系统limit
+  lineinfile:
+    dest: /etc/security/limits.conf
+    line: "{{item}}"
+  with_items:
+    - '* soft nofile 65536'
+    - '* hard nofile 65536'
+    - '* soft nproc 65536'
+    - '* hard nproc 65536'
+    - '* soft memlock unlimited'
+    - '* hard memlock unlimited'
+- name: 9.生成ipvs_modules
+  copy:
+    src: ../templates/ipvs.modules
+    dest: /etc/sysconfig/modules/
+    mode: 0755
+#- name: 10.增加nf_conntrack_ipv4参数配置
+#  #如果你的操作系统是3.x内核，需要去掉本段的注释。
+#  shell: "echo 'modprobe -- nf_conntrack_ipv4' >> /etc/sysconfig/modules/ipvs.modules"
+- name: 10.运行ipvs_modules
+  shell: "bash /etc/sysconfig/modules/ipvs.modules"
+- name: 11.生成sysctl内核参数
+  copy:
+    src: ../templates/kubernetes.conf
+    dest: /etc/sysctl.d/
+#- name: 12.增加tcp_tw_recycle参数配置
+#  #如果你的操作系统是3.x内核，需要去掉本段的注释。
+#  shell: "echo 'net.ipv4.tcp_tw_recycle=0' >> /etc/sysctl.d/kubernetes.conf"
+- name: 12.配置sysctl内核参数
+  shell: sysctl -p /etc/sysctl.d/kubernetes.conf
+- name: 13.创建journal目录
+  file: 
+    path: /var/log/journal
+    state: directory
+    mode: 0755
+- name: 14.创建journald.conf.d目录
+  file: 
+    path: /etc/systemd/journald.conf.d
+    state: directory
+    mode: 0755
+- name: 15.生成prophet配置文件
+  copy:
+    src: ../templates/99-prophet.conf
+    dest: /etc/systemd/journald.conf.d/
+    mode: 0755
+- name: 16.启动systemd-journald服务
+  service:
+    name: systemd-journald
+    state: restarted
+- name: 17.创建k8s证书目录 
+  file:
+    path: "/etc/kubernetes/ssl/"
+    state: directory
+- name: 18.解压k8s软件包
+  unarchive:
+    src: "{{software_home}}/pkg/kube-server-v1.14.8.tar.gz"
+    dest: /usr/local/bin/
+    mode: 0755
+- name: 19.解压helm软件包
+  unarchive:
+    src: "{{software_home}}/pkg/helm-v3.0.1.tar.gz"
+    dest: /usr/local/bin/
+    mode: 0755
+

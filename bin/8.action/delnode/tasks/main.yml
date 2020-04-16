@@ -1,0 +1,27 @@
+- name: 1.停止kubelet服务
+  service:
+    name: kubelet
+    state: stopped
+    enabled: false
+  ignore_errors: yes
+- name: 2.停止kube-proxy服务
+  service:
+    name: kube-proxy
+    state: stopped
+    enabled: false
+  ignore_errors: yes
+- name: 3.停止docker服务
+  service:
+    name: docker
+    state: stopped
+    enabled: false
+  ignore_errors: yes
+- name: 4.卸载docker软件
+  copy: 
+    src: ../templates/uninstall-docker.sh
+    dest: "{{software_home}}/temp/uninstall-docker.sh"
+    mode: 0755
+  ignore_errors: yes
+- shell: "{{software_home}}/temp/uninstall-docker.sh"
+  ignore_errors: yes
+

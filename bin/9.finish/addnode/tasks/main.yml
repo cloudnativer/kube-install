@@ -1,0 +1,11 @@
+- name: 恭喜您，node成功加入k8s集群！新node的操作系统将在300秒后自动重启以生效配置。如果您不想现在重启，也可以直接CTCL+C退出。
+  shell: "date"
+- copy:
+    src: ../../templates/tempreboot.sh
+    dest: "{{software_home}}/temp/tempreboot.sh"
+    mode: 0755
+- wait_for:
+    timeout: 250
+- shell: "nohup {{software_home}}/temp/tempreboot.sh 1>2&"
+  ignore_errors: yes
+

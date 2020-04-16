@@ -1,0 +1,25 @@
+- name: 1.解压cfssl程序包
+  unarchive:
+    src: "{{software_home}}/pkg/cfssl-linux.tar.gz"
+    dest: /usr/local/bin/
+    mode: 0755
+- name: 2.生成kubernetes-csr配置
+  template:
+    src: ../templates/kubernetes-csr.json.j2
+    dest: /etc/kubernetes/ssl/kubernetes-csr.json
+- copy:
+    src: "../templates/{{item}}"
+    dest: "/etc/kubernetes/ssl/{{item}}"
+  with_items:
+    - admin-csr.json
+    - audit-policy.yaml
+    - k8s-gencert.json
+    - k8s-root-ca-csr.json
+    - kube-proxy-csr.json
+    - token.csv
+- copy:
+    src: "../templates/{{item}}"
+    dest: "/etc/kubernetes/{{item}}"
+  with_items:
+    - apiserver-to-kubelet.yaml
+    - cert-renew-rbac.yaml
