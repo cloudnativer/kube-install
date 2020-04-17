@@ -56,7 +56,7 @@ Well,Execute on the k8s-master selected above:<br>
 <table>
 <tr><td bgcolor=#000000><font color=#C0FF3E># ./kube-install -opt install -master "192.168.122.11,192.168.122.12,192.168.122.13" -node "192.168.122.11,192.168.122.12,192.168.122.13,192.168.122.14" -mvip "192.168.122.100" -sshpwd "cloudnativer"</font></td></tr>
 </table>
-Note: in the above command, the - MVIP parameter is the k8s cluster virtual IP address.<br>
+Note: in the above command, the "-mvip" parameter is the k8s cluster virtual IP address.<br>
 <br>
 <br>
 <br>
