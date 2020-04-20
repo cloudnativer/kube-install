@@ -21,7 +21,7 @@ vrrp_instance VI_1 {
         auth_pass 20200419
     }
     virtual_ipaddress {
-        {{keepalived_vip}}
+        {{master_vip}}
     }
     track_script {
         Checkk8s
