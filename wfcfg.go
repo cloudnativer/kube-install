@@ -209,3 +209,4 @@ func delmasterConfig(delmaster_array []string, softdir string) {
     write.Flush()
 
 }
+
