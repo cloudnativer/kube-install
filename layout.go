@@ -41,7 +41,7 @@ func onemasterinstallYML(softdir string) {
     defer onemasterinstall_file.Close() //main函数结束前， 关闭文件
     onemasterinstall_file.WriteString("- remote_user: root\n  hosts: node\n  gather_facts: no\n  roles:\n    - "+softdir+"/bin/0.base/kernel\n")
     onemasterinstall_file.WriteString("- remote_user: root\n  hosts: master1,node\n  gather_facts: no\n  roles:\n    - "+softdir+"/bin/0.base/all\n")
-    onemasterinstall_file.WriteString("- remote_user: root\n  hosts: node\n  gather_facts: no\n  roles:\n    - "+softdir+"/bin/8.action/delnode/stopnode\n")
+    onemasterinstall_file.WriteString("- remote_user: root\n  hosts: node\n  gather_facts: no\n  roles:\n    - "+softdir+"/bin/8.action/delnode\n")
     onemasterinstall_file.WriteString("- remote_user: root\n  hosts: node\n  gather_facts: no\n  roles:\n    - "+softdir+"/bin/0.base/docker\n")
     onemasterinstall_file.WriteString("- remote_user: root\n  hosts: master1\n  gather_facts: no\n  roles:\n    - "+softdir+"/bin/1.cfssl/copycfssl\n")
     onemasterinstall_file.WriteString("- remote_user: root\n  hosts: master1\n  gather_facts: no\n  roles:\n    - "+softdir+"/bin/1.cfssl/createssl\n")
