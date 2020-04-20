@@ -1,5 +1,7 @@
 <b>How to build?</b><br>
 <br>
+Use the "go build" command to compile. Here is an example.
+<br>
 <table>
 <tr><td bgcolor=#000000>
 <font color=#C0FF3E># cd /root/</font><br>
