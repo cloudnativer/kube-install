@@ -89,8 +89,12 @@ func installConfig(master_array []string, node_array []string, currentdir string
     }
     write.WriteString("\n[nginx]\n")
     j := 120
+    role := "MASTER"
     for i := 0; i < master_num; i++ {
-      write.WriteString(master_array[i]+" ip="+master_array[i]+" priority="+strconv.Itoa(j)+"\n")
+      if i > 0 {
+        role = "BACKUP"
+      }
+      write.WriteString(master_array[i]+" ip="+master_array[i]+" priority="+strconv.Itoa(j)+" role="+role+"\n")
       j = j - 10
     }
     //生成node配置
