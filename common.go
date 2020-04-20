@@ -53,7 +53,7 @@ func copyFile(srcFileName string, dstFileName string) (written int64, err error)
     reader := bufio.NewReader(srcFile)
 
     //打开dstFileName
-    dstFile, err := os.OpenFile(dstFileName, os.O_WRONLY | os.O_CREATE, 0666)
+    dstFile, err := os.OpenFile(dstFileName, os.O_WRONLY|os.O_TRUNC|os.O_CREATE, 0666)
     if err != nil {
             fmt.Printf("open file err = %v\n", err)
             return

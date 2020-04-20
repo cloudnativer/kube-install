@@ -146,6 +146,7 @@ func main() {
         _, err_rebuildmaster := copyFile(softdir+"/workflow/general.inventory", softdir+"/workflow/rebuildmaster.inventory")
         checkErr(err_rebuildmaster)
         rebuildmasterConfig(rebuildmaster_array, softdir)
+        installGenfile(softdir)
         rebuildmasterYML(softdir)
         shellExecute("ansible-playbook -i "+softdir+"/workflow/rebuildmaster.inventory "+softdir+"/workflow/k8scluster-rebuildmaster.yml")
         fmt.Println("k8s-master节点重建完毕！")
