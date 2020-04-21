@@ -26,9 +26,11 @@ Commands:<br>
   mvip             K8s-master cluster virtual IP address.<br>
   node             The IP address of k8s-node server.<br>
   sshpwd           SSH login root password of each server.<br>
+ </pre>
 </font></td></tr>
 <tr><td bgcolor=#000000></td></tr>
 <tr><td bgcolor=#000000><font color=#C0FF3E>
+<pre>
 For example：<br>
 <br>
   Initialize the system environment:<br>
