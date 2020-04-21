@@ -2,7 +2,7 @@
 <br>
 <b>Introduction:</b><br>
 <br>
-The parameters about kube-install can be viewed using the "kube-install help" command. <br>
+The parameters about kube-install can be viewed using the "kube-install help" or "kube-install -opt help" command. <br>
 <table width=100%>
 <tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt help</font></td></tr>
 <tr><td bgcolor=#000000></td></tr>
