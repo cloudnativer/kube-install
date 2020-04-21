@@ -15,20 +15,12 @@ func main() {
     var master string
     var node string
     var mvip string
-    var addnode string
-    var delnode string
-    var rebuildmaster string
-    var delmaster string
     var sshpwd string
 
     flag.StringVar(&opt,"opt","","Available options: init | install | addnode | delnode | rebuildmaster | delmaster")
     flag.StringVar(&master,"master","","The IP address of k8s master server filled in for the first installation.")
     flag.StringVar(&node,"node","","The IP address of k8s node server filled in for the first installation.")
     flag.StringVar(&mvip,"mvip","","K8s master cluster virtual IP address filled in for the first installation.")
-    flag.StringVar(&addnode,"addnode","","IP address of k8s node server to be added.")
-    flag.StringVar(&delnode,"delnode","","IP address of k8s node server to be deleted.")
-    flag.StringVar(&rebuildmaster,"rebuildmaster","","IP address of k8s master server to be rebuilt.")
-    flag.StringVar(&delmaster,"delmaster","","IP address of k8s master server to be deleted.")
     flag.StringVar(&sshpwd,"sshpwd","","SSH login root password of each server.")
     flag.Parse()
 
@@ -36,14 +28,6 @@ func main() {
     master_str := strings.Replace(master, "," , " " , -1)
     node_array := strings.Split(node, ",")
     node_str := strings.Replace(node, "," , " " , -1)
-    addnode_array := strings.Split(addnode, ",")
-    addnode_str := strings.Replace(addnode, "," , " " , -1)
-    delnode_array := strings.Split(delnode, ",")
-    delnode_str := strings.Replace(delnode, "," , " " , -1)
-    rebuildmaster_array := strings.Split(rebuildmaster, ",")
-    rebuildmaster_str := strings.Replace(rebuildmaster, "," , " " , -1)
-    delmaster_array := strings.Split(delmaster, ",")
-    delmaster_str := strings.Replace(delmaster, "," , " " , -1)
 
 //设置各种path
     softdir := "/opt/kube-install"
@@ -63,13 +47,13 @@ func main() {
         安装k8s集群
         ./kube-install -opt install -master "192.168.122.11,192.168.122.12,192.168.122.13" -node "192.168.122.11,192.168.122.12,192.168.122.13,192.168.122.14" -mvip "192.168.122.100" -sshpwd "cloudnativer"
         添加k8s-node节点
-        ./kube-install -opt addnode -addnode "192.168.122.15,192.168.122.16" -sshpwd "cloudnativer"
+        ./kube-install -opt addnode -node "192.168.122.15,192.168.122.16" -sshpwd "cloudnativer"
         删除k8s-node节点
-        ./kube-install -opt delnode -delnode "192.168.122.13,192.168.122.15" -sshpwd "cloudnativer"
+        ./kube-install -opt delnode -node "192.168.122.13,192.168.122.15" -sshpwd "cloudnativer"
         删除k8s-master节点
-        ./kube-install -opt delmaster -delmaster "192.168.122.13" -sshpwd "cloudnativer"
+        ./kube-install -opt delmaster -master "192.168.122.13" -sshpwd "cloudnativer"
         重建k8s-master节点
-        ./kube-install -opt rebuildmaster -rebuildmaster "192.168.122.13" -sshpwd "cloudnativer"
+        ./kube-install -opt rebuildmaster -master "192.168.122.13" -sshpwd "cloudnativer"
     **/
 
     switch {
@@ -111,12 +95,12 @@ func main() {
       //执行addnode指令
       case opt == "addnode" :
         fmt.Println("正在添加k8s-node节点，请稍后……") 
-        checkParam(opt,addnode)
+        checkParam(opt,node)
         checkParam(opt,sshpwd)
-        shellExecute(softdir+"/workflow/sshkey-init.sh \""+sshpwd+"\" \""+addnode_str+"\" \""+softdir+"\" \""+softdir+"\" \"addnode\"")
+        shellExecute(softdir+"/workflow/sshkey-init.sh \""+sshpwd+"\" \""+node_str+"\" \""+softdir+"\" \""+softdir+"\" \"addnode\"")
         _, err_addnode := copyFile(softdir+"/workflow/general.inventory", softdir+"/workflow/addnode.inventory")
         checkErr(err_addnode)
-        addnodeConfig(addnode_array, softdir)
+        addnodeConfig(node_array, softdir)
         addnodeYML(softdir)
         shellExecute("ansible-playbook -i "+softdir+"/workflow/addnode.inventory "+softdir+"/workflow/k8scluster-addnode.yml")
         fmt.Println("k8s-node节点添加完毕！")
@@ -124,28 +108,28 @@ func main() {
       //执行delnode指令
       case opt == "delnode" :
         fmt.Println("正在删除k8s-node节点，请稍后……") 
-        checkParam(opt,delnode)
+        checkParam(opt,node)
         checkParam(opt,sshpwd)
-        shellExecute(softdir+"/workflow/sshkey-init.sh \""+sshpwd+"\" \""+delnode_str+"\" \""+softdir+"\" \""+softdir+"\" \"delnode\"")
+        shellExecute(softdir+"/workflow/sshkey-init.sh \""+sshpwd+"\" \""+node_str+"\" \""+softdir+"\" \""+softdir+"\" \"delnode\"")
         _, err_delnode := copyFile(softdir+"/workflow/general.inventory", softdir+"/workflow/delnode.inventory")
         checkErr(err_delnode)
-        delnodeConfig(delnode_array, softdir)
+        delnodeConfig(node_array, softdir)
         delnodeYML(softdir)
         shellExecute("ansible-playbook -i "+softdir+"/workflow/delnode.inventory "+softdir+"/workflow/k8scluster-delnode.yml")
-        for i := 0; i < len(delnode_array); i++ {
-            shellExecute("kubectl delete node "+delnode_array[i])
+        for i := 0; i < len(node_array); i++ {
+            shellExecute("kubectl delete node "+node_array[i])
         } 
         fmt.Println("k8s-node节点删除完毕！")
 
       //执行rebuildmaster指令
       case opt == "rebuildmaster" :
         fmt.Println("正在重建k8s-master节点，请稍后……")
-        checkParam(opt,rebuildmaster)
+        checkParam(opt,master)
         checkParam(opt,sshpwd)
-        shellExecute(softdir+"/workflow/sshkey-init.sh \""+sshpwd+"\" \""+rebuildmaster_str+"\" \""+softdir+"\" \""+softdir+"\" \"rebuildmaster\"")
+        shellExecute(softdir+"/workflow/sshkey-init.sh \""+sshpwd+"\" \""+master_str+"\" \""+softdir+"\" \""+softdir+"\" \"rebuildmaster\"")
         _, err_rebuildmaster := copyFile(softdir+"/workflow/general.inventory", softdir+"/workflow/rebuildmaster.inventory")
         checkErr(err_rebuildmaster)
-        rebuildmasterConfig(rebuildmaster_array, softdir)
+        rebuildmasterConfig(master_array, softdir)
         installGenfile(softdir)
         rebuildmasterYML(softdir)
         shellExecute("ansible-playbook -i "+softdir+"/workflow/rebuildmaster.inventory "+softdir+"/workflow/k8scluster-rebuildmaster.yml")
@@ -154,23 +138,22 @@ func main() {
       //执行delmaster指令
       case opt == "delmaster" :
         fmt.Println("正在删除k8s-master节点，请稍后……")
-        checkParam(opt,delmaster)
+        checkParam(opt,master)
         checkParam(opt,sshpwd)
-        shellExecute(softdir+"/workflow/sshkey-init.sh \""+sshpwd+"\" \""+delmaster_str+"\" \""+softdir+"\" \""+softdir+"\" \"delmaster\"")
+        shellExecute(softdir+"/workflow/sshkey-init.sh \""+sshpwd+"\" \""+master_str+"\" \""+softdir+"\" \""+softdir+"\" \"delmaster\"")
         _, err_delmaster := copyFile(softdir+"/workflow/general.inventory", softdir+"/workflow/delmaster.inventory")
         checkErr(err_delmaster)
-        delmasterConfig(delmaster_array, softdir)
+        delmasterConfig(master_array, softdir)
         delmasterYML(softdir)
         shellExecute("ansible-playbook -i "+softdir+"/workflow/delmaster.inventory "+softdir+"/workflow/k8scluster-delmaster.yml")
         fmt.Println("k8s-master节点删除完毕！")
 
-
+      //默认输出全局help信息
       default:
-        panic("您输入的-opt参数有误，请检查！")
+        showHelp()
 
     }
 
 }
-
 
 

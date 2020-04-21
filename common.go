@@ -123,4 +123,37 @@ func shellOutput(strCommand string)(string){
     return string(out_bytes)
 }
 
+func showHelp(){
+    fmt.Println("Version 0.1.1")
+    fmt.Println("Usage of kube-install: -opt [OPTIONS] COMMAND [ARGS]...\n")
+    fmt.Println("Options: \n")
+    fmt.Println("  init             Initialize the system environment.")
+    fmt.Println("  install          Install k8s cluster.")
+    fmt.Println("  delnode          Remove the k8s-node from the cluster.")
+    fmt.Println("  addnode          Add k8s-node to the cluster.")
+    fmt.Println("  delmaster        Remove the k8s-master from the cluster.")
+    fmt.Println("  rebuildmaster    Rebuild the damaged k8s-master.")
+    fmt.Println("  help             Display help information.\n")
+    fmt.Println("Commands:\n")
+    fmt.Println("  master           The IP address of k8s-master server.")
+    fmt.Println("  mvip             K8s-master cluster virtual IP address.")
+    fmt.Println("  node             The IP address of k8s-node server.")
+    fmt.Println("  sshpwd           SSH login root password of each server.\n\n")
+    fmt.Println("For example：\n")
+    fmt.Println("  Initialize the system environment:")
+    fmt.Println("    kube-install -opt init")
+    fmt.Println("  Install k8s cluster:")
+    fmt.Println("    kube-install -opt install -master \"192.168.122.11,192.168.122.12,192.168.122.13\" -node \"192.168.122.11,192.168.122.12,192.168.122.13,192.168.122.14\" -mvip \"192.168.122.100\" -sshpwd \"cloudnativer\"")
+    fmt.Println("  Add k8s-node to the cluster:")
+    fmt.Println("    kube-install -opt addnode -node \"192.168.122.15,192.168.122.16\" -sshpwd \"cloudnativer\"")
+    fmt.Println("  Remove the k8s-node from the cluster:")
+    fmt.Println("    kube-install -opt delnode -node \"192.168.122.13,192.168.122.15\" -sshpwd \"cloudnativer\"")
+    fmt.Println("  Remove the k8s-master from the cluster:")
+    fmt.Println("    kube-install -opt delmaster -master \"192.168.122.13\" -sshpwd \"cloudnativer\"")
+    fmt.Println("  Rebuild the damaged k8s-master:")
+    fmt.Println("    kube-install -opt rebuildmaster -master \"192.168.122.13\" -sshpwd \"cloudnativer\"")
+    fmt.Println("  Display help information:")
+    fmt.Println("    kube-install -opt help\n\n")
+}
+
 
