@@ -7,6 +7,7 @@ The parameters about kube-install can be viewed using the "kube-install -opt hel
 <tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt help</font></td></tr>
 <tr><td bgcolor=#000000></td></tr>
 <tr><td bgcolor=#000000><font color=#C0FF3E>
+<pre>
 Usage of kube-install: -opt [OPTIONS] COMMAND [ARGS]...<br>
 <br>
 Options: <br>
@@ -34,14 +35,15 @@ For example：<br>
     kube-install -opt init<br>
   Install k8s cluster:<br>
     kube-install -opt install -master "192.168.122.11,192.168.122.12,192.168.122.13" -node "192.168.122.11,192.168.122.12,192.168.122.13,192.168.122.14" -mvip "192.168.122.100" -sshpwd "cloudnativer"<br>
-  Remove the k8s-node from the cluster:<br>
-    kube-install -opt delnode -node "192.168.122.13,192.168.122.15" -sshpwd "cloudnativer"<br>
   Add k8s-node to the cluster:<br>
     kube-install -opt addnode -node "192.168.122.15,192.168.122.16" -sshpwd "cloudnativer"<br>
+  Remove the k8s-node from the cluster:<br>
+    kube-install -opt delnode -node "192.168.122.13,192.168.122.15" -sshpwd "cloudnativer"<br>
   Remove the k8s-master from the cluster:<br>
     kube-install -opt delmaster -master "192.168.122.13" -sshpwd "cloudnativer"<br>
   Rebuild the damaged k8s-master:<br>
     kube-install -opt rebuildmaster -master "192.168.122.13" -sshpwd "cloudnativer"<br>
+  </pre>
 </font></td></tr>
 <tr><td bgcolor=#000000></td></tr>
 </table>
