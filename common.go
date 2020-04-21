@@ -23,13 +23,13 @@ func checkErr(err error) {
 func checkIP(ipv4 string) {
     address := net.ParseIP(ipv4)  
     if address == nil {
-         panic("您输入的IP地址格式有误，请检查！")
+         panic("The format of IP address you entered is wrong, please check!")
     }
 }
 
 func checkParam(option string, param string) {
     if param == "" {
-         panic("执行"+option+"操作时，必须输入"+param+"参数，请检查！")
+         panic("When performing the "+option+" operation, you must enter the "+param+" parameter, please check!")
     }
 }
 
@@ -41,27 +41,23 @@ func progressBar(n int,char string) (s string) {
 }
 
 func copyFile(srcFileName string, dstFileName string) (written int64, err error) {
-    //用于拷贝文件的函数，接收两个文件路径 srcFileName dstFileName
+    //Functions for copying files
     srcFile, err := os.Open(srcFileName)
     if err != nil {
             fmt.Printf("open file err = %v\n", err)
             return
     }
     defer srcFile.Close()
-
-    //通过srcFile，获取到Reader
     reader := bufio.NewReader(srcFile)
 
-    //打开dstFileName
     dstFile, err := os.OpenFile(dstFileName, os.O_WRONLY|os.O_TRUNC|os.O_CREATE, 0666)
     if err != nil {
             fmt.Printf("open file err = %v\n", err)
             return
     }
-
     writer := bufio.NewWriter(dstFile)
     defer func() {
-            writer.Flush() //把缓冲区的内容写入到文件
+            writer.Flush()
             dstFile.Close()
     }()
 
@@ -72,7 +68,7 @@ func copyFile(srcFileName string, dstFileName string) (written int64, err error)
 
  
 func shellAsynclog(reader io.ReadCloser) error {
-    cache := "" //缓存不足一行的日志信息
+    cache := ""
     buf := make([]byte, 2048)
     for {
         num, err := reader.Read(buf)
@@ -82,7 +78,7 @@ func shellAsynclog(reader io.ReadCloser) error {
         if num > 0 {
             b := buf[:num]
             s := strings.Split(string(b), "\n")
-            line := strings.Join(s[:len(s)-1], "\n") //取出整行的日志
+            line := strings.Join(s[:len(s)-1], "\n")
             fmt.Printf("%s%s\n", cache, line)
             cache = s[len(s)-1]
         }
@@ -124,7 +120,7 @@ func shellOutput(strCommand string)(string){
 }
 
 func showHelp(){
-    fmt.Println("Version 0.1.1")
+    fmt.Println("Version 0.2.0 (Creation Date: 04/21/2020)")
     fmt.Println("Usage of kube-install: -opt [OPTIONS] COMMAND [ARGS]...\n")
     fmt.Println("Options: \n")
     fmt.Println("  init             Initialize the system environment.")

@@ -10,10 +10,9 @@ import (
 
 func generalConfig(master_array []string, node_array []string, mvip string, currentdir string, softdir string) {
     //生成通用配置
-    inventory_file, err := os.Create(currentdir+"/workflow/general.inventory") //新建inventory配置文件
+    inventory_file, err := os.Create(currentdir+"/workflow/general.inventory") 
     checkErr(err)
-    defer inventory_file.Close() //main函数结束前， 关闭文件
-
+    defer inventory_file.Close() 
     inventory_file.WriteString("###--------------------------------------k8s通用配置---------------------------------###\n")
     inventory_file.WriteString("\n[master1]\n")
     inventory_file.WriteString(master_array[0]+" ip="+master_array[0]+"\n")
@@ -72,9 +71,7 @@ func installConfig(master_array []string, node_array []string, currentdir string
     //生成master配置
     inventory_file, err := os.OpenFile(currentdir+"/workflow/install.inventory",os.O_WRONLY | os.O_APPEND, 0666)
     checkErr(err)
-    defer inventory_file.Close() //main函数结束前， 关闭文件
-
-    //写入文件时，使用带缓存的 *Writer
+    defer inventory_file.Close() 
     write := bufio.NewWriter(inventory_file)
     write.WriteString("###----------------------------------k8s-master主机列表------------------------------###\n")
     write.WriteString("\n[master]\n")
@@ -105,8 +102,6 @@ func installConfig(master_array []string, node_array []string, currentdir string
       write.WriteString(node_array[i]+" ip="+node_array[i]+"\n")
     }
     write.WriteString("\n[k8s:children]\n"+"master1\n"+"master\n"+"etcd\n"+"node\n"+"nginx\n\n\n")
-
-    //Flush将缓存的文件真正写入到文件中
     write.Flush()
 
 }
@@ -115,9 +110,7 @@ func addnodeConfig(addnode_array []string, softdir string) {
     //生成addnode配置
     inventory_file, err := os.OpenFile(softdir+"/workflow/addnode.inventory",os.O_WRONLY | os.O_APPEND, 0666)
     checkErr(err)
-    defer inventory_file.Close() //main函数结束前， 关闭文件
-
-    //写入文件时，使用带缓存的 *Writer
+    defer inventory_file.Close() 
     write := bufio.NewWriter(inventory_file)
     write.WriteString("###---------------------------------新增的k8s-node主机列表------------------------------###\n")
     write.WriteString("\n[addnode]\n")
@@ -126,7 +119,6 @@ func addnodeConfig(addnode_array []string, softdir string) {
       write.WriteString(addnode_array[i]+" ip="+addnode_array[i]+"\n")
     }
     write.WriteString("\n[k8s:children]\n"+"master1\n"+"addnode\n\n\n")
-    //Flush将缓存的文件真正写入到文件中
     write.Flush()
 
 }
@@ -135,9 +127,7 @@ func delnodeConfig(delnode_array []string, softdir string) {
     //生成delnode配置
     inventory_file, err := os.OpenFile(softdir+"/workflow/delnode.inventory",os.O_WRONLY | os.O_APPEND, 0666)
     checkErr(err)
-    defer inventory_file.Close() //main函数结束前， 关闭文件
-
-    //写入文件时，使用带缓存的 *Writer
+    defer inventory_file.Close() 
     write := bufio.NewWriter(inventory_file)
     write.WriteString("###---------------------------------被删除的k8s-node主机列表------------------------------###\n")
     write.WriteString("\n[delnode]\n")
@@ -146,7 +136,6 @@ func delnodeConfig(delnode_array []string, softdir string) {
       write.WriteString(delnode_array[i]+" ip="+delnode_array[i]+"\n")
     }
     write.WriteString("\n[k8s:children]\n"+"master1\n"+"delnode\n\n\n")
-    //Flush将缓存的文件真正写入到文件中
     write.Flush()
 
 }
@@ -162,9 +151,7 @@ func rebuildmasterConfig(rebuildmaster_array []string, softdir string) {
     }
     inventory_file, err := os.OpenFile(softdir+"/workflow/rebuildmaster.inventory",os.O_WRONLY | os.O_APPEND, 0666)
     checkErr(err)
-    defer inventory_file.Close() //main函数结束前， 关闭文件
-
-    //写入文件时，使用带缓存的 *Writer
+    defer inventory_file.Close() 
     write := bufio.NewWriter(inventory_file)
     write.WriteString("###----------------------------------要重建的k8s-master主机列表------------------------------###\n")
     write.WriteString("\n[master]\n")
@@ -184,8 +171,6 @@ func rebuildmasterConfig(rebuildmaster_array []string, softdir string) {
       write.WriteString(rebuildmaster_array[i]+" ip="+rebuildmaster_array[i]+" priority="+priority+"\n")
     }
     write.WriteString("\n[k8s:children]\n"+"master1\n"+"master\n"+"etcd\n"+"nginx\n\n\n")
-
-    //Flush将缓存的文件真正写入到文件中
     write.Flush()
 
 }
@@ -194,9 +179,7 @@ func delmasterConfig(delmaster_array []string, softdir string) {
     //生成delmaster配置
     inventory_file, err := os.OpenFile(softdir+"/workflow/delmaster.inventory",os.O_WRONLY | os.O_APPEND, 0666)
     checkErr(err)
-    defer inventory_file.Close() //main函数结束前， 关闭文件
-
-    //写入文件时，使用带缓存的 *Writer
+    defer inventory_file.Close() 
     write := bufio.NewWriter(inventory_file)
     write.WriteString("###---------------------------------被删除的k8s-master主机列表------------------------------###\n")
     write.WriteString("\n[delmaster]\n")
@@ -205,8 +188,8 @@ func delmasterConfig(delmaster_array []string, softdir string) {
       write.WriteString(delmaster_array[i]+" ip="+delmaster_array[i]+"\n")
     }
     write.WriteString("\n[k8s:children]\n"+"master1\n"+"delmaster\n\n\n")
-    //Flush将缓存的文件真正写入到文件中
     write.Flush()
 
 }
+
 

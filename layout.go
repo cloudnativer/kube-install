@@ -6,9 +6,9 @@ import (
 
 
 func installYML(softdir string) {
-    install_file, err := os.Create(softdir+"/workflow/k8scluster-install.yml") //新建inventory配置文件
+    install_file, err := os.Create(softdir+"/workflow/k8scluster-install.yml")
     checkErr(err)
-    defer install_file.Close() //main函数结束前， 关闭文件
+    defer install_file.Close()
     install_file.WriteString("- remote_user: root\n  hosts: master\n  gather_facts: no\n  roles:\n    - "+softdir+"/bin/0.base/genfile\n")
     install_file.WriteString("- remote_user: root\n  hosts: node\n  gather_facts: no\n  roles:\n    - "+softdir+"/bin/0.base/kernel\n")
     install_file.WriteString("- remote_user: root\n  hosts: master,node,nginx\n  gather_facts: no\n  roles:\n    - "+softdir+"/bin/0.base/all\n")
@@ -36,9 +36,9 @@ func installYML(softdir string) {
 }
 
 func onemasterinstallYML(softdir string) {
-    onemasterinstall_file, err := os.Create(softdir+"/workflow/k8scluster-onemasterinstall.yml") //新建inventory配置文件
+    onemasterinstall_file, err := os.Create(softdir+"/workflow/k8scluster-onemasterinstall.yml") 
     checkErr(err)
-    defer onemasterinstall_file.Close() //main函数结束前， 关闭文件
+    defer onemasterinstall_file.Close() 
     onemasterinstall_file.WriteString("- remote_user: root\n  hosts: node\n  gather_facts: no\n  roles:\n    - "+softdir+"/bin/0.base/kernel\n")
     onemasterinstall_file.WriteString("- remote_user: root\n  hosts: master1,node\n  gather_facts: no\n  roles:\n    - "+softdir+"/bin/0.base/all\n")
     onemasterinstall_file.WriteString("- remote_user: root\n  hosts: node\n  gather_facts: no\n  roles:\n    - "+softdir+"/bin/8.action/delnode\n")
@@ -62,9 +62,9 @@ func onemasterinstallYML(softdir string) {
 }
 
 func addnodeYML(softdir string) {
-    addnode_file, err := os.Create(softdir+"/workflow/k8scluster-addnode.yml") //新建inventory配置文件
+    addnode_file, err := os.Create(softdir+"/workflow/k8scluster-addnode.yml") 
     checkErr(err)
-    defer addnode_file.Close() //main函数结束前， 关闭文件
+    defer addnode_file.Close() 
     addnode_file.WriteString("- remote_user: root\n  hosts: addnode\n  gather_facts: no\n  roles:\n    - "+softdir+"/bin/0.base/kernel\n")
     addnode_file.WriteString("- remote_user: root\n  hosts: addnode\n  gather_facts: no\n  roles:\n    - "+softdir+"/bin/0.base/all\n")
     addnode_file.WriteString("- remote_user: root\n  hosts: addnode\n  gather_facts: no\n  roles:\n    - "+softdir+"/bin/8.action/delnode\n")
@@ -76,16 +76,16 @@ func addnodeYML(softdir string) {
 }
 
 func delnodeYML(softdir string) {
-    delnode_file, err := os.Create(softdir+"/workflow/k8scluster-delnode.yml") //新建inventory配置文件
+    delnode_file, err := os.Create(softdir+"/workflow/k8scluster-delnode.yml") 
     checkErr(err)
-    defer delnode_file.Close() //main函数结束前， 关闭文件
+    defer delnode_file.Close() 
     delnode_file.WriteString("- remote_user: root\n  hosts: delnode\n  gather_facts: no\n  roles:\n    - "+softdir+"/bin/8.action/delnode\n")
 }
 
 func rebuildmasterYML(softdir string) {
-    rebuildmaster_file, err := os.Create(softdir+"/workflow/k8scluster-rebuildmaster.yml") //新建inventory配置文件
+    rebuildmaster_file, err := os.Create(softdir+"/workflow/k8scluster-rebuildmaster.yml") 
     checkErr(err)
-    defer rebuildmaster_file.Close() //main函数结束前， 关闭文件
+    defer rebuildmaster_file.Close() 
     rebuildmaster_file.WriteString("- remote_user: root\n  hosts: master\n  gather_facts: no\n  roles:\n    - "+softdir+"/bin/0.base/genfile\n")
     rebuildmaster_file.WriteString("- remote_user: root\n  hosts: master\n  gather_facts: no\n  roles:\n    - "+softdir+"/bin/0.base/all\n")
     rebuildmaster_file.WriteString("- remote_user: root\n  hosts: master\n  gather_facts: no\n  roles:\n    - "+softdir+"/bin/1.cfssl/copycfssl\n")
@@ -101,8 +101,9 @@ func rebuildmasterYML(softdir string) {
 }
 
 func delmasterYML(softdir string) {
-    delmaster_file, err := os.Create(softdir+"/workflow/k8scluster-delmaster.yml") //新建inventory配置文件
+    delmaster_file, err := os.Create(softdir+"/workflow/k8scluster-delmaster.yml") 
     checkErr(err)
-    defer delmaster_file.Close() //main函数结束前， 关闭文件
+    defer delmaster_file.Close() 
     delmaster_file.WriteString("- remote_user: root\n  hosts: delmaster\n  gather_facts: no\n  roles:\n    - "+softdir+"/bin/8.action/delmaster\n")
 }
+
