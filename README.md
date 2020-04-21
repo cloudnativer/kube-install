@@ -63,7 +63,7 @@ Note: in the above command, the "-mvip" parameter is the k8s cluster virtual IP 
 <b>[3] Operation and maintenance:</b><br>
 <br>
 3.1 Add k8s-node to k8s cluster<br>
-Select any k8s-mkaster server, and execute the following command on it:<br>
+Select any k8s-master server, and execute the following command on it:<br>
 <table>
 <tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt addnode -node "192.168.122.15,192.168.122.16" -sshpwd "cloudnativer"</font></td></tr>
 </table>
