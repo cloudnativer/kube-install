@@ -77,7 +77,7 @@ Select any k8s-mkaster server, and execute the following command on it:<br>
 3.3 Delete k8s-master from k8s cluster<br>
 Select any k8s-mkaster server, and execute the following command on it:<br>
 <table>
-<tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt delmaster -master "192.168.122.13,192.168.122.15" -sshpwd "cloudnativer"</font></td></tr>
+<tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt delmaster -master "192.168.122.13" -sshpwd "cloudnativer"</font></td></tr>
 </table>
 <br>
 3.4 Rebuild k8s-master to k8s cluster<br>
