@@ -62,35 +62,35 @@ Note: in the above command, the "-mvip" parameter is the k8s cluster virtual IP 
 <br>
 <b>[3] Operation and maintenance:</b><br>
 <br>
-3.1 Delete k8s-node from k8s cluster<br>
-Select any k8s-mkaster server, and execute the following command on it:<br>
-<table>
-<tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt delnode -node "192.168.122.13,192.168.122.15" -sshpwd "cloudnativer"</font></td></tr>
-</table>
-<br>
-3.2 Add k8s-node to k8s cluster<br>
-Select any k8s-mkaster server, and execute the following command on it:<br>
+3.1 Add k8s-node to k8s cluster<br>
+Select any k8s-master server, and execute the following command on it:<br>
 <table>
 <tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt addnode -node "192.168.122.15,192.168.122.16" -sshpwd "cloudnativer"</font></td></tr>
 </table>
 <br>
-3.3 Delete k8s-master from k8s cluster<br>
-Select any k8s-mkaster server, and execute the following command on it:<br>
+3.2 Delete k8s-node from k8s cluster<br>
+Select any k8s-master server, and execute the following command on it:<br>
 <table>
-<tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt delmaster -master "192.168.122.13,192.168.122.15" -sshpwd "cloudnativer"</font></td></tr>
+<tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt delnode -node "192.168.122.13,192.168.122.15" -sshpwd "cloudnativer"</font></td></tr>
+</table>
+<br>
+3.3 Delete k8s-master from k8s cluster<br>
+Select any k8s-master server, and execute the following command on it:<br>
+<table>
+<tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt delmaster -master "192.168.122.13" -sshpwd "cloudnativer"</font></td></tr>
 </table>
 <br>
 3.4 Rebuild k8s-master to k8s cluster<br>
-Select any k8s-mkaster server, and execute the following command on it:<br>
+Select any k8s-master server, and execute the following command on it:<br>
 <table>
-<tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt rebuildmaster -rebuildmaster "192.168.122.13" -sshpwd "cloudnativer"</font></td></tr>
+<tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt rebuildmaster -master "192.168.122.13" -sshpwd "cloudnativer"</font></td></tr>
 </table>
 <br>
 <br>
 <br>
 <b>[4] Parameter introduction:</b><br>
 <br>
-The parameters about kube-install can be viewed using the "kube-install --help" command. <a href="docs/parameters0.2.md">You can also see more detailed parameter introduction here.</a><br>
+The parameters about kube-install can be viewed using the "kube-install help" or "kube-install -opt help" command. <a href="docs/parameters0.2.md">You can also see more detailed parameter introduction here.</a><br>
 <br>
 <br>
 <br>
