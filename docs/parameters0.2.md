@@ -45,6 +45,8 @@ For example：<br>
     kube-install -opt delmaster -master "192.168.122.13" -sshpwd "cloudnativer"<br>
   Rebuild the damaged k8s-master:<br>
     kube-install -opt rebuildmaster -master "192.168.122.13" -sshpwd "cloudnativer"<br>
+  Display help information:<br>
+    kube-install -opt help<br>
   </pre>
 </font></td></tr>
 <tr><td bgcolor=#000000></td></tr>
