@@ -39,6 +39,7 @@ func onemasterinstallYML(softdir string) {
     onemasterinstall_file, err := os.Create(softdir+"/workflow/k8scluster-onemasterinstall.yml") 
     checkErr(err)
     defer onemasterinstall_file.Close() 
+    onemasterinstall_file.WriteString("- remote_user: root\n  hosts: master\n  gather_facts: no\n  roles:\n    - "+softdir+"/bin/0.base/genfile\n")
     onemasterinstall_file.WriteString("- remote_user: root\n  hosts: node\n  gather_facts: no\n  roles:\n    - "+softdir+"/bin/0.base/kernel\n")
     onemasterinstall_file.WriteString("- remote_user: root\n  hosts: master1,node\n  gather_facts: no\n  roles:\n    - "+softdir+"/bin/0.base/all\n")
     onemasterinstall_file.WriteString("- remote_user: root\n  hosts: node\n  gather_facts: no\n  roles:\n    - "+softdir+"/bin/8.action/delnode\n")
