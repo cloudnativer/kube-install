@@ -83,7 +83,7 @@ Select any k8s-mkaster server, and execute the following command on it:<br>
 3.4 Rebuild k8s-master to k8s cluster<br>
 Select any k8s-mkaster server, and execute the following command on it:<br>
 <table>
-<tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt rebuildmaster -rebuildmaster "192.168.122.13" -sshpwd "cloudnativer"</font></td></tr>
+<tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt rebuildmaster -master "192.168.122.13" -sshpwd "cloudnativer"</font></td></tr>
 </table>
 <br>
 <br>
