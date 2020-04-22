@@ -27,23 +27,23 @@ Perform pre installation initialization<br>
 </table>
 Install k8s cluster<br>
 <table>
-<tr><td bgcolor=#000000><font color=#C0FF3E># ./kube-install -opt install -master "192.168.122.11,192.168.122.12,192.168.122.13" -node "192.168.122.11,192.168.122.12,192.168.122.13,192.168.122.14" -mvip "192.168.122.100" -sshpwd "cloudnativer"</font></td></tr>
+<tr><td bgcolor=#000000><font color=#C0FF3E># ./kube-install -opt install -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -mvip "192.168.1.100" -sshpwd "cloudnativer"</font></td></tr>
 </table>
 Add k8s-node to k8s cluster<br>
 <table>
-<tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt addnode -addnode "192.168.122.15,192.168.122.16" -sshpwd "cloudnativer"</font></td></tr>
+<tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt addnode -addnode "192.168.1.15,192.168.1.16" -sshpwd "cloudnativer"</font></td></tr>
 </table>
 Delete k8s-node from k8s cluster<br>
 <table>
-<tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt delnode -delnode "192.168.122.13,192.168.122.15" -sshpwd "cloudnativer"</font></td></tr>
+<tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt delnode -delnode "192.168.1.13,192.168.1.15" -sshpwd "cloudnativer"</font></td></tr>
 </table>
 Delete k8s-master from k8s cluster<br>
 <table>
-<tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt delnode -delnode "192.168.122.13,192.168.122.15" -sshpwd "cloudnativer"</font></td></tr>
+<tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt delnode -delnode "192.168.1.13,192.168.1.15" -sshpwd "cloudnativer"</font></td></tr>
 </table>
 Rebuild k8s-master to k8s cluster<br>
 <table>
-<tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt rebuildmaster -rebuildmaster "192.168.122.13" -sshpwd "cloudnativer"</font></td></tr>
+<tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt rebuildmaster -rebuildmaster "192.168.1.13" -sshpwd "cloudnativer"</font></td></tr>
 </table>
 <br>
 <br>

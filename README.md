@@ -45,16 +45,16 @@ Perform pre installation initialization<br>
 If your server environment is as follows:<br>
 <table>
 <tr><td>IP Address</td><td>Role</td><td>OS Version</td><td>Root Password</td></tr>
-<tr><td>192.168.122.11</td><td>k8s-master,k8s-node</td><td>CentOS Linux release 7</td><td>cloudnativer</td></tr>
-<tr><td>192.168.122.12</td><td>k8s-master,k8s-node</td><td>CentOS Linux release 7</td><td>cloudnativer</td></tr>
-<tr><td>192.168.122.13</td><td>k8s-master,k8s-node</td><td>CentOS Linux release 7</td><td>cloudnativer</td></tr>
-<tr><td>192.168.122.14</td><td>k8s-node</td><td>CentOS Linux release 7</td><td>cloudnativer</td></tr>
-<tr><td>192.168.122.15</td><td>k8s-node</td><td>CentOS Linux release 7</td><td>cloudnativer</td></tr>
-<tr><td>192.168.122.16</td><td>k8s-node</td><td>CentOS Linux release 7</td><td>cloudnativer</td></tr>
+<tr><td>192.168.1.11</td><td>k8s-master,k8s-node</td><td>CentOS Linux release 7</td><td>cloudnativer</td></tr>
+<tr><td>192.168.1.12</td><td>k8s-master,k8s-node</td><td>CentOS Linux release 7</td><td>cloudnativer</td></tr>
+<tr><td>192.168.1.13</td><td>k8s-master,k8s-node</td><td>CentOS Linux release 7</td><td>cloudnativer</td></tr>
+<tr><td>192.168.1.14</td><td>k8s-node</td><td>CentOS Linux release 7</td><td>cloudnativer</td></tr>
+<tr><td>192.168.1.15</td><td>k8s-node</td><td>CentOS Linux release 7</td><td>cloudnativer</td></tr>
+<tr><td>192.168.1.16</td><td>k8s-node</td><td>CentOS Linux release 7</td><td>cloudnativer</td></tr>
 </table>
 Well,Execute on the k8s-master selected above:<br>
 <table>
-<tr><td bgcolor=#000000><font color=#C0FF3E># ./kube-install -opt install -master "192.168.122.11,192.168.122.12,192.168.122.13" -node "192.168.122.11,192.168.122.12,192.168.122.13,192.168.122.14" -mvip "192.168.122.100" -sshpwd "cloudnativer"</font></td></tr>
+<tr><td bgcolor=#000000><font color=#C0FF3E># ./kube-install -opt install -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -mvip "192.168.1.100" -sshpwd "cloudnativer"</font></td></tr>
 </table>
 Note: in the above command, the "-mvip" parameter is the k8s cluster virtual IP address.<br>
 <br>
@@ -65,25 +65,25 @@ Note: in the above command, the "-mvip" parameter is the k8s cluster virtual IP 
 3.1 Add k8s-node to k8s cluster<br>
 Select any k8s-master server, and execute the following command on it:<br>
 <table>
-<tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt addnode -node "192.168.122.15,192.168.122.16" -sshpwd "cloudnativer"</font></td></tr>
+<tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt addnode -node "192.168.1.15,192.168.1.16" -sshpwd "cloudnativer"</font></td></tr>
 </table>
 <br>
 3.2 Delete k8s-node from k8s cluster<br>
 Select any k8s-master server, and execute the following command on it:<br>
 <table>
-<tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt delnode -node "192.168.122.13,192.168.122.15" -sshpwd "cloudnativer"</font></td></tr>
+<tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt delnode -node "192.168.1.13,192.168.1.15" -sshpwd "cloudnativer"</font></td></tr>
 </table>
 <br>
 3.3 Delete k8s-master from k8s cluster<br>
 Select any k8s-master server, and execute the following command on it:<br>
 <table>
-<tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt delmaster -master "192.168.122.13" -sshpwd "cloudnativer"</font></td></tr>
+<tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt delmaster -master "192.168.1.13" -sshpwd "cloudnativer"</font></td></tr>
 </table>
 <br>
 3.4 Rebuild k8s-master to k8s cluster<br>
 Select any k8s-master server, and execute the following command on it:<br>
 <table>
-<tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt rebuildmaster -master "192.168.122.13" -sshpwd "cloudnativer"</font></td></tr>
+<tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt rebuildmaster -master "192.168.1.13" -sshpwd "cloudnativer"</font></td></tr>
 </table>
 <br>
 <br>
