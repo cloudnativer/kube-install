@@ -51,6 +51,7 @@
 #  shell: "echo 'modprobe -- nf_conntrack_ipv4' >> /etc/sysconfig/modules/ipvs.modules"
 - name: 10.运行ipvs_modules
   shell: "bash /etc/sysconfig/modules/ipvs.modules"
+  ignore_errors: yes
 - name: 11.生成sysctl内核参数
   copy:
     src: ../templates/kubernetes.conf
