@@ -36,7 +36,7 @@ For example：<br>
   Initialize the system environment:<br>
     kube-install -opt init<br>
   Install k8s cluster:<br>
-    kube-install -opt install -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -mvip "192.168.1.100" -sshpwd "cloudnativer"<br>
+    kube-install -opt install -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -mvip "192.168.1.88" -sshpwd "cloudnativer"<br>
   Add k8s-node to the cluster:<br>
     kube-install -opt addnode -node "192.168.1.15,192.168.1.16" -sshpwd "cloudnativer"<br>
   Remove the k8s-node from the cluster:<br>

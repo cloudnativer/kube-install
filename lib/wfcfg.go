@@ -1,4 +1,4 @@
-package main
+package kilib
 
 import (
     "os"
@@ -8,10 +8,10 @@ import (
 
 
 
-func generalConfig(master_array []string, node_array []string, mvip string, currentdir string, softdir string) {
+func GeneralConfig(master_array []string, node_array []string, mvip string, currentdir string, softdir string) {
     //生成通用配置
     inventory_file, err := os.Create(currentdir+"/workflow/general.inventory") 
-    checkErr(err)
+    CheckErr(err)
     defer inventory_file.Close() 
     inventory_file.WriteString("###--------------------------------------k8s通用配置---------------------------------###\n")
     inventory_file.WriteString("\n[master1]\n")
@@ -67,17 +67,17 @@ func generalConfig(master_array []string, node_array []string, mvip string, curr
 
 }
 
-func installConfig(master_array []string, node_array []string, currentdir string, softdir string) {
+func InstallConfig(master_array []string, node_array []string, currentdir string, softdir string) {
     //生成master配置
     inventory_file, err := os.OpenFile(currentdir+"/workflow/install.inventory",os.O_WRONLY | os.O_APPEND, 0666)
-    checkErr(err)
+    CheckErr(err)
     defer inventory_file.Close() 
     write := bufio.NewWriter(inventory_file)
     write.WriteString("###----------------------------------k8s-master主机列表------------------------------###\n")
     write.WriteString("\n[master]\n")
     master_num := len(master_array)
     for i := 0; i < master_num; i++ {
-      checkIP(master_array[i])
+      CheckIP(master_array[i])
       write.WriteString(master_array[i]+" ip="+master_array[i]+"\n")
     }
     write.WriteString("\n[etcd]\n")
@@ -98,7 +98,7 @@ func installConfig(master_array []string, node_array []string, currentdir string
     write.WriteString("\n\n\n###-----------------------------------k8s-node主机列表-------------------------------###\n")
     write.WriteString("\n[node]\n")
     for i := 0; i < len(node_array); i++ {
-      checkIP(node_array[i])
+      CheckIP(node_array[i])
       write.WriteString(node_array[i]+" ip="+node_array[i]+"\n")
     }
     write.WriteString("\n[k8s:children]\n"+"master1\n"+"master\n"+"etcd\n"+"node\n"+"nginx\n\n\n")
@@ -106,16 +106,16 @@ func installConfig(master_array []string, node_array []string, currentdir string
 
 }
 
-func addnodeConfig(addnode_array []string, softdir string) {
+func AddnodeConfig(addnode_array []string, softdir string) {
     //生成addnode配置
     inventory_file, err := os.OpenFile(softdir+"/workflow/addnode.inventory",os.O_WRONLY | os.O_APPEND, 0666)
-    checkErr(err)
+    CheckErr(err)
     defer inventory_file.Close() 
     write := bufio.NewWriter(inventory_file)
     write.WriteString("###---------------------------------新增的k8s-node主机列表------------------------------###\n")
     write.WriteString("\n[addnode]\n")
     for i := 0; i < len(addnode_array); i++ {
-      checkIP(addnode_array[i])
+      CheckIP(addnode_array[i])
       write.WriteString(addnode_array[i]+" ip="+addnode_array[i]+"\n")
     }
     write.WriteString("\n[k8s:children]\n"+"master1\n"+"addnode\n\n\n")
@@ -123,16 +123,16 @@ func addnodeConfig(addnode_array []string, softdir string) {
 
 }
 
-func delnodeConfig(delnode_array []string, softdir string) {
+func DelnodeConfig(delnode_array []string, softdir string) {
     //生成delnode配置
     inventory_file, err := os.OpenFile(softdir+"/workflow/delnode.inventory",os.O_WRONLY | os.O_APPEND, 0666)
-    checkErr(err)
+    CheckErr(err)
     defer inventory_file.Close() 
     write := bufio.NewWriter(inventory_file)
     write.WriteString("###---------------------------------被删除的k8s-node主机列表------------------------------###\n")
     write.WriteString("\n[delnode]\n")
     for i := 0; i < len(delnode_array); i++ {
-      checkIP(delnode_array[i])
+      CheckIP(delnode_array[i])
       write.WriteString(delnode_array[i]+" ip="+delnode_array[i]+"\n")
     }
     write.WriteString("\n[k8s:children]\n"+"master1\n"+"delnode\n\n\n")
@@ -140,7 +140,7 @@ func delnodeConfig(delnode_array []string, softdir string) {
 
 }
 
-func rebuildmasterConfig(rebuildmaster_array []string, softdir string) {
+func RebuildmasterConfig(rebuildmaster_array []string, softdir string) {
     //生成rebuildmaster配置
     _, err := os.Stat(softdir+"/workflow/install.inventory")
     if err != nil {
@@ -150,24 +150,24 @@ func rebuildmasterConfig(rebuildmaster_array []string, softdir string) {
         panic(softdir+"/workflow/install.inventory文件已被您误删除，请手工恢复该文件or联系管理员！")
     }
     inventory_file, err := os.OpenFile(softdir+"/workflow/rebuildmaster.inventory",os.O_WRONLY | os.O_APPEND, 0666)
-    checkErr(err)
+    CheckErr(err)
     defer inventory_file.Close() 
     write := bufio.NewWriter(inventory_file)
     write.WriteString("###----------------------------------要重建的k8s-master主机列表------------------------------###\n")
     write.WriteString("\n[master]\n")
     rebuildmaster_num := len(rebuildmaster_array)
     for i := 0; i < rebuildmaster_num; i++ {
-      checkIP(rebuildmaster_array[i])
+      CheckIP(rebuildmaster_array[i])
       write.WriteString(rebuildmaster_array[i]+" ip="+rebuildmaster_array[i]+"\n")
     }
     write.WriteString("\n[etcd]\n")
     for i := 0; i < rebuildmaster_num; i++ {
-      etcdname := shellOutput(softdir+"/workflow/getmasterconfig.sh "+softdir+" etcdname "+rebuildmaster_array[i])
+      etcdname := ShellOutput(softdir+"/workflow/getmasterconfig.sh "+softdir+" etcdname "+rebuildmaster_array[i])
       write.WriteString(rebuildmaster_array[i]+" ip="+rebuildmaster_array[i]+" etcdname="+etcdname+"\n")
     }
     write.WriteString("\n[nginx]\n")
     for i := 0; i < rebuildmaster_num; i++ {
-      priority := shellOutput(softdir+"/workflow/getmasterconfig.sh "+softdir+" priority "+rebuildmaster_array[i])
+      priority := ShellOutput(softdir+"/workflow/getmasterconfig.sh "+softdir+" priority "+rebuildmaster_array[i])
       write.WriteString(rebuildmaster_array[i]+" ip="+rebuildmaster_array[i]+" priority="+priority+"\n")
     }
     write.WriteString("\n[k8s:children]\n"+"master1\n"+"master\n"+"etcd\n"+"nginx\n\n\n")
@@ -175,16 +175,16 @@ func rebuildmasterConfig(rebuildmaster_array []string, softdir string) {
 
 }
 
-func delmasterConfig(delmaster_array []string, softdir string) {
+func DelmasterConfig(delmaster_array []string, softdir string) {
     //生成delmaster配置
     inventory_file, err := os.OpenFile(softdir+"/workflow/delmaster.inventory",os.O_WRONLY | os.O_APPEND, 0666)
-    checkErr(err)
+    CheckErr(err)
     defer inventory_file.Close() 
     write := bufio.NewWriter(inventory_file)
     write.WriteString("###---------------------------------被删除的k8s-master主机列表------------------------------###\n")
     write.WriteString("\n[delmaster]\n")
     for i := 0; i < len(delmaster_array); i++ {
-      checkIP(delmaster_array[i])
+      CheckIP(delmaster_array[i])
       write.WriteString(delmaster_array[i]+" ip="+delmaster_array[i]+"\n")
     }
     write.WriteString("\n[k8s:children]\n"+"master1\n"+"delmaster\n\n\n")

@@ -1,13 +1,13 @@
-package main
+package kilib
 
 import (
     "os"
 )
 
 
-func installYML(softdir string) {
+func InstallYML(softdir string) {
     install_file, err := os.Create(softdir+"/workflow/k8scluster-install.yml")
-    checkErr(err)
+    CheckErr(err)
     defer install_file.Close()
     install_file.WriteString("- remote_user: root\n  hosts: master\n  gather_facts: no\n  roles:\n    - "+softdir+"/bin/0.base/genfile\n")
     install_file.WriteString("- remote_user: root\n  hosts: node\n  gather_facts: no\n  roles:\n    - "+softdir+"/bin/0.base/kernel\n")
@@ -35,9 +35,9 @@ func installYML(softdir string) {
     install_file.WriteString("- remote_user: root\n  hosts: node\n  gather_facts: no\n  roles:\n    - "+softdir+"/bin/9.finish/install\n")
 }
 
-func onemasterinstallYML(softdir string) {
+func OnemasterinstallYML(softdir string) {
     onemasterinstall_file, err := os.Create(softdir+"/workflow/k8scluster-onemasterinstall.yml") 
-    checkErr(err)
+    CheckErr(err)
     defer onemasterinstall_file.Close() 
     onemasterinstall_file.WriteString("- remote_user: root\n  hosts: master\n  gather_facts: no\n  roles:\n    - "+softdir+"/bin/0.base/genfile\n")
     onemasterinstall_file.WriteString("- remote_user: root\n  hosts: node\n  gather_facts: no\n  roles:\n    - "+softdir+"/bin/0.base/kernel\n")
@@ -62,9 +62,9 @@ func onemasterinstallYML(softdir string) {
     onemasterinstall_file.WriteString("- remote_user: root\n  hosts: node\n  gather_facts: no\n  roles:\n    - "+softdir+"/bin/9.finish/install\n")
 }
 
-func addnodeYML(softdir string) {
+func AddnodeYML(softdir string) {
     addnode_file, err := os.Create(softdir+"/workflow/k8scluster-addnode.yml") 
-    checkErr(err)
+    CheckErr(err)
     defer addnode_file.Close() 
     addnode_file.WriteString("- remote_user: root\n  hosts: addnode\n  gather_facts: no\n  roles:\n    - "+softdir+"/bin/0.base/kernel\n")
     addnode_file.WriteString("- remote_user: root\n  hosts: addnode\n  gather_facts: no\n  roles:\n    - "+softdir+"/bin/0.base/all\n")
@@ -76,16 +76,16 @@ func addnodeYML(softdir string) {
     addnode_file.WriteString("- remote_user: root\n  hosts: addnode\n  gather_facts: no\n  roles:\n    - "+softdir+"/bin/9.finish/addnode\n")
 }
 
-func delnodeYML(softdir string) {
+func DelnodeYML(softdir string) {
     delnode_file, err := os.Create(softdir+"/workflow/k8scluster-delnode.yml") 
-    checkErr(err)
+    CheckErr(err)
     defer delnode_file.Close() 
     delnode_file.WriteString("- remote_user: root\n  hosts: delnode\n  gather_facts: no\n  roles:\n    - "+softdir+"/bin/8.action/delnode\n")
 }
 
-func rebuildmasterYML(softdir string) {
+func RebuildmasterYML(softdir string) {
     rebuildmaster_file, err := os.Create(softdir+"/workflow/k8scluster-rebuildmaster.yml") 
-    checkErr(err)
+    CheckErr(err)
     defer rebuildmaster_file.Close() 
     rebuildmaster_file.WriteString("- remote_user: root\n  hosts: master\n  gather_facts: no\n  roles:\n    - "+softdir+"/bin/0.base/genfile\n")
     rebuildmaster_file.WriteString("- remote_user: root\n  hosts: master\n  gather_facts: no\n  roles:\n    - "+softdir+"/bin/0.base/all\n")
@@ -101,9 +101,9 @@ func rebuildmasterYML(softdir string) {
     rebuildmaster_file.WriteString("- remote_user: root\n  hosts: nginx\n  gather_facts: no\n  roles:\n    - "+softdir+"/bin/4.kube-nginx/alter\n")
 }
 
-func delmasterYML(softdir string) {
+func DelmasterYML(softdir string) {
     delmaster_file, err := os.Create(softdir+"/workflow/k8scluster-delmaster.yml") 
-    checkErr(err)
+    CheckErr(err)
     defer delmaster_file.Close() 
     delmaster_file.WriteString("- remote_user: root\n  hosts: delmaster\n  gather_facts: no\n  roles:\n    - "+softdir+"/bin/8.action/delmaster\n")
 }
