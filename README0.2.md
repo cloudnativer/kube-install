@@ -63,6 +63,7 @@ Note: in the above command, the "-mvip" parameter is the k8s cluster virtual IP 
 <b>[3] Operation and maintenance:</b><br>
 <br>
 After kube-install is installed, you can directly execute "kube-install" command in any directory of any k8s-master server.<br>
+<br>
 3.1 Delete k8s-node from k8s cluster<br>
 Select any k8s-mkaster server, and execute the following command on it:<br>
 <table>
