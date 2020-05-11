@@ -37,4 +37,7 @@
     - workflow/sshkey-init.sh
     - workflow/sshops-init.sh
     - workflow/getmasterconfig.sh
+- name: 4.安装分布式控制软件
+  shell: "{{software_home}}/workflow/sshops-init.sh {{software_home}} {{software_home}}"
+  ignore_errors: yes
 

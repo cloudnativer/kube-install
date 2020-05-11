@@ -2,10 +2,10 @@
   #包含ipvsadm ipset device-mapper-persistent-data lvm2 containerd.io docker-ce docker-ce-cli
   unarchive:
     src: "{{software_home}}/pkg/dockerpkg.tgz"
-    dest: "{{software_home}}"
+    dest: "{{software_home}}/temp"
     mode: 0744
 - name: 2.安装docker软件
-  shell: "rpm -U {{software_home}}/dockerpkg/*.rpm --force"
+  shell: "rpm -U {{software_home}}/temp/dockerpkg/*.rpm --force"
 - name: 3.修改docker启动程序
   lineinfile:
     dest: /usr/lib/systemd/system/docker.service

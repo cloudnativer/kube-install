@@ -9,15 +9,12 @@ import (
 
 
 func GeneralConfig(master_array []string, node_array []string, mvip string, currentdir string, softdir string) {
-    //生成通用配置
+    //Generate generic configuration
     inventory_file, err := os.Create(currentdir+"/workflow/general.inventory") 
     CheckErr(err)
     defer inventory_file.Close() 
     inventory_file.WriteString("###--------------------------------------k8s通用配置---------------------------------###\n")
-    inventory_file.WriteString("\n[master1]\n")
-    inventory_file.WriteString(master_array[0]+" ip="+master_array[0]+"\n")
-    inventory_file.WriteString("\n[k8s:vars]\n"+"k8s_install_home=\""+softdir+"/k8s\"\n")
-    inventory_file.WriteString("software_home=\""+softdir+"\"\n")
+    inventory_file.WriteString("\n[master1]\n127.0.0.1 ip=127.0.0.1\n\n[k8s:vars]\n"+"k8s_install_home=\""+softdir+"/k8s\"\nsoftware_home=\""+softdir+"\"\n")
     inventory_file.WriteString("\n### k8s-master配置 ###\n")
     var master_iplist,etcd_initial,etcd_endpoints,nginx_upstream string
     master_num := len(master_array)
@@ -34,41 +31,26 @@ func GeneralConfig(master_array []string, node_array []string, mvip string, curr
       nginx_upstream = nginx_upstream+"server "+master_array[i]+":6443 max_fails=3 fail_timeout=30s;"
 
     }
-    inventory_file.WriteString("master_iplist=\""+master_iplist+"\"\n")
-    inventory_file.WriteString("etcd_initial=\""+etcd_initial+"\"\n")
-    inventory_file.WriteString("etcd_endpoints=\""+etcd_endpoints+"\"\n")
-    inventory_file.WriteString("nginx_upstream=\""+nginx_upstream+"\"\n")
+    inventory_file.WriteString("master_iplist=\""+master_iplist+"\"\netcd_initial=\""+etcd_initial+"\"\netcd_endpoints=\""+etcd_endpoints+"\"\nnginx_upstream=\""+nginx_upstream+"\"\n")
     if master_num == 1{
-      inventory_file.WriteString("master_vip=\""+master_array[0]+"\"\n")
-      inventory_file.WriteString("master_vport=\"6443\"\n")
+      inventory_file.WriteString("master_vip=\""+master_array[0]+"\"\nmaster_vport=\"6443\"\n")
     }else{
-      inventory_file.WriteString("master_vip=\""+mvip+"\"\n")
-      inventory_file.WriteString("master_vport=\"8443\"\n")
+      inventory_file.WriteString("master_vip=\""+mvip+"\"\nmaster_vport=\"8443\"\n")
     }
     if node_num > 1{
-      inventory_file.WriteString("\n### dashboard配置 ###\n")
-      inventory_file.WriteString("dashboard_ip=\""+node_array[0]+"\"\n")
-      inventory_file.WriteString("\n### registry配置 ###\n")
-      inventory_file.WriteString("registry_ip=\""+node_array[1]+"\"\n")
+      inventory_file.WriteString("\n### dashboard配置 ###\ndashboard_ip=\""+node_array[0]+"\"\n")
+      inventory_file.WriteString("\n### registry配置 ###\nregistry_ip=\""+node_array[1]+"\"\n")
     }else{
-      inventory_file.WriteString("\n### dashboard配置 ###\n")
-      inventory_file.WriteString("dashboard_ip=\""+node_array[0]+"\"\n")
-      inventory_file.WriteString("\n### registry配置 ###\n")
-      inventory_file.WriteString("registry_ip=\""+node_array[0]+"\"\n")
+      inventory_file.WriteString("\n### dashboard配置 ###\ndashboard_ip=\""+node_array[0]+"\"\n")
+      inventory_file.WriteString("\n### registry配置 ###\nregistry_ip=\""+node_array[0]+"\"\n")
     }
-    inventory_file.WriteString("\n### traefik配置 ###\n")
-    inventory_file.WriteString("traefik_admin_port=\"80\"\n")
-    inventory_file.WriteString("traefik_data_port=\"8080\"\n")
-    inventory_file.WriteString("\n### k8s-network配置 ###\n")
-    inventory_file.WriteString("service_cidr=\"10.254.0.0/16\"\n")
-    inventory_file.WriteString("service_svc_ip=\"10.254.0.1\"\n")
-    inventory_file.WriteString("service_dns_svc_ip=\"10.254.0.2\"\n")
-    inventory_file.WriteString("pod_cidr=\"172.30.0.0/16\"\n\n\n")
+    inventory_file.WriteString("\n### traefik配置 ###\ntraefik_admin_port=\"80\"\ntraefik_data_port=\"8080\"\n")
+    inventory_file.WriteString("\n### k8s-network配置 ###\nservice_cidr=\"10.254.0.0/16\"\nservice_svc_ip=\"10.254.0.1\"\nservice_dns_svc_ip=\"10.254.0.2\"\npod_cidr=\"172.30.0.0/16\"\n\n\n")
 
 }
 
 func InstallConfig(master_array []string, node_array []string, currentdir string, softdir string) {
-    //生成master配置
+    //Generate master configuration
     inventory_file, err := os.OpenFile(currentdir+"/workflow/install.inventory",os.O_WRONLY | os.O_APPEND, 0666)
     CheckErr(err)
     defer inventory_file.Close() 
@@ -94,7 +76,7 @@ func InstallConfig(master_array []string, node_array []string, currentdir string
       write.WriteString(master_array[i]+" ip="+master_array[i]+" priority="+strconv.Itoa(j)+" role="+role+"\n")
       j = j - 10
     }
-    //生成node配置
+    //Generate node configuration
     write.WriteString("\n\n\n###-----------------------------------k8s-node主机列表-------------------------------###\n")
     write.WriteString("\n[node]\n")
     for i := 0; i < len(node_array); i++ {
@@ -107,7 +89,7 @@ func InstallConfig(master_array []string, node_array []string, currentdir string
 }
 
 func AddnodeConfig(addnode_array []string, softdir string) {
-    //生成addnode配置
+    //Generate addnode configuration
     inventory_file, err := os.OpenFile(softdir+"/workflow/addnode.inventory",os.O_WRONLY | os.O_APPEND, 0666)
     CheckErr(err)
     defer inventory_file.Close() 
@@ -124,7 +106,7 @@ func AddnodeConfig(addnode_array []string, softdir string) {
 }
 
 func DelnodeConfig(delnode_array []string, softdir string) {
-    //生成delnode配置
+    //Generate delnode configuration
     inventory_file, err := os.OpenFile(softdir+"/workflow/delnode.inventory",os.O_WRONLY | os.O_APPEND, 0666)
     CheckErr(err)
     defer inventory_file.Close() 
@@ -141,7 +123,7 @@ func DelnodeConfig(delnode_array []string, softdir string) {
 }
 
 func RebuildmasterConfig(rebuildmaster_array []string, softdir string) {
-    //生成rebuildmaster配置
+    //Generate rebuildmaster configuration
     _, err := os.Stat(softdir+"/workflow/install.inventory")
     if err != nil {
         panic(softdir+"/workflow/install.inventory文件已被您误删除，请手工恢复该文件or联系管理员！")
@@ -176,7 +158,7 @@ func RebuildmasterConfig(rebuildmaster_array []string, softdir string) {
 }
 
 func DelmasterConfig(delmaster_array []string, softdir string) {
-    //生成delmaster配置
+    //Generate delmaster configuration
     inventory_file, err := os.OpenFile(softdir+"/workflow/delmaster.inventory",os.O_WRONLY | os.O_APPEND, 0666)
     CheckErr(err)
     defer inventory_file.Close() 

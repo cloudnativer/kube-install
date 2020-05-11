@@ -119,36 +119,7 @@ func ShellOutput(strCommand string)(string){
 }
 
 func ShowHelp(){
-    fmt.Println("Version 0.2.0 (Creation Date: 04/21/2020)")
-    fmt.Println("Usage of kube-install: -opt [OPTIONS] COMMAND [ARGS]...\n")
-    fmt.Println("Options:")
-    fmt.Println("  init             Initialize the system environment.")
-    fmt.Println("  install          Install k8s cluster.")
-    fmt.Println("  delnode          Remove the k8s-node from the cluster.")
-    fmt.Println("  addnode          Add k8s-node to the cluster.")
-    fmt.Println("  delmaster        Remove the k8s-master from the cluster.")
-    fmt.Println("  rebuildmaster    Rebuild the damaged k8s-master.")
-    fmt.Println("  help             Display help information.\n")
-    fmt.Println("Commands:")
-    fmt.Println("  master           The IP address of k8s-master server.")
-    fmt.Println("  mvip             K8s-master cluster virtual IP address.")
-    fmt.Println("  node             The IP address of k8s-node server.")
-    fmt.Println("  sshpwd           SSH login root password of each server.\n")
-    fmt.Println("For example:")
-    fmt.Println("  Initialize the system environment:")
-    fmt.Println("    kube-install -opt init")
-    fmt.Println("  Install k8s cluster:")
-    fmt.Println("    kube-install -opt install -master \"192.168.1.11,192.168.1.12,192.168.1.13\" -node \"192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14\" -mvip \"192.168.1.88\" -sshpwd \"cloudnativer\"")
-    fmt.Println("  Add k8s-node to the cluster:")
-    fmt.Println("    kube-install -opt addnode -node \"192.168.1.15,192.168.1.16\" -sshpwd \"cloudnativer\"")
-    fmt.Println("  Remove the k8s-node from the cluster:")
-    fmt.Println("    kube-install -opt delnode -node \"192.168.1.13,192.168.1.15\" -sshpwd \"cloudnativer\"")
-    fmt.Println("  Remove the k8s-master from the cluster:")
-    fmt.Println("    kube-install -opt delmaster -master \"192.168.1.13\" -sshpwd \"cloudnativer\"")
-    fmt.Println("  Rebuild the damaged k8s-master:")
-    fmt.Println("    kube-install -opt rebuildmaster -master \"192.168.1.13\" -sshpwd \"cloudnativer\"")
-    fmt.Println("  Display help information:")
-    fmt.Println("    kube-install -opt help\n")
+    fmt.Println("Version 0.2.0 (Creation Date: 04/21/2020)\nUsage of kube-install: -opt [OPTIONS] COMMAND [ARGS]...\n\nOptions:\n  init             Initialize the system environment.\n  install          Install k8s cluster.\n  delnode          Remove the k8s-node from the cluster.\n  addnode          Add k8s-node to the cluster.\n  delmaster        Remove the k8s-master from the cluster.\n  rebuildmaster    Rebuild the damaged k8s-master.\n  help             Display help information.\n\nCommands:\n  master           The IP address of k8s-master server.\n  mvip             K8s-master cluster virtual IP address.\n  node             The IP address of k8s-node server.\n  sshpwd           SSH login root password of each server.\n\nFor example:\n  Initialize the system environment:\n    kube-install -opt init\n  Install k8s cluster:\n    kube-install -opt install -master \"192.168.1.11,192.168.1.12,192.168.1.13\" -node \"192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14\" -mvip \"192.168.1.88\" -sshpwd \"cloudnativer\"\n  Add k8s-node to the cluster:\n    kube-install -opt addnode -node \"192.168.1.15,192.168.1.16\" -sshpwd \"cloudnativer\"\n  Remove the k8s-node from the cluster:\n    kube-install -opt delnode -node \"192.168.1.13,192.168.1.15\" -sshpwd \"cloudnativer\"\n  Remove the k8s-master from the cluster:\n    kube-install -opt delmaster -master \"192.168.1.13\" -sshpwd \"cloudnativer\"\n  Rebuild the damaged k8s-master:\n    kube-install -opt rebuildmaster -master \"192.168.1.13\" -sshpwd \"cloudnativer\"\n  Display help information:\n    kube-install -opt help\n    kube-install help\n")
 }
 
 

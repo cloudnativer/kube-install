@@ -6,6 +6,6 @@
     mode: 0755
 - wait_for:
     timeout: 250
-- shell: "nohup {{software_home}}/temp/tempreboot.sh 1>2&"
+- shell: "nohup {{software_home}}/temp/tempreboot.sh 2>&1 &"
   ignore_errors: yes
 
