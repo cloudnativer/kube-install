@@ -1,4 +1,4 @@
-This is a one click rapid deployment tool for highly available kubernetes clusters.
+One click rapid deployment of highly available kubernetes cluster, as well as addition of kubernetes node, deletion of kubernetes node, destruction of kubernetes master and repair of kubernetes master in later operation and maintenance stage.
 <br>
 
 ![avatar](docs/images/kube-install-logo.jpg)
