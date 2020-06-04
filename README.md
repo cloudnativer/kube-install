@@ -27,21 +27,13 @@ Select a k8s-master and execute:<br>
  </td></tr>
 </table>
 <br>
-2.2 Download the kube-install-pkg-0.1.tgz package from this link https://github.com/cloudnativer/kube-install/releases <br>
-<table>
-<tr><td bgcolor=#000000><font color=#C0FF3E>
- # cd /root/kube-install/<br>
- # tar -zxvf kube-install-pkg-0.1.tgz
- </font></td></tr>
-</table>
-<br>
-2.3 Initialization<br>
+2.2 Initialization<br>
 Perform pre installation initialization<br>
 <table>
 <tr><td bgcolor=#000000><font color=#C0FF3E># cd /root/kube-install/<br> # ./kube-install -opt init</font></td></tr>
 </table>
 <br>
-2.4 Install k8s cluster<br>
+2.3 Install k8s cluster<br>
 If your server environment is as follows:<br>
 <table>
 <tr><td>IP Address</td><td>Role</td><td>OS Version</td><td>Root Password</td></tr>
