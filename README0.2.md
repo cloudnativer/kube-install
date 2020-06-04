@@ -23,7 +23,6 @@ Select a k8s-master and execute:<br>
 <tr><td bgcolor=#000000>
 <font color=#C0FF3E># cd /root/</font><br>
 <font color=#C0FF3E># git clone https://github.com/cloudnativer/kube-install.git </font><br>
-<font color=#C0FF3E># cd /root/kube-install/</font><br>
  </td></tr>
 </table>
 <br>
