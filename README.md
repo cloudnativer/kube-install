@@ -23,16 +23,24 @@ Select a k8s-master and execute:<br>
 <tr><td bgcolor=#000000>
 <font color=#C0FF3E># cd /root/</font><br>
 <font color=#C0FF3E># git clone https://github.com/cloudnativer/kube-install.git </font><br>
-</td></tr>
+ </td></tr>
 </table>
 <br>
-2.2 Initialization<br>
+2.2 Download the kube-install-pkg-0.1.tgz package from this link https://github.com/cloudnativer/kube-install/releases <br>
+<table>
+<tr><td bgcolor=#000000><font color=#C0FF3E>
+ # cd /root/kube-install/<br>
+ # tar -zxvf kube-install-pkg-0.1.tgz
+ </font></td></tr>
+</table>
+<br>
+2.3 Initialization<br>
 Perform pre installation initialization<br>
 <table>
 <tr><td bgcolor=#000000><font color=#C0FF3E># cd /root/kube-install/<br> # ./kube-install -opt init</font></td></tr>
 </table>
 <br>
-2.3 Install k8s cluster<br>
+2.4 Install k8s cluster<br>
 If your server environment is as follows:<br>
 <table>
 <tr><td>IP Address</td><td>Role</td><td>OS Version</td><td>Root Password</td></tr>
@@ -55,35 +63,35 @@ Note: in the above command, the "-mvip" parameter is the k8s cluster virtual IP 
 <br>
 After kube-install is installed, you can directly execute "kube-install" command in any directory of any k8s-master server.<br>
 <br>
-3.1 Add k8s-node to k8s cluster<br>
-Select any k8s-master server, and execute the following command on it:<br>
-<table>
-<tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt addnode -node "192.168.1.15,192.168.1.16" -sshpwd "cloudnativer"</font></td></tr>
-</table>
-<br>
-3.2 Delete k8s-node from k8s cluster<br>
-Select any k8s-master server, and execute the following command on it:<br>
+3.1 Delete k8s-node from k8s cluster<br>
+Select any k8s-mkaster server, and execute the following command on it:<br>
 <table>
 <tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt delnode -node "192.168.1.13,192.168.1.15" -sshpwd "cloudnativer"</font></td></tr>
 </table>
 <br>
-3.3 Delete k8s-master from k8s cluster<br>
-Select any k8s-master server, and execute the following command on it:<br>
+3.2 Add k8s-node to k8s cluster<br>
+Select any k8s-mkaster server, and execute the following command on it:<br>
 <table>
-<tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt delmaster -master "192.168.1.13" -sshpwd "cloudnativer"</font></td></tr>
+<tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt addnode -node "192.168.1.15,192.168.1.16" -sshpwd "cloudnativer"</font></td></tr>
+</table>
+<br>
+3.3 Delete k8s-master from k8s cluster<br>
+Select any k8s-mkaster server, and execute the following command on it:<br>
+<table>
+<tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt delmaster -master "192.168.1.13,192.168.1.15" -sshpwd "cloudnativer"</font></td></tr>
 </table>
 <br>
 3.4 Rebuild k8s-master to k8s cluster<br>
-Select any k8s-master server, and execute the following command on it:<br>
+Select any k8s-mkaster server, and execute the following command on it:<br>
 <table>
-<tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt rebuildmaster -master "192.168.1.13" -sshpwd "cloudnativer"</font></td></tr>
+<tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt rebuildmaster -rebuildmaster "192.168.1.13" -sshpwd "cloudnativer"</font></td></tr>
 </table>
 <br>
 <br>
 <br>
 <b>[4] Parameter introduction:</b><br>
 <br>
-The parameters about kube-install can be viewed using the "kube-install help" or "kube-install -opt help" command. <a href="docs/parameters0.2.md">You can also see more detailed parameter introduction here.</a><br>
+The parameters about kube-install can be viewed using the "kube-install --help" command. <a href="docs/parameters0.2.md">You can also see more detailed parameter introduction here.</a><br>
 <br>
 <br>
 <br>
