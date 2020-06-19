@@ -19,10 +19,12 @@ Kube-install and kubernetes version correspondence:
 <br>
 2.1 Download kube-install file<br>
 Select a k8s-master and execute:<br>
+
 ```
 cd /root/</font><br>
 git clone https://github.com/cloudnativer/kube-install.git 
 ```
+
 <br>
 2.2 Download the kube-install-pkg-0.1.tgz package from this link https://github.com/cloudnativer/kube-install/releases <br>
 <table>
