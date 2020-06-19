@@ -29,8 +29,8 @@ Select a k8s-master and execute:<br>
 2.2 Download the kube-install-pkg-0.1.tgz package from this link https://github.com/cloudnativer/kube-install/releases <br>
 
 ```
- # cd /root/kube-install/
- # tar -zxvf kube-install-pkg-0.1.tgz
+# cd /root/kube-install/
+# tar -zxvf kube-install-pkg-0.1.tgz
 ```
 
 <br>
@@ -69,7 +69,7 @@ Note: in the above command, the "-mvip" parameter is the k8s cluster virtual IP 
 Execute the following command on the k8s-master you selected to view the k8s dashboard console URL and key:<br>
 
 ```
- # cat /opt/kube-install/admin_login.txt
+# cat /opt/kube-install/admin_login.txt
 ```
 
 
