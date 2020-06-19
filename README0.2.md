@@ -19,26 +19,29 @@ Kube-install and kubernetes version correspondence:
 <br>
 2.1 Download kube-install file<br>
 Select a k8s-master and execute:<br>
-<table>
-<tr><td bgcolor=#000000>
-<font color=#C0FF3E># cd /root/</font><br>
-<font color=#C0FF3E># git clone https://github.com/cloudnativer/kube-install.git </font><br>
- </td></tr>
-</table>
+
+```
+# cd /root/
+# git clone https://github.com/cloudnativer/kube-install.git 
+```
+
 <br>
 2.2 Download the kube-install-pkg-0.1.tgz package from this link https://github.com/cloudnativer/kube-install/releases <br>
-<table>
-<tr><td bgcolor=#000000><font color=#C0FF3E>
- # cd /root/kube-install/<br>
+
+```
+ # cd /root/kube-install/
  # tar -zxvf kube-install-pkg-0.1.tgz
- </font></td></tr>
-</table>
+```
+
 <br>
 2.3 Initialization<br>
 Perform pre installation initialization<br>
-<table>
-<tr><td bgcolor=#000000><font color=#C0FF3E># cd /root/kube-install/<br> # ./kube-install -opt init</font></td></tr>
-</table>
+
+```
+# cd /root/kube-install/
+# ./kube-install -opt init
+```
+
 <br>
 2.4 Install k8s cluster<br>
 If your server environment is as follows:<br>
@@ -52,29 +55,30 @@ If your server environment is as follows:<br>
 <tr><td>192.168.1.16</td><td>k8s-node</td><td>CentOS Linux release 7</td><td>cloudnativer</td></tr>
 </table>
 Well,Execute on the k8s-master selected above:<br>
-<table>
-<tr><td bgcolor=#000000><font color=#C0FF3E># cd /root/kube-install/<br> # ./kube-install -opt install -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -mvip "192.168.1.88" -sshpwd "cloudnativer"</font></td></tr>
-</table>
-Note: in the above command, the "-mvip" parameter is the k8s cluster virtual IP address.<br>
+
+```
+# cd /root/kube-install/
+# ./kube-install -opt install -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -mvip "192.168.1.88" -sshpwd "cloudnativer"
+```
+
+Note: in the above command, the "-mvip" parameter is the k8s cluster virtual IP address.
+<br>
+<br>
 <br>
 2.5 Login k8s dashboard console UI<br>
 Execute the following command on the k8s-master you selected to view the k8s dashboard console URL and key:<br>
-<table>
-<tr><td bgcolor=#000000><font color=#C0FF3E>
- # cat /opt/kube-install/admin_login.txt<br>
- </font></td></tr>
-</table>
-<br>
+
+```
+ # cat /opt/kube-install/admin_login.txt
+```
+
 
 ![avatar](docs/images/admin_login.jpg)
 
-<br>
 Log in to the k8s dashboard console UI using the URL and key in the /opt/kube-install/admin_login.txt document.Here are the relevant screenshots:
-<br>
 
 ![avatar](docs/images/kube-dashboard1.jpg)
 
-<br>
 
 ![avatar](docs/images/kube-dashboard2.jpg)
 
@@ -87,27 +91,35 @@ After kube-install is installed, you can directly execute "kube-install" command
 <br>
 3.1 Delete k8s-node from k8s cluster<br>
 Select any k8s-mkaster server, and execute the following command on it:<br>
-<table>
-<tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt delnode -node "192.168.1.13,192.168.1.15" -sshpwd "cloudnativer"</font></td></tr>
-</table>
+
+```
+# kube-install -opt delnode -node "192.168.1.13,192.168.1.15" -sshpwd "cloudnativer"
+```
+
 <br>
 3.2 Add k8s-node to k8s cluster<br>
 Select any k8s-mkaster server, and execute the following command on it:<br>
-<table>
-<tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt addnode -node "192.168.1.15,192.168.1.16" -sshpwd "cloudnativer"</font></td></tr>
-</table>
+
+```
+# kube-install -opt addnode -node "192.168.1.15,192.168.1.16" -sshpwd "cloudnativer"
+```
+
 <br>
 3.3 Delete k8s-master from k8s cluster<br>
 Select any k8s-mkaster server, and execute the following command on it:<br>
-<table>
-<tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt delmaster -master "192.168.1.13,192.168.1.15" -sshpwd "cloudnativer"</font></td></tr>
-</table>
+
+```
+# kube-install -opt delmaster -master "192.168.1.13,192.168.1.15" -sshpwd "cloudnativer"
+```
+
 <br>
 3.4 Rebuild k8s-master to k8s cluster<br>
 Select any k8s-mkaster server, and execute the following command on it:<br>
-<table>
-<tr><td bgcolor=#000000><font color=#C0FF3E># kube-install -opt rebuildmaster -rebuildmaster "192.168.1.13" -sshpwd "cloudnativer"</font></td></tr>
-</table>
+
+```
+# kube-install -opt rebuildmaster -rebuildmaster "192.168.1.13" -sshpwd "cloudnativer"
+```
+
 <br>
 <br>
 <br>
@@ -117,3 +129,4 @@ The parameters about kube-install can be viewed using the "kube-install --help" 
 <br>
 <br>
 <br>
+
