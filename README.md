@@ -61,7 +61,9 @@ Well,Execute on the k8s-master selected above:<br>
 # ./kube-install -opt install -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -mvip "192.168.1.88" -sshpwd "cloudnativer"
 ```
 
-Note: in the above command, the "-mvip" parameter is the k8s cluster virtual IP address.<br>
+Note: in the above command, the "-mvip" parameter is the k8s cluster virtual IP address.
+<br>
+<br>
 <br>
 2.5 Login k8s dashboard console UI<br>
 Execute the following command on the k8s-master you selected to view the k8s dashboard console URL and key:<br>
@@ -70,17 +72,13 @@ Execute the following command on the k8s-master you selected to view the k8s das
  # cat /opt/kube-install/admin_login.txt
 ```
 
-<br>
 
 ![avatar](docs/images/admin_login.jpg)
 
-<br>
 Log in to the k8s dashboard console UI using the URL and key in the /opt/kube-install/admin_login.txt document.Here are the relevant screenshots:
-<br>
 
 ![avatar](docs/images/kube-dashboard1.jpg)
 
-<br>
 
 ![avatar](docs/images/kube-dashboard2.jpg)
 
