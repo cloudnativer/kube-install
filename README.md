@@ -10,7 +10,7 @@ Kube-install and kubernetes version correspondence:
 <table>
 <tr><td>kube-install Version</td><td>Corresponding Relation</td><td>Kubernetes Version</td>
 <tr><td>v0.1.* <br>v0.2.* </td><td>  -----> </td><td>v1.14.* </td></tr>
-<tr><td>v0.3.* </td><td>  -----> </td><td>v1.18.* </td></tr>
+<tr><td>v0.3.* </td><td>  -----> </td><td>v1.14* <br> v1.18.* </td></tr>
 </table>
 <br>
 <br>
@@ -26,11 +26,11 @@ Select a k8s-master and execute:<br>
 ```
 
 <br>
-2.2 Download the kube-install-pkg-0.1.tgz package from this link https://github.com/cloudnativer/kube-install/releases <br>
+2.2 Download the kube-install-pkg-0.2.tgz package from this link https://github.com/cloudnativer/kube-install/releases <br>
 
 ```
 # cd /root/kube-install/
-# tar -zxvf kube-install-pkg-0.1.tgz
+# tar -zxvf kube-install-pkg-0.2.tgz
 ```
 
 <br>
