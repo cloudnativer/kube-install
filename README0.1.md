@@ -9,8 +9,8 @@ This is a one click rapid deployment tool for highly available kubernetes cluste
 Kube-install and kubernetes version correspondence:
 <table>
 <tr><td>kube-install Version</td><td>Corresponding Relation</td><td>Kubernetes Version</td>
-<tr><td>v0.1.* </td><td>  -----> </td><td>v1.14.* </td></tr>
-<tr><td>v0.2.* </td><td>  -----> </td><td>v1.17.* </td></tr>
+<tr><td>v0.1.* <br>v0.2.* </td><td>  -----> </td><td>v1.14.* </td></tr>
+<tr><td>v0.3.* </td><td>  -----> </td><td>v1.14* <br> v1.18.* </td></tr>
 </table>
 <br>
 <br>

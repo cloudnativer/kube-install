@@ -5,7 +5,7 @@
     dest: "{{software_home}}/temp"
     mode: 0744
 - name: 2.安装docker软件
-  shell: "rpm -U {{software_home}}/temp/dockerpkg/*.rpm --force"
+  shell: "rpm -U {{software_home}}/temp/dockerpkg/*.rpm --force --nodeps"
 - name: 3.修改docker启动程序
   lineinfile:
     dest: /usr/lib/systemd/system/docker.service

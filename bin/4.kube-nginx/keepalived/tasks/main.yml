@@ -8,7 +8,7 @@
     dest: "{{software_home}}"
     mode: 0744
 - name: 2.安装keepalived软件
-  shell: "rpm -U {{software_home}}/keepalived/*.rpm --force"
+  shell: "rpm -U {{software_home}}/keepalived/*.rpm --force --nodeps"
 - shell: "ip add|grep {{ip}}|awk '{print $NF}'"
   register: ens
 - shell: "date"

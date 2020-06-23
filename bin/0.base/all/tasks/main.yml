@@ -16,7 +16,7 @@
     dest: "{{software_home}}/temp"
     mode: 0744
 - name: 4.安装基础包
-  shell: "rpm -U {{software_home}}/temp/basepkg/*.rpm --force"
+  shell: "rpm -U {{software_home}}/temp/basepkg/*.rpm --force --nodeps"
   ignore_errors: yes
 - name: 5.关闭防火墙
   service: 
