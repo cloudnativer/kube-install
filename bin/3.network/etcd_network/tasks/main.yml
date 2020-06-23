@@ -1,4 +1,4 @@
-- name: 1.在etcd中创建flannel网段
+- name: 1.Creating a flannel network segment in etcd
   shell: etcdctl --endpoints={{etcd_endpoints}} --ca-file=/etc/kubernetes/ssl/k8s-root-ca.pem --cert-file=/etc/kubernetes/ssl/kubernetes.pem --key-file=/etc/kubernetes/ssl/kubernetes-key.pem set /kubernetes/network/config '{"Network":"{{pod_cidr}}", "SubnetLen":24, "Backend":{"Type":"vxlan"}}'
-- name: 2.flannel网络配置结束
+- name: 2.Flannel network configuration completed
   command: date

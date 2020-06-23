@@ -1,4 +1,4 @@
-- name: 恭喜您，k8s集群已经部署完成！操作系统将在300秒后自动重启以生效集群配置。如果您不想现在重启，也可以直接CTCL+C退出。
+- name: Congratulations, k8s cluster has been deployed! The operating system will automatically restart in 300 seconds to take effect on the cluster configuration. If you do not want to restart now, you can also directly press "Ctrl+C" to exit.
   shell: "date"
 - file:
     path: "{{software_home}}/temp"

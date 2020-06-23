@@ -39,6 +39,7 @@ func main() {
     }
 
 
+
     switch {
 
       //Execute init command
@@ -72,7 +73,7 @@ func main() {
           kilib.InstallYML(currentdir)
           kilib.ShellExecute("ansible-playbook -i "+currentdir+"/workflow/install.inventory "+currentdir+"/workflow/k8scluster-install.yml")
         }
-        fmt.Println("Kubernetes cluster deployment completed!")
+        fmt.Println("Kubernetes cluster deployment operation execution completed!")
 
       //Execute addnode command
       case opt == "addnode" :
@@ -85,7 +86,7 @@ func main() {
         kilib.AddnodeConfig(node_array, softdir)
         kilib.AddnodeYML(softdir)
         kilib.ShellExecute("ansible-playbook -i "+softdir+"/workflow/addnode.inventory "+softdir+"/workflow/k8scluster-addnode.yml")
-        fmt.Println("K8s-node added completed!")
+        fmt.Println("K8s-node add operation execution completed!")
 
       //Execute delnode command
       case opt == "delnode" :
@@ -101,7 +102,7 @@ func main() {
         for i := 0; i < len(node_array); i++ {
             kilib.ShellExecute("kubectl delete node "+node_array[i])
         } 
-        fmt.Println("K8s-node deleted completed!")
+        fmt.Println("K8s-node delete operation execution completed!")
 
       //Execute rebuildmaster command
       case opt == "rebuildmaster" :
@@ -115,7 +116,7 @@ func main() {
         kilib.InstallGenfile(softdir)
         kilib.RebuildmasterYML(softdir)
         kilib.ShellExecute("ansible-playbook -i "+softdir+"/workflow/rebuildmaster.inventory "+softdir+"/workflow/k8scluster-rebuildmaster.yml")
-        fmt.Println("K8s-master ebuilt completed!")
+        fmt.Println("K8s-master rebuilt operation execution completed!")
 
       //Execute delmaster command
       case opt == "delmaster" :
@@ -128,7 +129,7 @@ func main() {
         kilib.DelmasterConfig(master_array, softdir)
         kilib.DelmasterYML(softdir)
         kilib.ShellExecute("ansible-playbook -i "+softdir+"/workflow/delmaster.inventory "+softdir+"/workflow/k8scluster-delmaster.yml")
-        fmt.Println("K8s-master deleted completed!")
+        fmt.Println("K8s-master delete operation execution completed!")
 
       //Default output help information
       default:

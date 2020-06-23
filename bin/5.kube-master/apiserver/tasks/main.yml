@@ -1,22 +1,20 @@
-- name: 1.分发kube-apiserver证书
+- name: 1.Distribution kube-apiserver cert
   copy: 
     src: /etc/kubernetes/
     dest: /etc/kubernetes/
-- name: 2.生成kube-apiserver服务启动文件
+- name: 2.Create kube-apiserver service startup file
   template:
     src: ../templates/kube-apiserver.service.j2
     dest: /etc/systemd/system/kube-apiserver.service
-- name: 3.创建{{k8s_install_home}}/kubernetes/kube-apiserver
+- name: 3.Create {{k8s_install_home}}/kubernetes/kube-apiserver directory
   file: 
     path: "{{k8s_install_home}}/kubernetes/kube-apiserver/log"
     state: directory
-- name: 4.设置服务开机自启动
+- name: 4.Set service startup
   shell: "systemctl enable kube-apiserver"
-- name: 5.启动kube-apiserver服务
+- name: 5.Start kube-apiserver service
   systemd:
     daemon_reload: true
     name: kube-apiserver
     state: restarted
     enabled: true
-- name: 6.时间
-  shell: date

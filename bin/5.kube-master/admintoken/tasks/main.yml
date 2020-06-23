@@ -1,8 +1,8 @@
-- name: 1.生成admin_login
+- name: 1.Create admin_login
   template:
     src: "../templates/admin_login.txt.j2"
     dest: "{{software_home}}/admin_login.txt"
-- name: 2.分发login_token
+- name: 2.Distribution login_token
   copy:
     src: /etc/kubernetes/dashboard_login_token.txt
     dest: /etc/kubernetes/dashboard_login_token.txt

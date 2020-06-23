@@ -1,9 +1,9 @@
-- name: 1.使csr-crb配置生效
+- name: 1.Enable csr-crb configuration
   shell: "kubectl apply -f /etc/kubernetes/apiserver-to-kubelet.yaml"
 - shell: "kubectl apply -f /etc/kubernetes/cert-renew-rbac.yaml"
-- name: 2.等待120秒
+- name: 2.Wait 120s
   wait_for:
     timeout: 120
-- name: 3.approve-csr
+- name: 3.Approve node csr
   shell: "kubectl get csr | awk '/Pending/ {print $1}' | xargs kubectl certificate approve"
   ignore_errors: yes

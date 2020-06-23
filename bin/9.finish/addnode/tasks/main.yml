@@ -1,4 +1,4 @@
-- name: 恭喜您，node成功加入k8s集群！新node的操作系统将在300秒后自动重启以生效配置。如果您不想现在重启，也可以直接CTCL+C退出。
+- name: Congratulations, node successfully joined k8s cluster! The new node's operating system will restart automatically in 300 seconds to take effect. If you do not want to restart now, you can also directly press "Ctrl+C" to exit.
   shell: "date"
 - copy:
     src: ../../templates/tempreboot.sh

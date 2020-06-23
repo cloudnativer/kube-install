@@ -1,18 +1,18 @@
-- name: 1.生成kube-scheduler服务启动文件
+- name: 1.Create kube-scheduler service startup file
   template:
     src: ../templates/kube-scheduler.service.j2
     dest: "/etc/systemd/system/kube-scheduler.service"
-- name: 2.分发kube-scheduler证书
+- name: 2.Distribution kube-scheduler cert
   copy: 
     src: /etc/kubernetes/
     dest: /etc/kubernetes/
-- name: 3.生成{{k8s_install_home}}/kubernetes/kube-scheduler
+- name: 3.Create {{k8s_install_home}}/kubernetes/kube-scheduler directory
   file: 
     path: "{{k8s_install_home}}/kubernetes/kube-scheduler/"
     state: directory
-- name: 4.设置服务开机自启动
+- name: 4.Set service startup
   shell: "systemctl enable kube-scheduler"
-- name: 5.启动kube-scheduler服务
+- name: 5.Start kube-scheduler service
   systemd:
     daemon_reload: true
     name: kube-scheduler

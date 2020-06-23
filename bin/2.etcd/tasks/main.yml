@@ -1,27 +1,27 @@
-- name: 1.解压etcd软件包
+- name: 1.Decompress etcd software package
   unarchive:
     src: "{{software_home}}/pkg/etcd-v3.3.18.tar.gz"
     dest: /usr/local/bin/
     mode: 0755
-- name: 2.创建{{k8s_install_home}}/etcd数据目录
+- name: 2.Create {{k8s_install_home}}/etcd data directory
   file: 
     path: "{{k8s_install_home}}/etcd"
     state: directory
-- name: 3.创建etcd证书目录
+- name: 3.Create etcd cert directory
   file: 
     path: /etc/kubernetes/ssl/
     state: directory
-- name: 4.生成etcd服务启动文件
+- name: 4.Create etcd service file
   template:
     src: ../templates/etcd.service.j2 
     dest: /etc/systemd/system/etcd.service
-- name: 5.分发etcd证书
+- name: 5.Distribution etcd cert file
   copy: 
     src: /etc/kubernetes/
     dest: /etc/kubernetes/
-- name: 6.设置服务开机自启动
+- name: 6.Set service startup
   shell: "systemctl enable etcd"
-- name: 7.启动etcd集群服务
+- name: 7.Start etcd service
   systemd:
     daemon_reload: true
     name: etcd

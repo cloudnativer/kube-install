@@ -1,5 +1,5 @@
 ### 
-- name: 0.创建addons文件夹
+- name: 0.Create addons directory
   file:
     path: "{{software_home}}/addons/{{item}}"
     state: directory
@@ -13,16 +13,16 @@
     - registry
     - temp
 
-### 1.部署coredns
-- name: 1.1 拷贝coredns.yaml文件
+### 1.Deploy coredns
+- name: 1.1 Crate coredns.yaml file
   template:
     src: "../templates/1.coredns/coredns.yaml.j2"
     dest: "{{software_home}}/addons/coredns/coredns.yaml"
-- name: 1.2 部署coredns
+- name: 1.2 Deploy coredns
   shell: "kubectl apply -f {{software_home}}/addons/coredns/coredns.yaml"
 
-### 2.部署dashboard
-- name: 2.1 拷贝dashboard.yaml文件
+### 2.Deploy dashboard
+- name: 2.1 Create dashboard.yaml file
   template:
     src: "../templates/2.dashboard/dashboard-controller.yaml.j2"
     dest: "{{software_home}}/addons/dashboard/dashboard-controller.yaml"
@@ -34,29 +34,29 @@
     - dashboard-rbac.yaml
     - dashboard-secret.yaml
     - dashboard-service.yaml
-- name: 2.2 部署dashboard
+- name: 2.2 Deploy dashboard
   shell: "kubectl apply -f {{software_home}}/addons/dashboard/"
 ###创建dashboard的token
-- name: 2.3 创建dashboard-admin
+- name: 2.3 Create dashboard-admin
   shell: "kubectl create sa dashboard-admin -n kube-system"  
   ignore_errors: yes
 - shell: "kubectl create clusterrolebinding dashboard-admin --clusterrole=cluster-admin --serviceaccount=kube-system:dashboard-admin"
   ignore_errors: yes
-- name: 2.4 查看ADMIN_SECRET
+- name: 2.4 Get ADMIN_SECRET info
   shell: "kubectl get secrets -n kube-system | grep dashboard-admin | awk '{print $1}'"
   register: admin_secret
-- name: 2.5 生成DASHBOARD_LOGIN_TOKEN
+- name: 2.5 Create DASHBOARD_LOGIN_TOKEN
   shell: "kubectl describe secret -n kube-system {{admin_secret.stdout}} | grep -E '^token' | awk '{print $2}'"
   register: dashboard_login_token
 - shell: "echo {{dashboard_login_token.stdout}} > /etc/kubernetes/dashboard_login_token.txt"
-- name: 2.6 创建dashboard的KubeConfig 文件
+- name: 2.6 Create dashboard的KubeConfig file
   shell: "kubectl config set-cluster kubernetes --certificate-authority=/etc/kubernetes/ssl/k8s-root-ca.pem --embed-certs=true --server=https://{{master_vip}}:8443 --kubeconfig=dashboard.kubeconfig chdir=/etc/kubernetes/ssl"
 - shell: "kubectl config set-credentials dashboard_user --token={{dashboard_login_token.stdout}} --kubeconfig=dashboard.kubeconfig chdir=/etc/kubernetes/ssl"
 - shell: "kubectl config set-context default --cluster=kubernetes --user=dashboard_user --kubeconfig=dashboard.kubeconfig chdir=/etc/kubernetes/ssl"
 - shell: "kubectl config use-context default --kubeconfig=dashboard.kubeconfig chdir=/etc/kubernetes/ssl"
 
-### 3.部署metrics-server
-- name: 3.1 拷贝metrics-server.yaml文件
+### 3.Deploy metrics-server
+- name: 3.1 Create metrics-server.yaml file
   template:
     src: "../templates/3.metrics-server/metrics-server-deployment.yaml.j2"
     dest: "{{software_home}}/addons/metrics-server/metrics-server-deployment.yaml"
@@ -70,13 +70,13 @@
     - metrics-apiservice.yaml
     - metrics-server-service.yaml
     - resource-reader.yaml
-- name: 3.2 部署metrics-server
+- name: 3.2 Deploy metrics-server
   shell: "kubectl apply -f {{software_home}}/addons/metrics-server/"
-- name: 3.3 创建metrics-server用户权限
+- name: 3.3 Create metrics-server rbac
   shell: "kubectl create clusterrolebinding the-boss --user system:anonymous --clusterrole cluster-admin"
 
-### 4.部署traefik
-- name: 4.1 拷贝traefik.yaml文件
+### 4.Deploy traefik
+- name: 4.1 Create traefik.yaml file
   template:
     src: "../templates/4.traefik/{{item}}.j2"
     dest: "{{software_home}}/addons/traefik/{{item}}"
@@ -89,11 +89,11 @@
   with_items:
     - traefik-config.yaml
     - traefik-rbac.yaml
-- name: 4.2 部署traefik
+- name: 4.2 Deploy traefik
   shell: "kubectl apply -f {{software_home}}/addons/traefik/"
 
-### 5.部署heapster
-- name: 5.1 拷贝heapster.yaml文件
+### 5.Deploy heapster
+- name: 5.1 Create heapster.yaml file
   template:
     src: "../templates/5.heapster/heapster-Deployment.yaml.j2"
     dest: "{{software_home}}/addons/heapster/heapster-Deployment.yaml"
@@ -104,15 +104,15 @@
     - heapster-rbac.yaml
     - heapster-ServiceAccount.yaml
     - heapster-svc.yaml
-- name: 5.2 部署heapster
+- name: 5.2 Deploy heapster
   shell: "kubectl apply -f {{software_home}}/addons/heapster/"
 
-### 6.部署registry
-- name: 6.1 拷贝docker-registry.yaml文件
+### 6.Deploy registry
+- name: 6.1 Create docker-registry.yaml file
   template:
     src: "../templates/6.registry/docker-registry.yaml.j2"
     dest: "{{software_home}}/addons/registry/docker-registry.yaml"
-- name: 6.2 部署registry
+- name: 6.2 Deploy registry
   shell: "kubectl apply -f {{software_home}}/addons/registry/docker-registry.yaml"
 
 

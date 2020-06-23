@@ -1,9 +1,9 @@
-- name: 1.解压cfssl程序包
+- name: 1.Decompress cfssl software package
   unarchive:
     src: "{{software_home}}/pkg/cfssl-linux.tar.gz"
     dest: /usr/local/bin/
     mode: 0755
-- name: 2.生成kubernetes-csr配置
+- name: 2.Set kubernetes-csr configuration
   template:
     src: ../templates/kubernetes-csr.json.j2
     dest: /etc/kubernetes/ssl/kubernetes-csr.json

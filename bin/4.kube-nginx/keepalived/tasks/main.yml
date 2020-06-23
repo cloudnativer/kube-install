@@ -1,27 +1,23 @@
-#- name: 1.yum install keepalived
-#  yum: 
-#    name: keepalived
-#    state: latest
-- name: 1.解压keepalived软件包
+- name: 1.Decompress keepalived software package
   unarchive:
     src: "{{software_home}}/pkg/keepalived.tar.gz"
     dest: "{{software_home}}"
     mode: 0744
-- name: 2.安装keepalived软件
+- name: 2.Install keepalived software
   shell: "rpm -U {{software_home}}/keepalived/*.rpm --force --nodeps"
 - shell: "ip add|grep {{ip}}|awk '{print $NF}'"
   register: ens
 - shell: "date"
-- name: 3.生成keepalived配置
+- name: 3.Create keepalived configuration
   template: 
     src: ../templates/keepalived.conf.j2
     dest: /etc/keepalived/keepalived.conf
-- name: 4.生成check_http脚本
+- name: 4.Create check_http shell
   template:
     src: ../templates/check_http.sh.j2
     dest: /etc/keepalived/check_http.sh
     mode: 0755
-- name: 5.设置服务失败重试机制
+- name: 5.Set service failure retry mechanism
   lineinfile:
     dest: /lib/systemd/system/keepalived.service 
     insertafter: '^KillMode=process'
@@ -38,9 +34,9 @@
     path: /lib/systemd/system/keepalived.service 
     regexp: 'After=syslog.target network-online.target'
     replace: 'After=syslog.target network-online.target kube-apiserver.service etcd.service'
-- name: 6.设置服务开机自启动
+- name: 6.Set service startup
   shell: "systemctl enable keepalived"
-- name: 7.启动keepalived服务
+- name: 7.Start keepalived service
   systemd:
     daemon_reload: true
     name: keepalived
