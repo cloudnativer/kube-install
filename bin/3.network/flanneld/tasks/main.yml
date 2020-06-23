@@ -17,8 +17,8 @@
     state: directory
 - name: 5.生成默认cni配置文件
   copy: 
-    src: ../templates/10-default.conf.j2
-    dest: /etc/cni/net.d/10-default.conf
+    src: ../templates/10-default.conflist.j2
+    dest: /etc/cni/net.d/10-default.conflist
 - name: 6.解压cni插件包
   unarchive:
     src: "{{software_home}}/pkg/cni-plugins.tar.gz"
