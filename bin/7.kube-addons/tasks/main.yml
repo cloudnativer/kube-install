@@ -92,16 +92,8 @@
 - name: 4.2 部署traefik
   shell: "kubectl apply -f {{software_home}}/addons/traefik/"
 
-### 6.部署registry
-- name: 6.1 拷贝docker-registry.yaml文件
-  template:
-    src: "../templates/6.registry/docker-registry.yaml.j2"
-    dest: "{{software_home}}/addons/registry/docker-registry.yaml"
-- name: 6.2 部署registry
-  shell: "kubectl apply -f {{software_home}}/addons/registry/docker-registry.yaml"
-
-### 7.部署heapster
-- name: 7.1 拷贝heapster.yaml文件
+### 5.部署heapster
+- name: 5.1 拷贝heapster.yaml文件
   template:
     src: "../templates/5.heapster/heapster-Deployment.yaml.j2"
     dest: "{{software_home}}/addons/heapster/heapster-Deployment.yaml"
@@ -112,6 +104,15 @@
     - heapster-rbac.yaml
     - heapster-ServiceAccount.yaml
     - heapster-svc.yaml
-- name: 7.2 部署heapster
+- name: 5.2 部署heapster
   shell: "kubectl apply -f {{software_home}}/addons/heapster/"
+
+### 6.部署registry
+- name: 6.1 拷贝docker-registry.yaml文件
+  template:
+    src: "../templates/6.registry/docker-registry.yaml.j2"
+    dest: "{{software_home}}/addons/registry/docker-registry.yaml"
+- name: 6.2 部署registry
+  shell: "kubectl apply -f {{software_home}}/addons/registry/docker-registry.yaml"
+
 
