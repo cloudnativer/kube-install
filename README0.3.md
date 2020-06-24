@@ -13,10 +13,10 @@ Kube-install and kubernetes version correspondence:
 <tr><td>kube-install Version</td><td>Install the base package to download</td><td>Supported installed versions</td>
 <tr><td> kube-install v0.1.* </td><td> kube-install-pkg-1.14.tgz</td><td> Install kubernetes v1.14.* </td></tr>
 <tr><td> kube-install v0.2.* </td><td> kube-install-pkg-1.14.tgz</td><td> Install kubernetes v1.14.* </td></tr>
-<tr><td> kube-install v0.3.* </td><td> kube-install-pkg-1.14.tgz</td><td> Install kubernetes v1.14.* </td></tr>
-<tr><td> kube-install v0.3.* </td><td> kube-install-pkg-1.17.tgz</td><td> Install kubernetes v1.17.* </td></tr>
-<tr><td> kube-install v0.3.* </td><td> kube-install-pkg-1.18.tgz</td><td> Install kubernetes v1.18.* </td></tr>
-<tr><td> kube-install v0.3.* </td><td> kube-install-pkg-1.19.tgz</td><td> Install kubernetes v1.19.* </td></tr>
+<tr><td> kube-install v0.3.* </td><td> kube-install-v1.14.tgz</td><td> Install kubernetes v1.14.* </td></tr>
+<tr><td> kube-install v0.3.* </td><td> kube-install-v1.17.tgz</td><td> Install kubernetes v1.17.* </td></tr>
+<tr><td> kube-install v0.3.* </td><td> kube-install-v1.18.tgz</td><td> Install kubernetes v1.18.* </td></tr>
+<tr><td> kube-install v0.3.* </td><td> kube-install-v1.19.tgz</td><td> Install kubernetes v1.19.* </td></tr>
 </table>
 <br>
 <br>
@@ -165,3 +165,4 @@ The parameters about kube-install can be viewed using the "kube-install help" co
 <br>
 <br>
 <br>
+
