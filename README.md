@@ -10,7 +10,7 @@ One click fast installation of highly available kubernetes cluster, as well as a
 <br>
 Kube-install and kubernetes version correspondence:
 <table>
-<tr><td>kube-install Version</td><td>Install the base package to download</td><td>Supported installed versions</td>
+<tr><td>kube-install Version</td><td>Installation package to download</td><td>Supported installed versions</td>
 <tr><td> kube-install v0.1.* </td><td> kube-install-pkg-1.14.tgz</td><td> Install kubernetes v1.14.* </td></tr>
 <tr><td> kube-install v0.2.* </td><td> kube-install-pkg-1.14.tgz</td><td> Install kubernetes v1.14.* </td></tr>
 <tr><td> kube-install v0.3.* </td><td> kube-install-v1.14.tgz</td><td> Install kubernetes v1.14.* </td></tr>
