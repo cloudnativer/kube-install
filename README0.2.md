@@ -76,7 +76,7 @@ Execute the following command on the k8s-master you selected to view the k8s das
 
 ![avatar](docs/images/admin_login.jpg)
 
-Log in to the k8s dashboard console UI using the URL and key in the /opt/kube-install/admin_login.txt document.Here are the relevant screenshots:
+Login to the k8s dashboard console UI using the URL and key in the /opt/kube-install/admin_login.txt document.Here are the relevant screenshots:
 
 ![avatar](docs/images/kube-dashboard1.jpg)
 
