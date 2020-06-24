@@ -5,7 +5,7 @@ One click fast installation of highly available kubernetes cluster, as well as a
 
 <br>
 
-<font size="5">[1] Corresponding relation: </font><br>
+<font size="5">[1] Corresponding relation: </font>
 
 <br>
 Kube-install and kubernetes version correspondence:
