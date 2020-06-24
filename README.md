@@ -4,7 +4,9 @@ One click fast installation of highly available kubernetes cluster, as well as a
 ![kube-install](docs/images/kube-install-logo.jpg)
 
 <br>
+
 <font size="5">[1] Corresponding relation: </font><br>
+
 <br>
 Kube-install and kubernetes version correspondence:
 <table>
