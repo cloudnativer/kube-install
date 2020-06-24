@@ -31,7 +31,7 @@ Kube-install and kubernetes version correspondence:
 <br>
 You can download the kube-install-*.tgz package from https://github.com/cloudnativer/kube-install/releases. <br>
 
-![download-pkg](docs/images/download-pkg2.jpg)
+![download-pkg](docs/images/download-pkg.jpg)
 
 If you want to install version 1.14 of kubernetes, download the kube-install-v1.14.tgz package file.If you want to install version 1.17 of kubernetes, download the kube-install-v1.17.tgz package file.If you want to install version 1.18 of kubernetes, download the kube-install-v1.18.tgz package file.<br>
 
