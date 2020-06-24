@@ -27,11 +27,11 @@ Select a k8s-master and execute:<br>
  </td></tr>
 </table>
 <br>
-2.2 Download the kube-install-pkg-0.1.tgz package from this link https://github.com/cloudnativer/kube-install/releases <br>
+2.2 Download the kube-install-pkg-1.14.tgz package from this link https://github.com/cloudnativer/kube-install/releases <br>
 <table>
 <tr><td bgcolor=#000000><font color=#C0FF3E>
  # cd /root/kube-install/<br>
- # tar -zxvf kube-install-pkg-0.1.tgz
+ # tar -zxvf kube-install-pkg-1.14.tgz
  </font></td></tr>
 </table>
 <br>
