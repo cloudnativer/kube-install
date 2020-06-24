@@ -31,6 +31,7 @@ Select a k8s-master and execute:<br>
 <table>
 <tr><td bgcolor=#000000><font color=#C0FF3E>
  # cd /root/kube-install/<br>
+ # wget https://github.com/cloudnativer/kube-install/releases/download/v0.1.0/kube-install-pkg-1.14.tgz <br>
  # tar -zxvf kube-install-pkg-1.14.tgz
  </font></td></tr>
 </table>
