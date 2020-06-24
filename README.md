@@ -14,6 +14,7 @@ Kube-install and kubernetes version correspondence:
 <tr><td> kube-install v0.1.* </td><td> kube-install-pkg-1.14.tgz</td><td> Install kubernetes v1.14.* </td></tr>
 <tr><td> kube-install v0.2.* </td><td> kube-install-pkg-1.14.tgz</td><td> Install kubernetes v1.14.* </td></tr>
 <tr><td> kube-install v0.3.* </td><td> kube-install-pkg-1.14.tgz</td><td> Install kubernetes v1.14.* </td></tr>
+<tr><td> kube-install v0.3.* </td><td> kube-install-pkg-1.17.tgz</td><td> Install kubernetes v1.17.* </td></tr>
 <tr><td> kube-install v0.3.* </td><td> kube-install-pkg-1.18.tgz</td><td> Install kubernetes v1.18.* </td></tr>
 <tr><td> kube-install v0.3.* </td><td> kube-install-pkg-1.19.tgz</td><td> Install kubernetes v1.19.* </td></tr>
 </table>
@@ -45,7 +46,7 @@ You can download the kube-install-pkg-x.x.tgz package from https://github.com/cl
 
 ![download-pkg](docs/images/download-pkg.jpg)
 
-If you want to install version 1.14 of kubernetes, download the kube-install-pkg-1.14.tgz package file.If you want to install version 1.18 of kubernetes, download the kube-install-pkg-1.18.tgz package file.<br>
+If you want to install version 1.14 of kubernetes, download the kube-install-pkg-1.14.tgz package file.If you want to install version 1.17 of kubernetes, download the kube-install-pkg-1.17.tgz package file.If you want to install version 1.18 of kubernetes, download the kube-install-pkg-1.18.tgz package file.<br>
 
 For example, we are now installing kubernetes v1.18, and we have downloaded the kube-install-pkg-1.18.tgz package.<br>
 
