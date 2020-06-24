@@ -86,7 +86,7 @@
     state: directory
 - name: 18.Decompress k8s software package
   unarchive:
-    src: "{{software_home}}/pkg/kube-server-v1.18.4.tar.gz"
+    src: "{{software_home}}/pkg/kube-server.tar.gz"
     dest: /usr/local/bin/
     mode: 0755
 - name: 19.Decompress helm software package

@@ -1,19 +1,19 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: my-nginx
+  name: myapp
   namespace: myapp
   labels:
-    app: my-nginx
+    app: myapp
 spec:
   replicas: 10
   template: 
     metadata:
       labels:
-        app: my-nginx
+        app: myapp
     spec: 
       containers: 
-        - name: my-nginx
+        - name: myapp
           image: {{registry_ip}}:5000/nginx:latest
           imagePullPolicy: IfNotPresent
           resources:
@@ -52,13 +52,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata: 
-  name: my-nginx
+  name: myapp
   namespace: myapp
   labels: 
-    app: my-nginx
+    app: myapp
 spec:
   selector:
-    app: my-nginx
+    app: myapp
   ports:
   - name: http
     port: 80
@@ -67,7 +67,7 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: my-nginx
+  name: myapp
   namespace: myapp
 spec:
   rules:
@@ -76,5 +76,6 @@ spec:
        paths:
        - path:
          backend:
-           serviceName: my-nginx
+           serviceName: myapp
            servicePort: 80
+
