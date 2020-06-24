@@ -1,7 +1,7 @@
 One click fast installation of highly available kubernetes cluster, as well as addition of kubernetes node, deletion of kubernetes node, destruction of kubernetes master and rebuild of kubernetes master in later operation and maintenance stage.
 <br>
 
-![avatar](docs/images/kube-install-logo.jpg)
+![kube-install](docs/images/kube-install-logo.jpg)
 
 <br>
 <font size="5">[1] Corresponding relation: </font><br>
