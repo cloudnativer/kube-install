@@ -6,6 +6,7 @@ One click fast installation of highly available kubernetes cluster, as well as a
 <br>
 
 # [1] Corresponding relation: 
+
 <br>
 Kube-install and kubernetes version correspondence:
 <table>
@@ -19,9 +20,14 @@ Kube-install and kubernetes version correspondence:
 <br>
 <br>
 <br>
+
 # [2] How to install?
+
 <br>
-## 2.1 Download kube-install bin file<br>
+
+## 2.1 Download kube-install bin file
+
+<br>
 Select a k8s-master and execute:<br>
 
 ```
@@ -31,7 +37,10 @@ Select a k8s-master and execute:<br>
 ```
 
 <br>
-## 2.2 Download the kube-install-pkg-*.tgz base package<br>
+
+## 2.2 Download the kube-install-pkg-*.tgz base package
+
+<br>
 You can download the kube-install-pkg-x.x.tgz package from https://github.com/cloudnativer/kube-install/releases. <br>
 
 ![download-pkg](docs/images/download-pkg.jpg)
@@ -48,7 +57,10 @@ For example, we are now installing kubernetes v1.18, and we have downloaded the 
 ```
 
 <br>
-## 2.3 Initialize system environment<br>
+
+## 2.3 Initialize system environment
+
+<br>
 Perform pre installation initialization<br>
 
 ```
@@ -57,7 +69,10 @@ Perform pre installation initialization<br>
 ```
 
 <br>
-## 2.4 Install kubernetes cluster<br>
+
+## 2.4 Install kubernetes cluster
+
+<br>
 If your server environment is as follows:<br>
 <table>
 <tr><td>IP Address</td><td>Role</td><td>OS Version</td><td>Root Password</td></tr>
@@ -79,7 +94,10 @@ Note: in the above command, the "-mvip" parameter is the k8s cluster virtual IP 
 <br>
 <br>
 <br>
-## 2.5 Login kubernetes dashboard UI<br>
+
+## 2.5 Login kubernetes dashboard UI
+
+<br>
 Execute the following command on the k8s-master you selected to view the k8s dashboard console URL and key:<br>
 
 ```
@@ -99,11 +117,17 @@ Log in to the k8s dashboard console UI using the URL and key in the /opt/kube-in
 <br>
 <br>
 <br>
-# [3] Operation and maintenance:<br>
+
+# [3] Operation and maintenance:
+
+<br>
 <br>
 After kube-install is installed, you can directly execute "kube-install" command in any directory of any k8s-master server.<br>
 <br>
-## 3.1 Delete k8s-node from k8s cluster<br>
+
+## 3.1 Delete k8s-node from k8s cluster
+
+<br>
 Select any k8s-mkaster server, and execute the following command on it:<br>
 
 ```
@@ -111,7 +135,10 @@ Select any k8s-mkaster server, and execute the following command on it:<br>
 ```
 
 <br>
-## 3.2 Add k8s-node to k8s cluster<br>
+
+## 3.2 Add k8s-node to k8s cluster
+
+<br>
 Select any k8s-mkaster server, and execute the following command on it:<br>
 
 ```
@@ -119,7 +146,10 @@ Select any k8s-mkaster server, and execute the following command on it:<br>
 ```
 
 <br>
-## 3.3 Delete k8s-master from k8s cluster<br>
+
+## 3.3 Delete k8s-master from k8s cluster
+
+<br>
 Select any k8s-mkaster server, and execute the following command on it:<br>
 
 ```
@@ -127,7 +157,10 @@ Select any k8s-mkaster server, and execute the following command on it:<br>
 ```
 
 <br>
-## 3.4 Rebuild k8s-master to k8s cluster<br>
+
+## 3.4 Rebuild k8s-master to k8s cluster
+
+<br>
 Select any k8s-mkaster server, and execute the following command on it:<br>
 
 ```
@@ -137,7 +170,10 @@ Select any k8s-mkaster server, and execute the following command on it:<br>
 <br>
 <br>
 <br>
-# [4] Parameter introduction:<br>
+
+# [4] Parameter introduction:
+
+<br>
 <br>
 The parameters about kube-install can be viewed using the "kube-install help" command. <a href="docs/parameters0.3.md">You can also see more detailed parameter introduction here.</a><br>
 <br>
