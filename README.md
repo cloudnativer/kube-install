@@ -33,7 +33,7 @@ Select a k8s-master and execute:<br>
 <b>2.2 Download the kube-install-pkg-*.tgz base package</b><br>
 You can download the kube-install-pkg-x.x.tgz package from https://github.com/cloudnativer/kube-install/releases. <br>
 
-![avatar](docs/images/download-pkg.jpg)
+![download-pkg](docs/images/download-pkg.jpg)
 
 If you want to install version 1.14 of kubernetes, download the kube-install-pkg-1.14.tgz package file.If you want to install version 1.18 of kubernetes, download the kube-install-pkg-1.18.tgz package file.<br>
 
@@ -85,14 +85,14 @@ Execute the following command on the k8s-master you selected to view the k8s das
 ```
 
 
-![avatar](docs/images/admin_login.jpg)
+![admin_login](docs/images/admin_login.jpg)
 
 Log in to the k8s dashboard console UI using the URL and key in the /opt/kube-install/admin_login.txt document.Here are the relevant screenshots:
 
 ![avatar](docs/images/kube-dashboard1.jpg)
 
 
-![avatar](docs/images/kube-dashboard2.jpg)
+![kube-dashboard](docs/images/kube-dashboard2.jpg)
 
 <br>
 <br>
