@@ -5,7 +5,7 @@ One click fast installation of highly available kubernetes cluster, as well as a
 
 <br>
 
-# [1] Corresponding relation: 
+# [1] Corresponding relation
 
 <br>
 Kube-install and kubernetes version correspondence:
@@ -118,9 +118,8 @@ Log in to the k8s dashboard console UI using the URL and key in the /opt/kube-in
 <br>
 <br>
 
-# [3] Operation and maintenance:
+# [3] Operation and maintenance
 
-<br>
 <br>
 After kube-install is installed, you can directly execute "kube-install" command in any directory of any k8s-master server.<br>
 <br>
@@ -171,9 +170,8 @@ Select any k8s-mkaster server, and execute the following command on it:<br>
 <br>
 <br>
 
-# [4] Parameter introduction:
+# [4] Parameter introduction
 
-<br>
 <br>
 The parameters about kube-install can be viewed using the "kube-install help" command. <a href="docs/parameters0.3.md">You can also see more detailed parameter introduction here.</a><br>
 <br>
