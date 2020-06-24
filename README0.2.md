@@ -125,7 +125,7 @@ Select any k8s-mkaster server, and execute the following command on it:<br>
 <br>
 <b>[4] Parameter introduction:</b><br>
 <br>
-The parameters about kube-install can be viewed using the "kube-install --help" command. <a href="docs/parameters0.2.md">You can also see more detailed parameter introduction here.</a><br>
+The parameters about kube-install can be viewed using the "kube-install help" command. <a href="docs/parameters0.2.md">You can also see more detailed parameter introduction here.</a><br>
 <br>
 <br>
 <br>
