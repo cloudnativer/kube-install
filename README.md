@@ -26,52 +26,39 @@ Kube-install and kubernetes version correspondence:
 
 <br>
 
-## 2.1 Download kube-install bin file
+## 2.1 Download kube-install package file
 
 <br>
-Select a k8s-master and execute:<br>
+You can download the kube-install-*.tgz package from https://github.com/cloudnativer/kube-install/releases. <br>
 
-```
-# cd /root/
-# git clone https://github.com/cloudnativer/kube-install.git 
-# ls /root/kube-install/
-```
+![download-pkg](docs/images/download-pkg2.jpg)
 
-<br>
+If you want to install version 1.14 of kubernetes, download the kube-install-v1.14.tgz package file.If you want to install version 1.17 of kubernetes, download the kube-install-v1.17.tgz package file.If you want to install version 1.18 of kubernetes, download the kube-install-v1.18.tgz package file.<br>
 
-## 2.2 Download the kube-install-pkg-*.tgz base package
-
-<br>
-You can download the kube-install-pkg-x.x.tgz package from https://github.com/cloudnativer/kube-install/releases. <br>
-
-![download-pkg](docs/images/download-pkg.jpg)
-
-If you want to install version 1.14 of kubernetes, download the kube-install-pkg-1.14.tgz package file.If you want to install version 1.17 of kubernetes, download the kube-install-pkg-1.17.tgz package file.If you want to install version 1.18 of kubernetes, download the kube-install-pkg-1.18.tgz package file.<br>
-
-For example, we are now installing kubernetes v1.18, and we have downloaded the kube-install-pkg-1.18.tgz package.<br>
+For example, we are now installing kubernetes v1.18, and we have downloaded the kube-install-v1.18.tgz package.<br>
 
 
 ```
-# wget https://github.com/cloudnativer/kube-install/releases/download/v0.3.0/kube-install-pkg-1.18.tgz
-# tar -zxvf kube-install-pkg-1.18.tgz -C /root/kube-install/
-# ls /root/kube-install/pkg/
+# wget https://github.com/cloudnativer/kube-install/releases/download/v0.3.0/kube-install-v1.18.tgz
+# tar -zxvf kube-install-v1.18.tgz
+# cd kube-install/
 ```
 
 <br>
 
-## 2.3 Initialize system environment
+## 2.2 Initialize system environment
 
 <br>
-Perform pre installation initialization<br>
+Please operate in the root user environment.Perform pre installation initialization:<br>
 
 ```
-# cd /root/kube-install/
+# cd kube-install/
 # ./kube-install -opt init
 ```
 
 <br>
 
-## 2.4 Install kubernetes cluster
+## 2.3 Install kubernetes cluster
 
 <br>
 If your server environment is as follows:<br>
@@ -84,7 +71,7 @@ If your server environment is as follows:<br>
 <tr><td>192.168.1.15</td><td>k8s-node</td><td>CentOS Linux release 7</td><td>cloudnativer</td></tr>
 <tr><td>192.168.1.16</td><td>k8s-node</td><td>CentOS Linux release 7</td><td>cloudnativer</td></tr>
 </table>
-Well,Execute on the k8s-master selected above:<br>
+Please operate in the root user environment.Well,Execute on the k8s-master selected above:<br>
 
 ```
 # cd /root/kube-install/
@@ -96,7 +83,7 @@ Note: in the above command, the "-mvip" parameter is the k8s cluster virtual IP 
 <br>
 <br>
 
-## 2.5 Login kubernetes dashboard UI
+## 2.4 Login kubernetes dashboard UI
 
 <br>
 Execute the following command on the k8s-master you selected to view the k8s dashboard console URL and key:<br>
