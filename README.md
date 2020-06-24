@@ -41,6 +41,7 @@ For example, we are now installing kubernetes v1.18, and we have downloaded the 
 
 
 ```
+# wget https://github.com/cloudnativer/kube-install/releases/download/v0.3.0/kube-install-pkg-1.18.tgz
 # tar -zxvf kube-install-pkg-1.18.tgz -C /root/kube-install/
 # ls /root/kube-install/pkg/
 ```
