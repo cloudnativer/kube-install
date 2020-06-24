@@ -30,6 +30,7 @@ Select a k8s-master and execute:<br>
 
 ```
 # cd /root/kube-install/
+# wget https://github.com/cloudnativer/kube-install/releases/download/v0.2.2/kube-install-pkg-1.14.tgz
 # tar -zxvf kube-install-pkg-1.14.tgz
 ```
 
