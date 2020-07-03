@@ -1,7 +1,7 @@
 #/bin/bash
 
 
-#$1是path
+#$1 is path
 
 mkdir -p $1
 

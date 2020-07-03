@@ -1,7 +1,7 @@
 #/bin/bash
 
 
-#$1是密码   $2是所有ip列表   $3是软件目录 $4是当前目录 $5是执行的操作选项
+#$1 is password   $2 is ip list   $3 is softdir   $4is currentdir   $5 is option
 
 
 if [ -f $4"/workflow/"$5".inventory" ];then
