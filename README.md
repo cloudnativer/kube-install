@@ -40,6 +40,7 @@ You expect the architecture after installation to be as follows:
 
 ![kube-install-arch](docs/images/kube-install-arch-1.jpg)
 
+<br>
 
 ## 2.1 Download kube-install package file
 
@@ -121,7 +122,7 @@ After kube-install is installed, you can directly execute "kube-install" command
 ## 3.1 Add k8s-node to k8s cluster
 
 <br>
-We will install two servers (192.168.1.15 and 192.168.1.16) as k8s-node and join the kubernetets cluster in Chapter 2.
+You will install two servers (192.168.1.15 and 192.168.1.16) as k8s-node and join the kubernetets cluster in Chapter 2.
 <table>
 <tr><td>IP Address</td><td>Role</td><td>OS Version</td><td>Root Password</td></tr>
 <tr><td>192.168.1.11</td><td>k8s-master,k8s-node</td><td>CentOS Linux release 7</td><td>cloudnativer</td></tr>
