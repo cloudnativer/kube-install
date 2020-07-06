@@ -18,6 +18,9 @@ The current kubernetes cluster architecture is as follows:
 
 <br>
 
+Next, we will carry out daily operation and maintenance operations such as add-k8s node, delete k8s-node, delete k8s-master and rebuild k8s-master.
+
+<br>
 
 ## Add k8s-node to k8s cluster
 
