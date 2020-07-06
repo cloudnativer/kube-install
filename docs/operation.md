@@ -14,7 +14,7 @@ If you have four servers, kubernetes master software is installed on the three s
 
 The current kubernetes cluster architecture is as follows:
 
-![kube-install-arch](docs/images/kube-install-arch-1.jpg)
+![kube-install-arch](images/kube-install-arch-1.jpg)
 
 <br>
 
