@@ -1,5 +1,5 @@
 
-# Operation and maintenance
+# Operation and Maintenance
 
 <br>
 
@@ -19,7 +19,7 @@ The current kubernetes cluster architecture is as follows:
 <br>
 
 
-## 1 Add k8s-node to k8s cluster
+## Add k8s-node to k8s cluster
 
 <br>
 You will install two servers (192.168.1.15 and 192.168.1.16) as k8s-node and join the kubernetets cluster in Chapter 2.
@@ -45,7 +45,7 @@ The architecture after installation is shown in the following figure:
 
 <br>
 
-## 2 Delete k8s-node from k8s cluster
+## Delete k8s-node from k8s cluster
 
 <br>
 You will delete the two k8s-nodes (192.168.1.15 and 192.168.1.16) from the kubernetets cluster.
@@ -61,7 +61,7 @@ The architecture after installation is shown in the following figure:
 
 <br>
 
-## 3 Delete k8s-master from k8s cluster
+## Delete k8s-master from k8s cluster
 
 <br>
 You will Delete the k8s-master (192.168.1.13) from the kubernetets cluster.
@@ -77,7 +77,7 @@ The architecture after installation is shown in the following figure:
 
 <br>
 
-## 4 Rebuild k8s-master to k8s cluster
+## Rebuild k8s-master to k8s cluster
 
 <br>
 You will rebuild the damaged k8s-master (192.168.1.13) in the kubernetets cluster.
