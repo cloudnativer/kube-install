@@ -71,9 +71,11 @@ If your server environment is as follows:<br>
 <tr><td>192.168.1.12</td><td>k8s-master,k8s-node</td><td>CentOS Linux release 7</td><td>cloudnativer</td></tr>
 <tr><td>192.168.1.13</td><td>k8s-master,k8s-node</td><td>CentOS Linux release 7</td><td>cloudnativer</td></tr>
 <tr><td>192.168.1.14</td><td>k8s-node</td><td>CentOS Linux release 7</td><td>cloudnativer</td></tr>
-<tr><td>192.168.1.15</td><td>k8s-node</td><td>CentOS Linux release 7</td><td>cloudnativer</td></tr>
-<tr><td>192.168.1.16</td><td>k8s-node</td><td>CentOS Linux release 7</td><td>cloudnativer</td></tr>
 </table>
+We installed master software on three servers(192.168.1.11,192.168.1.12,192.168.1.13), and node software on on four servers(192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14).The architecture after installation is shown in the following figure:
+
+![kube-install-arch](docs/images/kube-install-arch-1.jpg)
+
 Please operate in the root user environment.Well,Execute on the k8s-master selected above:<br>
 
 ```
@@ -115,24 +117,38 @@ Login to the k8s dashboard console UI using the URL and key in the /opt/kube-ins
 After kube-install is installed, you can directly execute "kube-install" command in any directory of any k8s-master server.<br>
 <br>
 
-## 3.1 Delete k8s-node from k8s cluster
+## 3.1 Add k8s-node to k8s cluster
+
+<br>
+Two k8s-nodes (192.168.1.15 and 192.168.1.16) are added to the  cluster in Chapter 2.
+<table>
+<tr><td>IP Address</td><td>Role</td><td>OS Version</td><td>Root Password</td></tr>
+<tr><td>192.168.1.11</td><td>k8s-master,k8s-node</td><td>CentOS Linux release 7</td><td>cloudnativer</td></tr>
+<tr><td>192.168.1.12</td><td>k8s-master,k8s-node</td><td>CentOS Linux release 7</td><td>cloudnativer</td></tr>
+<tr><td>192.168.1.13</td><td>k8s-master,k8s-node</td><td>CentOS Linux release 7</td><td>cloudnativer</td></tr>
+<tr><td>192.168.1.14</td><td>k8s-node</td><td>CentOS Linux release 7</td><td>cloudnativer</td></tr>
+<tr><td>192.168.1.15</td><td>k8s-node</td><td>CentOS Linux release 7</td><td>cloudnativer</td></tr>
+<tr><td>192.168.1.16</td><td>k8s-node</td><td>CentOS Linux release 7</td><td>cloudnativer</td></tr>
+</table>
+The architecture after installation is shown in the following figure:
+
+![kube-install-arch](docs/images/kube-install-arch-2.jpg)
+
+Select any k8s-mkaster server, and execute the following command on it:<br>
+
+```
+# kube-install -opt addnode -node "192.168.1.15,192.168.1.16" -sshpwd "cloudnativer"
+```
+
+<br>
+
+## 3.2 Delete k8s-node from k8s cluster
 
 <br>
 Select any k8s-mkaster server, and execute the following command on it:<br>
 
 ```
 # kube-install -opt delnode -node "192.168.1.13,192.168.1.15" -sshpwd "cloudnativer"
-```
-
-<br>
-
-## 3.2 Add k8s-node to k8s cluster
-
-<br>
-Select any k8s-mkaster server, and execute the following command on it:<br>
-
-```
-# kube-install -opt addnode -node "192.168.1.15,192.168.1.16" -sshpwd "cloudnativer"
 ```
 
 <br>
