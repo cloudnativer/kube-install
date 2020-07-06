@@ -28,7 +28,7 @@ Kube-install and kubernetes version correspondence:
 
 <br>
 
-If you have four servers,kubernetes master software is installed on the three servers (192.168.1.11,192.168.1.12,192.168.1.13), and kubernetes node software is installed on the four servers (192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14). <br>
+If you have four servers,kubernetes master software is installed on the three servers (192.168.1.11, 192.168.1.12, 192.168.1.13), and kubernetes node software is installed on the four servers (192.168.1.11, 192.168.1.12, 192.168.1.13, 192.168.1.14). <br>
 
 <table>
 <tr><td>IP Address</td><td>Role</td><td>OS Version</td><td>Root Password</td></tr>
