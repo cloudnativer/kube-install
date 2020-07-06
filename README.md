@@ -117,8 +117,7 @@ Login to the k8s dashboard console UI using the URL and key in the /opt/kube-ins
 # [3] Operation and maintenance
 
 <br>
-After kube-install is installed, you can directly execute "kube-install" command in any directory of any k8s-master server.<br>
-Kube-install can not only quickly install the highly available k8s cluster, but also add k8s node, delete k8s node, delete k8s master and rebuild k8s master.
+After kube-install is installed, you can directly execute "kube-install" command in any directory of any k8s-master server.Kube-install can not only quickly install the highly available k8s cluster, but also add k8s node, delete k8s node, delete k8s master and rebuild k8s master.<br>
 Suppose you expect to install two servers (192.168.1.15 and 192.168.1.16) as k8s-nodes and join the kubernetets cluster in Chapter 2.
 
 <table>
