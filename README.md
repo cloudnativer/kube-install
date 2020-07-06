@@ -142,7 +142,7 @@ The architecture after installation is shown in the following figure:
 ![kube-install-arch](docs/images/kube-install-arch-2.jpg)
 
 <br>
-You can <a href="docs/operation.md">click here to view more operation documents</a> about add k8s node, delete k8s node, delete k8s master and rebuild k8s master.
+You can <a href="docs/operation.md">click here to view more operation documents</a> about add k8s-node, delete k8s-node, delete k8s-master and rebuild k8s-master.
 <br>
 <br>
 
