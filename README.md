@@ -28,7 +28,7 @@ Kube-install and kubernetes version correspondence:
 
 <br>
 
-If your server environment is as follows:<br>
+If you have four servers, you expect to install the kubernetes master software on these three servers (192.168.1.11,192.168.1.12,192.168.1.13), and kubernetes node software on on four servers(192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14). <br>
 <table>
 <tr><td>IP Address</td><td>Role</td><td>OS Version</td><td>Root Password</td></tr>
 <tr><td>192.168.1.11</td><td>k8s-master,k8s-node</td><td>CentOS Linux release 7</td><td>cloudnativer</td></tr>
@@ -36,7 +36,7 @@ If your server environment is as follows:<br>
 <tr><td>192.168.1.13</td><td>k8s-master,k8s-node</td><td>CentOS Linux release 7</td><td>cloudnativer</td></tr>
 <tr><td>192.168.1.14</td><td>k8s-node</td><td>CentOS Linux release 7</td><td>cloudnativer</td></tr>
 </table>
-We installed master software on three servers(192.168.1.11,192.168.1.12,192.168.1.13), and node software on on four servers(192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14).We expect the architecture after installation to be as follows:
+You expect the architecture after installation to be as follows:
 
 ![kube-install-arch](docs/images/kube-install-arch-1.jpg)
 
