@@ -27,7 +27,7 @@ Select any k8s-mkaster server, and execute the following command on it:<br>
 
 The architecture after installation is shown in the following figure:
 
-![kube-install-arch](docs/images/kube-install-arch-2.jpg)
+![kube-install-arch](images/kube-install-arch-2.jpg)
 
 <br>
 
@@ -43,7 +43,7 @@ Select any k8s-mkaster server, and execute the following command on it:<br>
 
 The architecture after installation is shown in the following figure:
 
-![kube-install-arch](docs/images/kube-install-arch-3.jpg)
+![kube-install-arch](images/kube-install-arch-3.jpg)
 
 <br>
 
@@ -59,7 +59,7 @@ Select any k8s-mkaster server, and execute the following command on it:<br>
 
 The architecture after installation is shown in the following figure:
 
-![kube-install-arch](docs/images/kube-install-arch-4.jpg)
+![kube-install-arch](images/kube-install-arch-4.jpg)
 
 <br>
 
@@ -75,7 +75,7 @@ Select any k8s-mkaster server, and execute the following command on it:<br>
 
 The architecture after installation is shown in the following figure:
 
-![kube-install-arch](docs/images/kube-install-arch-5.jpg)
+![kube-install-arch](images/kube-install-arch-5.jpg)
 
 <br>
 <br>
