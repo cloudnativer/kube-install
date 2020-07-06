@@ -2,8 +2,22 @@
 # Operation and maintenance
 
 <br>
-After kube-install is installed, you can directly execute "kube-install" command in any directory of any k8s-master server.<br>
+
+If you have four servers, you expect to install the kubernetes master software on these three servers (192.168.1.11,192.168.1.12,192.168.1.13), and kubernetes node software on on four servers(192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14). <br>
+<table>
+<tr><td>IP Address</td><td>Role</td><td>OS Version</td><td>Root Password</td></tr>
+<tr><td>192.168.1.11</td><td>k8s-master,k8s-node</td><td>CentOS Linux release 7</td><td>cloudnativer</td></tr>
+<tr><td>192.168.1.12</td><td>k8s-master,k8s-node</td><td>CentOS Linux release 7</td><td>cloudnativer</td></tr>
+<tr><td>192.168.1.13</td><td>k8s-master,k8s-node</td><td>CentOS Linux release 7</td><td>cloudnativer</td></tr>
+<tr><td>192.168.1.14</td><td>k8s-node</td><td>CentOS Linux release 7</td><td>cloudnativer</td></tr>
+</table>
+
+The current kubernetes cluster architecture is as follows:
+
+![kube-install-arch](docs/images/kube-install-arch-1.jpg)
+
 <br>
+
 
 ## 1 Add k8s-node to k8s cluster
 
