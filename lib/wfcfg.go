@@ -42,11 +42,9 @@ func GeneralConfig(master_array []string, node_array []string, mvip string, curr
       case node_num == 1 :
         inventory_file.WriteString("\n### addons_ip configuration ###\naddons_ip1=\""+node_array[0]+"\"\naddons_ip2=\""+node_array[0]+"\"\naddons_ip3=\""+node_array[0]+"\"\n")
       case node_num == 2 :
-        inventory_file.WriteString("\n### addons_ip configuration ###\naddons_ip1=\""+node_array[0]+"\"\naddons_ip2=\""+node_array[1]+"\"\naddons_ip3=\""+node_array[1]+"\"
-\n")
-      case node_num == 1 :
-        inventory_file.WriteString("\n### addons_ip configuration ###\naddons_ip1=\""+node_array[0]+"\"\naddons_ip2=\""+node_array[1]+"\"\naddons_ip3=\""+node_array[2]+"\"
-\n")
+        inventory_file.WriteString("\n### addons_ip configuration ###\naddons_ip1=\""+node_array[0]+"\"\naddons_ip2=\""+node_array[1]+"\"\naddons_ip3=\""+node_array[1]+"\"\n")
+      case node_num >= 3 :
+        inventory_file.WriteString("\n### addons_ip configuration ###\naddons_ip1=\""+node_array[0]+"\"\naddons_ip2=\""+node_array[1]+"\"\naddons_ip3=\""+node_array[2]+"\"\n")
       default:
         panic("You must install at least one k8s-node to ensure that the cluster is running properly!")
     }
