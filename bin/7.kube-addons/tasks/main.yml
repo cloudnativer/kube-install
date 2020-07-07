@@ -48,10 +48,10 @@
 - name: 2.5 Create DASHBOARD_LOGIN_TOKEN
   shell: "kubectl describe secret -n kube-system {{admin_secret.stdout}} | grep -E '^token' | awk '{print $2}'"
   register: dashboard_login_token
-- shell: "echo {{dashboard_login_token.stdout}} > /etc/kubernetes/dashboard_login_token.txt"
+- shell: "echo \"{{dashboard_login_token.stdout}}\" > /etc/kubernetes/dashboard_login_token.txt"
 - name: 2.6 Create dashboard的KubeConfig file
   shell: "kubectl config set-cluster kubernetes --certificate-authority=/etc/kubernetes/ssl/k8s-root-ca.pem --embed-certs=true --server=https://{{master_vip}}:8443 --kubeconfig=dashboard.kubeconfig chdir=/etc/kubernetes/ssl"
-- shell: "kubectl config set-credentials dashboard_user --token={{dashboard_login_token.stdout}} --kubeconfig=dashboard.kubeconfig chdir=/etc/kubernetes/ssl"
+- shell: "kubectl config set-credentials dashboard_user --token=\"{{dashboard_login_token.stdout}}\" --kubeconfig=dashboard.kubeconfig chdir=/etc/kubernetes/ssl"
 - shell: "kubectl config set-context default --cluster=kubernetes --user=dashboard_user --kubeconfig=dashboard.kubeconfig chdir=/etc/kubernetes/ssl"
 - shell: "kubectl config use-context default --kubeconfig=dashboard.kubeconfig chdir=/etc/kubernetes/ssl"
 
