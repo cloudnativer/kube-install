@@ -4,9 +4,15 @@
 <br>
 The parameters about kube-install can be viewed using the "kube-install help" or "kube-install -opt help" command. <br>
 <table width=100%>
-<tr><td bgcolor=#000000><font color=#C0FF3E># kube-install help</font></td></tr>
-<tr><td bgcolor=#000000></td></tr>
-<tr><td bgcolor=#000000><font color=#C0FF3E>
+<tr><td>
+ 
+ ```
+  # kube-install help
+ ```
+  
+</td></tr>
+<tr><td></td></tr>
+<tr><td>
 <pre>
 Usage of kube-install: -opt [OPTIONS] COMMAND [ARGS]...<br>
 <br>
@@ -27,9 +33,9 @@ Commands:<br>
   node             The IP address of k8s-node server.<br>
   sshpwd           SSH login root password of each server.<br>
  </pre>
-</font></td></tr>
-<tr><td bgcolor=#000000></td></tr>
-<tr><td bgcolor=#000000><font color=#C0FF3E>
+</td></tr>
+<tr><td></td></tr>
+<tr><td>
 <pre>
 For example：<br>
 <br>
@@ -48,8 +54,8 @@ For example：<br>
   Display help information:<br>
     kube-install -opt help<br>
   </pre>
-</font></td></tr>
-<tr><td bgcolor=#000000></td></tr>
+</td></tr>
+<tr><td></td></tr>
 </table>
 <br>
 <br>
