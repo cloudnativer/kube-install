@@ -101,14 +101,14 @@ Execute the following command on the k8s-master you selected to view the kube-da
 ```
 
 
-![admin_login](docs/images/admin_login.jpg)
+![admin_login](docs/images/admin_login2.jpg)
 
 Login to the kube-dashboard console UI using the URL and key in the /opt/kube-install/admin_login.txt document.Here are the relevant screenshots:
 
-![kube-dashboard](docs/images/kube-dashboard1.jpg)
+![kube-dashboard](docs/images/kube-dashboard3.jpg)
 
 
-![kube-dashboard](docs/images/kube-dashboard2.jpg)
+![kube-dashboard](docs/images/kube-dashboard4.jpg)
 
 <br>
 <br>
