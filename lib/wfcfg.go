@@ -37,12 +37,18 @@ func GeneralConfig(master_array []string, node_array []string, mvip string, curr
     }else{
       inventory_file.WriteString("master_vip=\""+mvip+"\"\nmaster_vport=\"8443\"\n")
     }
-    if node_num > 1{
-      inventory_file.WriteString("\n### dashboard configuration ###\ndashboard_ip=\""+node_array[0]+"\"\n")
-      inventory_file.WriteString("\n### registry configuration ###\nregistry_ip=\""+node_array[1]+"\"\n")
-    }else{
-      inventory_file.WriteString("\n### dashboard configuration ###\ndashboard_ip=\""+node_array[0]+"\"\n")
-      inventory_file.WriteString("\n### registry configuration ###\nregistry_ip=\""+node_array[0]+"\"\n")
+    //Setting the scheduling IP for addons
+    switch {
+      case node_num == 1 :
+        inventory_file.WriteString("\n### addons_ip configuration ###\naddons_ip1=\""+node_array[0]+"\"\naddons_ip2=\""+node_array[0]+"\"\naddons_ip3=\""+node_array[0]+"\"\n")
+      case node_num == 2 :
+        inventory_file.WriteString("\n### addons_ip configuration ###\naddons_ip1=\""+node_array[0]+"\"\naddons_ip2=\""+node_array[1]+"\"\naddons_ip3=\""+node_array[1]+"\"
+\n")
+      case node_num == 1 :
+        inventory_file.WriteString("\n### addons_ip configuration ###\naddons_ip1=\""+node_array[0]+"\"\naddons_ip2=\""+node_array[1]+"\"\naddons_ip3=\""+node_array[2]+"\"
+\n")
+      default:
+        panic("You must install at least one k8s-node to ensure that the cluster is running properly!")
     }
     inventory_file.WriteString("\n### traefik configuration ###\ntraefik_admin_port=\"80\"\ntraefik_data_port=\"8080\"\n")
     inventory_file.WriteString("\n### k8s-network configuration ###\nservice_cidr=\"10.254.0.0/16\"\nservice_svc_ip=\"10.254.0.1\"\nservice_dns_svc_ip=\"10.254.0.2\"\npod_cidr=\"172.30.0.0/16\"\n\n\n")

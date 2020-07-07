@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: kibana-logging
-        image: {{registry_ip}}:5000/kibana-oss:6.6.1
+        image: {{master_vip}}:5000/kibana-oss:6.6.1
         imagePullPolicy: IfNotPresent
         resources:
           # need more cpu upon initialization, therefore burstable class

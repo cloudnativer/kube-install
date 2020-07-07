@@ -18,7 +18,7 @@ spec:
       serviceAccountName: heapster
       containers:
       - name: heapster
-        image: {{registry_ip}}:5000/heapster-amd64:v1.5.4
+        image: {{master_vip}}:5000/heapster-amd64:v1.5.4
         imagePullPolicy: IfNotPresent
         command:
         - /heapster

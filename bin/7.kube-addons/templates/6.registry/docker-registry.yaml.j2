@@ -16,7 +16,7 @@ spec:
         app: docker-registry
     spec: 
       nodeSelector:
-        kubernetes.io/hostname: {{registry_ip}}
+        registry: turnon
       tolerations:
       - key: "servertype"
         operator: "Equal"
@@ -24,7 +24,7 @@ spec:
         effect: "NoSchedule"
       containers: 
         - name: docker-registry
-          image: {{registry_ip}}:5000/registry:latest
+          image: {{master_vip}}:5000/registry:latest
           imagePullPolicy: IfNotPresent
           resources:
             requests:

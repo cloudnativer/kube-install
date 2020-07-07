@@ -6,7 +6,7 @@
     },
     "data-root": "{{k8s_install_home}}/docker/containerd",
     "insecure-registries": [
-    "{{registry_ip}}:5000"
+    "{{master_vip}}:5000"
     ]
 }
 overlay2
@@ -20,6 +20,6 @@ overlay2
     },
     "data-root": "{{k8s_install_home}}/docker/containerd",
     "insecure-registries": [
-    "{{registry_ip}}:5000"
+    "{{master_vip}}:5000"
     ]
 }

@@ -57,7 +57,7 @@
     - "coredns.tar"
     - "registry.tar"
 - name: 12.Set docker images tag
-  shell: "docker tag houshijun/{{item}} {{registry_ip}}:5000/{{item}}"
+  shell: "docker tag houshijun/{{item}} {{master_vip}}:5000/{{item}}"
   with_items:
     - "metrics-server-amd64:v0.3.6"
     - "heapster-amd64:v1.5.4"
