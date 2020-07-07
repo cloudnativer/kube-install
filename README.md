@@ -57,7 +57,7 @@ For example, we are now installing kubernetes v1.18, and we have downloaded the 
 
 ```
 # cd /root/
-# wget https://github.com/cloudnativer/kube-install/releases/download/v0.3.0/kube-install-v1.18.tgz
+# wget https://github.com/cloudnativer/kube-install/releases/download/0.3.0/kube-install-v1.18.tgz
 # tar -zxvf kube-install-v1.18.tgz
 # cd /root/kube-install/
 ```
@@ -86,7 +86,7 @@ Please operate in the root user environment. Execute on the k8s-master selected 
 # ./kube-install -opt install -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -mvip "192.168.1.88" -sshpwd "cloudnativer"
 ```
 
-Note: in the above command, the "-mvip" parameter is the k8s cluster virtual IP address.
+Note: in the above command, the "-mvip" parameter is the kubernetes cluster virtual IP address.
 <br>
 <br>
 <br>
@@ -94,7 +94,7 @@ Note: in the above command, the "-mvip" parameter is the k8s cluster virtual IP 
 ## 2.4 Login kubernetes dashboard UI
 
 <br>
-Execute the following command on the k8s-master you selected to view the k8s dashboard console URL and key:<br>
+Execute the following command on the k8s-master you selected to view the kube-dashboard console URL and key:<br>
 
 ```
 # cat /opt/kube-install/admin_login.txt
@@ -103,7 +103,7 @@ Execute the following command on the k8s-master you selected to view the k8s das
 
 ![admin_login](docs/images/admin_login.jpg)
 
-Login to the k8s dashboard console UI using the URL and key in the /opt/kube-install/admin_login.txt document.Here are the relevant screenshots:
+Login to the kube-dashboard console UI using the URL and key in the /opt/kube-install/admin_login.txt document.Here are the relevant screenshots:
 
 ![kube-dashboard](docs/images/kube-dashboard1.jpg)
 
@@ -117,7 +117,7 @@ Login to the k8s dashboard console UI using the URL and key in the /opt/kube-ins
 # [3] Operation and maintenance
 
 <br>
-After kube-install is installed, you can directly execute "kube-install" command in any directory of any k8s-master server.Kube-install can not only quickly install the highly available k8s cluster, but also add k8s node, delete k8s node, delete k8s master and rebuild k8s master.<br>
+After kube-install is installed, you can directly execute "kube-install" command in any directory of any k8s-master server.Kube-install can not only quickly install the highly available kubernetes cluster, but also add k8s-node, delete k8s-node, delete k8s-master and rebuild k8s-master.<br>
 Suppose you expect to install two servers (192.168.1.15 and 192.168.1.16) as k8s-nodes and join the kubernetets cluster in Chapter 2.
 
 <table>
