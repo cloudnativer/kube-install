@@ -12,13 +12,6 @@
     - traefik
     - registry
     - temp
-- name: 0. Setting scheduling label for k8s node
-  shell: "kubectl label node {{addons_ip1}} dashboard=turnon --overwrite"
-  ignore_errors: yes
-- shell: "kubectl label node {{addons_ip2}} dashboard=turnon --overwrite"
-  ignore_errors: yes
-- shell: "kubectl label node {{addons_ip3}} registry=turnon --overwrite"
-  ignore_errors: yes
 
 
 ### 1.Deploy coredns
