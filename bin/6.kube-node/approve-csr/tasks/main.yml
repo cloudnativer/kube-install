@@ -7,3 +7,14 @@
 - name: 3.Approve node csr
   shell: "kubectl get csr | awk '/Pending/ {print $1}' | xargs kubectl certificate approve"
   ignore_errors: yes
+- name: 4.Wait 30s
+  wait_for:
+    timeout: 30
+- name: 5. Setting scheduling label for k8s node
+  shell: "kubectl label node {{addons_ip1}} dashboard=turnon --overwrite"
+  ignore_errors: yes
+- shell: "kubectl label node {{addons_ip2}} dashboard=turnon --overwrite"
+  ignore_errors: yes
+- shell: "kubectl label node {{addons_ip3}} registry=turnon --overwrite"
+  ignore_errors: yes
+  
