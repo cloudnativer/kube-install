@@ -101,7 +101,7 @@ func main() {
         kilib.DelnodeYML(softdir)
         delnodeiplist := "{"+node+"}"
         if len(node_array) == 1 { delnodeiplist = node }
-        kilib.ShellExecute("kubectl drain {"+node+"} --delete-local-data --ignore-daemonsets --force && kubectl delete node "+delnodeiplist )
+        kilib.ShellExecute("kubectl delete node "+delnodeiplist )
         kilib.ShellExecute("ansible-playbook -i "+softdir+"/workflow/delnode.inventory "+softdir+"/workflow/k8scluster-delnode.yml")
         fmt.Println("K8s-node delete operation execution completed!")
 
