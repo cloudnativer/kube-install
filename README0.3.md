@@ -46,13 +46,13 @@ You expect the architecture after installation to be as follows:
 ## 2.1 Download kube-install package file
 
 <br>
-You can download the kube-install-*.tgz package from https://github.com/cloudnativer/kube-install/releases. <br>
+You can download the `kube-install-*.tgz` package from https://github.com/cloudnativer/kube-install/releases. <br>
 
 ![download-pkg](docs/images/download-pkg.jpg)
 
-If you want to install version 1.18 of kubernetes, download the kube-install-v1.18.tgz package file.If you want to install version 1.17 of kubernetes, download the kube-install-v1.17.tgz package file.If you want to install version 1.16 of kubernetes, download the kube-install-v1.16.tgz package file...In the same way, you can download the version you want.<br>
+If you want to install version 1.18 of kubernetes, download the `kube-install-v1.18.tgz` package file.If you want to install version 1.17 of kubernetes, download the `kube-install-v1.17.tgz` package file.If you want to install version 1.16 of kubernetes, download the `kube-install-v1.16.tgz` package file...In the same way, you can download the version you want.<br>
 
-For example, we are now installing kubernetes v1.18, and we have downloaded the kube-install-v1.18.tgz package.<br>
+For example, we are now installing kubernetes v1.18, and we have downloaded the `kube-install-v1.18.tgz` package.<br>
 
 
 ```
@@ -86,7 +86,7 @@ Please operate in the root user environment. Execute on the k8s-master selected 
 # ./kube-install -opt install -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -mvip "192.168.1.88" -sshpwd "cloudnativer"
 ```
 
-Note: in the above command, the "-mvip" parameter is the kubernetes cluster virtual IP address.
+Note: in the above command, the `-mvip` parameter is the kubernetes cluster virtual IP address.So you need to assign the kubernetes cluster a virtual IP address on the same LAN as the k8s-master.
 <br>
 <br>
 <br>
@@ -103,7 +103,7 @@ Execute the following command on the k8s-master you selected to view the kube-da
 
 ![admin_login](docs/images/admin_login2.jpg)
 
-Login to the kube-dashboard console UI using the URL and key in the /opt/kube-install/admin_login.txt document.Here are the relevant screenshots:
+Login to the kube-dashboard console UI using the URL and key in the `/opt/kube-install/admin_login.txt` document.Here are the relevant screenshots:
 
 ![kube-dashboard](docs/images/kube-dashboard3.jpg)
 
@@ -117,7 +117,7 @@ Login to the kube-dashboard console UI using the URL and key in the /opt/kube-in
 # [3] Operation and maintenance
 
 <br>
-After kube-install is installed, you can directly execute "kube-install" command in any directory of any k8s-master server.Kube-install can not only quickly install the highly available kubernetes cluster, but also add k8s-node, delete k8s-node, delete k8s-master and rebuild k8s-master.<br>
+After kube-install is installed, you can directly execute `kube-install` command in any directory of any k8s-master server.Kube-install can not only quickly install the highly available kubernetes cluster, but also add k8s-node, delete k8s-node, delete k8s-master and rebuild k8s-master.<br>
 Suppose you expect to install two servers (192.168.1.15 and 192.168.1.16) as k8s-nodes and join the kubernetets cluster in Chapter 2.
 
 <table>
@@ -148,7 +148,7 @@ You can <a href="docs/operation.md">click here to view more operation documents<
 # [4] Parameter introduction
 
 <br>
-The parameters about kube-install can be viewed using the "kube-install help" command. You can also <a href="docs/parameters0.3.md">see more detailed parameter introduction here</a>.<br>
+The parameters about kube-install can be viewed using the `kube-install help` command. You can also <a href="docs/parameters0.3.md">see more detailed parameter introduction here</a>.<br>
 <br>
 <br>
 <br>
