@@ -130,7 +130,7 @@ Suppose you expect to install two servers (192.168.1.15 and 192.168.1.16) as k8s
 <tr><td><b>192.168.1.16</b></td><td>k8s-node</td><td>CentOS Linux release 7</td><td>cloudnativer</td></tr>
 </table>
 
-Select any k8s-mkaster server, and execute the following command on it:<br>
+Select any k8s-master server, and execute the following command on it:<br>
 
 ```
 # kube-install -opt addnode -node "192.168.1.15,192.168.1.16" -sshpwd "cloudnativer"
