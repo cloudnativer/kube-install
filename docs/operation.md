@@ -36,7 +36,7 @@ You will install two servers (192.168.1.15 and 192.168.1.16) as k8s-node and joi
 <tr><td><b>192.168.1.16</b></td><td>k8s-node</td><td>CentOS Linux release 7</td><td>cloudnativer</td></tr>
 </table>
 
-Select any k8s-mkaster server, and execute the following command on it:<br>
+Select any k8s-master server, and execute the following command on it:<br>
 
 ```
 # kube-install -opt addnode -node "192.168.1.15,192.168.1.16" -sshpwd "cloudnativer"
@@ -52,7 +52,7 @@ The architecture after installation is shown in the following figure:
 
 <br>
 You will delete the two k8s-nodes (192.168.1.15 and 192.168.1.16) from the kubernetets cluster.
-Select any k8s-mkaster server, and execute the following command on it:<br>
+Select any k8s-master server, and execute the following command on it:<br>
 
 ```
 # kube-install -opt delnode -node "192.168.1.13,192.168.1.15" -sshpwd "cloudnativer"
@@ -68,7 +68,7 @@ The architecture after installation is shown in the following figure:
 
 <br>
 You will Delete the k8s-master (192.168.1.13) from the kubernetets cluster.
-Select any k8s-mkaster server, and execute the following command on it:<br>
+Select any k8s-master server, and execute the following command on it:<br>
 
 ```
 # kube-install -opt delmaster -master "192.168.1.13" -sshpwd "cloudnativer"
@@ -84,7 +84,7 @@ The architecture after installation is shown in the following figure:
 
 <br>
 You will rebuild the damaged k8s-master (192.168.1.13) in the kubernetets cluster.
-Select any k8s-mkaster server, and execute the following command on it:<br>
+Select any k8s-master server, and execute the following command on it:<br>
 
 ```
 # kube-install -opt rebuildmaster -rebuildmaster "192.168.1.13" -sshpwd "cloudnativer"
