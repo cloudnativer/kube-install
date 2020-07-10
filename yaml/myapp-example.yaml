@@ -24,8 +24,8 @@ spec:
               cpu: 200m
               memory: 512Mi
           env:
-            - name: fana
-              value: huangmanman
+            - name: group
+              value: cloudnativer
           livenessProbe:
             httpGet:
               path: /
