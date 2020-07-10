@@ -25,7 +25,7 @@ Next, we will carry out daily operation and maintenance operations such as add-k
 ## Add k8s-node to k8s cluster
 
 <br>
-You will install two servers (192.168.1.15 and 192.168.1.16) as k8s-node and join the kubernetets cluster in Chapter 2.
+You will install two servers (192.168.1.15 and 192.168.1.16) as k8s-node and join the kubernetets cluster.
 <table>
 <tr><td>IP Address</td><td>Role</td><td>OS Version</td><td>Root Password</td></tr>
 <tr><td>192.168.1.11</td><td>k8s-master,k8s-node</td><td>CentOS Linux release 7</td><td>cloudnativer</td></tr>
