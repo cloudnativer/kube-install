@@ -75,6 +75,7 @@
   shell: "kubectl apply -f {{software_home}}/addons/metrics-server/"
 - name: 3.3 Create metrics-server rbac
   shell: "kubectl create clusterrolebinding the-boss --user system:anonymous --clusterrole cluster-admin"
+  ignore_errors: yes
 
 ### 4.Deploy traefik
 - name: 4.1 Create traefik.yaml file
