@@ -30,5 +30,11 @@ Red Hat Enterprise Linux(RHEL) 7.8
 
 <br>
 
-Note: we have not tested it on CentOS Linux release 8 and Red Hat Enterprise Linux(RHEL) 8, so we can not ensure that Kube install can be successfully installed on CentOS Linux release 8 and Red Hat Enterprise Linux(RHEL) 8.
+Note:
+<br>
+we have not tested it on CentOS Linux release 8 and Red Hat Enterprise Linux(RHEL) 8, so we can not ensure that Kube install can be successfully installed on CentOS Linux release 8 and Red Hat Enterprise Linux(RHEL) 8.
+<br>
+Currently, we don't support the Ubuntu and Debian operating systems, and we may support them in the future.
+<br>
+
 
