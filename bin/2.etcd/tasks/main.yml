@@ -1,0 +1,29 @@
+- name: 1.Decompress etcd software package
+  unarchive:
+    src: "{{software_home}}/pkg/etcd-v3.3.18.tar.gz"
+    dest: /usr/local/bin/
+    mode: 0755
+- name: 2.Create {{k8s_install_home}}/etcd data directory
+  file: 
+    path: "{{k8s_install_home}}/etcd"
+    state: directory
+- name: 3.Create etcd cert directory
+  file: 
+    path: /etc/kubernetes/ssl/
+    state: directory
+- name: 4.Create etcd service file
+  template:
+    src: ../templates/etcd.service.j2 
+    dest: /etc/systemd/system/etcd.service
+- name: 5.Distribution etcd cert file
+  copy: 
+    src: /etc/kubernetes/
+    dest: /etc/kubernetes/
+- name: 6.Set service startup
+  shell: "systemctl enable etcd"
+- name: 7.Start etcd service
+  systemd:
+    daemon_reload: true
+    name: etcd
+    state: restarted
+    enabled: true

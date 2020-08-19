@@ -1,0 +1,16 @@
+- name: 1.Create kernel package
+  file:
+    path: "{{software_home}}/temp"
+    state: directory
+- name: 2.Decompress kernel package
+  #update os to kernel4.19
+  unarchive:
+    src: "{{software_home}}/pkg/kernel4.19.tar.gz"
+    dest: "{{software_home}}/temp"
+    mode: 0744
+- name: 3.Update kernel and grub
+  template: 
+    src: ../templates/updategrub.sh.j2
+    dest: "{{software_home}}/temp/updategrub.sh"
+    mode: 0755
+- shell: "/bin/bash {{software_home}}/temp/updategrub.sh"

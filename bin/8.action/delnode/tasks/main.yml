@@ -1,0 +1,37 @@
+- name: 1.Stop kubelet service
+  service:
+    name: kubelet
+    state: stopped
+    enabled: false
+  ignore_errors: yes
+- name: 2.Stop kube-proxy service
+  service:
+    name: kube-proxy
+    state: stopped
+    enabled: false
+  ignore_errors: yes
+- name: 3.Stop docker service
+  service:
+    name: docker
+    state: stopped
+    enabled: false
+  ignore_errors: yes
+- name: 4.Uninstall docker software
+  copy: 
+    src: ../templates/uninstall-docker.sh
+    dest: "{{software_home}}/temp/uninstall-docker.sh"
+    mode: 0755
+  ignore_errors: yes
+- shell: "{{software_home}}/temp/uninstall-docker.sh"
+  ignore_errors: yes
+- name: 5.Delete kube-proxy service file
+  file:
+    path: /etc/systemd/system/kube-proxy.service
+    state: absent
+  ignore_errors: yes
+- name: 6.Delete kubelet service file
+  file:
+    path: /etc/systemd/system/kubelet.service
+    state: absent
+  ignore_errors: yes
+

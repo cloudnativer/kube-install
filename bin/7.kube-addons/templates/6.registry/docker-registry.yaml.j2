@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: docker-registry
+  namespace: kube-system
+  labels:
+    app: docker-registry
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: docker-registry
+  template:
+    metadata:
+      labels:
+        app: docker-registry
+    spec: 
+      nodeSelector:
+        registry: turnon
+      tolerations:
+      - key: "servertype"
+        operator: "Equal"
+        value: "buffer"
+        effect: "NoSchedule"
+      containers: 
+        - name: docker-registry
+          image: {{master_vip}}:5000/registry:latest
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 4
+              memory: 8192Gi
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 5000
+              scheme: HTTP
+            initialDelaySeconds: 120
+            timeoutSeconds: 10
+            periodSeconds: 60
+          volumeMounts:
+          - name: registry-data
+            mountPath: /var/lib/registry
+      volumes:
+        - name: registry-data
+          hostPath:
+            path: {{software_home}}/dockerregistry
+
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: docker-registry
+  namespace: kube-system
+  labels: 
+    app: docker-registry
+spec:
+  type: NodePort
+  selector:
+    app: docker-registry
+  ports:
+  - name: http
+    port: 5000
+    targetPort: 5000
+    nodePort: 5000
+

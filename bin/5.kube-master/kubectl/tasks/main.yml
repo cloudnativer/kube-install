@@ -1,0 +1,12 @@
+- name: 1.Distribution kubectl admin cert
+  copy:
+    src: /etc/kubernetes/
+    dest: /etc/kubernetes/
+- name: 2.Create /root/.kube directory
+  file: 
+    path: /root/.kube
+    state: directory
+- name: 3.Create kubectl.kubeconfig file
+  copy:
+    src: "/etc/kubernetes/ssl/kubectl.kubeconfig"
+    dest: "/root/.kube/config"

@@ -1,0 +1,14 @@
+- name: Create reboot config file
+  file:
+    path: "{{software_home}}/temp"
+    state: directory
+- copy:
+    src: ../../templates/tempreboot.sh
+    dest: "{{software_home}}/temp/tempreboot.sh"
+    mode: 0755
+- name: Congratulations, node successfully joined kubernetes cluster! The new node's operating system will restart automatically in 300 seconds to take effect. If you do not want to restart now, you can also directly press "Ctrl+C" to exit.
+  wait_for:
+    timeout: 250
+- shell: "nohup {{software_home}}/temp/tempreboot.sh 2>&1 &"
+  ignore_errors: yes
+

@@ -1,0 +1,20 @@
+- name: 1.Distribution kube-controller-manager cert
+  copy: 
+    src: /etc/kubernetes/
+    dest: /etc/kubernetes/
+- name: 2.Create kube-controller-manager service startup file
+  template:
+    src: ../templates/kube-controller-manager.service.j2
+    dest: /etc/systemd/system/kube-controller-manager.service
+- name: 3.Create {{k8s_install_home}}/kubernetes/kube-controller-manager directory
+  file: 
+    path: "{{k8s_install_home}}/kubernetes/kube-controller-manager"
+    state: directory
+- name: 4.Set service startup
+  shell: "systemctl enable kube-controller-manager"
+- name: 5.Start kube-controller-manager service
+  systemd:
+    daemon_reload: true
+    name: kube-controller-manager
+    state: restarted
+    enabled: true

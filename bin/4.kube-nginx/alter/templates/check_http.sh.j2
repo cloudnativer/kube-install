@@ -1,0 +1,11 @@
+#!/bin/bash
+token=`cat /etc/kubernetes/dashboard_login_token.txt`
+key=/etc/kubernetes/ssl/k8s-root-ca.pem
+url="https://{{ip}}:6443"
+
+#status=$(/usr/bin/curl -k -s --head "$url" | awk '/HTTP/ {print $2}')
+status=$(curl -k -s --cacert $key -H "Authorization: Bearer $token" --head $url| awk '/HTTP/ {print $2}')
+
+if [ "$status" != "200" ]; then
+ systemctl stop keepalived
+fi

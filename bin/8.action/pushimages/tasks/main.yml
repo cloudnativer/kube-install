@@ -1,0 +1,6 @@
+- name: 1.Save container image to image center
+  shell: "nohup {{software_home}}/image_files/pushsysimages.sh 2>&1 &"
+  ignore_errors: yes
+- wait_for:
+    timeout: 50
+

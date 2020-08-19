@@ -1,0 +1,7 @@
+#!/bin/bash
+url="http://{{ip}}:88"
+status=$(/usr/bin/curl -s --head "$url" | awk '/HTTP/ {print $2}')
+
+if [ "$status" != "200" ]; then
+ systemctl stop keepalived
+fi

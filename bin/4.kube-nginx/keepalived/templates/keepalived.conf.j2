@@ -1,0 +1,29 @@
+global_defs {
+    router_id k8s_master
+    script_user root
+    enable_script_security
+}
+
+vrrp_script Checkk8s {
+    script "/etc/keepalived/check_http.sh"
+    interval 20
+    fall 3
+    weight -20
+}
+
+vrrp_instance VI_1 {
+    state {{role}}
+    interface {{ens.stdout}}
+    virtual_router_id 88
+    priority {{priority}}
+    authentication {
+        auth_type PASS
+        auth_pass 20200419
+    }
+    virtual_ipaddress {
+        {{master_vip}}
+    }
+    track_script {
+        Checkk8s
+    }
+}
