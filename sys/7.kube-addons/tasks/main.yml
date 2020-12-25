@@ -23,41 +23,37 @@
   shell: "kubectl apply -f {{software_home}}/addons/coredns/coredns.yaml"
 
 ### 2.Deploy dashboard
-- name: 2.0 Clear history install serviceaccounts
+### 2.部署dashboard
+- name: 2.0 Clean up the dashboard-admin left by historical installation
   shell: "kubectl delete serviceaccounts dashboard-admin -n kube-system"
   ignore_errors: yes
-- name: 2.1 Create dashboard.yaml file
+- name: 2.1 Copy dashboard.yaml file
   template:
-    src: "../templates/2.dashboard/dashboard-controller.yaml.j2"
-    dest: "{{software_home}}/addons/dashboard/dashboard-controller.yaml"
+    src: "../templates/2.dashboard/{{item}}.j2"
+    dest: "{{software_home}}/addons/dashboard/{{item}}"
+  with_items:
+    - kubernetes-dashboard-deployment.yaml
+    - kubernetes-dashboard-service.yaml
 - copy:
     src: "../templates/2.dashboard/{{item}}"
     dest: "{{software_home}}/addons/dashboard/{{item}}"
   with_items:
-    - dashboard-configmap.yaml
-    - dashboard-rbac.yaml
-    - dashboard-secret.yaml
-    - dashboard-service.yaml
+    - kubernetes-dashboard-admin-rbac.yaml
+    - kubernetes-dashboard-rbac-minimal.yaml
 - name: 2.2 Deploy dashboard
   shell: "kubectl apply -f {{software_home}}/addons/dashboard/"
-###创建dashboard的token
-- name: 2.3 Create dashboard-admin
-  shell: "kubectl create sa dashboard-admin -n kube-system"  
-  ignore_errors: yes
-- shell: "kubectl create clusterrolebinding dashboard-admin --clusterrole=cluster-admin --serviceaccount=kube-system:dashboard-admin"
-  ignore_errors: yes
-- name: 2.4 Get ADMIN_SECRET info
+- name: 2.3 Show ADMIN_SECRET
   shell: "kubectl get secrets -n kube-system | grep dashboard-admin | awk '{print $1}'"
   register: admin_secret
-- name: 2.5 Create DASHBOARD_LOGIN_TOKEN
+- name: 2.4 Create DASHBOARD_LOGIN_TOKEN
   shell: "kubectl describe secret -n kube-system {{admin_secret.stdout}} | grep -E '^token' | awk '{print $2}'"
   register: dashboard_login_token
+- name: 2.5 Create KubeConfig files
+  shell: "kubectl config set-cluster kubernetes --certificate-authority=/etc/kubernetes/ssl/k8s-root-ca.pem --embed-certs=true --server=https://{{master_vip}}:4433 --kubeconfig=/etc/kubernetes/ssl/dashboard.kubeconfig"
+- shell: "kubectl config set-credentials dashboard_user --token=\"{{dashboard_login_token.stdout}}\" --kubeconfig=/etc/kubernetes/ssl/dashboard.kubeconfig"
 - shell: "echo \"{{dashboard_login_token.stdout}}\" > /etc/kubernetes/dashboard_login_token.txt"
-- name: 2.6 Create dashboard的KubeConfig file
-  shell: "kubectl config set-cluster kubernetes --certificate-authority=/etc/kubernetes/ssl/k8s-root-ca.pem --embed-certs=true --server=https://{{master_vip}}:8443 --kubeconfig=dashboard.kubeconfig chdir=/etc/kubernetes/ssl"
-- shell: "kubectl config set-credentials dashboard_user --token=\"{{dashboard_login_token.stdout}}\" --kubeconfig=dashboard.kubeconfig chdir=/etc/kubernetes/ssl"
-- shell: "kubectl config set-context default --cluster=kubernetes --user=dashboard_user --kubeconfig=dashboard.kubeconfig chdir=/etc/kubernetes/ssl"
-- shell: "kubectl config use-context default --kubeconfig=dashboard.kubeconfig chdir=/etc/kubernetes/ssl"
+- shell: "kubectl config set-context default --cluster=kubernetes --user=dashboard_user --kubeconfig=/etc/kubernetes/ssl/dashboard.kubeconfig"
+- shell: "kubectl config use-context default --kubeconfig=/etc/kubernetes/ssl/dashboard.kubeconfig"
 
 ### 3.Deploy metrics-server
 - name: 3.1 Create metrics-server.yaml file

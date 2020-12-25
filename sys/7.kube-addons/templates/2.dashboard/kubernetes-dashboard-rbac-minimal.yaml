@@ -1,12 +1,44 @@
+# ------------------- Dashboard Secret ------------------- #
+
+apiVersion: v1
+kind: Secret
+metadata:
+  labels:
+    APPNAME: kube-system
+    CLUSTER: kube-system-dashboard
+  name: kubernetes-dashboard-certs
+  namespace: kube-system
+type: Opaque
+
+---
+# ------------------- Dashboard Service Account ------------------- #
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    APPNAME: kube-system
+    CLUSTER: kube-system-dashboard
+  name: kubernetes-dashboard
+  namespace: kube-system
+
+---
+# ------------------- Dashboard Role & Role Binding ------------------- #
+
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  labels:
-    k8s-app: kubernetes-dashboard
-    addonmanager.kubernetes.io/mode: Reconcile
   name: kubernetes-dashboard-minimal
   namespace: kube-system
 rules:
+  # Allow Dashboard to create 'kubernetes-dashboard-key-holder' secret.
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["create"]
+  # Allow Dashboard to create 'kubernetes-dashboard-settings' config map.
+- apiGroups: [""]
+  resources: ["configmaps"]
+  verbs: ["create"]
   # Allow Dashboard to get, update and delete Dashboard exclusive secrets.
 - apiGroups: [""]
   resources: ["secrets"]
@@ -26,15 +58,13 @@ rules:
   resources: ["services/proxy"]
   resourceNames: ["heapster", "http:heapster:", "https:heapster:"]
   verbs: ["get"]
+
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: kubernetes-dashboard-minimal
   namespace: kube-system
-  labels:
-    k8s-app: kubernetes-dashboard
-    addonmanager.kubernetes.io/mode: Reconcile
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -43,3 +73,4 @@ subjects:
 - kind: ServiceAccount
   name: kubernetes-dashboard
   namespace: kube-system
+
