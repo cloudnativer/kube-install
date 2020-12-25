@@ -18,7 +18,6 @@ Kube-install and kubernetes version correspondence:
 <tr><td> kube-install v0.3.* </td><td> kube-install-v1.16.tgz</td><td> Install kubernetes v1.16.* </td></tr>
 <tr><td> kube-install v0.3.* </td><td> kube-install-v1.17.tgz</td><td> Install kubernetes v1.17.* </td></tr>
 <tr><td> kube-install v0.3.* </td><td> kube-install-v1.18.tgz</td><td> Install kubernetes v1.18.* </td></tr>
-<tr><td> kube-install v0.3.* </td><td> kube-install-v1.19.tgz</td><td> Install kubernetes v1.19.* </td></tr>
 </table>
 <br>
 Note: for a list of supported operating system distributions, please refer to <a href="docs/os-support.md">OS support list</a>.
