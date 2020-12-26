@@ -16,7 +16,13 @@
     state: stopped
     enabled: false
   ignore_errors: yes
-- name: 4.Uninstall docker software
+- name: 4.Stop flannel service
+  service:
+    name: flanneld
+    state: stopped
+    enabled: false
+  ignore_errors: yes
+- name: 5.Uninstall docker software
   copy: 
     src: ../templates/uninstall-docker.sh
     dest: "{{software_home}}/temp/uninstall-docker.sh"
@@ -24,14 +30,51 @@
   ignore_errors: yes
 - shell: "{{software_home}}/temp/uninstall-docker.sh"
   ignore_errors: yes
-- name: 5.Delete kube-proxy service file
+- name: 6.Delete CNI-plugin service file
+  file:
+    path: /etc/systemd/system/flanneld.service
+    state: absent
+  ignore_errors: yes
+- file:
+    path: /usr/local/bin/{{item}}
+    state: absent
+  with_items:
+    - flannel
+    - flanneld
+    - ipvlan
+    - ptp
+    - vlan
+    - bridge
+    - bandwidth
+    - loopback
+    - dhcp
+    - firewall
+    - host-device
+    - host-local
+    - macvlan
+    - static
+    - sbr
+    - portmap
+    - mk-docker-opts.sh
+    - tuning
+  ignore_errors: yes
+- name: 7.Delete kube-proxy service file
   file:
     path: /etc/systemd/system/kube-proxy.service
     state: absent
   ignore_errors: yes
-- name: 6.Delete kubelet service file
+- file:
+    path: /usr/local/bin/kube-proxy
+    state: absent
+  ignore_errors: yes
+- name: 8.Delete kubelet service file
   file:
     path: /etc/systemd/system/kubelet.service
     state: absent
   ignore_errors: yes
+- file:
+    path: /usr/local/bin/kubelet
+    state: absent
+  ignore_errors: yes
+
 

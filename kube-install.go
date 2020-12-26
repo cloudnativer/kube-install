@@ -134,31 +134,32 @@ func main() {
 
       //Execute uninstall command
       case opt == "uninstall" :
-        fmt.Println("Uninstalling kubernetes cluster, please wait……")
+        fmt.Println("\nUninstalling kubernetes cluster, please wait...\n\n")
         kilib.CheckParam(opt,"master",master)
         kilib.CheckParam(opt,"node",node)
         kilib.CheckParam(opt,"sshpwd",sshpwd)
         kilib.ShellExecute(currentdir+"/workflow/sshkey-init.sh \""+sshpwd+"\" \""+master_str+" "+node_str+"\" \""+softdir+"\" \""+currentdir+"\" \"install\"")
-        kilib.GeneralConfig(master_array, node_array, mvip, currentdir, softdir)
-        _, err_install := kilib.CopyFile(currentdir+"/workflow/general.inventory", currentdir+"/workflow/install.inventory")
-        kilib.CheckErr(err_install)
-        kilib.InstallConfig(master_array, node_array, currentdir, softdir)
-        _, err_delmaster := kilib.CopyFile(softdir+"/workflow/general.inventory", softdir+"/workflow/delmaster.inventory")
-        kilib.CheckErr(err_delmaster)
-        kilib.DelmasterConfig(master_array, softdir)
-        _, err_delnode := kilib.CopyFile(softdir+"/workflow/general.inventory", softdir+"/workflow/delnode.inventory")
-        kilib.CheckErr(err_delnode)
-        kilib.DelnodeConfig(node_array, softdir)
-        kilib.DelmasterYML(softdir)
-        kilib.DelnodeYML(softdir)
+        //Create tmp workflow dir
+        err_rmdir:= os.RemoveAll("/tmp/workflow/")
+        kilib.CheckErr(err_rmdir)
+        err_mkdir := os.Mkdir("/tmp/workflow", 0666)
+        kilib.CheckErr(err_mkdir)
+        //Create tmp config files
+        kilib.GeneralConfig(master_array, node_array, "", currentdir, softdir)
+        _, err_uninstall := kilib.CopyFile(currentdir+"/workflow/general.inventory", "/tmp/workflow/uninstall.inventory")
+        kilib.CheckErr(err_uninstall)
+        kilib.UninstallConfig(node_array, master_array, "/tmp")
+        kilib.UninstallYML(currentdir)
+        //Uninstall kubernetes cluster process now
         delnodeiplist := "{"+node+"}"
         if len(node_array) == 1 { delnodeiplist = node }
-        kilib.ShellExecute("kubectl delete node "+delnodeiplist )
-        kilib.ShellExecute("ansible-playbook -i "+softdir+"/workflow/delnode.inventory "+softdir+"/workflow/k8scluster-delnode.yml")
-        fmt.Println("K8s-node delete operation execution completed!")
-        kilib.ShellExecute("ansible-playbook -i "+softdir+"/workflow/delmaster.inventory "+softdir+"/workflow/k8scluster-delmaster.yml")
-        fmt.Println("K8s-master delete operation execution completed!\n")
-        fmt.Println("Kubernetes cluster uninstall operation execution completed!")
+        fmt.Println("K8s-node list: "+delnodeiplist+" \n")
+        kilib.ShellExecute("kubectl delete node "+delnodeiplist+">/dev/null 2>&1")
+        fmt.Println("k8s-node delete operation execution completed!\n\nUninstall k8s-master and k8s-node software, please wait...")
+        kilib.ShellExecute("ansible-playbook -i /tmp/workflow/uninstall.inventory /tmp/workflow/k8scluster-uninstall.yml")
+        fmt.Println("K8s-master and k8s-node software uninstall operation execution completed!\n\n**********************************************************************************\n\n")
+        os.RemoveAll("/tmp/workflow/")
+        fmt.Println("Kubernetes cluster uninstall operation execution completed!\n\n")
 
       //Default output help information
       default:

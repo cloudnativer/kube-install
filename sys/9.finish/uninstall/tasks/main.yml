@@ -1,0 +1,24 @@
+- name: delete uninstall files, please wait...
+  wait_for:
+    timeout: 10
+- file:
+    path: /usr/local/bin/kubectl
+    state: absent
+  ignore_errors: yes
+- file:
+    path: /usr/local/bin/kube-install
+    state: absent
+  ignore_errors: yes
+- file:
+    path: /etc/kubernetes/ssl
+    state: absent
+  ignore_errors: yes
+- file:
+    path: /etc/kubernetes
+    state: absent
+  ignore_errors: yes
+- file:
+    path: "{{software_home}}"
+    state: absent
+  ignore_errors: yes
+

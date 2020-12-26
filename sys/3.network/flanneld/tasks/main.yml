@@ -33,7 +33,6 @@
     name: flanneld
     state: restarted
     enabled: true
-- shell: "date"
 - name: 9.Start docker service
   systemd:
     daemon-reload: true

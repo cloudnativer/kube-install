@@ -7,7 +7,6 @@
   shell: "rpm -U {{software_home}}/keepalived/*.rpm --force --nodeps"
 - shell: "ip add|grep {{ip}}|awk '{print $NF}'"
   register: ens
-- shell: "date"
 - name: 3.Create keepalived configuration
   template: 
     src: ../templates/keepalived.conf.j2
@@ -42,5 +41,4 @@
     name: keepalived
     state: restarted
     enabled: true
-- name: 8.时间
-  shell: date
+

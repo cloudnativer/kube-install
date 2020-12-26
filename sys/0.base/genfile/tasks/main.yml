@@ -8,7 +8,7 @@
     - pkg
     - workflow
     - yaml
-- name: 2.Distributing deployment files to k8s master
+- name: 2.Distributing deployment files to kubernetes master, please wait...
   copy:
     src: "/root/kube-install/bin"
     dest: "{{software_home}}/"

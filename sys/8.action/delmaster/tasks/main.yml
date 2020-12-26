@@ -44,9 +44,21 @@
     path: /etc/systemd/system/nginx.service
     state: absent
   ignore_errors: yes
+- file:
+    path: /usr/local/bin/{{item}}
+    state: absent
+  with_items:
+    - pcre-config
+    - pcregrep
+    - pcretest
+  ignore_errors: yes
 - name: 9.Delete kube-controller-manager file
   file:
     path: /etc/systemd/system/kube-controller-manager.service
+    state: absent
+  ignore_errors: yes
+- file:
+    path: /usr/local/bin/kube-controller-manager
     state: absent
   ignore_errors: yes
 - name: 10.Delete kube-scheduler file
@@ -54,14 +66,47 @@
     path: /etc/systemd/system/kube-scheduler.service
     state: absent
   ignore_errors: yes
+- file:
+    path: /usr/local/bin/kube-scheduler
+    state: absent
+  ignore_errors: yes
 - name: 11.Delete kube-apiserver file
   file:
     path: /etc/systemd/system/kube-apiserver.service
     state: absent
   ignore_errors: yes
+- file:
+    path: /usr/local/bin/{{item}}
+    state: absent
+  with_items:
+    - apiextensions-apiserver
+    - kube-aggregator
+    - kube-apiserver
+  ignore_errors: yes
 - name: 12.Delete etcd file
   file:
     path: /etc/systemd/system/etcd.service 
+    state: absent
+  ignore_errors: yes
+- file:
+    path: /usr/local/bin/{{item}}
+    state: absent
+  with_items:
+    - etcd
+    - etcdctl
+  ignore_errors: yes
+- name: 13.Delete cfssl software file
+  file:
+    path: /usr/local/bin/{{item}}
+    state: absent
+  with_items:
+    - cfssl
+    - cfssl-certinfo
+    - cfssljson
+  ignore_errors: yes
+- name: 14.Delete helm software file
+  file:
+    path: /usr/local/bin/helm
     state: absent
   ignore_errors: yes
 

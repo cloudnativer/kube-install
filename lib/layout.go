@@ -47,3 +47,12 @@ func DelmasterYML(softdir string) {
     delmaster_file.WriteString("- remote_user: root\n  hosts: delmaster\n  gather_facts: no\n  roles:\n    - "+softdir+"/sys/8.action/delmaster\n")
 }
 
+func UninstallYML(softdir string) {
+    uninstall_file, err := os.Create("/tmp/workflow/k8scluster-uninstall.yml")
+    CheckErr(err)
+    defer uninstall_file.Close()
+    uninstall_file.WriteString("\n- remote_user: root\n  hosts: delnode\n  gather_facts: no\n  roles:\n    - "+softdir+"/sys/8.action/delnode\n- remote_user: root\n  hosts: delmaster\n  gather_facts: no\n  roles:\n    - "+softdir+"/sys/8.action/delmaster\n- remote_user: root\n  hosts: delmaster,delnode\n  gather_facts: no\n  roles:\n    - "+softdir+"/sys/9.finish/uninstall\n")
+}
+
+
+

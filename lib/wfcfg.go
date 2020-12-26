@@ -180,4 +180,27 @@ func DelmasterConfig(delmaster_array []string, softdir string) {
 
 }
 
+func UninstallConfig(delnode_array []string, delmaster_array []string, softdir string) {
+    //Generate uninstall configuration
+    inventory_file, err := os.OpenFile(softdir+"/workflow/uninstall.inventory",os.O_WRONLY | os.O_APPEND, 0666)
+    CheckErr(err)
+    defer inventory_file.Close()
+    write := bufio.NewWriter(inventory_file)
+    write.WriteString("###---------------------------------To delete k8s-node host list------------------------------###\n")
+    write.WriteString("\n[delnode]\n")
+    for i := 0; i < len(delnode_array); i++ {
+      CheckIP(delnode_array[i])
+      write.WriteString(delnode_array[i]+" ip="+delnode_array[i]+"\n")
+    }
+    write.WriteString("###---------------------------------To delete k8s-master host list------------------------------###\n")
+    write.WriteString("\n[delmaster]\n")
+    for i := 0; i < len(delmaster_array); i++ {
+      CheckIP(delmaster_array[i])
+      write.WriteString(delmaster_array[i]+" ip="+delmaster_array[i]+"\n")
+    }
+    write.WriteString("\n[k8s:children]\n"+"master1\n"+"delmaster\n"+"delnode\n\n\n")
+    write.Flush()
+
+}
+
 
