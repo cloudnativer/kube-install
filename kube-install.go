@@ -45,7 +45,7 @@ func main() {
 
       //Execute init command
       case opt == "init" :
-        fmt.Println("Initialization in progress, please wait……\n") 
+        fmt.Println("\nInitialization in progress, please wait...\n") 
         time.Sleep(1 * time.Second)
         for i := 1; i <= 100; i = i + 1 {
           fmt.Fprintf(os.Stdout, "%d%% [%s]\r",i,kilib.ProgressBar(i,"#") + kilib.ProgressBar(100-i," "))
@@ -56,7 +56,7 @@ func main() {
 
       //Execute install command
       case opt == "install" :
-        fmt.Println("Deploying kubernetes cluster, please wait……") 
+        fmt.Println("\nDeploying kubernetes cluster, please wait...\n") 
         kilib.CheckParam(opt,"master",master)
         kilib.CheckParam(opt,"node",node)
         kilib.CheckParam(opt,"mvip",mvip)
@@ -78,7 +78,7 @@ func main() {
 
       //Execute addnode command
       case opt == "addnode" :
-        fmt.Println("Adding k8s-node, please wait……") 
+        fmt.Println("\nAdding k8s-node, please wait...\n") 
         kilib.CheckParam(opt,"node",node)
         kilib.CheckParam(opt,"sshpwd",sshpwd)
         kilib.ShellExecute(softdir+"/workflow/sshkey-init.sh \""+sshpwd+"\" \"127.0.0.1 "+node_str+"\" \""+softdir+"\" \""+softdir+"\" \"addnode\"")
@@ -91,7 +91,7 @@ func main() {
 
       //Execute delnode command
       case opt == "delnode" :
-        fmt.Println("Deleting k8s-node, please wait……") 
+        fmt.Println("\nDeleting k8s-node, please wait...\n") 
         kilib.CheckParam(opt,"node",node)
         kilib.CheckParam(opt,"sshpwd",sshpwd)
         kilib.ShellExecute(softdir+"/workflow/sshkey-init.sh \""+sshpwd+"\" \"127.0.0.1 "+node_str+"\" \""+softdir+"\" \""+softdir+"\" \"delnode\"")
@@ -107,7 +107,7 @@ func main() {
 
       //Execute rebuildmaster command
       case opt == "rebuildmaster" :
-        fmt.Println("Rebuilding k8s-master, please wait……")
+        fmt.Println("\nRebuilding k8s-master, please wait...\n")
         kilib.CheckParam(opt,"master",master)
         kilib.CheckParam(opt,"sshpwd",sshpwd)
         kilib.ShellExecute(softdir+"/workflow/sshkey-init.sh \""+sshpwd+"\" \"127.0.0.1 "+master_str+"\" \""+softdir+"\" \""+softdir+"\" \"rebuildmaster\"")
@@ -121,7 +121,7 @@ func main() {
 
       //Execute delmaster command
       case opt == "delmaster" :
-        fmt.Println("Deleting k8s-master, please wait……")
+        fmt.Println("\nDeleting k8s-master, please wait...\n")
         kilib.CheckParam(opt,"master",master)
         kilib.CheckParam(opt,"sshpwd",sshpwd)
         kilib.ShellExecute(softdir+"/workflow/sshkey-init.sh \""+sshpwd+"\" \"127.0.0.1 "+master_str+"\" \""+softdir+"\" \""+softdir+"\" \"delmaster\"")
