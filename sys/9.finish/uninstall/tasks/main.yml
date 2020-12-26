@@ -46,6 +46,10 @@
     state: absent
   ignore_errors: yes
 - file:
+    path: /etc/cni
+    state: absent
+  ignore_errors: yes
+- file:
     path: "{{software_home}}"
     state: absent
   ignore_errors: yes
