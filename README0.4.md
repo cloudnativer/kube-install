@@ -1,4 +1,4 @@
-One click fast installation of highly available kubernetes cluster, as well as addition of kubernetes node, deletion of kubernetes node, destruction of kubernetes master and rebuild of kubernetes master in later operation and maintenance stage.
+One click fast installation of highly available kubernetes cluster, as well as addition of kubernetes node, deletion of kubernetes node, destruction of kubernetes master, rebuild of kubernetes master, and uninstallation of cluster in later operation and maintenance stage.
 <br>
 
 ![kube-install](docs/images/kube-install-logo.jpg)
@@ -148,7 +148,7 @@ The architecture after installation is shown in the following figure:
 ![kube-install-arch](docs/images/kube-install-arch-2.jpg)
 
 <br>
-You can <a href="docs/operation0.4.md">click here to view more operation documents</a> about add k8s-node, delete k8s-node, delete k8s-master and rebuild k8s-master.
+You can <a href="docs/operation0.4.md">click here to view more operation documents</a> about add k8s-node, delete k8s-node, delete k8s-master, rebuild k8s-master, and uninstall cluster.
 <br>
 <br>
 
