@@ -11,13 +11,13 @@ One click fast installation of highly available kubernetes cluster, as well as a
 Kube-install and kubernetes version correspondence:
 <table>
 <tr><td>kube-install Version</td><td>Installation package to download</td><td>Supported installed versions</td>
-<tr><td> kube-install v0.1.* </td><td> kube-install-for-k8s1.14-v0.1.0.tgz</td><td> Install kubernetes v1.14.* </td></tr>
-<tr><td> kube-install v0.2.* </td><td> kube-install-for-k8s1.14-v0.2.0.tgz</td><td> Install kubernetes v1.14.* </td></tr>
-<tr><td> kube-install v0.3.* </td><td> kube-install-for-k8s1.14-v0.3.0.tgz</td><td> Install kubernetes v1.14.* </td></tr>
-<tr><td> kube-install v0.3.* </td><td> kube-install-for-k8s1.15-v0.3.0.tgz</td><td> Install kubernetes v1.15.* </td></tr>
-<tr><td> kube-install v0.3.* </td><td> kube-install-for-k8s1.16-v0.3.0.tgz</td><td> Install kubernetes v1.16.* </td></tr>
-<tr><td> kube-install v0.3.* </td><td> kube-install-for-k8s1.17-v0.3.0.tgz</td><td> Install kubernetes v1.17.* </td></tr>
-<tr><td> kube-install v0.3.* </td><td> kube-install-for-k8s1.18-v0.3.0.tgz</td><td> Install kubernetes v1.18.* </td></tr>
+<tr><td> kube-install v0.1.* </td><td> kube-install-for-k8s1.14-v0.1.*.tgz</td><td> Install kubernetes v1.14.* </td></tr>
+<tr><td> kube-install v0.2.* </td><td> kube-install-for-k8s1.14-v0.2.*.tgz</td><td> Install kubernetes v1.14.* </td></tr>
+<tr><td> kube-install v0.3.* </td><td> kube-install-for-k8s1.14-v0.3.*.tgz</td><td> Install kubernetes v1.14.* </td></tr>
+<tr><td> kube-install v0.3.* </td><td> kube-install-for-k8s1.15-v0.3.*.tgz</td><td> Install kubernetes v1.15.* </td></tr>
+<tr><td> kube-install v0.3.* </td><td> kube-install-for-k8s1.16-v0.3.*.tgz</td><td> Install kubernetes v1.16.* </td></tr>
+<tr><td> kube-install v0.3.* </td><td> kube-install-for-k8s1.17-v0.3.*.tgz</td><td> Install kubernetes v1.17.* </td></tr>
+<tr><td> kube-install v0.3.* </td><td> kube-install-for-k8s1.18-v0.3.*.tgz</td><td> Install kubernetes v1.18.* </td></tr>
 </table>
 <br>
 Note: for a list of supported operating system distributions, please refer to <a href="docs/os-support.md">OS support list</a>.
