@@ -81,4 +81,3 @@ spec:
          backend:
            serviceName: myapp
            servicePort: 80
-
