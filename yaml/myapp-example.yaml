@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: myapp
@@ -7,6 +7,9 @@ metadata:
     app: myapp
 spec:
   replicas: 10
+  selector:
+    matchLabels:
+      app: myapp
   template: 
     metadata:
       labels:
@@ -71,7 +74,7 @@ metadata:
   namespace: myapp
 spec:
   rules:
-  - host: myapp.nginx.com
+  - host: myapp.cloudnativer.github.io
     http:
        paths:
        - path:
