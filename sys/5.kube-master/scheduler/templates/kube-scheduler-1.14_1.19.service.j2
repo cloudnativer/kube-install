@@ -5,8 +5,8 @@ Documentation=https://github.com/GoogleCloudPlatform/kubernetes
 [Service]
 ExecStart=/usr/local/bin/kube-scheduler \
 --address=127.0.0.1 \
+--master=http://127.0.0.1:6334 \
 --leader-elect=true \
---kubeconfig=/etc/kubernetes/kubectl.kubeconfig
 --logtostderr=false \
 --log-dir={{k8s_install_home}}/kubernetes/kube-scheduler \
 --v=2
