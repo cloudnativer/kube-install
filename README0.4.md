@@ -36,7 +36,9 @@ Note: for a list of supported operating system distributions, please refer to <a
 
 <br>
 
-If you have four servers,kubernetes master software is installed on the three servers (192.168.1.11, 192.168.1.12, 192.168.1.13), and kubernetes node software is installed on the four servers (192.168.1.11, 192.168.1.12, 192.168.1.13, 192.168.1.14). <br>
+If you have four servers,kubernetes master software is installed on the three servers (192.168.1.11, 192.168.1.12, 192.168.1.13), and kubernetes node software is installed on the four servers (192.168.1.11, 192.168.1.12, 192.168.1.13, 192.168.1.14). The operating system of the server is pure CentOS Linux or RHEL(Red Hat Enterprise Linux). It's like this:
+
+ <br>
 
 <table>
 <tr><td>IP Address</td><td>Role</td><td>OS Version</td><td>Root Password</td></tr>
