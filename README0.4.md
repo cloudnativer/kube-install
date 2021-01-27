@@ -5,7 +5,7 @@ One click fast installation of highly available kubernetes cluster, as well as a
 
 <br>
 
-# [1] Corresponding relation
+# [1] Compatibility
 
 <br>
 Kube-install and kubernetes version correspondence:
