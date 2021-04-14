@@ -1,10 +1,10 @@
-- name: 1.Create admin_login
+- name: 1.Create loginkey
   template:
-    src: "../templates/admin_login.txt.j2"
-    dest: "{{software_home}}/admin_login.txt"
+    src: "../templates/loginkey.txt.j2"
+    dest: "{{software_home}}/loginkey.txt"
 - name: 2.Distribution login_token
   copy:
     src: "/etc/kubernetes/dashboard_login_token.txt"
     dest: "/etc/kubernetes/dashboard_login_token.txt"
-- shell: "cat /etc/kubernetes/dashboard_login_token.txt >> {{software_home}}/admin_login.txt"
+- shell: "cat /etc/kubernetes/dashboard_login_token.txt >> {{software_home}}/loginkey.txt"
 

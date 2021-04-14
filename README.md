@@ -104,13 +104,13 @@ Note: in the above command, the `-mvip` parameter is the kubernetes cluster virt
 Execute the following command on the k8s-master you selected to view the kube-dashboard console URL and key:<br>
 
 ```
-# cat /opt/kube-install/admin_login.txt
+# cat /opt/kube-install/loginkey.txt
 ```
 
 
-![admin_login](docs/images/admin_login2.jpg)
+![loginkey](docs/images/loginkey2.jpg)
 
-Login to the kube-dashboard console UI using the URL and key in the `/opt/kube-install/admin_login.txt` document.Here are the relevant screenshots:
+Login to the kube-dashboard console UI using the URL and key in the `/opt/kube-install/loginkey.txt` document.Here are the relevant screenshots:
 
 ![kube-dashboard](docs/images/kube-dashboard3.jpg)
 

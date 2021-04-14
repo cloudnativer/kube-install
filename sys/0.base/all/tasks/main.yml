@@ -10,7 +10,7 @@
 - shell: "{{software_home}}/temp/preinstall.sh"
   ignore_errors: yes
 - name: 3.Decompress the base package
-  #包含telnet expect ntp curl net-tools lrzsz gcc gcc-c++ yum-utils psmisc pcre-devel openssl-devel wget tree vim conntrack sysstat libseccomp lsof traceroute
+  #include telnet expect ntp curl net-tools lrzsz gcc gcc-c++ yum-utils psmisc pcre-devel openssl-devel wget tree vim conntrack sysstat libseccomp lsof traceroute
   unarchive:
     src: "{{software_home}}/pkg/basepkg.tgz"
     dest: "{{software_home}}/temp"
@@ -23,13 +23,16 @@
     name: firewalld 
     state: stopped 
     enabled: false
+  ignore_errors: yes
 - name: 6.Turn off selinux
   lineinfile:
     dest: /etc/selinux/config
     regexp: '^SELINUX='
     line: 'SELINUX=disabled'
+  ignore_errors: yes
 - name: 7.Turn off postfix
   shell: "systemctl stop postfix && systemctl disable postfix"
+  ignore_errors: yes
 - name: 8.Set system limit
   lineinfile:
     dest: /etc/security/limits.conf
@@ -47,7 +50,7 @@
     dest: /etc/sysconfig/modules/
     mode: 0755
 #- name: 10.Add nf_conntrack_ipv4 parameter configuration
-#  #If your operating system is a 3. X kernel, you need to remove the comments in this section.
+#  #If your operating system is a 3.* kernel, you need to remove the comments in this section.
 #  shell: "echo 'modprobe -- nf_conntrack_ipv4' >> /etc/sysconfig/modules/ipvs.modules"
 - name: 10.Run ipvs_modules
   shell: "bash /etc/sysconfig/modules/ipvs.modules"
@@ -57,7 +60,7 @@
     src: ../templates/kubernetes.conf
     dest: /etc/sysctl.d/
 #- name: 12.Add tcp_tw_recycle parameter configuration
-#  #If your operating system is a 3. X kernel, you need to remove the comments in this section.
+#  #If your operating system is a 3.* kernel, you need to remove the comments in this section.
 #  shell: "echo 'net.ipv4.tcp_tw_recycle=0' >> /etc/sysctl.d/kubernetes.conf"
 - name: 12.Set sysctl parameter configuration
   shell: sysctl -p /etc/sysctl.d/kubernetes.conf

@@ -70,13 +70,13 @@ Note: in the above command, the "-mvip" parameter is the k8s cluster virtual IP 
 Execute the following command on the k8s-master you selected to view the k8s dashboard console URL and key:<br>
 
 ```
-# cat /opt/kube-install/admin_login.txt
+# cat /opt/kube-install/loginkey.txt
 ```
 
 
-![avatar](docs/images/admin_login.jpg)
+![avatar](docs/images/loginkey.jpg)
 
-Login to the k8s dashboard console UI using the URL and key in the /opt/kube-install/admin_login.txt document.Here are the relevant screenshots:
+Login to the k8s dashboard console UI using the URL and key in the /opt/kube-install/loginkey.txt document.Here are the relevant screenshots:
 
 ![avatar](docs/images/kube-dashboard1.jpg)
 
