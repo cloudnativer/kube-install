@@ -23,7 +23,7 @@ Options: <br>
 Commands:<br>
 <br>
   master           The IP address of k8s-master server.<br>
-  mvip             K8s-master cluster virtual IP address.<br>
+  mastervip       K8s-master cluster virtual IP address.<br>
   node             The IP address of k8s-node server.<br>
   sshpwd           SSH login root password of each server.<br>
  </pre>
@@ -36,7 +36,7 @@ For example：<br>
   Initialize the system environment:<br>
     kube-install -opt init<br>
   Install k8s cluster:<br>
-    kube-install -opt install -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -mvip "192.168.1.88" -sshpwd "cloudnativer"<br>
+    kube-install -opt install -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -mastervip "192.168.1.88" -sshpwd "cloudnativer"<br>
   Add k8s-node to the cluster:<br>
     kube-install -opt addnode -node "192.168.1.15,192.168.1.16" -sshpwd "cloudnativer"<br>
   Remove the k8s-node from the cluster:<br>

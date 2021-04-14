@@ -8,7 +8,7 @@ import (
 
 
 
-func GeneralConfig(master_array []string, node_array []string, mvip string, currentdir string, softdir string) {
+func GeneralConfig(master_array []string, node_array []string, mastervip string, currentdir string, softdir string) {
     //Generate generic configuration
     inventory_file, err := os.Create(currentdir+"/workflow/general.inventory") 
     CheckErr(err)
@@ -35,9 +35,9 @@ func GeneralConfig(master_array []string, node_array []string, mvip string, curr
     }
     inventory_file.WriteString("master_iplist=\""+master_iplist+"\"\netcd_initial=\""+etcd_initial+"\"\netcd_endpoints=\""+etcd_endpoints+"\"\nnginx_upstream=\""+nginx_upstream+"\"\ningress_upstream=\""+ingress_upstream+"\"\n")
     if master_num == 1{
-      inventory_file.WriteString("master_vip=\""+master_array[0]+"\"\nmaster_vport=\"6443\"\n")
+      inventory_file.WriteString("mastervip=\""+master_array[0]+"\"\nmaster_vport=\"6443\"\n")
     }else{
-      inventory_file.WriteString("master_vip=\""+mvip+"\"\nmaster_vport=\"8443\"\n")
+      inventory_file.WriteString("mastervip=\""+mastervip+"\"\nmaster_vport=\"8443\"\n")
     }
     //Setting the scheduling IP for addons
     switch {

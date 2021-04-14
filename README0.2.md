@@ -59,10 +59,10 @@ Well,Execute on the k8s-master selected above:<br>
 
 ```
 # cd /root/kube-install/
-# ./kube-install -opt install -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -mvip "192.168.1.88" -sshpwd "cloudnativer"
+# ./kube-install -opt install -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -mastervip "192.168.1.88" -sshpwd "cloudnativer"
 ```
 
-Note: in the above command, the "-mvip" parameter is the k8s cluster virtual IP address.
+Note: in the above command, the "-mastervip" parameter is the k8s cluster virtual IP address.
 <br>
 <br>
 <br>

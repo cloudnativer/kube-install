@@ -10,7 +10,7 @@ The parameters about kube-install can be viewed using the "kube-install --help" 
 <tr><td bgcolor=#000000><font color=#C0FF3E>-delmaster</font></td><td bgcolor=#000000><font color=#C0FF3E> string </font></td><td bgcolor=#000000><font color=#C0FF3E>IP address of k8s master server to be deleted.</font></td></tr>
 <tr><td bgcolor=#000000><font color=#C0FF3E>-delnode</font></td><td bgcolor=#000000><font color=#C0FF3E> string </font></td><td bgcolor=#000000><font color=#C0FF3E>IP address of k8s node server to be deleted.</font></td></tr>
 <tr><td bgcolor=#000000><font color=#C0FF3E>-master</font></td><td bgcolor=#000000><font color=#C0FF3E> string </font></td><td bgcolor=#000000><font color=#C0FF3E>The IP address of k8s master server filled in for the first installation</font></td></tr>
-<tr><td bgcolor=#000000><font color=#C0FF3E>-mvip</font></td><td bgcolor=#000000><font color=#C0FF3E> string </font></td><td bgcolor=#000000><font color=#C0FF3E>K8s master cluster virtual IP address filled in for the first installation.</font></td></tr>
+<tr><td bgcolor=#000000><font color=#C0FF3E>-mastervip</font></td><td bgcolor=#000000><font color=#C0FF3E> string </font></td><td bgcolor=#000000><font color=#C0FF3E>K8s master cluster virtual IP address filled in for the first installation.</font></td></tr>
 <tr><td bgcolor=#000000><font color=#C0FF3E>-node</font></td><td bgcolor=#000000><font color=#C0FF3E> string </font></td><td bgcolor=#000000><font color=#C0FF3E>The IP address of k8s node server filled in for the first installation.</font></td></tr>
 <tr><td bgcolor=#000000><font color=#C0FF3E>-opt</font></td><td bgcolor=#000000><font color=#C0FF3E> string </font></td><td bgcolor=#000000><font color=#C0FF3E>Available options：init | install | addnode | delnode | rebuildmaster | delmaster</font></td></tr>
 <tr><td bgcolor=#000000><font color=#C0FF3E>-rebuildmaster</font></td><td bgcolor=#000000><font color=#C0FF3E> string </font></td><td bgcolor=#000000><font color=#C0FF3E>IP address of k8s master server to be rebuilt.</font></td></tr>
@@ -27,7 +27,7 @@ Perform pre installation initialization<br>
 </table>
 Install k8s cluster<br>
 <table>
-<tr><td bgcolor=#000000><font color=#C0FF3E># ./kube-install -opt install -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -mvip "192.168.1.100" -sshpwd "cloudnativer"</font></td></tr>
+<tr><td bgcolor=#000000><font color=#C0FF3E># ./kube-install -opt install -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -mastervip "192.168.1.100" -sshpwd "cloudnativer"</font></td></tr>
 </table>
 Add k8s-node to k8s cluster<br>
 <table>
