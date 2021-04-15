@@ -60,13 +60,13 @@ You can download the `kube-install-*.tgz` package from https://github.com/cloudn
 
 If you want to install version 1.18 of kubernetes, download the `kube-install-v1.18.tgz` package file.If you want to install version 1.17 of kubernetes, download the `kube-install-v1.17.tgz` package file.If you want to install version 1.16 of kubernetes, download the `kube-install-v1.16.tgz` package file...In the same way, you can download the version you want.<br>
 
-For example, we are now installing kubernetes v1.20, and we have downloaded the `kube-install-for-k8s1.20-v0.4.1.tgz` package.<br>
+For example, we are now installing kubernetes v1.21, and we have downloaded the `kube-install-for-k8s1.21-v0.4.2.tgz` package.<br>
 
 
 ```
 # cd /root/
-# wget https://github.com/cloudnativer/kube-install/releases/download/v0.4.1/kube-install-for-k8s1.20-v0.4.1.tgz
-# tar -zxvf kube-install-for-k8s1.20-v0.4.1.tgz
+# wget https://github.com/cloudnativer/kube-install/releases/download/v0.4.2/kube-install-for-k8s1.21-v0.4.2.tgz
+# tar -zxvf kube-install-for-k8s1.21-v0.4.2.tgz
 # cd /root/kube-install/
 ```
 
