@@ -29,7 +29,7 @@ Options:
 
 Commands:
   master           The IP address of k8s-master server.
-  mastervip       K8s-master cluster virtual IP address.
+  mastervip        K8s-master cluster virtual IP address.
   node             The IP address of k8s-node server.
   sshpwd           SSH login root password of each server.
 ```
