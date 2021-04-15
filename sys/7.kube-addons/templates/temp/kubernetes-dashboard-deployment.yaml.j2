@@ -34,7 +34,7 @@ spec:
       priorityClassName: system-cluster-critical
       containers:
       - name: kube-system-dashboard-dev
-        image: {{master_vip}}:5000/kubernetes-dashboard-amd64:v2.2.0
+        image: {{master_vip}}:5000/kubernetes-dashboard-amd64:v1.10.1
         imagePullPolicy: IfNotPresent
         resources:
           limits:

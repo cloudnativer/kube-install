@@ -64,7 +64,7 @@
     - "pause-amd64:3.1"
     - "traefik:v2.0.7"
     - "alpine:3.6"
-    - "kubernetes-dashboard-amd64:v2.2.0"
+    - "kubernetes-dashboard-amd64:v1.10.1"
     - "coredns:1.3.1"
     - "registry:latest"
 
