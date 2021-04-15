@@ -6,8 +6,8 @@
     src: ../../templates/tempreboot.sh
     dest: "{{software_home}}/temp/tempreboot.sh"
     mode: 0755
-- name: Congratulations, kubernetes cluster installation and deployment is successful! The operating system will automatically restart in 300 seconds to take effect on the cluster configuration. If you do not want to restart now, you can also directly press "Ctrl+C" to exit.
+- name: Congratulations, kubernetes cluster installation and deployment is successful! The operating system will automatically restart in 60 seconds to take effect on the cluster configuration. If you do not want to restart now, you can also directly press "Ctrl+C" to exit.
   wait_for:
-    timeout: 250
+    timeout: 60
 - shell: "nohup {{software_home}}/temp/tempreboot.sh 2>&1 &"
   ignore_errors: yes

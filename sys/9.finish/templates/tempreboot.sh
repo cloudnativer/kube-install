@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sleep 50
+sleep 3
 sync
 reboot
 
