@@ -2,7 +2,9 @@
 <br>
 <b>Introduction:</b><br>
 <br>
+
 The parameters about kube-install can be viewed using the `kube-install help` or `kube-install -opt help` command. <br>
+
 <table width=100%>
 <tr><td>
  
