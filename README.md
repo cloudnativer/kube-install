@@ -94,7 +94,7 @@ Please operate in the root user environment. Execute on the k8s-master selected 
 # ./kube-install -opt install -master "192.168.1.11,192.168.1.12,192.168.1.13" -mastervip "192.168.1.88" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -sshpwd "cloudnativer"
 ```
 
-Notice: In the above command, If you have more than k8s-master, the `-mastervip` parameter is the kubernetes cluster virtual IP address.So you need to assign the kubernetes cluster a virtual IP address on the same LAN as the k8s-master.If you have only one k8s-master, `-mastervip` parameter should be set to the same IP as the k8s-master.
+Notice: In the above command, If you have more than k8s-master, the `-mastervip` parameter is the kubernetes cluster virtual IP address, So you need to assign the kubernetes cluster a virtual IP address on the same LAN as the k8s-master. If you have only one k8s-master, `-mastervip` parameter should be set to the same IP as the k8s-master.
 <br>
 <br>
 <br>
