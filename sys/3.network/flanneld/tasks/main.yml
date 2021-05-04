@@ -40,7 +40,7 @@
 - name: 10.Create ipvsinit shell
   template:
     src: ../templates/ipvsinit.sh.j2
-    dest: /usr/local/bin/
+    dest: /usr/local/bin/ipvsinit.sh
     mode: 0755
 - name: 11.Enable ipvsinit service
   systemd:
