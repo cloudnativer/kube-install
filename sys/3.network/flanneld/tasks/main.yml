@@ -3,11 +3,11 @@
     src: "{{software_home}}/pkg/flannel-v0.11.0.tar.gz"
     dest: /usr/local/bin/
     mode: 0755
-- name: 2.Distribution flanneld cert
+- name: 2.Distribution flanneld cert file
   copy: 
     src: /etc/kubernetes/
     dest: /etc/kubernetes/
-- name: 3.Create flanneld service
+- name: 3.Create flanneld startup file
   template:
     src: ../templates/flanneld.service.j2
     dest: /etc/systemd/system/flanneld.service
@@ -33,27 +33,18 @@
     name: flanneld
     state: restarted
     enabled: true
-- name: 9.Create ipvsinit service
-  copy:
-    src: ../templates/ipvsinit.service
-    dest: /etc/systemd/system/ipvsinit.service
-- name: 10.Create ipvsinit service
-  copy:
-    src: ../templates/ipvsinit.sh
-    dest: /usr/local/bin/
-    mode: 0755
-- name: 11.Start docker service
+- name: 9.Start docker service
   systemd:
     daemon-reload: true
     name: docker
     state: restarted
     enabled: true
-- name: 12.Decompress docker images package
+- name: 10.Decompress docker images package
   unarchive:
     src: "{{software_home}}/pkg/image_files.tar.gz"
     dest: "{{software_home}}"
     mode: 0744
-- name: 13.Load docker images
+- name: 11.Load docker images
   shell: "docker load < {{software_home}}/image_files/{{item}}"
   with_items:
     - "metrics-server-amd64.tar"
@@ -64,7 +55,7 @@
     - "kubernetes-dashboard-amd64.tar"
     - "coredns.tar"
     - "registry.tar"
-- name: 14.Set docker images tag and create pushsysimages shell 
+- name: 12.Set docker images tag and create pushsysimages shell 
   shell: "echo '#!/bin/bash' > {{software_home}}/image_files/pushsysimages.sh && chmod 755 {{software_home}}/image_files/pushsysimages.sh"
 - shell: "docker tag houshijun/{{item}} {{master_vip}}:5000/{{item}} && echo 'docker push {{master_vip}}:5000/{{item}}' >> {{software_home}}/image_files/pushsysimages.sh"
   with_items:

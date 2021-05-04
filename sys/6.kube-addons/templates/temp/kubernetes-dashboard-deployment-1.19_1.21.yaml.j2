@@ -6,7 +6,7 @@ metadata:
   labels:
     APPNAME: kube-system
     CLUSTER: kube-system-dashboard
-  name: kube-system-dashboard-dev
+  name: kube-dashboard
   namespace: kube-system
 spec:
   replicas: 1
@@ -33,7 +33,7 @@ spec:
               weight: 100
       priorityClassName: system-cluster-critical
       containers:
-      - name: kube-system-dashboard-dev
+      - name: kube-dashboard
         image: {{master_vip}}:5000/kubernetes-dashboard-amd64:v2.2.0
         imagePullPolicy: IfNotPresent
         resources:
