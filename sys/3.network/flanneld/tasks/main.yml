@@ -16,7 +16,7 @@
     path: /etc/cni/net.d
     state: directory
 - name: 5.Create cni configuration file
-  template: 
+  copy: 
     src: ../templates/10-default.conflist.j2
     dest: /etc/cni/net.d/10-default.conflist
 - name: 6.Decompress cni plugin package
@@ -38,8 +38,8 @@
     src: ../templates/ipvsinit.service
     dest: /etc/systemd/system/ipvsinit.service
 - name: 10.Create ipvsinit shell
-  template:
-    src: ../templates/ipvsinit.sh.j2
+  copy:
+    src: ../templates/ipvsinit.sh
     dest: /usr/local/bin/
     mode: 0755
 - name: 11.Enable ipvsinit service

@@ -34,8 +34,7 @@ func GeneralConfig(master_array []string, node_array []string, currentdir string
     for i := 0; i < node_num; i++ {
       ingress_upstream = ingress_upstream+"server "+node_array[i]+":80 max_fails=3 fail_timeout=30s;"
     }
-    inventory_file.WriteString("master_iplist=\""+master_iplist+"\"\netcd_initial=\""+etcd_initial+"\"\netcd_endpoints=\""+etcd_endpoints+"\"\ningress_upstream=\""+ingress_upstream+"\"\n")
-    inventory_file.WriteString("master_vip=\"10.254.0.1\"\nmaster_vport=\"443\"\n")
+    inventory_file.WriteString("master_iplist=\""+master_iplist+"\"\netcd_initial=\""+etcd_initial+"\"\netcd_endpoints=\""+etcd_endpoints+"\"\ningress_upstream=\""+ingress_upstream+"\"\nmaster_ipvsinit = \""+master_ipvsinit+"\"\nmaster_vip=\"10.254.0.1\"\nmaster_vport=\"443\"\n")
     //Setting the scheduling IP for addons
     switch {
       case node_num == 1 :
