@@ -1,6 +1,6 @@
 - name: 1.Cleaning up garbage files left in history
   file:
-    path: "{{k8s_install_home}}"
+    path: "{{k8s_install_home}}/.temp/"
     state: directory
 - service:
     name: kubelet
