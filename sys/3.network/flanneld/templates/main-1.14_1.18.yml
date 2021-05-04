@@ -38,8 +38,8 @@
     src: ../templates/ipvsinit.service
     dest: /etc/systemd/system/ipvsinit.service
 - name: 10.Create ipvsinit shell
-  copy:
-    src: ../templates/ipvsinit.sh
+  template:
+    src: ../templates/ipvsinit.sh.j2
     dest: /usr/local/bin/
     mode: 0755
 - name: 11.Enable ipvsinit service
