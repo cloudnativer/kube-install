@@ -1,26 +1,55 @@
-- name: 1.Decompress docker software package
-  #包含ipvsadm ipset device-mapper-persistent-data lvm2 containerd.io docker-ce docker-ce-cli
-  unarchive:
-    src: "{{software_home}}/pkg/dockerpkg.tgz"
-    dest: "{{software_home}}/temp"
-    mode: 0744
-- name: 2.Install docker software
-  shell: "rpm -U {{software_home}}/temp/dockerpkg/*.rpm --force --nodeps"
-- name: 3.Set docker config file
-  lineinfile:
-    dest: /usr/lib/systemd/system/docker.service
-    insertbefore: '^ExecStart=/usr/bin/dockerd'
-    line: 'EnvironmentFile=/run/flannel/docker'
-- name: 4.Set docker sock
-  replace:
-    path: /usr/lib/systemd/system/docker.service
-    regexp: '--containerd=/run/containerd/containerd.sock'
-    replace: '--containerd=/run/containerd/containerd.sock $DOCKER_NETWORK_OPTIONS'
-- name: 5.Create docker configuration directory
+- name: 1.Cleaning up garbage files left in history
   file:
-    path: "/etc/docker"
+    path: "{{k8s_install_home}}"
     state: directory
-- name: 6.Create docker configuration file
-  template: 
-    src: ../templates/daemon.json.j2
-    dest: "/etc/docker/daemon.json"
+- service:
+    name: kubelet
+    state: stopped
+    enabled: false
+  ignore_errors: yes
+- service:
+    name: kube-proxy
+    state: stopped
+    enabled: false
+  ignore_errors: yes
+- service:
+    name: docker
+    state: stopped
+    enabled: false
+  ignore_errors: yes
+- service:
+    name: flanneld
+    state: stopped
+    enabled: false
+  ignore_errors: yes
+- file:
+    path: /etc/systemd/system/kubelet.service
+    state: absent
+  ignore_errors: yes
+- file:
+    path: /etc/systemd/system/kube-proxy.service
+    state: absent
+  ignore_errors: yes
+- file:
+    path: /etc/systemd/system/flanneld.service
+    state: absent
+  ignore_errors: yes
+- copy:
+    src: ../../../7.action/delnode/templates/uninstall-docker.sh
+    dest: "{{k8s_install_home}}/.temp/uninstall-docker.sh"
+    mode: 0755
+  ignore_errors: yes
+- shell: "{{k8s_install_home}}/.temp/uninstall-docker.sh"
+  ignore_errors: yes
+
+- name: 2.Decompress docker software package
+  unarchive:
+    src: "{{software_home}}/pkg/docker.tgz"
+    dest: /usr/bin/
+    mode: 0755
+- name: 6.Create docker service
+  template:
+    src: ../templates/docker.service
+    dest: /etc/systemd/system/docker.service
+
+

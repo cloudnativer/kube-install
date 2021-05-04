@@ -1,0 +1,24 @@
+- name: 1.Distribution kube-apiserver cert
+  copy: 
+    src: /etc/kubernetes/
+    dest: /etc/kubernetes/
+- name: 2.Create kube-apiserver service startup file
+  template:
+    src: ../templates/kube-apiserver.service.j2
+    dest: /etc/systemd/system/kube-apiserver.service
+- name: 3.Create {{k8s_install_home}}/kubernetes/kube-apiserver directory
+  file: 
+    path: "{{k8s_install_home}}/kubernetes/kube-apiserver/log"
+    state: directory
+- name: 4.Set service startup
+  shell: "systemctl enable kube-apiserver"
+- name: 5.Start kube-apiserver service
+  systemd:
+    daemon_reload: true
+    name: kube-apiserver
+    state: restarted
+    enabled: true
+- name: 4.Set IPVS rules
+  shell: "ipvsadm -A -t 10.254.0.1:443 -s rr && ipvsadm -a -t 10.254.0.1:443 -r 192.168.56.81:6443 -m && ipvsadm -a -t 10.254.0.1:443 -r 192.168.56.82:6443 -m && ipvsadm -a -t 10.254.0.1:443 -r 192.168.56.83:6443 -m"
+  ignore_errors: yes
+

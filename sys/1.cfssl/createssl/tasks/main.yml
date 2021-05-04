@@ -10,13 +10,20 @@
 - shell: "kubectl config set-credentials kubelet-bootstrap --token=706127e2ed6ea0f8d85944d232b29099 --kubeconfig=/etc/kubernetes/ssl/bootstrap.kubeconfig"
 - shell: "kubectl config set-context default --cluster=kubernetes --user=kubelet-bootstrap --kubeconfig=/etc/kubernetes/ssl/bootstrap.kubeconfig"
 - shell: "kubectl config use-context default --kubeconfig=/etc/kubernetes/ssl/bootstrap.kubeconfig"
-- name: 3.Create kubectl.kubeconfig
-  shell: "kubectl config set-cluster kubernetes --certificate-authority=/etc/kubernetes/ssl/k8s-root-ca.pem --embed-certs=true --server=https://{{master_vip}}:{{master_vport}} --kubeconfig=/etc/kubernetes/ssl/kubectl.kubeconfig"
-- shell: "kubectl config set-credentials kubernetes-admin --client-certificate=/etc/kubernetes/ssl/admin.pem --client-key=/etc/kubernetes/ssl/admin-key.pem --embed-certs=true --kubeconfig=/etc/kubernetes/ssl/kubectl.kubeconfig"
-- shell: "kubectl config set-context kubernetes-admin@kubernetes --cluster=kubernetes --user=kubernetes-admin --kubeconfig=/etc/kubernetes/ssl/kubectl.kubeconfig"
-- shell: "kubectl config use-context kubernetes-admin@kubernetes --kubeconfig=/etc/kubernetes/ssl/kubectl.kubeconfig"
-- name: 4.Create kube-proxy.kubeconfig
+- name: 3.Create local.kubeconfig
+  shell: "kubectl config set-cluster kubernetes --certificate-authority=/etc/kubernetes/ssl/k8s-root-ca.pem --embed-certs=true --server=https://127.0.0.1:6443 --kubeconfig=/etc/kubernetes/ssl/local.kubeconfig"
+- shell: "kubectl config set-credentials kubernetes-admin --client-certificate=/etc/kubernetes/ssl/admin.pem --client-key=/etc/kubernetes/ssl/admin-key.pem --embed-certs=true --kubeconfig=/etc/kubernetes/ssl/local.kubeconfig"
+- shell: "kubectl config set-context kubernetes-admin@kubernetes --cluster=kubernetes --user=kubernetes-admin --kubeconfig=/etc/kubernetes/ssl/local.kubeconfig"
+- shell: "kubectl config use-context kubernetes-admin@kubernetes --kubeconfig=/etc/kubernetes/ssl/local.kubeconfig"
+- name: 4.Create kube.kubeconfig
+  shell: "kubectl config set-cluster kubernetes --certificate-authority=/etc/kubernetes/ssl/k8s-root-ca.pem --embed-certs=true  --server=https://{{master_vip}}:{{master_vport}} --kubeconfig=/etc/kubernetes/ssl/kube.kubeconfig"
+- shell: "kubectl config set-credentials kubernetes-admin --client-certificate=/etc/kubernetes/ssl/admin.pem --client-key=/etc/kubernetes/ssl/admin-key.pem
+ --embed-certs=true --kubeconfig=/etc/kubernetes/ssl/kube.kubeconfig"
+- shell: "kubectl config set-context kubernetes-admin@kubernetes --cluster=kubernetes --user=kubernetes-admin --kubeconfig=/etc/kubernetes/ssl/kube.kubeconfig"
+- shell: "kubectl config use-context kubernetes-admin@kubernetes --kubeconfig=/etc/kubernetes/ssl/kube.kubeconfig"
+- name: 5.Create kube-proxy.kubeconfig
   shell: "kubectl config set-cluster kubernetes --certificate-authority=/etc/kubernetes/ssl/k8s-root-ca.pem --embed-certs=true --server=https://{{master_vip}}:{{master_vport}} --kubeconfig=/etc/kubernetes/ssl/kube-proxy.kubeconfig"
 - shell: "kubectl config set-credentials kube-proxy --client-certificate=/etc/kubernetes/ssl/kube-proxy.pem --client-key=/etc/kubernetes/ssl/kube-proxy-key.pem --embed-certs=true --kubeconfig=/etc/kubernetes/ssl/kube-proxy.kubeconfig"
 - shell: "kubectl config set-context default --cluster=kubernetes --user=kube-proxy --kubeconfig=/etc/kubernetes/ssl/kube-proxy.kubeconfig"
 - shell: "kubectl config use-context default --kubeconfig=/etc/kubernetes/ssl/kube-proxy.kubeconfig"
+

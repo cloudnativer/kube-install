@@ -17,13 +17,11 @@ func main() {
     var opt string
     var master string
     var node string
-    var mastervip string
     var sshpwd string
 
     flag.StringVar(&opt,"opt","","Available options: init | install | addnode | delnode | rebuildmaster | delmaster | uninstall")
     flag.StringVar(&master,"master","","The IP address of k8s master server filled in for the first installation.")
     flag.StringVar(&node,"node","","The IP address of k8s node server filled in for the first installation.")
-    flag.StringVar(&mastervip,"mastervip","","K8s master cluster virtual IP address filled in for the first installation.")
     flag.StringVar(&sshpwd,"sshpwd","","The root password used to SSH login to each server.")
     flag.Parse()
 
@@ -59,10 +57,9 @@ func main() {
         fmt.Println("\nDeploying kubernetes cluster, please wait...\n") 
         kilib.CheckParam(opt,"master",master)
         kilib.CheckParam(opt,"node",node)
-        kilib.CheckParam(opt,"mastervip",mastervip)
         kilib.CheckParam(opt,"sshpwd",sshpwd)
         kilib.ShellExecute(currentdir+"/workflow/sshkey-init.sh \""+sshpwd+"\" \""+master_str+" "+node_str+"\" \""+softdir+"\" \""+currentdir+"\" \"install\"")
-        kilib.GeneralConfig(master_array, node_array, mastervip, currentdir, softdir)
+        kilib.GeneralConfig(master_array, node_array, currentdir, softdir)
         _, err_install := kilib.CopyFile(currentdir+"/workflow/general.inventory", currentdir+"/workflow/install.inventory")
         kilib.CheckErr(err_install)
         kilib.InstallConfig(master_array, node_array, currentdir, softdir)
@@ -145,7 +142,7 @@ func main() {
         err_mkdir := os.Mkdir("/tmp/workflow", 0666)
         kilib.CheckErr(err_mkdir)
         //Create tmp config files
-        kilib.GeneralConfig(master_array, node_array, "", currentdir, softdir)
+        kilib.GeneralConfig(master_array, node_array, currentdir, softdir)
         _, err_uninstall := kilib.CopyFile(currentdir+"/workflow/general.inventory", "/tmp/workflow/uninstall.inventory")
         kilib.CheckErr(err_uninstall)
         kilib.UninstallConfig(node_array, master_array, "/tmp")

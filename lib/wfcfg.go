@@ -8,7 +8,7 @@ import (
 
 
 
-func GeneralConfig(master_array []string, node_array []string, mastervip string, currentdir string, softdir string) {
+func GeneralConfig(master_array []string, node_array []string, currentdir string, softdir string) {
     //Generate generic configuration
     inventory_file, err := os.Create(currentdir+"/workflow/general.inventory") 
     CheckErr(err)
@@ -16,7 +16,7 @@ func GeneralConfig(master_array []string, node_array []string, mastervip string,
     inventory_file.WriteString("###--------------------------------------General configuration---------------------------------###\n")
     inventory_file.WriteString("\n[master1]\n127.0.0.1 ip=127.0.0.1\n\n[k8s:vars]\n"+"k8s_install_home=\""+softdir+"/k8s\"\nsoftware_home=\""+softdir+"\"\n")
     inventory_file.WriteString("\n### k8s-master configuration ###\n")
-    var master_iplist,etcd_initial,etcd_endpoints,nginx_upstream,ingress_upstream string
+    var master_iplist,etcd_initial,etcd_endpoints,ingress_upstream string
     master_num := len(master_array)
     node_num := len(node_array)
     for i := 0; i < master_num; i++ {
@@ -28,16 +28,15 @@ func GeneralConfig(master_array []string, node_array []string, mastervip string,
       master_iplist = master_iplist+"\\\""+master_array[i]+"\\\""
       etcd_initial = etcd_initial+"kube"+strconv.Itoa(i)+"=https://"+master_array[i]+":2380"
       etcd_endpoints = etcd_endpoints+"https://"+master_array[i]+":2379"
-      nginx_upstream = nginx_upstream+"server "+master_array[i]+":6443 max_fails=3 fail_timeout=30s;"
     }
     for i := 0; i < node_num; i++ {
       ingress_upstream = ingress_upstream+"server "+node_array[i]+":80 max_fails=3 fail_timeout=30s;"
     }
-    inventory_file.WriteString("master_iplist=\""+master_iplist+"\"\netcd_initial=\""+etcd_initial+"\"\netcd_endpoints=\""+etcd_endpoints+"\"\nnginx_upstream=\""+nginx_upstream+"\"\ningress_upstream=\""+ingress_upstream+"\"\n")
+    inventory_file.WriteString("master_iplist=\""+master_iplist+"\"\netcd_initial=\""+etcd_initial+"\"\netcd_endpoints=\""+etcd_endpoints+"\"\ningress_upstream=\""+ingress_upstream+"\"\n")
     if master_num == 1{
-      inventory_file.WriteString("master_vip=\""+master_array[0]+"\"\nmaster_vport=\"6443\"\n")
+      inventory_file.WriteString("master_vip=\""+master_array[0]+"\"\nmaster_vport=\"443\"\n")
     }else{
-      inventory_file.WriteString("master_vip=\""+mastervip+"\"\nmaster_vport=\"8443\"\n")
+      inventory_file.WriteString("master_vip=\"10.254.0.1\"\nmaster_vport=\"443\"\n")
     }
     //Setting the scheduling IP for addons
     switch {
@@ -72,16 +71,6 @@ func InstallConfig(master_array []string, node_array []string, currentdir string
     for i := 0; i < master_num; i++ {
       write.WriteString(master_array[i]+" ip="+master_array[i]+" etcdname=kube"+strconv.Itoa(i)+"\n")
     }
-    write.WriteString("\n[nginx]\n")
-    j := 120
-    role := "MASTER"
-    for i := 0; i < master_num; i++ {
-      if i > 0 {
-        role = "BACKUP"
-      }
-      write.WriteString(master_array[i]+" ip="+master_array[i]+" priority="+strconv.Itoa(j)+" role="+role+"\n")
-      j = j - 10
-    }
     //Generate node configuration
     write.WriteString("\n\n\n###-----------------------------------k8s-node host list-------------------------------###\n")
     write.WriteString("\n[node]\n")
@@ -89,7 +78,7 @@ func InstallConfig(master_array []string, node_array []string, currentdir string
       CheckIP(node_array[i])
       write.WriteString(node_array[i]+" ip="+node_array[i]+"\n")
     }
-    write.WriteString("\n[k8s:children]\n"+"master1\n"+"master\n"+"etcd\n"+"node\n"+"nginx\n\n\n")
+    write.WriteString("\n[k8s:children]\n"+"master1\n"+"master\n"+"etcd\n"+"node\n"+"\n\n")
     write.Flush()
 
 }
@@ -150,15 +139,10 @@ func RebuildmasterConfig(rebuildmaster_array []string, softdir string) {
     }
     write.WriteString("\n[etcd]\n")
     for i := 0; i < rebuildmaster_num; i++ {
-      etcdname := ShellOutput(softdir+"/workflow/getmasterconfig.sh "+softdir+" etcdname "+rebuildmaster_array[i])
+      etcdname := ShellOutput("cat "+softdir+"/workflow/install.inventory  | grep etcdname | grep "+rebuildmaster_array[i]+" | cut -d \"=\" -f 3,4 | head -1")
       write.WriteString(rebuildmaster_array[i]+" ip="+rebuildmaster_array[i]+" etcdname="+etcdname+"\n")
     }
-    write.WriteString("\n[nginx]\n")
-    for i := 0; i < rebuildmaster_num; i++ {
-      priority := ShellOutput(softdir+"/workflow/getmasterconfig.sh "+softdir+" priority "+rebuildmaster_array[i])
-      write.WriteString(rebuildmaster_array[i]+" ip="+rebuildmaster_array[i]+" priority="+priority+"\n")
-    }
-    write.WriteString("\n[k8s:children]\n"+"master1\n"+"master\n"+"etcd\n"+"nginx\n\n\n")
+    write.WriteString("\n[k8s:children]\n"+"master1\n"+"master\n"+"etcd\n"+"\n\n")
     write.Flush()
 
 }
