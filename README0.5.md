@@ -73,7 +73,7 @@ For example, we are now installing kubernetes v1.21, and we have downloaded the 
 
 ```
 # cd /root/
-# wget https://github.com/cloudnativer/kube-install/releases/download/v0.4.2/kube-install-for-k8s1.21-v0.5.0.tgz
+# wget https://github.com/cloudnativer/kube-install/releases/download/v0.5.0/kube-install-for-k8s1.21-v0.5.0.tgz
 # tar -zxvf kube-install-for-k8s1.21-v0.5.0.tgz
 # cd /root/kube-install/
 ```
