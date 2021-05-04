@@ -58,7 +58,7 @@ func main() {
         kilib.CheckParam(opt,"master",master)
         kilib.CheckParam(opt,"node",node)
         kilib.CheckParam(opt,"sshpwd",sshpwd)
-        kilib.ShellExecute(currentdir+"/workflow/sshkey-init.sh \""+sshpwd+"\" \""+master_str+" "+node_str+"\" \""+softdir+"\" \""+currentdir+"\" \"install\"")
+        kilib.ShellExecute(currentdir+"/workflow/sshkey-init.sh \""+sshpwd+"\" \"127.0.0.1 "+master_str+" "+node_str+"\" \""+softdir+"\" \""+currentdir+"\" \"install\"")
         kilib.GeneralConfig(master_array, node_array, currentdir, softdir)
         _, err_install := kilib.CopyFile(currentdir+"/workflow/general.inventory", currentdir+"/workflow/install.inventory")
         kilib.CheckErr(err_install)
