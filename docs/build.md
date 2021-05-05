@@ -1,13 +1,26 @@
-<b>How to build?</b><br>
+# How to build it?
 <br>
-Use the "go build" command to compile. Here is an example.
+
+First, make sure the docker and git commands are installed locally.
+
 <br>
-<table>
-<tr><td bgcolor=#000000>
-<font color=#C0FF3E># cd $GOPATH/src/</font><br>
-<font color=#C0FF3E># git clone https://github.com/cloudnativer/kube-install.git </font><br>
-<font color=#C0FF3E># cd kube-install/</font><br>
-<font color=#C0FF3E># go build kube-install.go</font><br>
- </td></tr>
-</table>
+
+Then, use the following command to download the code locally:
+
+```
+# git clone https://github.com/cloudnativer/kube-install.git
+```
+
+Enter `kube-install` directory, executing the `make` command:
+
+```
+# cd kube-install
+# make
+```
+
+The above command will automatically complete the build operation. 
+After building, there is a file named `kube-install` in the current directory. `kube-install` file is binary executable file, run the command `kube-install help` and start the kubernetes journey.
 <br>
+<br>
+
+

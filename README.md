@@ -103,8 +103,6 @@ Please operate in the root user environment. Execute on the k8s-master selected 
 ```
 
 <br>
-<br>
-<br>
 
 ## 2.4 Login kubernetes dashboard UI
 
@@ -157,6 +155,8 @@ The architecture after installation is shown in the following figure:
 
 <br>
 You can <a href="docs/operation0.4.md">click here to view more operation documents</a> about add k8s-node, delete k8s-node, delete k8s-master, rebuild k8s-master, and uninstall cluster.
+
+<br>
 <br>
 <br>
 
@@ -167,5 +167,16 @@ The parameters about kube-install can be viewed using the `kube-install help` co
 <br>
 <br>
 <br>
+
+# [5] How to build it?
+
+<br>
+
+The build can be completed automatically by executing the `make` command. You can also <a href="docs/build.md">see more detailed build instructions here</a>.<br>
+
+<br>
+<br>
+<br>
+
 
 
