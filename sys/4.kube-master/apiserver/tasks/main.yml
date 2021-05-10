@@ -19,6 +19,6 @@
     state: restarted
     enabled: true
 - name: 4.Set IPVS rules
-  shell: "{{master_ipvsinit}}"
+  shell: "/usr/local/bin/ipvsinit.sh"
   ignore_errors: yes
 

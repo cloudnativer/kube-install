@@ -4,6 +4,7 @@
     path: "{{software_home}}/addons/{{item}}"
     state: directory
   with_items:
+    - ipvsinit
     - coredns
     - dashboard
     - metrics-server
@@ -14,8 +15,21 @@
     - temp
 
 
+### 0.Init IPVS rules
+- name: 0.1 Create ipvsinit.yaml file
+  copy:
+    src: "../templates/0.ipvsinit/{{item}}"
+    dest: "{{software_home}}/addons/ipvsinit/{{item}}"
+  with_items:
+    - ipvsinit_svc.yaml
+    - ipvsinit_ep.yaml
+- name: 0.2 Init IPVS service
+  shell: "kubectl apply -f {{software_home}}/addons/ipvsinit/ipvsinit_svc.yaml"
+- name: 0.3 Init IPVS rules
+  shell: "kubectl apply -f {{software_home}}/addons/ipvsinit/ipvsinit_ep.yaml"
+
 ### 1.Deploy coredns
-- name: 1.1 Crate coredns.yaml file
+- name: 1.1 Create coredns.yaml file
   template:
     src: "../templates/1.coredns/coredns.yaml.j2"
     dest: "{{software_home}}/addons/coredns/coredns.yaml"

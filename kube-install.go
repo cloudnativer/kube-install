@@ -63,7 +63,8 @@ func main() {
           _, err_install := kilib.CopyFile(currentdir+"/workflow/general.inventory", currentdir+"/workflow/install.inventory")
           kilib.CheckErr(err_install)
           kilib.InstallConfig(master_array, node_array, currentdir, softdir)
-          kilib.InstallGenfile(currentdir)
+          kilib.InstallGenFile(currentdir)
+          kilib.InstallIpvsYaml(currentdir, master_array)
           if len(master_array) == 1{
               kilib.OnemasterinstallYML(currentdir)
               kilib.ShellExecute("ansible-playbook -i "+currentdir+"/workflow/install.inventory "+currentdir+"/workflow/k8scluster-onemasterinstall.yml")
@@ -111,7 +112,7 @@ func main() {
           _, err_rebuildmaster := kilib.CopyFile(softdir+"/workflow/general.inventory", softdir+"/workflow/rebuildmaster.inventory")
           kilib.CheckErr(err_rebuildmaster)
           kilib.RebuildmasterConfig(master_array, softdir)
-          kilib.InstallGenfile(softdir)
+          kilib.InstallGenFile(softdir)
           kilib.RebuildmasterYML(softdir)
           kilib.ShellExecute("ansible-playbook -i "+softdir+"/workflow/rebuildmaster.inventory "+softdir+"/workflow/k8scluster-rebuildmaster.yml")
           fmt.Println("K8s-master rebuilt operation execution completed!")

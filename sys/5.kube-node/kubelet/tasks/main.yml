@@ -9,17 +9,20 @@
   template:
     src: ../templates/kubelet.config.json.j2
     dest: /etc/kubernetes/kubelet.config.json
-- name: 4.Create {{k8s_install_home}}/kubernetes directory
+- name: 4.Set IPVS rules
+  shell: "/usr/local/bin/ipvsinit.sh"
+  ignore_errors: yes
+- name: 5.Create {{k8s_install_home}}/kubernetes directory
   file:
     path: "{{k8s_install_home}}/kubernetes/kubelet"
     state: directory
-- name: 5.Create kubelet service startup file
+- name: 6.Create kubelet service startup file
   template:
     src: ../templates/kubelet.service.j2
     dest: /etc/systemd/system/kubelet.service
-- name: 6.Set service startup
+- name: 7.Set service startup
   shell: "systemctl enable kubelet"
-- name: 7.Start kubelet service
+- name: 8.Start kubelet service
   systemd:
     daemon_reload: true
     name: kubelet
