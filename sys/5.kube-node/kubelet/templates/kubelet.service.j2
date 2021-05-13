@@ -18,6 +18,7 @@ ExecStart=/usr/local/bin/kubelet \
   --pod-infra-container-image={{master_vip}}:5000/pause-amd64:3.1 \
   --alsologtostderr=true \
   --logtostderr=false \
+  --root-dir={{k8s_install_home}}/kubernetes/kubelet \
   --log-dir={{k8s_install_home}}/kubernetes/kubelet \
   --v=2
 Restart=on-failure

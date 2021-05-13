@@ -20,6 +20,7 @@ ExecStart=/usr/local/bin/kubelet \
   --max-pods=210 \
   --alsologtostderr=true \
   --logtostderr=false \
+  --root-dir={{k8s_install_home}}/kubernetes/kubelet \
   --log-dir={{k8s_install_home}}/kubernetes/kubelet \
   --v=2
 Restart=on-failure

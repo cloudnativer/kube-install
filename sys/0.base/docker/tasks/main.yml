@@ -42,12 +42,19 @@
 - shell: "{{k8s_install_home}}/.temp/uninstall-docker.sh"
   ignore_errors: yes
 
-- name: 2.Decompress docker software package
+- name: 2.Create docker config dir
+  file:
+    path: "/etc/docker/"
+    state: directory
+- name: 3.Decompress docker software package
   unarchive:
     src: "{{software_home}}/pkg/docker.tgz"
     dest: /usr/bin/
     mode: 0755
-- name: 6.Create docker service
+- template:
+    src: ../templates/daemon.json.j2
+    dest: "/etc/docker/daemon.json"
+- name: 4.Create docker service
   template:
     src: ../templates/docker.service
     dest: /etc/systemd/system/docker.service

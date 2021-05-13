@@ -18,11 +18,15 @@ func main() {
     var master string
     var node string
     var sshpwd string
+    var ostype string
+    var softdir string
+    var currentdir string
 
     flag.StringVar(&opt,"opt","","Available options: init | install | addnode | delnode | rebuildmaster | delmaster | uninstall")
-    flag.StringVar(&master,"master","","The IP address of k8s master server filled in for the first installation.")
-    flag.StringVar(&node,"node","","The IP address of k8s node server filled in for the first installation.")
-    flag.StringVar(&sshpwd,"sshpwd","","The root password used to SSH login to each server.")
+    flag.StringVar(&master,"master","","The IP address of k8s master server filled in for the first installation")
+    flag.StringVar(&node,"node","","The IP address of k8s node server filled in for the first installation")
+    flag.StringVar(&sshpwd,"sshpwd","","The root password used to SSH login to each server")
+    flag.StringVar(&ostype,"ostype","","Specifies the distribution operating system type: centos7 | centos8 | rhel7 | rhel8 | suse15")
     flag.Parse()
 
     master_array := strings.Split(master, ",")
@@ -30,15 +34,17 @@ func main() {
     node_array := strings.Split(node, ",")
     node_str := strings.Replace(node, "," , " " , -1)
 
-    softdir := "/opt/kube-install"
+    ostype = kilib.CheckOS(ostype)
+    softdir = "/opt/kube-install"
     path, err := os.Executable()
     kilib.CheckErr(err)
-    currentdir := filepath.Dir(path)
+    currentdir = filepath.Dir(path)
     if currentdir == "/usr/local/bin" {
 	currentdir = softdir
     }
 
 
+    //Execute opt
     switch {
 
       //Execute init command
@@ -49,7 +55,7 @@ func main() {
               fmt.Fprintf(os.Stdout, "%d%% [%s]\r",i,kilib.ProgressBar(i,"#") + kilib.ProgressBar(100-i," "))
               time.Sleep(time.Second * 1)
         } 
-        kilib.ShellExecute(currentdir+"/workflow/sshops-init.sh \""+softdir+"\" \""+currentdir+"\"")
+        kilib.ShellExecute(currentdir+"/workflow/sshops-init.sh \""+softdir+"\" \""+currentdir+"\" \""+ostype+"\"")
         fmt.Println("\n\nInitialization completed!\n") 
 
       //Execute install command
@@ -59,17 +65,17 @@ func main() {
           kilib.CheckParam(opt,"node",node)
           kilib.CheckParam(opt,"sshpwd",sshpwd)
           kilib.ShellExecute(currentdir+"/workflow/sshkey-init.sh \""+sshpwd+"\" \"127.0.0.1 "+master_str+" "+node_str+"\" \""+softdir+"\" \""+currentdir+"\" \"install\"")
-          kilib.GeneralConfig(master_array, node_array, currentdir, softdir)
+          kilib.GeneralConfig(master_array, node_array, currentdir, softdir, ostype)
           _, err_install := kilib.CopyFile(currentdir+"/workflow/general.inventory", currentdir+"/workflow/install.inventory")
           kilib.CheckErr(err_install)
           kilib.InstallConfig(master_array, node_array, currentdir, softdir)
           kilib.InstallGenFile(currentdir)
           kilib.InstallIpvsYaml(currentdir, master_array)
           if len(master_array) == 1{
-              kilib.OnemasterinstallYML(currentdir)
+              kilib.OnemasterinstallYML(currentdir, ostype)
               kilib.ShellExecute("ansible-playbook -i "+currentdir+"/workflow/install.inventory "+currentdir+"/workflow/k8scluster-onemasterinstall.yml")
           }else{
-              kilib.InstallYML(currentdir)
+              kilib.InstallYML(currentdir, ostype)
               kilib.ShellExecute("ansible-playbook -i "+currentdir+"/workflow/install.inventory "+currentdir+"/workflow/k8scluster-install.yml")
           }
           fmt.Println("Kubernetes cluster deployment operation execution completed!")
@@ -83,7 +89,7 @@ func main() {
           _, err_addnode := kilib.CopyFile(softdir+"/workflow/general.inventory", softdir+"/workflow/addnode.inventory")
           kilib.CheckErr(err_addnode)
           kilib.AddnodeConfig(node_array, softdir)
-          kilib.AddnodeYML(softdir)
+          kilib.AddnodeYML(softdir, ostype)
           kilib.ShellExecute("ansible-playbook -i "+softdir+"/workflow/addnode.inventory "+softdir+"/workflow/k8scluster-addnode.yml")
           fmt.Println("K8s-node add operation execution completed!")
 
@@ -143,7 +149,7 @@ func main() {
           err_mkdir := os.Mkdir("/tmp/workflow", 0666)
           kilib.CheckErr(err_mkdir)
           //Create tmp config files
-          kilib.GeneralConfig(master_array, node_array, currentdir, softdir)
+          kilib.GeneralConfig(master_array, node_array, currentdir, softdir, ostype)
           _, err_uninstall := kilib.CopyFile(currentdir+"/workflow/general.inventory", "/tmp/workflow/uninstall.inventory")
           kilib.CheckErr(err_uninstall)
           kilib.UninstallConfig(node_array, master_array, "/tmp")

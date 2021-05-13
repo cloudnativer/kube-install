@@ -26,6 +26,25 @@ func CheckIP(ipv4 string) {
     }
 }
 
+func CheckOS(osType string) (string) {
+    switch {
+      case osType == "centos7" :
+          return "rhel7"
+      case osType == "" :
+          return "rhel7"
+      case osType == "rhel7" :
+          return "rhel7"
+      case osType == "centos8" :
+          return "rhel8"
+      case osType == "rhel8" :
+          return "rhel8"
+      case osType == "suse15" :
+          return "suse15"
+      default:
+          panic("Only support rhel7, rhel8, centos7, centos8, suse15 these types of \"ostype\", please check!\n--------------------------------------------------------\n    rhel7   --> Red Hat Enterprise Linux 7 (default) \n    rhel8   --> Red Hat Enterprise Linux 8 \n    centos7 --> CentOS Linux 7 (default) \n    centos8 --> CentOS Linux 8 \n    suse15  --> OpenSUSE Linux 15 \n\n  *.If the \"ostype\" is empty, the default value is rhel7 or centos7 ! ")
+    }
+}
+
 func CheckParam(option string,paramname string, param string) {
     if param == "" {
          panic("When performing the "+option+" operation, you must enter the "+paramname+" parameter, please check!")
@@ -64,8 +83,6 @@ func CopyFile(srcFileName string, dstFileName string) (written int64, err error)
 
 }
 
-
- 
 func ShellAsynclog(reader io.ReadCloser) error {
     cache := ""
     buf := make([]byte, 2048)
@@ -119,7 +136,7 @@ func ShellOutput(strCommand string)(string){
 }
 
 func ShowHelp(){
-    fmt.Println("Version 0.5.0 (Creation Date: 5/10/2021)\nUsage of kube-install: -opt [OPTIONS] COMMAND [ARGS]...\n\nOptions:\n  init             Initialize the system environment.\n  install          Install kubernetes cluster.\n  delnode          Remove the k8s-node from the cluster.\n  addnode          Add k8s-node to the cluster.\n  delmaster        Remove the k8s-master from the cluster.\n  rebuildmaster    Rebuild the damaged k8s-master.\n  uninstall        Uninstall kubernetes cluster.\n  help             Display help information.\n\nCommands:\n  master           The IP address of k8s-master server.\n  node             The IP address of k8s-node server.\n  sshpwd           The root password used to SSH login to each server.\n\nFor example:\n  Initialize the system environment:\n    kube-install -opt init\n  Install k8s cluster:\n    kube-install -opt install -master \"192.168.1.11,192.168.1.12,192.168.1.13\" -node \"192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14\" -sshpwd \"cloudnativer\"\n  Add k8s-node to the cluster:\n    kube-install -opt addnode -node \"192.168.1.15,192.168.1.16\" -sshpwd \"cloudnativer\"\n  Remove the k8s-node from the cluster:\n    kube-install -opt delnode -node \"192.168.1.13,192.168.1.15\" -sshpwd \"cloudnativer\"\n  Remove the k8s-master from the cluster:\n    kube-install -opt delmaster -master \"192.168.1.13\" -sshpwd \"cloudnativer\"\n  Rebuild the damaged k8s-master:\n    kube-install -opt rebuildmaster -master \"192.168.1.13\" -sshpwd \"cloudnativer\"\n  Uninstall k8s cluster:\n    kube-install -opt uninstall -master \"192.168.1.11,192.168.1.12,192.168.1.13\" -node \"192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14\" -sshpwd \"cloudnativer\"\n  Display help information:\n    kube-install -opt help\n    kube-install help\n")
+    fmt.Println("Version 0.5.0 (Creation Date: 5/10/2021)\nUsage of kube-install: -opt [OPTIONS] COMMAND [ARGS]...\n\nOptions:\n  init             Initialize the system environment.\n  install          Install kubernetes cluster.\n  delnode          Remove the k8s-node from the cluster.\n  addnode          Add k8s-node to the cluster.\n  delmaster        Remove the k8s-master from the cluster.\n  rebuildmaster    Rebuild the damaged k8s-master.\n  uninstall        Uninstall kubernetes cluster.\n  help             Display help information.\n\nCommands:\n  master           The IP address of k8s-master server.\n  node             The IP address of k8s-node server.\n  sshpwd           The root password used to SSH login to each server.\n  ostype           Specifies the distribution OS type: centos7|centos8|rhel7|rhel8|suse15.\n\nFor example:\n  Initialize the system environment:\n    kube-install -opt init\n  Install k8s cluster:\n    kube-install -opt install -master \"192.168.1.11,192.168.1.12,192.168.1.13\" -node \"192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14\" -sshpwd \"cloudnativer\"\n  Add k8s-node to the cluster:\n    kube-install -opt addnode -node \"192.168.1.15,192.168.1.16\" -sshpwd \"cloudnativer\"\n  Remove the k8s-node from the cluster:\n    kube-install -opt delnode -node \"192.168.1.13,192.168.1.15\" -sshpwd \"cloudnativer\"\n  Remove the k8s-master from the cluster:\n    kube-install -opt delmaster -master \"192.168.1.13\" -sshpwd \"cloudnativer\"\n  Rebuild the damaged k8s-master:\n    kube-install -opt rebuildmaster -master \"192.168.1.13\" -sshpwd \"cloudnativer\"\n  Uninstall k8s cluster:\n    kube-install -opt uninstall -master \"192.168.1.11,192.168.1.12,192.168.1.13\" -node \"192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14\" -sshpwd \"cloudnativer\"\n  Display help information:\n    kube-install -opt help\n    kube-install help\n")
 }
 
 
