@@ -42,7 +42,7 @@ OpenSUSE Linux 15.3
 
 <br>
 
-Note:
+Notice:
 <br>
 We have not tested it on other versions of RHEL and SUSE, so we can not ensure that kube-install can be successfully installed on other versions of RHEL and SUSE.
 <br>
