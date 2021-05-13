@@ -3,7 +3,7 @@ One click fast installation of highly available kubernetes cluster, as well as a
 
 ![kube-install](docs/images/kube-install-logo.jpg)
 
-<br>
+
 
 # [1] Compatibility
 
