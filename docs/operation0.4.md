@@ -90,7 +90,7 @@ Select any k8s-master server, and execute the following command on it:<br>
 # kube-install -opt rebuildmaster -rebuildmaster "192.168.1.13" -sshpwd "cloudnativer"
 ```
 
-Notice: If your OS is suse15, centos8 or rhel8, please use the `-ostype` flag. If you OS is centos7 or rhel7, the "ostype" flag can be omitted.
+Notice: If your OS is SUSE 15, CentOS 8 or RHEL 8, please use the `-ostype` flag to specifies the distribution OS type. If you OS is centos7 or rhel7, the "ostype" flag can be omitted.
 <br>
 The architecture after installation is shown in the following figure:
 
