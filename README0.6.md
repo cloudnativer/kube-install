@@ -70,6 +70,7 @@ You expect the architecture after installation to be as follows:
 ## 2.1 Download kube-install package file
 
 <br>
+
 You can download the `kube-install-*.tgz` package from https://github.com/cloudnativer/kube-install/releases. <br>
 
 ![download-pkg](docs/images/download-pkg.jpg)
@@ -110,7 +111,7 @@ Please operate in the root user environment. Execute on the k8s-master selected 
 # ./kube-install -opt install -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -sshpwd "cloudnativer"
 ```
 
-Notice: If your OS is SUSE 15, CentOS 8 or RHEL 8, please use the `-ostype` flag to specifies the distribution OS type. If you OS is centos7 or rhel7, the "ostype" flag can be omitted.
+Notice: If your OS is SUSE 15, CentOS 8 or RHEL 8, please use the `-ostype` flag to specifies the distribution OS type. If you OS is centos7 or rhel7, the `-ostype` flag can be omitted.
 
 <br>
 
@@ -141,7 +142,9 @@ Login to the kube-dashboard console UI using the URL and key in the `/opt/kube-i
 # [3] Operation and maintenance
 
 <br>
+
 After kube-install is installed, you can directly execute `kube-install` command in any directory of any k8s-master server.Kube-install can not only quickly install the highly available kubernetes cluster, but also add k8s-node, delete k8s-node, delete k8s-master and rebuild k8s-master.<br>
+
 Suppose you expect to install two servers (192.168.1.15 and 192.168.1.16) as k8s-nodes and join the kubernetets cluster in Chapter [2].
 
 <table>
@@ -160,13 +163,14 @@ Select any k8s-master server, and execute the following command on it:<br>
 # kube-install -opt addnode -node "192.168.1.15,192.168.1.16" -sshpwd "cloudnativer"
 ```
 
-Notice: If your OS is SUSE 15, CentOS 8 or RHEL 8, please use the `-ostype` flag to specifies the distribution OS type. If you OS is centos7 or rhel7, the "ostype" flag can be omitted.
-<br>
+Notice: If your OS is SUSE 15, CentOS 8 or RHEL 8, please use the `-ostype` flag to specifies the distribution OS type. If you OS is centos7 or rhel7, the `-ostype` flag can be omitted.<br>
+
 The architecture after installation is shown in the following figure:
 
 ![kube-install-arch](docs/images/kube-install-arch-2.jpg)
 
 <br>
+
 You can <a href="docs/operation0.4.md">click here to view more operation documents</a> about add k8s-node, delete k8s-node, delete k8s-master, rebuild k8s-master, and uninstall cluster.
 
 <br>
@@ -176,7 +180,9 @@ You can <a href="docs/operation0.4.md">click here to view more operation documen
 # [4] Parameter introduction
 
 <br>
+
 The parameters about kube-install can be viewed using the `kube-install help` command. You can also <a href="docs/parameters0.6.md">see more detailed parameter introduction here</a>.<br>
+
 <br>
 <br>
 <br>
@@ -190,6 +196,5 @@ The build can be completed automatically by executing the `make` command. You ca
 <br>
 <br>
 <br>
-
 
 
