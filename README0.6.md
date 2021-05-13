@@ -10,7 +10,7 @@ One click fast installation of highly available kubernetes cluster, as well as a
 <br>
 Kube-install and kubernetes version correspondence:
 <table>
-<tr><td>kube-install Version</td><td>Installation package to download</td><td>Supported installed versions</td><td>Supported OS</td></tr>
+<tr><td><b>kube-install Version</b></td><td><b>Installation package to download</b></td><td><b>Supported installed versions</b></td><td><b>Supported OS</b></td></tr>
 <tr><td> kube-install v0.1.* </td><td> kube-install-for-k8s1.14-v0.1.*.tgz</td><td> Install kubernetes v1.14.* </td><td>CentOS 7</td></tr>
 <tr><td> kube-install v0.2.* </td><td> kube-install-for-k8s1.14-v0.2.*.tgz</td><td> Install kubernetes v1.14.* </td><td>CentOS 7</td></tr>
 <tr><td> kube-install v0.3.* </td><td> kube-install-for-k8s1.14-v0.3.*.tgz</td><td> Install kubernetes v1.14.* </td><td>CentOS 7</td></tr>
