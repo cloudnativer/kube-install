@@ -175,7 +175,7 @@ You can <a href="docs/operation0.4.md">click here to view more operation documen
 
 <br>
 <br>
-<br>
+
 
 # [4] Parameter introduction
 
@@ -185,7 +185,7 @@ The parameters about kube-install can be viewed using the `kube-install help` co
 
 <br>
 <br>
-<br>
+
 
 # [5] How to build it?
 
