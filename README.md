@@ -176,7 +176,9 @@ You can <a href="docs/operation0.4.md">click here to view more operation documen
 # [4] Parameter introduction
 
 <br>
+
 The parameters about kube-install can be viewed using the `kube-install help` command. You can also <a href="docs/parameters0.6.md">see more detailed parameter introduction here</a>.<br>
+
 <br>
 <br>
 <br>
