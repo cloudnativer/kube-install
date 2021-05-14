@@ -71,7 +71,7 @@
     - "registry.tar"
 - name: 15.Set docker images tag and create pushsysimages shell 
   shell: "echo '#!/bin/bash' > {{software_home}}/image_files/pushsysimages.sh && chmod 755 {{software_home}}/image_files/pushsysimages.sh"
-- shell: "docker tag houshijun/{{item}} {{master_vip}}:5000/{{item}} && echo 'docker push {{master_vip}}:5000/{{item}}' >> {{software_home}}/image_files/pushsysimages.sh"
+- shell: "docker tag cloudnativer/{{item}} {{master_vip}}:5000/{{item}} && echo 'docker push {{master_vip}}:5000/{{item}}' >> {{software_home}}/image_files/pushsysimages.sh"
   with_items:
     - "metrics-server-amd64:v0.3.6"
     - "heapster-amd64:v1.5.4"
