@@ -27,7 +27,7 @@ spec:
       hostNetwork: true
       containers:
       - name: traefik-ingress-lb
-        image: {{master_vip}}:5000/traefik:v2.0.7
+        image: {{addons_ip3}}:5000/traefik:v2.0.7
         imagePullPolicy: IfNotPresent
         ports:
         - name: http

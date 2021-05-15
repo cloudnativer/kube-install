@@ -74,7 +74,7 @@ spec:
       serviceAccountName: elasticsearch-logging
       containers:
       - name: elasticsearch-logging
-        image: {{master_vip}}:5000/elasticsearch:6.6.1
+        image: {{addons_ip3}}:5000/elasticsearch:6.6.1
         imagePullPolicy: IfNotPresent
         resources:
           # need more cpu upon initialization, therefore burstable class
@@ -104,7 +104,7 @@ spec:
       # If your OS already sets up this number to a higher value, feel free
       # to remove this init container.
       initContainers:
-      - image: {{master_vip}}:5000/alpine:3.6
+      - image: {{addons_ip3}}:5000/alpine:3.6
         imagePullPolicy: IfNotPresent
         command: ["/sbin/sysctl", "-w", "vm.max_map_count=262144"]
         name: elasticsearch-logging-init

@@ -29,7 +29,7 @@ spec:
         emptyDir: {}
       containers:
       - name: metrics-server
-        image: {{master_vip}}:5000/metrics-server-amd64:v0.3.6
+        image: {{addons_ip3}}:5000/metrics-server-amd64:v0.3.6
         imagePullPolicy: IfNotPresent
         args:
           - --cert-dir=/tmp

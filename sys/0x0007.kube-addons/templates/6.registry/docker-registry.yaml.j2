@@ -24,7 +24,7 @@ spec:
         effect: "NoSchedule"
       containers: 
         - name: docker-registry
-          image: {{master_vip}}:5000/registry:v2.7.1
+          image: {{addons_ip3}}:5000/registry:v2.7.1
           imagePullPolicy: IfNotPresent
           resources:
             requests:

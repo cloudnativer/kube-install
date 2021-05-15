@@ -34,7 +34,7 @@ spec:
       priorityClassName: system-cluster-critical
       containers:
       - name: kube-dashboard
-        image: {{master_vip}}:5000/kubernetes-dashboard-amd64:v2.2.0
+        image: {{addons_ip3}}:5000/kubernetes-dashboard-amd64:v2.2.0
         imagePullPolicy: IfNotPresent
         resources:
           limits:
@@ -52,7 +52,7 @@ spec:
           # If not specified, Dashboard will attempt to auto discover the API server and connect
           # to it. Uncomment only if the default does not work.
           # - --apiserver-host=http://my-address:port
-          - --apiserver-host=https://{{master_vip}}:{{master_vport}}
+          - --apiserver-host=https://{{addons_ip3}}:{{master_vport}}
           - --kubeconfig=/etc/kubernetes/ssl/kube.kubeconfig
           - --token-ttl=66666
         volumeMounts:
