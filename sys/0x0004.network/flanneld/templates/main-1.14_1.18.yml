@@ -1,0 +1,84 @@
+- name: 1.Decompress flanneld software package
+  unarchive:
+    src: "{{software_home}}/pkg/flannel-v0.11.0.tar.gz"
+    dest: /usr/local/bin/
+    mode: 0755
+- name: 2.Distribution flanneld cert
+  copy: 
+    src: /etc/kubernetes/
+    dest: /etc/kubernetes/
+- name: 3.Create flanneld service
+  template:
+    src: ../templates/flanneld.service.j2
+    dest: /etc/systemd/system/flanneld.service
+- name: 4.Create cni configuration directory
+  file:
+    path: /etc/cni/net.d
+    state: directory
+- name: 5.Create cni configuration file
+  copy: 
+    src: ../templates/10-default.conflist.j2
+    dest: /etc/cni/net.d/10-default.conflist
+- name: 6.Decompress cni plugin package
+  unarchive:
+    src: "{{software_home}}/pkg/cni-plugins.tar.gz"
+    dest: /usr/local/bin/
+    mode: 0755
+- name: 7.Set service startup
+  shell: "systemctl enable flanneld"
+- shell: "systemctl enable docker"
+- name: 8.Start flanneld service
+  systemd:
+    daemon-reload: true
+    name: flanneld
+    state: restarted
+    enabled: true
+- name: 9.Create ipvsinit service
+  copy:
+    src: ../templates/ipvsinit.service
+    dest: /etc/systemd/system/ipvsinit.service
+- name: 10.Create ipvsinit shell
+  template:
+    src: ../templates/ipvsinit.sh.j2
+    dest: /usr/local/bin/ipvsinit.sh
+    mode: 0755
+- name: 11.Enable ipvsinit service
+  systemd:
+    daemon-reload: true
+    name: ipvsinit
+    enabled: true
+- name: 12.Start docker service
+  systemd:
+    daemon-reload: true
+    name: docker
+    state: restarted
+    enabled: true
+- name: 13.Decompress docker images package
+  unarchive:
+    src: "{{software_home}}/pkg/image_files.tar.gz"
+    dest: "{{software_home}}"
+    mode: 0744
+- name: 14.Load docker images
+  shell: "docker load < {{software_home}}/image_files/{{item}}"
+  with_items:
+    - "metrics-server-amd64.tar"
+    - "heapster-amd64.tar"
+    - "pause-amd64.tar"
+    - "traefik.tar"
+    - "alpine.tar"
+    - "kubernetes-dashboard-amd64.tar"
+    - "coredns.tar"
+    - "registry.tar"
+- name: 15.Set docker images tag and create pushsysimages shell 
+  shell: "echo '#!/bin/bash' > {{software_home}}/image_files/pushsysimages.sh && chmod 755 {{software_home}}/image_files/pushsysimages.sh"
+- shell: "docker tag cloudnativer/{{item}} {{master_vip}}:5000/{{item}} && echo 'docker push {{master_vip}}:5000/{{item}}' >> {{software_home}}/image_files/pushsysimages.sh"
+  with_items:
+    - "metrics-server-amd64:v0.3.6"
+    - "heapster-amd64:v1.5.4"
+    - "pause-amd64:3.1"
+    - "traefik:v2.0.7"
+    - "alpine:3.6"
+    - "kubernetes-dashboard-amd64:v1.10.1"
+    - "coredns:1.3.1"
+    - "registry:v2.7.1"
+

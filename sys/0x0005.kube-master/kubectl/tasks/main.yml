@@ -1,0 +1,8 @@
+- name: 1.Create /root/.kube directory
+  file: 
+    path: /root/.kube
+    state: directory
+- name: 2.Create local.kubeconfig file
+  copy:
+    src: "/etc/kubernetes/ssl/local.kubeconfig"
+    dest: "/root/.kube/config"
