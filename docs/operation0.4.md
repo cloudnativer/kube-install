@@ -42,6 +42,10 @@ Select any k8s-master server, and execute the following command on it:<br>
 # kube-install -opt addnode -node "192.168.1.15,192.168.1.16" -sshpwd "cloudnativer"
 ```
 
+Notice: Please make sure that the `-ostype` flag you entered is correct, only support rhel7, rhel8, centos7, centos8, suse15 these types of "ostype".
+
+<br>
+
 The architecture after installation is shown in the following figure:
 
 ![kube-install-arch](images/kube-install-arch-2.jpg)
@@ -90,8 +94,10 @@ Select any k8s-master server, and execute the following command on it:<br>
 # kube-install -opt rebuildmaster -rebuildmaster "192.168.1.13" -sshpwd "cloudnativer"
 ```
 
-Notice: If your OS is SUSE 15, CentOS 8 or RHEL 8, please use the `-ostype` flag to specifies the distribution OS type. If you OS is centos7 or rhel7, the `-ostype` flag can be omitted.
+Notice: Please make sure that the `-ostype` flag you entered is correct, only support rhel7, rhel8, centos7, centos8, suse15 these types of "ostype".
+
 <br>
+
 The architecture after installation is shown in the following figure:
 
 ![kube-install-arch](images/kube-install-arch-5.jpg)

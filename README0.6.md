@@ -4,7 +4,6 @@ One click fast installation of highly available kubernetes cluster, as well as a
 ![kube-install](docs/images/kube-install-logo.jpg)
 
 
-
 # [1] Compatibility
 
 <br>
@@ -96,8 +95,10 @@ Please operate in the root user environment. Perform the system environment init
 
 ```
 # cd /root/kube-install/
-# ./kube-install -opt init
+# ./kube-install -opt init -ostype centos7
 ```
+
+Notice: Please make sure that the `-ostype` flag you entered is correct, only support rhel7, rhel8, centos7, centos8, suse15 these types of "ostype".
 
 <br>
 
@@ -111,7 +112,7 @@ Please operate in the root user environment. Execute on the k8s-master selected 
 # ./kube-install -opt install -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -sshpwd "cloudnativer"
 ```
 
-Notice: If your OS is SUSE 15, CentOS 8 or RHEL 8, please use the `-ostype` flag to specifies the distribution OS type. If you OS is centos7 or rhel7, the `-ostype` flag can be omitted.
+Notice: Please make sure that the `-ostype` flag you entered is correct, only support rhel7, rhel8, centos7, centos8, suse15 these types of "ostype".
 
 <br>
 
@@ -163,7 +164,9 @@ Select any k8s-master server, and execute the following command on it:<br>
 # kube-install -opt addnode -node "192.168.1.15,192.168.1.16" -sshpwd "cloudnativer"
 ```
 
-Notice: If your OS is SUSE 15, CentOS 8 or RHEL 8, please use the `-ostype` flag to specifies the distribution OS type. If you OS is centos7 or rhel7, the `-ostype` flag can be omitted.<br>
+Notice: Please make sure that the `-ostype` flag you entered is correct, only support rhel7, rhel8, centos7, centos8, suse15 these types of "ostype".
+
+<br>
 
 The architecture after installation is shown in the following figure:
 
@@ -196,5 +199,6 @@ The build can be completed automatically by executing the `make` command. You ca
 <br>
 <br>
 <br>
+
 
 

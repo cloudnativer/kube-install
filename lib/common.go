@@ -22,15 +22,13 @@ func CheckErr(err error) {
 func CheckIP(ipv4 string) {
     address := net.ParseIP(ipv4)  
     if address == nil {
-         panic("The format of IP address you entered is wrong, please check!")
+         panic("The format of IP address you entered is wrong, please check! \n--------------------------------------------------------\n")
     }
 }
 
 func CheckOS(osType string) (string) {
     switch {
       case osType == "centos7" :
-          return "rhel7"
-      case osType == "" :
           return "rhel7"
       case osType == "rhel7" :
           return "rhel7"
@@ -41,17 +39,17 @@ func CheckOS(osType string) (string) {
       case osType == "suse15" :
           return "suse15"
       default:
-          panic("Only support rhel7, rhel8, centos7, centos8, suse15 these types of \"ostype\", please check!\n--------------------------------------------------------\n    rhel7   --> Red Hat Enterprise Linux 7 (default) \n    rhel8   --> Red Hat Enterprise Linux 8 \n    centos7 --> CentOS Linux 7 (default) \n    centos8 --> CentOS Linux 8 \n    suse15  --> OpenSUSE Linux 15 \n\n  *.If the \"ostype\" is empty, the default value is rhel7 or centos7 ! ")
+          panic("Please make sure that the \"-ostype\" parameter you entered is correct! Only support rhel7, rhel8, centos7, centos8, suse15 these types of \"ostype\": \n--------------------------------------------------------\n    rhel7   --> Red Hat Enterprise Linux 7 \n    rhel8   --> Red Hat Enterprise Linux 8 \n    centos7 --> CentOS Linux 7 \n    centos8 --> CentOS Linux 8 \n    suse15  --> OpenSUSE Linux 15 \n\n ")
     }
 }
 
-func CheckParam(option string,paramname string, param string) {
+func CheckParam(option string, paramname string, param string) {
     if param == "" {
-         panic("When performing the "+option+" operation, you must enter the "+paramname+" parameter, please check!")
+         panic("When you execute the "+option+" operation, you must enter the "+paramname+" parameter, please check! \n--------------------------------------------------------\n")
     }
 }
 
-func ProgressBar(n int,char string) (s string) {
+func ProgressBar(n int, char string) (s string) {
     for i:=1;i<=n;i++{
         s+=char
     }

@@ -34,7 +34,6 @@ func main() {
     node_array := strings.Split(node, ",")
     node_str := strings.Replace(node, "," , " " , -1)
 
-    ostype = kilib.CheckOS(ostype)
     softdir = "/opt/kube-install"
     path, err := os.Executable()
     kilib.CheckErr(err)
@@ -49,7 +48,8 @@ func main() {
 
       //Execute init command
       case opt == "init" :
-          fmt.Println("\nInitialization in progress, please wait...\n") 
+          fmt.Println("\nInitialization in progress, please wait...\n")
+          ostype = kilib.CheckOS(ostype)
           time.Sleep(1 * time.Second)
           for i := 1; i <= 100; i = i + 1 {
               fmt.Fprintf(os.Stdout, "%d%% [%s]\r",i,kilib.ProgressBar(i,"#") + kilib.ProgressBar(100-i," "))
@@ -61,9 +61,10 @@ func main() {
       //Execute install command
       case opt == "install" :
           fmt.Println("\nDeploying kubernetes cluster, please wait...\n") 
-          kilib.CheckParam(opt,"master",master)
-          kilib.CheckParam(opt,"node",node)
-          kilib.CheckParam(opt,"sshpwd",sshpwd)
+          kilib.CheckParam(opt,"\"-master\"",master)
+          kilib.CheckParam(opt,"\"-node\"",node)
+          kilib.CheckParam(opt,"\"-sshpwd\"",sshpwd)
+          ostype = kilib.CheckOS(ostype)
           kilib.ShellExecute(currentdir+"/workflow/sshkey-init.sh \""+sshpwd+"\" \"127.0.0.1 "+master_str+" "+node_str+"\" \""+softdir+"\" \""+currentdir+"\" \"install\"")
           kilib.GeneralConfig(master_array, node_array, currentdir, softdir, ostype)
           _, err_install := kilib.CopyFile(currentdir+"/workflow/general.inventory", currentdir+"/workflow/install.inventory")
@@ -83,8 +84,9 @@ func main() {
       //Execute addnode command
       case opt == "addnode" :
           fmt.Println("\nAdding k8s-node, please wait...\n") 
-          kilib.CheckParam(opt,"node",node)
-          kilib.CheckParam(opt,"sshpwd",sshpwd)
+          kilib.CheckParam(opt,"\"-node\"",node)
+          kilib.CheckParam(opt,"\"-sshpwd\"",sshpwd)
+          ostype = kilib.CheckOS(ostype)
           kilib.ShellExecute(softdir+"/workflow/sshkey-init.sh \""+sshpwd+"\" \"127.0.0.1 "+node_str+"\" \""+softdir+"\" \""+softdir+"\" \"addnode\"")
           _, err_addnode := kilib.CopyFile(softdir+"/workflow/general.inventory", softdir+"/workflow/addnode.inventory")
           kilib.CheckErr(err_addnode)
@@ -96,8 +98,8 @@ func main() {
       //Execute delnode command
       case opt == "delnode" :
           fmt.Println("\nDeleting k8s-node, please wait...\n") 
-          kilib.CheckParam(opt,"node",node)
-          kilib.CheckParam(opt,"sshpwd",sshpwd)
+          kilib.CheckParam(opt,"\"-node\"",node)
+          kilib.CheckParam(opt,"\"-sshpwd\"",sshpwd)
           kilib.ShellExecute(softdir+"/workflow/sshkey-init.sh \""+sshpwd+"\" \"127.0.0.1 "+node_str+"\" \""+softdir+"\" \""+softdir+"\" \"delnode\"")
           _, err_delnode := kilib.CopyFile(softdir+"/workflow/general.inventory", softdir+"/workflow/delnode.inventory")
           kilib.CheckErr(err_delnode)
@@ -112,8 +114,9 @@ func main() {
       //Execute rebuildmaster command
       case opt == "rebuildmaster" :
           fmt.Println("\nRebuilding k8s-master, please wait...\n")
-          kilib.CheckParam(opt,"master",master)
-          kilib.CheckParam(opt,"sshpwd",sshpwd)
+          kilib.CheckParam(opt,"\"-master\"",master)
+          kilib.CheckParam(opt,"\"-sshpwd\"",sshpwd)
+          ostype = kilib.CheckOS(ostype)
           kilib.ShellExecute(softdir+"/workflow/sshkey-init.sh \""+sshpwd+"\" \"127.0.0.1 "+master_str+"\" \""+softdir+"\" \""+softdir+"\" \"rebuildmaster\"")
           _, err_rebuildmaster := kilib.CopyFile(softdir+"/workflow/general.inventory", softdir+"/workflow/rebuildmaster.inventory")
           kilib.CheckErr(err_rebuildmaster)
@@ -126,8 +129,8 @@ func main() {
       //Execute delmaster command
       case opt == "delmaster" :
           fmt.Println("\nDeleting k8s-master, please wait...\n")
-          kilib.CheckParam(opt,"master",master)
-          kilib.CheckParam(opt,"sshpwd",sshpwd)
+          kilib.CheckParam(opt,"\"-master\"",master)
+          kilib.CheckParam(opt,"\"-sshpwd\"",sshpwd)
           kilib.ShellExecute(softdir+"/workflow/sshkey-init.sh \""+sshpwd+"\" \"127.0.0.1 "+master_str+"\" \""+softdir+"\" \""+softdir+"\" \"delmaster\"")
           _, err_delmaster := kilib.CopyFile(softdir+"/workflow/general.inventory", softdir+"/workflow/delmaster.inventory")
           kilib.CheckErr(err_delmaster)
@@ -139,9 +142,9 @@ func main() {
       //Execute uninstall command
       case opt == "uninstall" :
           fmt.Println("\nUninstalling kubernetes cluster, please wait...\n\n")
-          kilib.CheckParam(opt,"master",master)
-          kilib.CheckParam(opt,"node",node)
-          kilib.CheckParam(opt,"sshpwd",sshpwd)
+          kilib.CheckParam(opt,"\"-master\"",master)
+          kilib.CheckParam(opt,"\"-node\"",node)
+          kilib.CheckParam(opt,"\"-sshpwd\"",sshpwd)
           kilib.ShellExecute(currentdir+"/workflow/sshkey-init.sh \""+sshpwd+"\" \""+master_str+" "+node_str+"\" \""+softdir+"\" \""+currentdir+"\" \"install\"")
           //Create tmp workflow dir
           err_rmdir:= os.RemoveAll("/tmp/workflow/")

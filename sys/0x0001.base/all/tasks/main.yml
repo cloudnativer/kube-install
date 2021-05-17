@@ -1,6 +1,6 @@
 - name: 1.Create base package directory
   file:
-    path: "{{software_home}}/temp/"
+    path: "{{software_home}}/temp/basepkg-{{ostype}}"
     state: directory
 - name: 2.Perform installation pretreatment
   copy: 
@@ -9,16 +9,14 @@
     mode: 0755
 - shell: "{{software_home}}/temp/preinstall.sh"
   ignore_errors: yes
-- name: 3.Decompress base package
+- name: 3.Installation base package
   #include telnet expect ntp curl net-tools lrzsz gcc gcc-c++ yum-utils psmisc pcre-devel openssl-devel wget tree vim conntrack sysstat libseccomp lsof traceroute
-  unarchive:
-    src: "{{software_home}}/pkg/basepkg-{{ostype}}.tgz"
-    dest: "{{software_home}}/temp"
-    mode: 0744
-- name: 4.Installation base package
-  shell: "rpm -U {{software_home}}/temp/basepkg-{{ostype}}/*.rpm --force --nodeps"
+  copy:
+    src: "{{software_home}}/pkg/{{ostype}}/basepkg-{{ostype}}/"
+    dest: "{{software_home}}/temp/basepkg-{{ostype}}/"
+- shell: "rpm -U {{software_home}}/pkg/temp/basepkg-{{ostype}}/*.rpm --force --nodeps"
   ignore_errors: yes
-- name: 5.Turn off firewall
+- name: 4.Turn off firewall
   service: 
     name: firewalld 
     state: stopped 
@@ -29,16 +27,16 @@
     state: stopped
     enabled: false
   ignore_errors: yes
-- name: 6.Turn off selinux
+- name: 5.Turn off selinux
   lineinfile:
     dest: /etc/selinux/config
     regexp: '^SELINUX='
     line: 'SELINUX=disabled'
   ignore_errors: yes
-- name: 7.Turn off postfix
+- name: 6.Turn off postfix
   shell: "systemctl stop postfix && systemctl disable postfix"
   ignore_errors: yes
-- name: 8.Set system limit
+- name: 7.Set system limit
   lineinfile:
     dest: /etc/security/limits.conf
     line: "{{item}}"
@@ -49,57 +47,63 @@
     - '* hard nproc 65536'
     - '* soft memlock unlimited'
     - '* hard memlock unlimited'
-- name: 9.Set ipvs_modules
+- name: 8.Set ipvs_modules
   copy:
     src: ../templates/ipvs.modules
     dest: /etc/sysconfig/modules/
     mode: 0755
-#- name: 10.Add nf_conntrack_ipv4 parameter configuration
+#- name: 9.Add nf_conntrack_ipv4 parameter configuration
 #  #If your operating system is a 3.* kernel, you need to remove the comments in this section.
 #  shell: "echo 'modprobe -- nf_conntrack_ipv4' >> /etc/sysconfig/modules/ipvs.modules"
-- name: 10.Run ipvs_modules
+- name: 9.Run ipvs_modules
   shell: "bash /etc/sysconfig/modules/ipvs.modules"
   ignore_errors: yes
-- name: 11.Add sysctl parameter configuration
+- name: 10.Add sysctl parameter configuration
   copy:
     src: ../templates/kubernetes.conf
     dest: /etc/sysctl.d/
-#- name: 12.Add tcp_tw_recycle parameter configuration
+#- name: 11.Add tcp_tw_recycle parameter configuration
 #  #If your operating system is a 3.* kernel, you need to remove the comments in this section.
 #  shell: "echo 'net.ipv4.tcp_tw_recycle=0' >> /etc/sysctl.d/kubernetes.conf"
-- name: 12.Set sysctl parameter configuration
+- name: 11.Set sysctl parameter configuration
   shell: sysctl -p /etc/sysctl.d/kubernetes.conf
   ignore_errors: yes
-- name: 13.Create journal directory
+- name: 12.Create journal directory
   file: 
     path: /var/log/journal
     state: directory
     mode: 0755
-- name: 14.Create journal.conf.d directory
+- name: 12.Create journal.conf.d directory
   file: 
     path: /etc/systemd/journald.conf.d
     state: directory
     mode: 0755
-- name: 15.Add prophet file
+- name: 13.Add prophet file
   copy:
     src: ../templates/99-prophet.conf
     dest: /etc/systemd/journald.conf.d/
     mode: 0755
-- name: 16.Start systemd-journald service
+- name: 14.Start systemd-journald service
   service:
     name: systemd-journald
     state: restarted
   ignore_errors: yes
-- name: 17.Create k8s cert directory
+- name: 15.Create resolv config file
+  file:
+    path: /etc/resolv.conf 
+    state: touch
+    mode: 0644
+  ignore_errors: yes
+- name: 16.Create k8s cert directory
   file:
     path: "/etc/kubernetes/ssl/"
     state: directory
-- name: 18.Decompress k8s software package
+- name: 17.Decompress k8s software package
   unarchive:
     src: "{{software_home}}/pkg/kube-server.tar.gz"
     dest: /usr/local/bin/
     mode: 0755
-- name: 19.Decompress helm software package
+- name: 18.Decompress helm software package
   unarchive:
     src: "{{software_home}}/pkg/helm-v3.5.3.tar.gz"
     dest: /usr/local/bin/
