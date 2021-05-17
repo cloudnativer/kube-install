@@ -14,7 +14,7 @@
   copy:
     src: "{{software_home}}/pkg/{{ostype}}/basepkg-{{ostype}}/"
     dest: "{{software_home}}/temp/basepkg-{{ostype}}/"
-- shell: "rpm -U {{software_home}}/pkg/temp/basepkg-{{ostype}}/*.rpm --force --nodeps"
+- shell: "rpm -U {{software_home}}/temp/basepkg-{{ostype}}/*.rpm --force --nodeps"
   ignore_errors: yes
 - name: 4.Turn off firewall
   service: 
