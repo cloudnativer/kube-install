@@ -18,8 +18,12 @@ func GeneralConfig(master_array []string, node_array []string, currentdir string
     inventory_file.WriteString("\n### k8s-master configuration ###\n")
     var master_iplist,etcd_initial,etcd_endpoints,ingress_upstream string
     var ipvsinit_shell string = "ipvsadm -A -t 10.254.0.3:6443 -s rr "
+    var master_vip string = "10.254.0.3"
     master_num := len(master_array)
     node_num := len(node_array)
+    if master_num == 1 {
+        master_vip = master_array[0]
+    }
     for i := 0; i < master_num; i++ {
         if i > 0{
             master_iplist = master_iplist + ","
@@ -34,7 +38,7 @@ func GeneralConfig(master_array []string, node_array []string, currentdir string
     for i := 0; i < node_num; i++ {
         ingress_upstream = ingress_upstream+"server "+node_array[i]+":80 max_fails=3 fail_timeout=30s;"
     }
-    inventory_file.WriteString("ostype=\""+ostype+"\"\nmaster_iplist=\""+master_iplist+"\"\netcd_initial=\""+etcd_initial+"\"\netcd_endpoints=\""+etcd_endpoints+"\"\ningress_upstream=\""+ingress_upstream+"\"\nipvsinit_shell = \""+ipvsinit_shell+"\"\nmaster_vip=\"10.254.0.3\"\nmaster_vport=\"6443\"\n")
+    inventory_file.WriteString("ostype=\""+ostype+"\"\nmaster_iplist=\""+master_iplist+"\"\netcd_initial=\""+etcd_initial+"\"\netcd_endpoints=\""+etcd_endpoints+"\"\ningress_upstream=\""+ingress_upstream+"\"\nipvsinit_shell = \""+ipvsinit_shell+"\"\nmaster_vip = \""+master_vip+"\"\nmaster_vport=\"6443\"\n")
     //Setting the scheduling IP for addons
     switch {
         case node_num == 1 :
