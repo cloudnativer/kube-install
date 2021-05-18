@@ -95,7 +95,7 @@ Please operate in the root user environment. Perform the system environment init
 
 ```
 # cd /root/kube-install/
-# ./kube-install -opt init -ostype centos7
+# ./kube-install -opt init -ostype "centos7"
 ```
 
 Notice: Please make sure that the `-ostype` flag you entered is correct, only support rhel7, rhel8, centos7, centos8, suse15 these types of "ostype".
@@ -109,7 +109,7 @@ Please operate in the root user environment. Execute on the k8s-master selected 
 
 ```
 # cd /root/kube-install/
-# ./kube-install -opt install -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -sshpwd "cloudnativer"
+# ./kube-install -opt install -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -sshpwd "cloudnativer" -ostype "centos7"
 ```
 
 Notice: Please make sure that the `-ostype` flag you entered is correct, only support rhel7, rhel8, centos7, centos8, suse15 these types of "ostype".
@@ -161,7 +161,7 @@ Suppose you expect to install two servers (192.168.1.15 and 192.168.1.16) as k8s
 Select any k8s-master server, and execute the following command on it:<br>
 
 ```
-# kube-install -opt addnode -node "192.168.1.15,192.168.1.16" -sshpwd "cloudnativer"
+# kube-install -opt addnode -node "192.168.1.15,192.168.1.16" -sshpwd "cloudnativer" -ostype "centos7"
 ```
 
 Notice: Please make sure that the `-ostype` flag you entered is correct, only support rhel7, rhel8, centos7, centos8, suse15 these types of "ostype".
@@ -174,7 +174,7 @@ The architecture after installation is shown in the following figure:
 
 <br>
 
-You can <a href="docs/operation0.4.md">click here to view more operation documents</a> about add k8s-node, delete k8s-node, delete k8s-master, rebuild k8s-master, and uninstall cluster.
+You can <a href="docs/operation0.6.md">click here to view more operation documents</a> about add k8s-node, delete k8s-node, delete k8s-master, rebuild k8s-master, and uninstall cluster.
 
 <br>
 <br>

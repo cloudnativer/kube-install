@@ -43,15 +43,15 @@ For example：
   Initialize the system environment:
     kube-install -opt init
   Install k8s cluster:
-    kube-install -opt install -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -sshpwd "cloudnativer"
+    kube-install -opt install -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -sshpwd "cloudnativer" -ostype "centos7"
   Add k8s-node to the cluster:
-    kube-install -opt addnode -node "192.168.1.15,192.168.1.16" -sshpwd "cloudnativer"
+    kube-install -opt addnode -node "192.168.1.15,192.168.1.16" -sshpwd "cloudnativer" -ostype "centos7"
   Remove the k8s-node from the cluster:
     kube-install -opt delnode -node "192.168.1.13,192.168.1.15" -sshpwd "cloudnativer"
   Remove the k8s-master from the cluster:
     kube-install -opt delmaster -master "192.168.1.13" -sshpwd "cloudnativer"
   Rebuild the damaged k8s-master:
-    kube-install -opt rebuildmaster -master "192.168.1.13" -sshpwd "cloudnativer"
+    kube-install -opt rebuildmaster -master "192.168.1.13" -sshpwd "cloudnativer" -ostype "centos7"
   Uninstall k8s cluster:
     kube-install -opt uninstall -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -sshpwd "cloudnativer"
   Display help information:
