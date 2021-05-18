@@ -35,7 +35,7 @@
     state: absent
   ignore_errors: yes
 - copy:
-    src: ../../../0x0008.action/delnode/templates/uninstall-docker.sh
+    src: ../../../0x00000000action/delnode/templates/uninstall-docker.sh
     dest: "{{k8s_install_home}}/.temp/uninstall-docker.sh"
     mode: 0755
   ignore_errors: yes

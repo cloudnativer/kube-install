@@ -27,3 +27,6 @@
     name: etcd
     state: restarted
     enabled: true
+- name: 8.Creating network config in etcd storage
+  shell: etcdctl --endpoints={{etcd_endpoints}} --ca-file=/etc/kubernetes/ssl/k8s-root-ca.pem --cert-file=/etc/kubernetes/ssl/kubernetes.pem --key-file=/etc/kubernetes/ssl/kubernetes-key.pem set /kubernetes/network/config '{"Network":"{{pod_cidr}}", "SubnetLen":24, "Backend":{"Type":"vxlan"}}'
+

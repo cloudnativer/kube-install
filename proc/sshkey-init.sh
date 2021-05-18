@@ -4,8 +4,8 @@
 #$1 is password   $2 is ip list   $3 is softdir   $4is currentdir   $5 is option
 
 
-if [ -f $4"/workflow/"$5".inventory" ];then
-  rm -rf $4"/workflow/"$5".inventory"
+if [ -f $4"/config/"$5".inventory" ];then
+  rm -rf $4"/config/"$5".inventory"
 fi
 
 if [ "$5" == "install" ];then

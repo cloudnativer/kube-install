@@ -10,7 +10,7 @@ import (
 
 func GeneralConfig(master_array []string, node_array []string, currentdir string, softdir string, ostype string) {
     //Generate generic configuration
-    inventory_file, err := os.Create(currentdir+"/workflow/general.inventory") 
+    inventory_file, err := os.Create(currentdir+"/config/general.inventory") 
     CheckErr(err)
     defer inventory_file.Close() 
     inventory_file.WriteString("###--------------------------------------General configuration---------------------------------###\n")
@@ -57,7 +57,7 @@ func GeneralConfig(master_array []string, node_array []string, currentdir string
 
 func InstallConfig(master_array []string, node_array []string, currentdir string, softdir string) {
     //Generate master configuration
-    inventory_file, err := os.OpenFile(currentdir+"/workflow/install.inventory",os.O_WRONLY | os.O_APPEND, 0666)
+    inventory_file, err := os.OpenFile(currentdir+"/config/install.inventory",os.O_WRONLY | os.O_APPEND, 0666)
     CheckErr(err)
     defer inventory_file.Close() 
     write := bufio.NewWriter(inventory_file)
@@ -86,7 +86,7 @@ func InstallConfig(master_array []string, node_array []string, currentdir string
 
 func AddnodeConfig(addnode_array []string, softdir string) {
     //Generate addnode configuration
-    inventory_file, err := os.OpenFile(softdir+"/workflow/addnode.inventory",os.O_WRONLY | os.O_APPEND, 0666)
+    inventory_file, err := os.OpenFile(softdir+"/config/addnode.inventory",os.O_WRONLY | os.O_APPEND, 0666)
     CheckErr(err)
     defer inventory_file.Close() 
     write := bufio.NewWriter(inventory_file)
@@ -103,7 +103,7 @@ func AddnodeConfig(addnode_array []string, softdir string) {
 
 func DelnodeConfig(delnode_array []string, softdir string) {
     //Generate delnode configuration
-    inventory_file, err := os.OpenFile(softdir+"/workflow/delnode.inventory",os.O_WRONLY | os.O_APPEND, 0666)
+    inventory_file, err := os.OpenFile(softdir+"/config/delnode.inventory",os.O_WRONLY | os.O_APPEND, 0666)
     CheckErr(err)
     defer inventory_file.Close() 
     write := bufio.NewWriter(inventory_file)
@@ -120,14 +120,14 @@ func DelnodeConfig(delnode_array []string, softdir string) {
 
 func RebuildmasterConfig(rebuildmaster_array []string, softdir string) {
     //Generate rebuildmaster configuration
-    _, err := os.Stat(softdir+"/workflow/install.inventory")
+    _, err := os.Stat(softdir+"/config/install.inventory")
     if err != nil {
-        panic(softdir+"/workflow/install.inventory file has been deleted by mistake. Please restore the file manually or contact the administrator!")
+        panic(softdir+"/config/install.inventory file has been deleted by mistake. Please restore the file manually or contact the administrator!")
     }
     if os.IsNotExist(err) {
-        panic(softdir+"/workflow/install.inventory file has been deleted by mistake. Please restore the file manually or contact the administrator!")
+        panic(softdir+"/config/install.inventory file has been deleted by mistake. Please restore the file manually or contact the administrator!")
     }
-    inventory_file, err := os.OpenFile(softdir+"/workflow/rebuildmaster.inventory",os.O_WRONLY | os.O_APPEND, 0666)
+    inventory_file, err := os.OpenFile(softdir+"/config/rebuildmaster.inventory",os.O_WRONLY | os.O_APPEND, 0666)
     CheckErr(err)
     defer inventory_file.Close() 
     write := bufio.NewWriter(inventory_file)
@@ -140,7 +140,7 @@ func RebuildmasterConfig(rebuildmaster_array []string, softdir string) {
     }
     write.WriteString("\n[etcd]\n")
     for i := 0; i < rebuildmaster_num; i++ {
-        etcdname := ShellOutput("cat "+softdir+"/workflow/install.inventory  | grep etcdname | grep "+rebuildmaster_array[i]+" | cut -d \"=\" -f 3,4 | head -1")
+        etcdname := ShellOutput("cat "+softdir+"/config/install.inventory  | grep etcdname | grep "+rebuildmaster_array[i]+" | cut -d \"=\" -f 3,4 | head -1")
         write.WriteString(rebuildmaster_array[i]+" ip="+rebuildmaster_array[i]+" etcdname="+etcdname+"\n")
     }
     write.WriteString("\n[k8s:children]\n"+"master1\n"+"master\n"+"etcd\n"+"\n\n")
@@ -150,7 +150,7 @@ func RebuildmasterConfig(rebuildmaster_array []string, softdir string) {
 
 func DelmasterConfig(delmaster_array []string, softdir string) {
     //Generate delmaster configuration
-    inventory_file, err := os.OpenFile(softdir+"/workflow/delmaster.inventory",os.O_WRONLY | os.O_APPEND, 0666)
+    inventory_file, err := os.OpenFile(softdir+"/config/delmaster.inventory",os.O_WRONLY | os.O_APPEND, 0666)
     CheckErr(err)
     defer inventory_file.Close() 
     write := bufio.NewWriter(inventory_file)
@@ -167,7 +167,7 @@ func DelmasterConfig(delmaster_array []string, softdir string) {
 
 func UninstallConfig(delnode_array []string, delmaster_array []string, softdir string) {
     //Generate uninstall configuration
-    inventory_file, err := os.OpenFile(softdir+"/workflow/uninstall.inventory",os.O_WRONLY | os.O_APPEND, 0666)
+    inventory_file, err := os.OpenFile(softdir+"/config/uninstall.inventory",os.O_WRONLY | os.O_APPEND, 0666)
     CheckErr(err)
     defer inventory_file.Close()
     write := bufio.NewWriter(inventory_file)

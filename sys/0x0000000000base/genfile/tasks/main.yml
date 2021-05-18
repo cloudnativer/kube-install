@@ -6,7 +6,8 @@
     - bin
     - docs
     - pkg
-    - workflow
+    - proc
+    - config
     - yaml
 - name: 2.Distributing deployment files to kubernetes master, please wait...
   copy:
@@ -19,7 +20,10 @@
     src: "/root/kube-install/pkg"
     dest: "{{software_home}}/"
 - copy:
-    src: "/root/kube-install/workflow"
+    src: "/root/kube-install/proc"
+    dest: "{{software_home}}/"
+- copy:
+    src: "/root/kube-install/config"
     dest: "{{software_home}}/"
 - copy:
     src: "/root/kube-install/yaml"
@@ -34,10 +38,10 @@
 - name: 3.Configure permissions for executables
   file: path={{software_home}}/{{ item }} mode=755 owner=root group=root
   with_items:
-    - workflow/sshkey-init.sh
-    - workflow/sshops-init.sh
-    - workflow/getmasterconfig.sh
+    - proc/sshkey-init.sh
+    - proc/sshops-init.sh
+    - proc/getmasterconfig.sh
 - name: 4.Install distributed control software
-  shell: "{{software_home}}/workflow/sshops-init.sh {{software_home}} {{software_home}}"
+  shell: "{{software_home}}/proc/sshops-init.sh {{software_home}} {{software_home}}"
   ignore_errors: yes
 
