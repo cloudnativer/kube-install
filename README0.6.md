@@ -41,6 +41,7 @@ Kube-install and kubernetes version correspondence:
 <tr><td> kube-install v0.6.* </td><td> kube-install-for-k8s1.19-v0.6.*.tgz</td><td> Install kubernetes v1.19.* </td><td>CentOS 7/RHEL 7/CentOS 8/RHEL 8/SUSE15</td></tr>
 <tr><td> kube-install v0.6.* </td><td> kube-install-for-k8s1.20-v0.6.*.tgz</td><td> Install kubernetes v1.20.* </td><td>CentOS 7/RHEL 7/CentOS 8/RHEL 8/SUSE15</td></tr>
 <tr><td> kube-install v0.6.* </td><td> kube-install-for-k8s1.21-v0.6.*.tgz</td><td> Install kubernetes v1.21.* </td><td>CentOS 7/RHEL 7/CentOS 8/RHEL 8/SUSE15</td></tr>
+<tr><td> kube-install v0.6.* </td><td> kube-install-for-k8s1.22-v0.6.*.tgz</td><td> Install kubernetes v1.22.* </td><td>CentOS 7/RHEL 7/CentOS 8/RHEL 8/SUSE15</td></tr>
 </table>
 <br>
 Notice: kube-install supports CentOS 7, CentOS 8, SUSE 15, RHEL 7 and RHEL 8 operating system environments. For a list of supported operating system distributions, please refer to <a href="docs/os-support.md">OS support list</a>.

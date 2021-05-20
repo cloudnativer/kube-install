@@ -6,12 +6,13 @@ After=network.target
 [Service]
 WorkingDirectory={{k8s_install_home}}/kubernetes/kube-apiserver
 ExecStart=/usr/local/bin/kube-apiserver \
---enable-admission-plugins=NamespaceLifecycle,LimitRanger,ServiceAccount,DefaultStorageClass,DefaultTolerationSeconds,NodeRestriction,ResourceQuota  \
+--admission-control=NamespaceLifecycle,LimitRanger,ServiceAccount,DefaultStorageClass,ResourceQuota,NodeRestriction \
 --feature-gates=ExpandInUsePersistentVolumes=true \
 --advertise-address={{ip}} \
 --bind-address=0.0.0.0 \
+--insecure-bind-address=127.0.0.1 \
 --secure-port=6443 \
---insecure-port=0 \
+--insecure-port=6334 \
 --kubelet-https=true \
 --enable-swagger-ui=false \
 --runtime-config=rbac.authorization.k8s.io/v1beta1 \
@@ -23,10 +24,6 @@ ExecStart=/usr/local/bin/kube-apiserver \
 --service-node-port-range=5000-55000 \
 --tls-cert-file=/etc/kubernetes/ssl/kubernetes.pem \
 --tls-private-key-file=/etc/kubernetes/ssl/kubernetes-key.pem \
---service-account-key-file=/etc/kubernetes/ssl/sa.pub  \
---service-account-signing-key-file=/etc/kubernetes/ssl/sa.key  \
---service-account-issuer=https://kubernetes.default.svc.cluster.local \
---kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname  \
 --kubelet-client-certificate=/etc/kubernetes/ssl/kubernetes.pem \
 --kubelet-client-key=/etc/kubernetes/ssl/kubernetes-key.pem \
 --client-ca-file=/etc/kubernetes/ssl/k8s-root-ca.pem \
