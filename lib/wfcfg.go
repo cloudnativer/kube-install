@@ -140,7 +140,8 @@ func RebuildmasterConfig(rebuildmaster_array []string, softdir string) {
     }
     write.WriteString("\n[etcd]\n")
     for i := 0; i < rebuildmaster_num; i++ {
-        etcdname := ShellOutput("cat "+softdir+"/config/install.inventory  | grep etcdname | grep "+rebuildmaster_array[i]+" | cut -d \"=\" -f 3,4 | head -1")
+        etcdname,err := ShellOutput("cat "+softdir+"/config/install.inventory  | grep etcdname | grep "+rebuildmaster_array[i]+" | cut -d \"=\" -f 3,4 | head -1")
+        CheckErr(err)
         write.WriteString(rebuildmaster_array[i]+" ip="+rebuildmaster_array[i]+" etcdname="+etcdname+"\n")
     }
     write.WriteString("\n[k8s:children]\n"+"master1\n"+"master\n"+"etcd\n"+"\n\n")

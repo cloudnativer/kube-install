@@ -54,9 +54,9 @@ func main() {
           for i := 1; i <= 100; i = i + 1 {
               fmt.Fprintf(os.Stdout, "%d%% [%s]\r",i,kilib.ProgressBar(i,"#") + kilib.ProgressBar(100-i," "))
               time.Sleep(time.Second * 1)
-        } 
-        kilib.ShellExecute(currentdir+"/proc/sshops-init.sh \""+softdir+"\" \""+currentdir+"\" \""+ostype+"\"")
-        fmt.Println("\n\nInitialization completed!\n") 
+          }
+          kilib.SshOpsInit(softdir, currentdir, ostype) 
+          fmt.Println("\n\nInitialization completed!\n") 
 
       //Execute install command
       case opt == "install" :
@@ -65,21 +65,21 @@ func main() {
           kilib.CheckParam(opt,"\"-node\"",node)
           kilib.CheckParam(opt,"\"-sshpwd\"",sshpwd)
           ostype = kilib.CheckOS(ostype)
-          kilib.ShellExecute(currentdir+"/proc/sshkey-init.sh \""+sshpwd+"\" \"127.0.0.1 "+master_str+" "+node_str+"\" \""+softdir+"\" \""+currentdir+"\" \"install\"")
+          kilib.SshKeyInit(sshpwd, master_str+" "+node_str, softdir, currentdir, opt)
           kilib.GeneralConfig(master_array, node_array, currentdir, softdir, ostype)
-          _, err_install := kilib.CopyFile(currentdir+"/config/general.inventory", currentdir+"/config/install.inventory")
-          kilib.CheckErr(err_install)
+          _, err_cpfile := kilib.CopyFile(currentdir+"/config/general.inventory", currentdir+"/config/install.inventory")
+          kilib.CheckErr(err_cpfile)
           kilib.InstallConfig(master_array, node_array, currentdir, softdir)
           kilib.InstallGenFile(currentdir)
           kilib.InstallIpvsYaml(currentdir, master_array)
           if len(master_array) == 1{
               kilib.OnemasterinstallYML(currentdir, ostype)
-              kilib.ShellExecute("ansible-playbook -i "+currentdir+"/config/install.inventory "+currentdir+"/config/k8scluster-onemasterinstall.yml")
+              kilib.Operation("onemasterinstall", currentdir)
           }else{
               kilib.InstallYML(currentdir, ostype)
-              kilib.ShellExecute("ansible-playbook -i "+currentdir+"/config/install.inventory "+currentdir+"/config/k8scluster-install.yml")
+              kilib.Operation(opt, currentdir)
           }
-          fmt.Println("Kubernetes cluster deployment operation execution completed!")
+          fmt.Println("=============================================================================\nKubernetes cluster installation completed!=============================================================================\n")
 
       //Execute addnode command
       case opt == "addnode" :
@@ -87,29 +87,30 @@ func main() {
           kilib.CheckParam(opt,"\"-node\"",node)
           kilib.CheckParam(opt,"\"-sshpwd\"",sshpwd)
           ostype = kilib.CheckOS(ostype)
-          kilib.ShellExecute(softdir+"/proc/sshkey-init.sh \""+sshpwd+"\" \"127.0.0.1 "+node_str+"\" \""+softdir+"\" \""+softdir+"\" \"addnode\"")
+          kilib.SshKeyInit(sshpwd, node_str, softdir, softdir, opt)
           _, err_addnode := kilib.CopyFile(softdir+"/config/general.inventory", softdir+"/config/addnode.inventory")
           kilib.CheckErr(err_addnode)
           kilib.AddnodeConfig(node_array, softdir)
           kilib.AddnodeYML(softdir, ostype)
-          kilib.ShellExecute("ansible-playbook -i "+softdir+"/config/addnode.inventory "+softdir+"/config/k8scluster-addnode.yml")
-          fmt.Println("K8s-node add operation execution completed!")
+          kilib.Operation(opt, currentdir)
+          fmt.Println("=============================================================================\nK8s-node has been added to the kubernetes cluster!=============================================================================\n")
 
       //Execute delnode command
       case opt == "delnode" :
           fmt.Println("\nDeleting k8s-node, please wait...\n") 
           kilib.CheckParam(opt,"\"-node\"",node)
           kilib.CheckParam(opt,"\"-sshpwd\"",sshpwd)
-          kilib.ShellExecute(softdir+"/proc/sshkey-init.sh \""+sshpwd+"\" \"127.0.0.1 "+node_str+"\" \""+softdir+"\" \""+softdir+"\" \"delnode\"")
-          _, err_delnode := kilib.CopyFile(softdir+"/config/general.inventory", softdir+"/config/delnode.inventory")
-          kilib.CheckErr(err_delnode)
+          kilib.SshKeyInit(sshpwd, node_str, softdir, softdir, opt)
+          _, err_cpfile := kilib.CopyFile(softdir+"/config/general.inventory", softdir+"/config/delnode.inventory")
+          kilib.CheckErr(err_cpfile)
           kilib.DelnodeConfig(node_array, softdir)
           kilib.DelnodeYML(softdir)
           delnodeiplist := "{"+node+"}"
           if len(node_array) == 1 { delnodeiplist = node }
-          kilib.ShellExecute("kubectl delete node "+delnodeiplist )
-          kilib.ShellExecute("ansible-playbook -i "+softdir+"/config/delnode.inventory "+softdir+"/config/k8scluster-delnode.yml")
-          fmt.Println("K8s-node delete operation execution completed!")
+          err_delnode := kilib.ShellExecute("kubectl delete node "+delnodeiplist )
+          kilib.CheckErr(err_delnode)
+          kilib.Operation(opt, currentdir)
+          fmt.Println("=============================================================================\nK8s-node has been removed from the kubernetes cluster!=============================================================================\n")
 
       //Execute rebuildmaster command
       case opt == "rebuildmaster" :
@@ -117,27 +118,27 @@ func main() {
           kilib.CheckParam(opt,"\"-master\"",master)
           kilib.CheckParam(opt,"\"-sshpwd\"",sshpwd)
           ostype = kilib.CheckOS(ostype)
-          kilib.ShellExecute(softdir+"/proc/sshkey-init.sh \""+sshpwd+"\" \"127.0.0.1 "+master_str+"\" \""+softdir+"\" \""+softdir+"\" \"rebuildmaster\"")
-          _, err_rebuildmaster := kilib.CopyFile(softdir+"/config/general.inventory", softdir+"/config/rebuildmaster.inventory")
-          kilib.CheckErr(err_rebuildmaster)
+          kilib.SshKeyInit(sshpwd, master_str, softdir, softdir, opt)
+          _, err_cpfile := kilib.CopyFile(softdir+"/config/general.inventory", softdir+"/config/rebuildmaster.inventory")
+          kilib.CheckErr(err_cpfile)
           kilib.RebuildmasterConfig(master_array, softdir)
           kilib.InstallGenFile(softdir)
           kilib.RebuildmasterYML(softdir)
-          kilib.ShellExecute("ansible-playbook -i "+softdir+"/config/rebuildmaster.inventory "+softdir+"/config/k8scluster-rebuildmaster.yml")
-          fmt.Println("K8s-master rebuilt operation execution completed!")
+          kilib.Operation(opt, currentdir)
+          fmt.Println("=============================================================================\nK8s-master in the kubernetes cluster has been rebuilt!=============================================================================\n")
 
       //Execute delmaster command
       case opt == "delmaster" :
           fmt.Println("\nDeleting k8s-master, please wait...\n")
           kilib.CheckParam(opt,"\"-master\"",master)
           kilib.CheckParam(opt,"\"-sshpwd\"",sshpwd)
-          kilib.ShellExecute(softdir+"/proc/sshkey-init.sh \""+sshpwd+"\" \"127.0.0.1 "+master_str+"\" \""+softdir+"\" \""+softdir+"\" \"delmaster\"")
-          _, err_delmaster := kilib.CopyFile(softdir+"/config/general.inventory", softdir+"/config/delmaster.inventory")
-          kilib.CheckErr(err_delmaster)
+          kilib.SshKeyInit(sshpwd, master_str, softdir, softdir, opt)
+          _, err_cpfile := kilib.CopyFile(softdir+"/config/general.inventory", softdir+"/config/delmaster.inventory")
+          kilib.CheckErr(err_cpfile)
           kilib.DelmasterConfig(master_array, softdir)
           kilib.DelmasterYML(softdir)
-          kilib.ShellExecute("ansible-playbook -i "+softdir+"/config/delmaster.inventory "+softdir+"/config/k8scluster-delmaster.yml")
-          fmt.Println("K8s-master delete operation execution completed!")
+          kilib.Operation(opt, currentdir)
+          fmt.Println("=============================================================================\nK8s-master has been removed from the kubernetes cluster! \n=============================================================================\n")
 
       //Execute uninstall command
       case opt == "uninstall" :
@@ -145,7 +146,7 @@ func main() {
           kilib.CheckParam(opt,"\"-master\"",master)
           kilib.CheckParam(opt,"\"-node\"",node)
           kilib.CheckParam(opt,"\"-sshpwd\"",sshpwd)
-          kilib.ShellExecute(currentdir+"/proc/sshkey-init.sh \""+sshpwd+"\" \""+master_str+" "+node_str+"\" \""+softdir+"\" \""+currentdir+"\" \"install\"")
+          kilib.SshKeyInit(sshpwd, master_str+" "+node_str, softdir, currentdir, opt)
           //Create tmp kube-install config dir
           err_rmdir:= os.RemoveAll("/tmp/.kube-install/config/")
           kilib.CheckErr(err_rmdir)
@@ -153,20 +154,21 @@ func main() {
           kilib.CheckErr(err_mkdir)
           //Create tmp kube-install config files
           kilib.GeneralConfig(master_array, node_array, currentdir, softdir, ostype)
-          _, err_uninstall := kilib.CopyFile(currentdir+"/config/general.inventory", "/tmp/.kube-install/config/uninstall.inventory")
-          kilib.CheckErr(err_uninstall)
+          _, err_cpfile := kilib.CopyFile(currentdir+"/config/general.inventory", "/tmp/.kube-install/config/uninstall.inventory")
+          kilib.CheckErr(err_cpfile)
           kilib.UninstallConfig(node_array, master_array, "/tmp/.kube-install")
           kilib.UninstallYML(currentdir)
           //Uninstall kubernetes cluster process now
           delnodeiplist := "{"+node+"}"
           if len(node_array) == 1 { delnodeiplist = node }
           fmt.Println("K8s-node list: "+delnodeiplist+" \n")
-          kilib.ShellExecute("kubectl delete node "+delnodeiplist+">/dev/null 2>&1")
+          err_delnode := kilib.ShellExecute("kubectl delete node "+delnodeiplist+">/dev/null 2>&1")
+          kilib.CheckErr(err_delnode)
           fmt.Println("k8s-node delete operation execution completed!\n\nUninstall k8s-master and k8s-node software, please wait...")
-          kilib.ShellExecute("ansible-playbook -i /tmp/.kube-install/config/uninstall.inventory /tmp/.kube-install/config/k8scluster-uninstall.yml")
-          fmt.Println("K8s-master and k8s-node software uninstall operation execution completed!\n\n**********************************************************************************\n\n")
+          kilib.Operation(opt, "/tmp/.kube-install")
+          fmt.Println("K8s-master and k8s-node software uninstall operation execution completed!\n")
           os.RemoveAll("/tmp/.kube-install/")
-          fmt.Println("Kubernetes cluster uninstall operation execution completed!\n\n")
+          fmt.Println("=============================================================================\nKubernetes cluster has been installed! \n=============================================================================\n")
 
       //Default output help information
       default:
