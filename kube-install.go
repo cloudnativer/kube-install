@@ -91,7 +91,7 @@ func main() {
           _, err_addnode := kilib.CopyFile(softdir+"/config/general.inventory", softdir+"/config/addnode.inventory")
           kilib.CheckErr(err_addnode)
           kilib.AddnodeConfig(node_array, softdir)
-          kilib.AddnodeYML(softdir, ostype)
+          kilib.AddnodeYML(currentdir, ostype)
           kilib.Operation(opt, currentdir)
           fmt.Println("=============================================================================\nK8s-node has been added to the kubernetes cluster!=============================================================================\n")
 
@@ -104,7 +104,7 @@ func main() {
           _, err_cpfile := kilib.CopyFile(softdir+"/config/general.inventory", softdir+"/config/delnode.inventory")
           kilib.CheckErr(err_cpfile)
           kilib.DelnodeConfig(node_array, softdir)
-          kilib.DelnodeYML(softdir)
+          kilib.DelnodeYML(currentdir)
           delnodeiplist := "{"+node+"}"
           if len(node_array) == 1 { delnodeiplist = node }
           err_delnode := kilib.ShellExecute("kubectl delete node "+delnodeiplist )
@@ -123,7 +123,7 @@ func main() {
           kilib.CheckErr(err_cpfile)
           kilib.RebuildmasterConfig(master_array, softdir)
           kilib.InstallGenFile(softdir)
-          kilib.RebuildmasterYML(softdir)
+          kilib.RebuildmasterYML(currentdir)
           kilib.Operation(opt, currentdir)
           fmt.Println("=============================================================================\nK8s-master in the kubernetes cluster has been rebuilt!=============================================================================\n")
 
@@ -136,7 +136,7 @@ func main() {
           _, err_cpfile := kilib.CopyFile(softdir+"/config/general.inventory", softdir+"/config/delmaster.inventory")
           kilib.CheckErr(err_cpfile)
           kilib.DelmasterConfig(master_array, softdir)
-          kilib.DelmasterYML(softdir)
+          kilib.DelmasterYML(currentdir)
           kilib.Operation(opt, currentdir)
           fmt.Println("=============================================================================\nK8s-master has been removed from the kubernetes cluster! \n=============================================================================\n")
 
