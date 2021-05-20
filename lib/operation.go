@@ -6,13 +6,11 @@ import (
 
 
 func SshOpsInit(softDir string, currentDir string, osType string) {
-    err := ShellExecute(currentDir+"/proc/sshops-init.sh \""+softDir+"\" \""+currentDir+"\" \""+osType+"\"")
-    CheckErr(err)
+    ShellExecute(currentDir+"/proc/sshops-init.sh \""+softDir+"\" \""+currentDir+"\" \""+osType+"\"")
 }
 
 func SshKeyInit(sshPwd string, ip string, softDir string, currentDir string, opt string) {
-    err := ShellExecute(currentDir+"/proc/sshkey-init.sh \""+sshPwd+"\" \"127.0.0.1 "+ip+"\" \""+softDir+"\" \""+currentDir+"\" \"+opt+\"")
-    CheckErr(err)
+    ShellExecute(currentDir+"/proc/sshkey-init.sh \""+sshPwd+"\" \"127.0.0.1 "+ip+"\" \""+softDir+"\" \""+currentDir+"\" \"+opt+\"")
 }
 
 func Operation(opt string, currentDir string) {
