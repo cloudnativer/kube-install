@@ -79,7 +79,7 @@ func main() {
               kilib.InstallYML(currentdir, ostype)
               kilib.Operation(opt, currentdir)
           }
-          fmt.Println("=============================================================================\nKubernetes cluster installation completed!=============================================================================\n")
+          fmt.Println("=============================================================================\nKubernetes cluster installation completed! \n=============================================================================\n")
 
       //Execute addnode command
       case opt == "addnode" :
@@ -88,12 +88,12 @@ func main() {
           kilib.CheckParam(opt,"\"-sshpwd\"",sshpwd)
           ostype = kilib.CheckOS(ostype)
           kilib.SshKeyInit(sshpwd, node_str, softdir, currentdir, opt)
-          _, err_addnode := kilib.CopyFile(softdir+"/config/general.inventory", softdir+"/config/addnode.inventory")
+          _, err_addnode := kilib.CopyFile(currentdir+"/config/general.inventory", currentdir+"/config/addnode.inventory")
           kilib.CheckErr(err_addnode)
           kilib.AddnodeConfig(node_array, currentdir)
           kilib.AddnodeYML(currentdir, ostype)
           kilib.Operation(opt, currentdir)
-          fmt.Println("=============================================================================\nK8s-node has been added to the kubernetes cluster!=============================================================================\n")
+          fmt.Println("=============================================================================\nK8s-node has been added to the kubernetes cluster! \n=============================================================================\n")
 
       //Execute delnode command
       case opt == "delnode" :
@@ -101,16 +101,15 @@ func main() {
           kilib.CheckParam(opt,"\"-node\"",node)
           kilib.CheckParam(opt,"\"-sshpwd\"",sshpwd)
           kilib.SshKeyInit(sshpwd, node_str, softdir, currentdir, opt)
-          _, err_cpfile := kilib.CopyFile(softdir+"/config/general.inventory", softdir+"/config/delnode.inventory")
+          _, err_cpfile := kilib.CopyFile(currentdir+"/config/general.inventory", currentdir+"/config/delnode.inventory")
           kilib.CheckErr(err_cpfile)
           kilib.DelnodeConfig(node_array, currentdir)
           kilib.DelnodeYML(currentdir)
           delnodeiplist := "{"+node+"}"
           if len(node_array) == 1 { delnodeiplist = node }
-          err_delnode := kilib.ShellExecute("kubectl delete node "+delnodeiplist )
-          kilib.CheckErr(err_delnode)
+          kilib.ShellExecute("kubectl delete node "+delnodeiplist )
           kilib.Operation(opt, currentdir)
-          fmt.Println("=============================================================================\nK8s-node has been removed from the kubernetes cluster!=============================================================================\n")
+          fmt.Println("=============================================================================\nK8s-node has been removed from the kubernetes cluster! \n=============================================================================\n")
 
       //Execute rebuildmaster command
       case opt == "rebuildmaster" :
@@ -119,13 +118,13 @@ func main() {
           kilib.CheckParam(opt,"\"-sshpwd\"",sshpwd)
           ostype = kilib.CheckOS(ostype)
           kilib.SshKeyInit(sshpwd, master_str, softdir, currentdir, opt)
-          _, err_cpfile := kilib.CopyFile(softdir+"/config/general.inventory", softdir+"/config/rebuildmaster.inventory")
+          _, err_cpfile := kilib.CopyFile(currentdir+"/config/general.inventory", currentdir+"/config/rebuildmaster.inventory")
           kilib.CheckErr(err_cpfile)
           kilib.RebuildmasterConfig(master_array, currentdir)
           kilib.InstallGenFile(softdir)
           kilib.RebuildmasterYML(currentdir)
           kilib.Operation(opt, currentdir)
-          fmt.Println("=============================================================================\nK8s-master in the kubernetes cluster has been rebuilt!=============================================================================\n")
+          fmt.Println("=============================================================================\nK8s-master in the kubernetes cluster has been rebuilt! \n=============================================================================\n")
 
       //Execute delmaster command
       case opt == "delmaster" :
@@ -133,7 +132,7 @@ func main() {
           kilib.CheckParam(opt,"\"-master\"",master)
           kilib.CheckParam(opt,"\"-sshpwd\"",sshpwd)
           kilib.SshKeyInit(sshpwd, master_str, softdir, currentdir, opt)
-          _, err_cpfile := kilib.CopyFile(softdir+"/config/general.inventory", softdir+"/config/delmaster.inventory")
+          _, err_cpfile := kilib.CopyFile(currentdir+"/config/general.inventory", currentdir+"/config/delmaster.inventory")
           kilib.CheckErr(err_cpfile)
           kilib.DelmasterConfig(master_array, currentdir)
           kilib.DelmasterYML(currentdir)
@@ -162,8 +161,7 @@ func main() {
           delnodeiplist := "{"+node+"}"
           if len(node_array) == 1 { delnodeiplist = node }
           fmt.Println("K8s-node list: "+delnodeiplist+" \n")
-          err_delnode := kilib.ShellExecute("kubectl delete node "+delnodeiplist+">/dev/null 2>&1")
-          kilib.CheckErr(err_delnode)
+          kilib.ShellExecute("kubectl delete node "+delnodeiplist+">/dev/null 2>&1")
           fmt.Println("k8s-node delete operation execution completed!\n\nUninstall k8s-master and k8s-node software, please wait...")
           kilib.Operation(opt, "/tmp/.kube-install")
           fmt.Println("K8s-master and k8s-node software uninstall operation execution completed!\n")

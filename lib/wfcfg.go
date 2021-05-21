@@ -3,7 +3,6 @@ package kilib
 import (
     "os"
     "bufio"
-    "strconv"
 )
 
 
@@ -31,7 +30,7 @@ func GeneralConfig(master_array []string, node_array []string, currentdir string
             etcd_endpoints = etcd_endpoints + ","
         }
         master_iplist = master_iplist+"\\\""+master_array[i]+"\\\""
-        etcd_initial = etcd_initial+"kube"+strconv.Itoa(i)+"=https://"+master_array[i]+":2380"
+        etcd_initial = etcd_initial+master_array[i]+"=https://"+master_array[i]+":2380"
         etcd_endpoints = etcd_endpoints+"https://"+master_array[i]+":2379"
         ipvsinit_shell = ipvsinit_shell+" && ipvsadm -a -t 10.254.0.3:6443 -r "+master_array[i]+":6443 -m"
     }
@@ -70,7 +69,7 @@ func InstallConfig(master_array []string, node_array []string, currentdir string
     }
     write.WriteString("\n[etcd]\n")
     for i := 0; i < master_num; i++ {
-        write.WriteString(master_array[i]+" ip="+master_array[i]+" etcdname=kube"+strconv.Itoa(i)+"\n")
+        write.WriteString(master_array[i]+" ip="+master_array[i]+" etcdname="+master_array[i]+"\n")
     }
     //Generate node configuration
     write.WriteString("\n\n\n###-----------------------------------k8s-node host list-------------------------------###\n")
@@ -140,9 +139,7 @@ func RebuildmasterConfig(rebuildmaster_array []string, softdir string) {
     }
     write.WriteString("\n[etcd]\n")
     for i := 0; i < rebuildmaster_num; i++ {
-        etcdname,err := ShellOutput("cat "+softdir+"/config/install.inventory  | grep etcdname | grep "+rebuildmaster_array[i]+" | cut -d \"=\" -f 3,4 | head -1")
-        CheckErr(err)
-        write.WriteString(rebuildmaster_array[i]+" ip="+rebuildmaster_array[i]+" etcdname="+etcdname+"\n")
+        write.WriteString(rebuildmaster_array[i]+" ip="+rebuildmaster_array[i]+" etcdname="+rebuildmaster_array[i]+"\n")
     }
     write.WriteString("\n[k8s:children]\n"+"master1\n"+"master\n"+"etcd\n"+"\n\n")
     write.Flush()
