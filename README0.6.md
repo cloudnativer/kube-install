@@ -55,7 +55,7 @@ Notice: kube-install supports CentOS 7, CentOS 8, SUSE 15, RHEL 7 and RHEL 8 ope
 
 If you have four servers,kubernetes master software is installed on the three servers (192.168.1.11, 192.168.1.12, 192.168.1.13), and kubernetes node software is installed on the four servers (192.168.1.11, 192.168.1.12, 192.168.1.13, 192.168.1.14). The operating system of the server is pure CentOS Linux or RHEL(Red Hat Enterprise Linux). It's like this:
 <table>
-<tr><td>IP Address</td><td>Role</td><td>OS Version</td><td>Root Password</td></tr>
+<tr><td><b>IP Address</b></td><td><b>Role</b></td><td><b>OS Version</b></td><td><b>Root Password</b></td></tr>
 <tr><td>192.168.1.11</td><td>k8s-master,k8s-node</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
 <tr><td>192.168.1.12</td><td>k8s-master,k8s-node</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
 <tr><td>192.168.1.13</td><td>k8s-master,k8s-node</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
@@ -99,7 +99,7 @@ Please operate in the root user environment. Perform the system environment init
 # ./kube-install -opt init -ostype "centos7"
 ```
 
-Notice: Please make sure that the `-ostype` flag you entered is correct, only support rhel7, rhel8, centos7, centos8, suse15 these types of "ostype".
+Notice: Please make sure that the `-ostype` flag you entered is correct, only support `rhel7`, `rhel8`, `centos7`, `centos8`, `suse15` these types of "ostype".
 
 <br>
 
@@ -113,7 +113,7 @@ Please operate in the root user environment. Execute on the k8s-master selected 
 # ./kube-install -opt install -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -sshpwd "cloudnativer" -ostype "centos7"
 ```
 
-Notice: Please make sure that the `-ostype` flag you entered is correct, only support rhel7, rhel8, centos7, centos8, suse15 these types of "ostype".
+Notice: Please make sure that the `-ostype` flag you entered is correct, only support `rhel7`, `rhel8`, `centos7`, `centos8`, `suse15` these types of "ostype".
 
 <br>
 
@@ -150,7 +150,7 @@ After kube-install is installed, you can directly execute `kube-install` command
 Suppose you expect to install two servers (192.168.1.15 and 192.168.1.16) as k8s-nodes and join the kubernetets cluster in Chapter [2].
 
 <table>
-<tr><td>IP Address</td><td>Role</td><td>OS Version</td><td>Root Password</td></tr>
+<tr><td><b>IP Address</b></td><td><b>Role</b></td><td><b>OS Version</b></td><td><b>Root Password</b></td></tr>
 <tr><td>192.168.1.11</td><td>k8s-master,k8s-node</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
 <tr><td>192.168.1.12</td><td>k8s-master,k8s-node</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
 <tr><td>192.168.1.13</td><td>k8s-master,k8s-node</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
@@ -165,7 +165,7 @@ Select any k8s-master server, and execute the following command on it:<br>
 # kube-install -opt addnode -node "192.168.1.15,192.168.1.16" -sshpwd "cloudnativer" -ostype "centos7"
 ```
 
-Notice: Please make sure that the `-ostype` flag you entered is correct, only support rhel7, rhel8, centos7, centos8, suse15 these types of "ostype".
+Notice: Please make sure that the `-ostype` flag you entered is correct, only support `rhel7`, `rhel8`, `centos7`, `centos8`, `suse15` these types of "ostype".
 
 <br>
 
@@ -200,5 +200,6 @@ The build can be completed automatically by executing the `make` command. You ca
 <br>
 <br>
 <br>
+
 
 
