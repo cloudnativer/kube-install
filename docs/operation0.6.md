@@ -42,7 +42,7 @@ Select any k8s-master server, and execute the following command on it:<br>
 # kube-install -opt addnode -node "192.168.1.15,192.168.1.16" -sshpwd "cloudnativer" -ostype "centos7"
 ```
 
-Notice: Please make sure that the `-ostype` flag you entered is correct, only support rhel7, rhel8, centos7, centos8, suse15 these types of "ostype".
+Notice: Please make sure that the `-ostype` flag you entered is correct, only support `rhel7`, `rhel8`, `centos7`, `centos8`, `suse15` these types of "ostype".
 
 <br>
 
@@ -94,7 +94,7 @@ Select any k8s-master server, and execute the following command on it:<br>
 # kube-install -opt rebuildmaster -rebuildmaster "192.168.1.13" -sshpwd "cloudnativer" -ostype "centos7"
 ```
 
-Notice: Please make sure that the `-ostype` flag you entered is correct, only support rhel7, rhel8, centos7, centos8, suse15 these types of "ostype".
+Notice: Please make sure that the `-ostype` flag you entered is correct, only support `rhel7`, `rhel8`, `centos7`, `centos8`, `suse15` these types of "ostype".
 
 <br>
 
