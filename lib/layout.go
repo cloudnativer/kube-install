@@ -60,7 +60,7 @@ func DelmasterYML(softdir string) {
 }
 
 func UninstallYML(softdir string) {
-    uninstall_file, err := os.Create("/tmp/config/k8scluster-uninstall.yml")
+    uninstall_file, err := os.Create("/tmp/.kube-install/config/k8scluster-uninstall.yml")
     CheckErr(err)
     defer uninstall_file.Close()
     uninstall_file.WriteString("\n- remote_user: root\n  hosts: delnode\n  gather_facts: no\n  roles:\n    - "+softdir+"/sys/0x00000000action/delnode\n- remote_user: root\n  hosts: delmaster\n  gather_facts: no\n  roles:\n    - "+softdir+"/sys/0x00000000action/delmaster\n- remote_user: root\n  hosts: delmaster,delnode\n  gather_facts: no\n  roles:\n    - "+softdir+"/sys/0x00000000finish/uninstall\n")

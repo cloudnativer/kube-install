@@ -147,9 +147,8 @@ func main() {
           kilib.CheckParam(opt,"\"-sshpwd\"",sshpwd)
           kilib.SshKeyInit(sshpwd, master_str+" "+node_str, softdir, currentdir, opt)
           //Create tmp kube-install config dir
-          err_rmdir:= os.RemoveAll("/tmp/.kube-install/config/")
-          kilib.CheckErr(err_rmdir)
-          err_mkdir := os.Mkdir("/tmp/.kube-install/config/", 0666)
+          os.RemoveAll("/tmp/.kube-install/config/")
+          err_mkdir := os.MkdirAll("/tmp/.kube-install/config/", 0666)
           kilib.CheckErr(err_mkdir)
           //Create tmp kube-install config files
           kilib.GeneralConfig(master_array, node_array, currentdir, softdir, ostype)
