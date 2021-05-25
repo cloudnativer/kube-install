@@ -74,10 +74,10 @@ func main() {
           kilib.InstallIpvsYaml(currentdir, master_array)
           if len(master_array) == 1{
               kilib.OnemasterinstallYML(currentdir, ostype)
-              kilib.Operation("onemasterinstall", currentdir)
+              kilib.Operation(opt, currentdir, "onemasterinstall")
           }else{
               kilib.InstallYML(currentdir, ostype)
-              kilib.Operation(opt, currentdir)
+              kilib.Operation(opt, currentdir, opt)
           }
           fmt.Println("=============================================================================\nKubernetes cluster installation completed! \n=============================================================================\n")
 
@@ -92,7 +92,7 @@ func main() {
           kilib.CheckErr(err_addnode)
           kilib.AddnodeConfig(node_array, currentdir)
           kilib.AddnodeYML(currentdir, ostype)
-          kilib.Operation(opt, currentdir)
+          kilib.Operation(opt, currentdir, opt)
           fmt.Println("=============================================================================\nK8s-node has been added to the kubernetes cluster! \n=============================================================================\n")
 
       //Execute delnode command
@@ -108,7 +108,7 @@ func main() {
           delnodeiplist := "{"+node+"}"
           if len(node_array) == 1 { delnodeiplist = node }
           kilib.ShellExecute("kubectl delete node "+delnodeiplist )
-          kilib.Operation(opt, currentdir)
+          kilib.Operation(opt, currentdir, opt)
           fmt.Println("=============================================================================\nK8s-node has been removed from the kubernetes cluster! \n=============================================================================\n")
 
       //Execute rebuildmaster command
@@ -123,7 +123,7 @@ func main() {
           kilib.RebuildmasterConfig(master_array, currentdir)
           kilib.InstallGenFile(softdir)
           kilib.RebuildmasterYML(currentdir)
-          kilib.Operation(opt, currentdir)
+          kilib.Operation(opt, currentdir, opt)
           fmt.Println("=============================================================================\nK8s-master in the kubernetes cluster has been rebuilt! \n=============================================================================\n")
 
       //Execute delmaster command
@@ -136,7 +136,7 @@ func main() {
           kilib.CheckErr(err_cpfile)
           kilib.DelmasterConfig(master_array, currentdir)
           kilib.DelmasterYML(currentdir)
-          kilib.Operation(opt, currentdir)
+          kilib.Operation(opt, currentdir, opt)
           fmt.Println("=============================================================================\nK8s-master has been removed from the kubernetes cluster! \n=============================================================================\n")
 
       //Execute uninstall command
@@ -163,7 +163,7 @@ func main() {
           fmt.Println("K8s-node list: "+delnodeiplist+" \n")
           kilib.ShellExecute("kubectl delete node "+delnodeiplist+">/dev/null 2>&1")
           fmt.Println("k8s-node delete operation execution completed!\n\nUninstall k8s-master and k8s-node software, please wait...")
-          kilib.Operation(opt, "/tmp/.kube-install")
+          kilib.Operation(opt, "/tmp/.kube-install", opt)
           fmt.Println("K8s-master and k8s-node software uninstall operation execution completed!\n")
           os.RemoveAll("/tmp/.kube-install/")
           fmt.Println("=============================================================================\nKubernetes cluster has been installed! \n=============================================================================\n")

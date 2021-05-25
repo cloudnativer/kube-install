@@ -17,8 +17,8 @@ func SshKeyInit(sshPwd string, ip string, softDir string, currentDir string, opt
     }
 }
 
-func Operation(opt string, currentDir string) {
-    err := ShellExecute("ansible-playbook -i "+currentDir+"/config/"+opt+".inventory "+currentDir+"/config/k8scluster-"+opt+".yml")
+func Operation(opt string, currentDir string, layoutYml string) {
+    err := ShellExecute("ansible-playbook -i "+currentDir+"/config/"+opt+".inventory "+currentDir+"/config/k8scluster-"+layoutYml+".yml")
     CheckErr(err)
     fmt.Println(opt+" operation executed successfully! \n")
 }
