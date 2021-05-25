@@ -23,13 +23,13 @@
   "address": "{{ip}}",
   "port": 10250,
   "readOnlyPort": 10255,
+  "failSwapOn": false,
+  "podPidsLimit": -1,
+  "maxPods": 210,
   "cgroupDriver": "systemd",
   "hairpinMode": "promiscuous-bridge",
   "serializeImagePulls": false,
   "featureGates": {
-    "SupportPodPidsLimit": false,
-    "SupportNodePidsLimit": false,
-    "RotateKubeletClientCertificate": true,
     "RotateKubeletServerCertificate": true
   },
   "clusterDomain": "cluster.local.",
