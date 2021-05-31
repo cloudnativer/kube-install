@@ -7,41 +7,15 @@ One click fast installation of highly available kubernetes cluster, as well as a
 # [1] Compatibility
 
 <br>
-Kube-install and kubernetes version correspondence:
+Compatibility matrix:
 <table>
-<tr><td><b>kube-install Version</b></td><td><b>Installation package to download</b></td><td><b>Supported installed versions</b></td><td><b>Supported OS</b></td></tr>
-<tr><td> kube-install v0.1.* </td><td> kube-install-for-k8s1.14-v0.1.*.tgz</td><td> Install kubernetes v1.14.* </td><td>CentOS 7</td></tr>
-<tr><td> kube-install v0.2.* </td><td> kube-install-for-k8s1.14-v0.2.*.tgz</td><td> Install kubernetes v1.14.* </td><td>CentOS 7</td></tr>
-<tr><td> kube-install v0.3.* </td><td> kube-install-for-k8s1.14-v0.3.*.tgz</td><td> Install kubernetes v1.14.* </td><td>CentOS 7</td></tr>
-<tr><td> kube-install v0.3.* </td><td> kube-install-for-k8s1.15-v0.3.*.tgz</td><td> Install kubernetes v1.15.* </td><td>CentOS 7</td></tr>
-<tr><td> kube-install v0.3.* </td><td> kube-install-for-k8s1.16-v0.3.*.tgz</td><td> Install kubernetes v1.16.* </td><td>CentOS 7</td></tr>
-<tr><td> kube-install v0.3.* </td><td> kube-install-for-k8s1.17-v0.3.*.tgz</td><td> Install kubernetes v1.17.* </td><td>CentOS 7</td></tr>
-<tr><td> kube-install v0.3.* </td><td> kube-install-for-k8s1.18-v0.3.*.tgz</td><td> Install kubernetes v1.18.* </td><td>CentOS 7</td></tr>
-<tr><td> kube-install v0.4.* </td><td> kube-install-for-k8s1.14-v0.4.*.tgz</td><td> Install kubernetes v1.14.* </td><td>CentOS 7/RHEL 7</td></tr>
-<tr><td> kube-install v0.4.* </td><td> kube-install-for-k8s1.15-v0.4.*.tgz</td><td> Install kubernetes v1.15.* </td><td>CentOS 7/RHEL 7</td></tr>
-<tr><td> kube-install v0.4.* </td><td> kube-install-for-k8s1.16-v0.4.*.tgz</td><td> Install kubernetes v1.16.* </td><td>CentOS 7/RHEL 7</td></tr>
-<tr><td> kube-install v0.4.* </td><td> kube-install-for-k8s1.17-v0.4.*.tgz</td><td> Install kubernetes v1.17.* </td><td>CentOS 7/RHEL 7</td></tr>
-<tr><td> kube-install v0.4.* </td><td> kube-install-for-k8s1.18-v0.4.*.tgz</td><td> Install kubernetes v1.18.* </td><td>CentOS 7/RHEL 7</td></tr>
-<tr><td> kube-install v0.4.* </td><td> kube-install-for-k8s1.19-v0.4.*.tgz</td><td> Install kubernetes v1.19.* </td><td>CentOS 7/RHEL 7</td></tr>
-<tr><td> kube-install v0.4.* </td><td> kube-install-for-k8s1.20-v0.4.*.tgz</td><td> Install kubernetes v1.20.* </td><td>CentOS 7/RHEL 7</td></tr>
-<tr><td> kube-install v0.4.* </td><td> kube-install-for-k8s1.21-v0.4.*.tgz</td><td> Install kubernetes v1.21.* </td><td>CentOS 7/RHEL 7</td></tr>
-<tr><td> kube-install v0.5.* </td><td> kube-install-for-k8s1.14-v0.5.*.tgz</td><td> Install kubernetes v1.14.* </td><td>CentOS 7/RHEL 7</td></tr>
-<tr><td> kube-install v0.5.* </td><td> kube-install-for-k8s1.15-v0.5.*.tgz</td><td> Install kubernetes v1.15.* </td><td>CentOS 7/RHEL 7</td></tr>
-<tr><td> kube-install v0.5.* </td><td> kube-install-for-k8s1.16-v0.5.*.tgz</td><td> Install kubernetes v1.16.* </td><td>CentOS 7/RHEL 7</td></tr>
-<tr><td> kube-install v0.5.* </td><td> kube-install-for-k8s1.17-v0.5.*.tgz</td><td> Install kubernetes v1.17.* </td><td>CentOS 7/RHEL 7</td></tr>
-<tr><td> kube-install v0.5.* </td><td> kube-install-for-k8s1.18-v0.5.*.tgz</td><td> Install kubernetes v1.18.* </td><td>CentOS 7/RHEL 7</td></tr>
-<tr><td> kube-install v0.5.* </td><td> kube-install-for-k8s1.19-v0.5.*.tgz</td><td> Install kubernetes v1.19.* </td><td>CentOS 7/RHEL 7</td></tr>
-<tr><td> kube-install v0.5.* </td><td> kube-install-for-k8s1.20-v0.5.*.tgz</td><td> Install kubernetes v1.20.* </td><td>CentOS 7/RHEL 7</td></tr>
-<tr><td> kube-install v0.5.* </td><td> kube-install-for-k8s1.21-v0.5.*.tgz</td><td> Install kubernetes v1.21.* </td><td>CentOS 7/RHEL 7</td></tr>
-<tr><td> kube-install v0.6.* </td><td> kube-install-for-k8s1.14-v0.6.*.tgz</td><td> Install kubernetes v1.14.* </td><td>CentOS 7/RHEL 7/CentOS 8/RHEL 8/SUSE15</td></tr>
-<tr><td> kube-install v0.6.* </td><td> kube-install-for-k8s1.15-v0.6.*.tgz</td><td> Install kubernetes v1.15.* </td><td>CentOS 7/RHEL 7/CentOS 8/RHEL 8/SUSE15</td></tr>
-<tr><td> kube-install v0.6.* </td><td> kube-install-for-k8s1.16-v0.6.*.tgz</td><td> Install kubernetes v1.16.* </td><td>CentOS 7/RHEL 7/CentOS 8/RHEL 8/SUSE15</td></tr>
-<tr><td> kube-install v0.6.* </td><td> kube-install-for-k8s1.17-v0.6.*.tgz</td><td> Install kubernetes v1.17.* </td><td>CentOS 7/RHEL 7/CentOS 8/RHEL 8/SUSE15</td></tr>
-<tr><td> kube-install v0.6.* </td><td> kube-install-for-k8s1.18-v0.6.*.tgz</td><td> Install kubernetes v1.18.* </td><td>CentOS 7/RHEL 7/CentOS 8/RHEL 8/SUSE15</td></tr>
-<tr><td> kube-install v0.6.* </td><td> kube-install-for-k8s1.19-v0.6.*.tgz</td><td> Install kubernetes v1.19.* </td><td>CentOS 7/RHEL 7/CentOS 8/RHEL 8/SUSE15</td></tr>
-<tr><td> kube-install v0.6.* </td><td> kube-install-for-k8s1.20-v0.6.*.tgz</td><td> Install kubernetes v1.20.* </td><td>CentOS 7/RHEL 7/CentOS 8/RHEL 8/SUSE15</td></tr>
-<tr><td> kube-install v0.6.* </td><td> kube-install-for-k8s1.21-v0.6.*.tgz</td><td> Install kubernetes v1.21.* </td><td>CentOS 7/RHEL 7/CentOS 8/RHEL 8/SUSE15</td></tr>
-<tr><td> kube-install v0.6.* </td><td> kube-install-for-k8s1.22-v0.6.*.tgz</td><td> Install kubernetes v1.22.* </td><td>CentOS 7/RHEL 7/CentOS 8/RHEL 8/SUSE15</td></tr>
+<tr><td><b>kube-install Version</b></td><td><b>Supported Kubernetes Version</b></td><td><b>Supported OS Version</b></td></tr>
+<tr><td> kube-install v0.6.* </td><td> kubernetes v1.22 , kubernetes v1.21 , kubernetes v1.20 , <br> kubernetes v1.19 , kubernetes v1.18 , kubernetes v1.17 , <br> kubernetes v1.16 , kubernetes v1.15 , kubernetes v1.14 </td><td> CentOS 7 , RHEL 7 , <br> CentOS 8 , RHEL 8 , <br> SUSE 15 </td></tr>
+<tr><td> kube-install v0.5.* </td><td> kubernetes v1.21 , kubernetes v1.20 , kubernetes v1.19 , <br> kubernetes v1.18 , kubernetes v1.17 , kubernetes v1.16 , <br> kubernetes v1.15 , kubernetes v1.14 </td><td> CentOS 7 , RHEL 7 </td></tr>
+<tr><td> kube-install v0.4.* </td><td> kubernetes v1.21 , kubernetes v1.20 , kubernetes v1.19 , <br> kubernetes v1.18 , kubernetes v1.17 , kubernetes v1.16 , <br> kubernetes v1.15 , kubernetes v1.14 </td><td> CentOS 7 , RHEL 7 </td></tr>
+<tr><td> kube-install v0.3.* </td><td> kubernetes v1.18 , kubernetes v1.17 , kubernetes v1.16 , <br> kubernetes v1.15 , kubernetes v1.14 </td><td>CentOS 7</td></tr>
+<tr><td> kube-install v0.2.* </td><td> kubernetes v1.14 </td><td> CentOS 7 </td></tr>
+<tr><td> kube-install v0.1.* </td><td> kubernetes v1.14 </td><td> CentOS 7 </td></tr>
 </table>
 <br>
 Notice: kube-install supports CentOS 7, CentOS 8, SUSE 15, RHEL 7 and RHEL 8 operating system environments. For a list of supported operating system distributions, please refer to <a href="docs/os-support.md">OS support list</a>.
