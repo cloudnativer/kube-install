@@ -9,10 +9,10 @@ One click fast installation of highly available kubernetes cluster, as well as a
 <br>
 Kube-install and kubernetes version correspondence:
 <table>
-<tr><td><b>kube-install Version</b></td><td><b>Supported kubernetes Version</b></td><td><b>Supported OS Version</b></td></tr>
+<tr><td><b>kube-install Version</b></td><td><b>Supported Kubernetes Version</b></td><td><b>Supported OS Version</b></td></tr>
 <tr><td> kube-install v0.6.* </td><td> kubernetes v1.22.* ，kubernetes v1.21.* ，kubernetes v1.20.* ，kubernetes v1.19.* ，kubernetes v1.18.* ，kubernetes v1.17.* ，kubernetes v1.16.* ，kubernetes v1.15.* ，kubernetes v1.14.*</td><td>CentOS 7/RHEL 7/CentOS 8/RHEL 8/SUSE15</td></tr>
-<tr><td> kube-install v0.5.* </td><td> Install kubernetes v1.21.* , Install kubernetes v1.20.* ，kubernetes v1.20.* ，kubernetes v1.19.* ，kubernetes v1.18.* ，kubernetes v1.17.* ，kubernetes v1.16.* ，kubernetes v1.15.* ，kubernetes v1.14.* </td><td>CentOS 7/RHEL 7</td></tr>
-<tr><td> kube-install v0.4.* </td><td> Install kubernetes v1.21.* , Install kubernetes v1.20.* ，kubernetes v1.20.* ，kubernetes v1.19.* ，kubernetes v1.18.* ，kubernetes v1.17.* ，kubernetes v1.16.* ，kubernetes v1.15.* ，kubernetes v1.14.*</td><td>CentOS 7/RHEL 7</td></tr>
+<tr><td> kube-install v0.5.* </td><td>kubernetes v1.21.* , Install kubernetes v1.20.* ，kubernetes v1.20.* ，kubernetes v1.19.* ，kubernetes v1.18.* ，kubernetes v1.17.* ，kubernetes v1.16.* ，kubernetes v1.15.* ，kubernetes v1.14.* </td><td>CentOS 7/RHEL 7</td></tr>
+<tr><td> kube-install v0.4.* </td><td>kubernetes v1.21.* , Install kubernetes v1.20.* ，kubernetes v1.20.* ，kubernetes v1.19.* ，kubernetes v1.18.* ，kubernetes v1.17.* ，kubernetes v1.16.* ，kubernetes v1.15.* ，kubernetes v1.14.*</td><td>CentOS 7/RHEL 7</td></tr>
 <tr><td> kube-install v0.3.*</td><td>kubernetes v1.18.* ，kubernetes v1.17.* ，kubernetes v1.16.* ，kubernetes v1.15.* ，kubernetes v1.14.*</td><td>CentOS 7</td></tr>
 <tr><td> kube-install v0.2.* </td><td>kubernetes v1.14.*</td><td>CentOS 7</td></tr>
 <tr><td> kube-install v0.1.* </td><td>kubernetes v1.14.*</td><td>CentOS 7</td></tr>
