@@ -46,7 +46,7 @@ Notice:
 <br>
 We have not tested it on other versions of RHEL and SUSE, so we can not ensure that kube-install can be successfully installed on other versions of RHEL and SUSE.
 <br>
-Currently, we don't support the Ubuntu, Debian and SUSE Linux operating systems, and we may support them in the future.
+Currently, we don't support the Ubuntu, Debian and other operating systems, and we may support them in the future.
 <br>
 
 
