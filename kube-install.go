@@ -21,14 +21,25 @@ func main() {
     var ostype string
     var softdir string
     var currentdir string
+    var cfg string
 
     flag.StringVar(&opt,"opt","","Available options: init | install | addnode | delnode | rebuildmaster | delmaster | uninstall")
     flag.StringVar(&master,"master","","The IP address of k8s master server filled in for the first installation")
     flag.StringVar(&node,"node","","The IP address of k8s node server filled in for the first installation")
     flag.StringVar(&sshpwd,"sshpwd","","The root password used to SSH login to each server")
     flag.StringVar(&ostype,"ostype","","Specifies the distribution operating system type: centos7 | centos8 | rhel7 | rhel8 | suse15")
-    flag.StringVar(&softdir,"softdir","/opt/kube-install","Specify the installation path of kubernetes cluster.")
+    flag.StringVar(&softdir,"softdir","/opt/kube-install","Specify the installation directory of kubernetes cluster.")
+    flag.StringVar(&cfg,"cfg","","Specify the path of the configuration file for installation and operation.")
     flag.Parse()
+
+    if cfg != "" {
+        config_file := kilib.InitConfig(cfg)
+        master = string(config_file["master"])
+        node = string(config_file["node"])
+        sshpwd = string(config_file["sshpwd"])
+        ostype = string(config_file["ostype"])
+        softdir = string(config_file["softdir"])
+    }
 
     master_array := strings.Split(master, ",")
     master_str := strings.Replace(master, "," , " " , -1)

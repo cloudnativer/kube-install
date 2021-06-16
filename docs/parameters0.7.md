@@ -33,6 +33,7 @@ Commands:
   sshpwd           SSH login root password of each server.
   ostype           Specifies the distribution OS type: centos7|centos8|rhel7|rhel8|suse15.
   softdir          Specifies the installation path of kubernetes cluster.(Default value is "/opt/kube-install")
+  cfg              Specifies the path of the configuration file for installation and operation.
 ```
 
 </td></tr>
