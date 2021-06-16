@@ -43,6 +43,7 @@ func main() {
     }
 
 
+
     //Execute opt
     switch {
 
@@ -79,6 +80,7 @@ func main() {
               kilib.InstallYML(currentdir, ostype)
               kilib.Operation(opt, currentdir, opt)
           }
+          fmt.Println("Please check the file "+softdir+"/loginkey.txt to get the login key. \n")
           fmt.Println("=============================================================================\nKubernetes cluster installation completed! \n=============================================================================\n")
 
       //Execute addnode command
