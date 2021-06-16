@@ -89,7 +89,8 @@ Please operate in the root user environment. Execute on the k8s-master selected 
 # ./kube-install -opt install -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -sshpwd "cloudnativer" -ostype "centos7"
 ```
 
-Notice: Please make sure that the `-ostype` flag you entered is correct, only support `rhel7`, `rhel8`, `centos7`, `centos8`, `suse15` these types of "ostype".
+Notice: Please make sure that the `-ostype` flag you entered is correct, only support `rhel7`, `rhel8`, `centos7`, `centos8`, `suse15` these types of "ostype".<br>
+In addition, if you need to specify the directory path to the Kubernetes cluster installation, you can set it using the `-softdir` parameter.
 
 <br>
 
@@ -114,6 +115,17 @@ Login to the kube-dashboard console UI using the URL and key in the `/opt/kube-i
 ![kube-dashboard](docs/images/kube-dashboard4.jpg)
 
 <br>
+
+## 2.5 Use configuration file to install
+
+<br>
+You can also specify a configuration file to install.
+
+```
+# ./kube-install -opt install -cfg 1.cfg
+```
+
+You can also <a href="docs/cfg0.7.md">see more detailed configuration file introduction here</a>.<br>
 <br>
 <br>
 
@@ -142,7 +154,7 @@ Select any k8s-master server, and execute the following command on it:<br>
 ```
 
 Notice: Please make sure that the `-ostype` flag you entered is correct, only support `rhel7`, `rhel8`, `centos7`, `centos8`, `suse15` these types of "ostype".<br>
-In addition, if you need to specify the directory path to the Kubernetes cluster installation, you can set it using the `-softdir` parameter.
+In addition, if you need to specify the directory path to add Kubernetes node, you can set it using the `-softdir` parameter.
 
 <br>
 
@@ -153,6 +165,15 @@ The architecture after installation is shown in the following figure:
 <br>
 
 You can <a href="docs/operation0.6.md">click here to view more operation documents</a> about add k8s-node, delete k8s-node, delete k8s-master, rebuild k8s-master, and uninstall cluster.
+
+<br>
+You can also specify a configuration file to add k8s-node.
+
+```
+# ./kube-install -opt addnode -cfg 2.cfg
+```
+
+You can also <a href="docs/cfg0.7.md">see more detailed configuration file introduction here</a>.<br>
 
 <br>
 <br>
