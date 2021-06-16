@@ -10,6 +10,7 @@ One click fast installation of highly available kubernetes cluster, as well as a
 Compatibility matrix:
 <table>
 <tr><td><b>kube-install Version</b></td><td><b>Supported Kubernetes Version</b></td><td><b>Supported OS Version</b></td></tr>
+<tr><td> kube-install v0.7.* </td><td> kubernetes v1.22 , kubernetes v1.21 , kubernetes v1.20 , <br> kubernetes v1.19 , kubernetes v1.18 , kubernetes v1.17 , <br> kubernetes v1.16 , kubernetes v1.15 , kubernetes v1.14 </td><td> CentOS 7 , RHEL 7 , <br> CentOS 8 , RHEL 8 , <br> SUSE Linux 15 </td></tr>
 <tr><td> kube-install v0.6.* </td><td> kubernetes v1.22 , kubernetes v1.21 , kubernetes v1.20 , <br> kubernetes v1.19 , kubernetes v1.18 , kubernetes v1.17 , <br> kubernetes v1.16 , kubernetes v1.15 , kubernetes v1.14 </td><td> CentOS 7 , RHEL 7 , <br> CentOS 8 , RHEL 8 , <br> SUSE Linux 15 </td></tr>
 <tr><td> kube-install v0.5.* </td><td> kubernetes v1.21 , kubernetes v1.20 , kubernetes v1.19 , <br> kubernetes v1.18 , kubernetes v1.17 , kubernetes v1.16 , <br> kubernetes v1.15 , kubernetes v1.14 </td><td> CentOS 7 , RHEL 7 </td></tr>
 <tr><td> kube-install v0.4.* </td><td> kubernetes v1.21 , kubernetes v1.20 , kubernetes v1.19 , <br> kubernetes v1.18 , kubernetes v1.17 , kubernetes v1.16 , <br> kubernetes v1.15 , kubernetes v1.14 </td><td> CentOS 7 , RHEL 7 </td></tr>
@@ -73,7 +74,8 @@ Please operate in the root user environment. Perform the system environment init
 # ./kube-install -opt init -ostype "centos7"
 ```
 
-Notice: Please make sure that the `-ostype` flag you entered is correct, only support `rhel7`, `rhel8`, `centos7`, `centos8`, `suse15` these types of "ostype".
+Notice: Please make sure that the `-ostype` flag you entered is correct, only support `rhel7`, `rhel8`, `centos7`, `centos8`, `suse15` these types of "ostype".<br>
+In addition, if you need to specify the directory path to the Kubernetes cluster installation, you can set it using the `-softdir` parameter.
 
 <br>
 
@@ -139,7 +141,8 @@ Select any k8s-master server, and execute the following command on it:<br>
 # kube-install -opt addnode -node "192.168.1.15,192.168.1.16" -sshpwd "cloudnativer" -ostype "centos7"
 ```
 
-Notice: Please make sure that the `-ostype` flag you entered is correct, only support `rhel7`, `rhel8`, `centos7`, `centos8`, `suse15` these types of "ostype".
+Notice: Please make sure that the `-ostype` flag you entered is correct, only support `rhel7`, `rhel8`, `centos7`, `centos8`, `suse15` these types of "ostype".<br>
+In addition, if you need to specify the directory path to the Kubernetes cluster installation, you can set it using the `-softdir` parameter.
 
 <br>
 
@@ -159,7 +162,7 @@ You can <a href="docs/operation0.6.md">click here to view more operation documen
 
 <br>
 
-The parameters about kube-install can be viewed using the `kube-install help` command. You can also <a href="docs/parameters0.6.md">see more detailed parameter introduction here</a>.<br>
+The parameters about kube-install can be viewed using the `kube-install help` command. You can also <a href="docs/parameters0.7.md">see more detailed parameter introduction here</a>.<br>
 
 <br>
 <br>

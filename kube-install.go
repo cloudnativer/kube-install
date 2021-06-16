@@ -27,14 +27,13 @@ func main() {
     flag.StringVar(&node,"node","","The IP address of k8s node server filled in for the first installation")
     flag.StringVar(&sshpwd,"sshpwd","","The root password used to SSH login to each server")
     flag.StringVar(&ostype,"ostype","","Specifies the distribution operating system type: centos7 | centos8 | rhel7 | rhel8 | suse15")
+    flag.StringVar(&softdir,"softdir","/opt/kube-install","Specify the installation path of kubernetes cluster.")
     flag.Parse()
 
     master_array := strings.Split(master, ",")
     master_str := strings.Replace(master, "," , " " , -1)
     node_array := strings.Split(node, ",")
     node_str := strings.Replace(node, "," , " " , -1)
-
-    softdir = "/opt/kube-install"
     path, err := os.Executable()
     kilib.CheckErr(err)
     currentdir = filepath.Dir(path)
