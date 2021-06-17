@@ -36,7 +36,7 @@ ostype = centos7
 softdir = /data/k8s
 ```
 
-Then you can execute `./kube-install -opt addnode -cfg your.cfg` to add kubernetes node.
+Then you can execute `kube-install -opt addnode -cfg your.cfg` to add kubernetes node.
 
 
 <br>
@@ -55,7 +55,7 @@ ostype = centos7
 softdir = /data/k8s
 ```
 
-Then you can execute `./kube-install -opt delnode -cfg your.cfg` to del kubernetes node.
+Then you can execute `kube-install -opt delnode -cfg your.cfg` to del kubernetes node.
 
 <br>
 <br>
@@ -73,7 +73,7 @@ ostype = centos7
 softdir = /data/k8s
 ```
 
-Then you can execute `./kube-install -opt delmaster -cfg your.cfg` to del kubernetes master.
+Then you can execute `kube-install -opt delmaster -cfg your.cfg` to del kubernetes master.
 
 <br>
 <br>
@@ -91,7 +91,7 @@ ostype = centos7
 softdir = /data/k8s
 ```
 
-Then you can execute `./kube-install -opt rebuildmaster -cfg your.cfg` to del kubernetes master.
+Then you can execute `kube-install -opt rebuildmaster -cfg your.cfg` to del kubernetes master.
 
 <br>
 <br>
@@ -110,7 +110,7 @@ ostype = centos7
 softdir = /data/k8s
 ```
 
-Then you can execute `./kube-install -opt uninstall -cfg your.cfg` to install kubernetes cluster.
+Then you can execute `kube-install -opt uninstall -cfg your.cfg` to install kubernetes cluster.
 
 <br>
 <br>
