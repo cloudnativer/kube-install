@@ -73,7 +73,7 @@ ostype = centos7
 softdir = /data/k8s
 ```
 
-Then you can execute `./kube-install -opt delnode -cfg your.cfg` to del kubernetes master.
+Then you can execute `./kube-install -opt delmaster -cfg your.cfg` to del kubernetes master.
 
 <br>
 <br>
