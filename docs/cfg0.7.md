@@ -2,6 +2,7 @@
 # Operating with configuration files
 
 <br>
+You can perform various operations through pre written configuration files.
 <br>
 
 ## Use configuration file to install kubernetes cluster
@@ -115,4 +116,10 @@ Then you can execute `kube-install -opt uninstall -cfg your.cfg` to install kube
 <br>
 <br>
 
+## Operating with flag parameters
 
+You can also specify flag parameters to carry out various operation and maintenance operations.
+
+<br>
+<br>
+<br>
