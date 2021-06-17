@@ -118,7 +118,7 @@ Then you can execute `kube-install -opt uninstall -cfg your.cfg` to install kube
 
 ## Operating with flag parameters
 
-You can also specify flag parameters to carry out various operation and maintenance operations.
+You can also specify flag parameters to carry out various operation and maintenance operations. Click here to <a href="docs/operation0.6.md">see more operation documents</a>.
 
 <br>
 <br>
