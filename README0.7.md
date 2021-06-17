@@ -166,7 +166,7 @@ The architecture after installation is shown in the following figure:
 You can also add nodes through the pre written configuration file. 
 
 ```
-# ./kube-install -opt addnode -cfg your.cfg
+# kube-install -opt addnode -cfg your.cfg
 ```
 
 The node is added through the pre written configuration file. Click here to <a href="docs/cfg0.7.md">see more detailed configuration file introduction</a>.<br>
