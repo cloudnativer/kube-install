@@ -1,14 +1,21 @@
-# Use configuration file to install kubernetes cluster
 
-First, you need to write a configuration file in the following format:
+# Operating with configuration files
 
+<br>
+<br>
+
+## Use configuration file to install kubernetes cluster
+
+The cluster is installed through the pre written configuration file. 
+<br>
+First, you need to write a configuration file in the following format. For example, create a configuration file named `your.cfg`.
 
 ```
-master = 192.168.56.81,192.168.56.82,192.168.56.83
-node = 192.168.56.81,192.168.56.82,192.168.56.83
+master = 192.168.1.11,192.168.1.12,192.168.1.13
+node = 192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14
 sshpwd = 123456789
 ostype = centos7
-softdir = /data/kube-install
+softdir = /data/k8s
 ```
 
 Then you can execute `./kube-install -opt install -cfg your.cfg` to install kubernetes cluster.
@@ -16,16 +23,17 @@ Then you can execute `./kube-install -opt install -cfg your.cfg` to install kube
 <br>
 <br>
 
-# Use configuration file to add kubernetes node
+## Use configuration file to add kubernetes node
 
-First, you need to write a configuration file in the following format:
-
+The kubernetes node is added through the pre written configuration file.
+<br>
+First, you need to write a configuration file in the following format. For example, create a configuration file named `your.cfg`.
 
 ```
-node = 192.168.56.85
+node = 192.168.1.15,192.168.1.16,192.168.1.17
 sshpwd = 123456789
 ostype = centos7
-softdir = /data/kube-install
+softdir = /data/k8s
 ```
 
 Then you can execute `./kube-install -opt addnode -cfg your.cfg` to add kubernetes node.
@@ -34,10 +42,77 @@ Then you can execute `./kube-install -opt addnode -cfg your.cfg` to add kubernet
 <br>
 <br>
 
-# Use configuration file to ***
+## Use configuration file delete kubernetes node
 
-to do ...
+The kubernetes node is deleted through the pre written configuration file.
+<br>
+First, you need to write a configuration file in the following format. For example, create a configuration file named `your.cfg`.
 
+```
+node = 192.168.1.14,192.168.1.16
+sshpwd = 123456789
+ostype = centos7
+softdir = /data/k8s
+```
 
+Then you can execute `./kube-install -opt delnode -cfg your.cfg` to del kubernetes node.
+
+<br>
+<br>
+
+## Use configuration file delete kubernetes master
+
+The kubernetes master is deleted through the pre written configuration file.
+<br>
+First, you need to write a configuration file in the following format. For example, create a configuration file named `your.cfg`.
+
+```
+master = 192.168.1.12
+sshpwd = 123456789
+ostype = centos7
+softdir = /data/k8s
+```
+
+Then you can execute `./kube-install -opt delnode -cfg your.cfg` to del kubernetes master.
+
+<br>
+<br>
+
+## Use configuration file rebuild kubernetes master
+
+The kubernetes master is rebuilt through the pre written configuration file.
+<br>
+First, you need to write a configuration file in the following format. For example, create a configuration file named `your.cfg`.
+
+```
+master = 192.168.1.12
+sshpwd = 123456789
+ostype = centos7
+softdir = /data/k8s
+```
+
+Then you can execute `./kube-install -opt rebuildmaster -cfg your.cfg` to del kubernetes master.
+
+<br>
+<br>
+
+## Use configuration file to uninstall kubernetes cluster
+
+The cluster is uninstalled through the pre written configuration file.
+<br>
+First, you need to write a configuration file in the following format. For example, create a configuration file named `your.cfg`.
+
+```
+master = 192.168.1.11,192.168.1.12,192.168.1.13
+node = 192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14,192.168.1.15,192.168.1.16,192.168.1.17
+sshpwd = 123456789
+ostype = centos7
+softdir = /data/k8s
+```
+
+Then you can execute `./kube-install -opt uninstall -cfg your.cfg` to install kubernetes cluster.
+
+<br>
+<br>
 
 

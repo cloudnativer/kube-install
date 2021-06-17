@@ -43,7 +43,8 @@ Select any k8s-master server, and execute the following command on it:<br>
 ```
 
 Notice: Please make sure that the `-ostype` flag you entered is correct, only support `rhel7`, `rhel8`, `centos7`, `centos8`, `suse15` these types of "ostype".<br>
-In addition, if you need to specify the directory path to add Kubernetes node, you can set it using the `-softdir` parameter.
+If you need to specify the directory path to add Kubernetes node, you can set it using the `-softdir` parameter.<br>
+In addition, you can also add node through the pre written configuration file. Click here to <a href="docs/cfg0.7.md">see more detailed configuration file introduction</a>.<br>
 
 <br>
 
@@ -64,6 +65,7 @@ Select any k8s-master server, and execute the following command on it:<br>
 ```
 
 Notice: If you specify the `-softdir` parameter value during the installation or addnode operation, please specify the same `-softdir` parameter value during the delnode operation.<br>
+In addition, you can also delete node through the pre written configuration file. Click here to <a href="docs/cfg0.7.md">see more detailed configuration file introduction</a>.<br>
 
 The architecture after installation is shown in the following figure:
 
@@ -82,7 +84,7 @@ Select any k8s-master server, and execute the following command on it:<br>
 ```
 
 Notice: If you specify the `-softdir` parameter value during the installation operation, please specify the same `-softdir` parameter value during the delmaster operation.<br>
-
+In addition, you can also delete master through the pre written configuration file. Click here to <a href="docs/cfg0.7.md">see more detailed configuration file introduction</a>.<br>
 
 The architecture after installation is shown in the following figure:
 
@@ -101,7 +103,8 @@ Select any k8s-master server, and execute the following command on it:<br>
 ```
 
 Notice: Please make sure that the `-ostype` flag you entered is correct, only support `rhel7`, `rhel8`, `centos7`, `centos8`, `suse15` these types of "ostype".<br>
-Notice: If you specify the `-softdir` parameter value during the installation operation, please specify the same `-softdir` parameter value during the rebuildmaster operation.
+Notice: If you specify the `-softdir` parameter value during the installation operation, please specify the same `-softdir` parameter value during the rebuildmaster operation.<br>
+In addition, you can also rebuild master through the pre written configuration file. Click here to <a href="docs/cfg0.7.md">see more detailed configuration file introduction</a>.<br>
 
 <br>
 
@@ -123,6 +126,7 @@ Select any k8s-master server, and execute the following command on it:<br>
 ```
 
 Notice: If you specify the `-softdir` parameter value during the installation operation, please specify the same `-softdir` parameter value during the uninstall operation.<br>
+In addition, you can also uninstall the Kubernetes cluster through the prewritten configuration file. Click here to <a href="docs/cfg0.7.md">see more detailed configuration file introduction</a>.<br>
 
 
 <br>

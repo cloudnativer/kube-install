@@ -52,13 +52,13 @@ You can download the `kube-install-*.tgz` package from https://github.com/cloudn
 
 If you want to install version 1.18 of kubernetes, download the `kube-install-for-k8s1.18-*.tgz` package file.If you want to install version 1.15 of kubernetes, download the `kube-install-for-k8s1.15-*.tgz` package file...In the same way, you can download the version you want.<br>
 
-For example, we are now installing kubernetes v1.21, and we have downloaded the `kube-install-for-k8s1.21-v0.6.3.tgz` package.<br>
+For example, we are now installing kubernetes v1.22, and we have downloaded the `kube-install-for-k8s1.22-v0.7.0-beta.tgz` package.<br>
 
 
 ```
 # cd /root/
-# curl -O https://github.com/cloudnativer/kube-install/releases/download/v0.6.3/kube-install-for-k8s1.21-v0.6.3.tgz
-# tar -zxvf kube-install-for-k8s1.21-v0.6.3.tgz
+# curl -O https://github.com/cloudnativer/kube-install/releases/download/v0.7.0-beta/kube-install-for-k8s1.22-v0.7.0-beta.tgz
+# tar -zxvf kube-install-for-k8s1.22-v0.7.0-beta.tgz
 # cd /root/kube-install/
 ```
 
@@ -119,13 +119,13 @@ Login to the kube-dashboard console UI using the URL and key in the `/opt/kube-i
 ## 2.5 Use configuration file to install
 
 <br>
-You can also specify a configuration file to install.
+You can also install the Kubernetes cluster through the prewritten configuration file. 
 
 ```
-# ./kube-install -opt install -cfg 1.cfg
+# ./kube-install -opt install -cfg your.cfg
 ```
 
-You can also <a href="docs/cfg0.7.md">see more detailed configuration file introduction here</a>.<br>
+The cluster is installed through the pre written configuration file. Click here to <a href="docs/cfg0.7.md">see more detailed configuration file introduction</a>.<br>
 <br>
 <br>
 
@@ -163,17 +163,15 @@ The architecture after installation is shown in the following figure:
 ![kube-install-arch](docs/images/kube-install-arch-2.jpg)
 
 <br>
-
-You can <a href="docs/operation0.6.md">click here to view more operation documents</a> about add k8s-node, delete k8s-node, delete k8s-master, rebuild k8s-master, and uninstall cluster.
-
-<br>
-You can also specify a configuration file to add k8s-node.
+You can also add nodes through the pre written configuration file. 
 
 ```
-# ./kube-install -opt addnode -cfg 2.cfg
+# ./kube-install -opt addnode -cfg your.cfg
 ```
 
-You can also <a href="docs/cfg0.7.md">see more detailed configuration file introduction here</a>.<br>
+The node is added through the pre written configuration file. Click here to <a href="docs/cfg0.7.md">see more detailed configuration file introduction</a>.<br>
+
+Notice: you can <a href="docs/operation0.6.md">click here to view more operation documents</a> about add k8s-node, delete k8s-node, delete k8s-master, rebuild k8s-master, and uninstall cluster.
 
 <br>
 <br>
