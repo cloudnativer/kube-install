@@ -116,5 +116,11 @@ Select any k8s-master server, and execute the following command on it:<br>
 ```
 
 <br>
+
+## Operating with configuration files
+
+You can also perform various operations through pre written configuration files. Click here to <a href="docs/cfg0.7.md">see more detailed configuration file introduction</a>.
+
+<br>
 <br>
 <br>
