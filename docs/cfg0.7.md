@@ -14,7 +14,7 @@ First, you need to write a configuration file in the following format. For examp
 ```
 master = 192.168.1.11,192.168.1.12,192.168.1.13
 node = 192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14
-sshpwd = 123456789
+sshpwd = cloudnativer
 ostype = centos7
 softdir = /data/k8s
 ```
@@ -32,7 +32,7 @@ First, you need to write a configuration file in the following format. For examp
 
 ```
 node = 192.168.1.15,192.168.1.16,192.168.1.17
-sshpwd = 123456789
+sshpwd = cloudnativer
 ostype = centos7
 softdir = /data/k8s
 ```
@@ -51,7 +51,7 @@ First, you need to write a configuration file in the following format. For examp
 
 ```
 node = 192.168.1.14,192.168.1.16
-sshpwd = 123456789
+sshpwd = cloudnativer
 ostype = centos7
 softdir = /data/k8s
 ```
@@ -69,7 +69,7 @@ First, you need to write a configuration file in the following format. For examp
 
 ```
 master = 192.168.1.12
-sshpwd = 123456789
+sshpwd = cloudnativer
 ostype = centos7
 softdir = /data/k8s
 ```
@@ -87,7 +87,7 @@ First, you need to write a configuration file in the following format. For examp
 
 ```
 master = 192.168.1.12
-sshpwd = 123456789
+sshpwd = cloudnativer
 ostype = centos7
 softdir = /data/k8s
 ```
@@ -106,7 +106,7 @@ First, you need to write a configuration file in the following format. For examp
 ```
 master = 192.168.1.11,192.168.1.12,192.168.1.13
 node = 192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14,192.168.1.15,192.168.1.16,192.168.1.17
-sshpwd = 123456789
+sshpwd = cloudnativer
 ostype = centos7
 softdir = /data/k8s
 ```
