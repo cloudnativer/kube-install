@@ -1,0 +1,212 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>{{if eq .Lang "cn"}}Kube-Install快速部署K8S集群(二进制方式){{else}}Kube-Install(Fast installation of k8s cluster in binary mode){{end}}</title>
+	<!--[if lt IE 9]>
+		<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<script src="static/js/Flot/excanvas.js"></script>
+	<![endif]-->
+	<!-- The Fonts -->
+        <link rel="stylesheet" href="static/css/fonts.css" />
+	<!-- The Main CSS File -->
+	<link rel="stylesheet" href="static/css/style.css" />
+	<!-- jQuery -->
+	<script src="static/js/jQuery/jquery-1.7.2.min.js"></script>
+	<!-- Flot -->
+	<script src="static/js/Flot/jquery.flot.js"></script>
+	<script src="static/js/Flot/jquery.flot.resize.js"></script>
+	<script src="static/js/Flot/jquery.flot.pie.js"></script>
+	<!-- DataTables -->
+	<script src="static/js/DataTables/jquery.dataTables.min.js"></script>
+	<!-- ColResizable -->
+	<script src="static/js/ColResizable/colResizable-1.3.js"></script>
+	<!-- jQuryUI -->
+	<script src="static/js/jQueryUI/jquery-ui-1.8.21.min.js"></script>
+	<!-- Uniform -->
+	<script src="static/js/Uniform/jquery.uniform.js"></script>
+	<!-- Tipsy -->
+	<script src="static/js/Tipsy/jquery.tipsy.js"></script>
+	<!-- Elastic -->
+	<script src="static/js/Elastic/jquery.elastic.js"></script>
+	<!-- ColorPicker -->
+	<script src="static/js/ColorPicker/colorpicker.js"></script>
+	<!-- SuperTextarea -->
+	<script src="static/js/SuperTextarea/jquery.supertextarea.min.js"></script>
+	<!-- UISpinner -->
+	<script src="static/js/UISpinner/ui.spinner.js"></script>
+	<!-- MaskedInput -->
+	<script src="static/js/MaskedInput/jquery.maskedinput-1.3.js"></script>
+	<!-- ClEditor -->
+	<script src="static/js/ClEditor/jquery.cleditor.js"></script>
+	<!-- Full Calendar -->
+	<script src="static/js/FullCalendar/fullcalendar.js"></script>
+	<!-- Color Box -->
+	<script src="static/js/ColorBox/jquery.colorbox.js"></script>
+	<!-- kubeinstall Script -->
+	<script src="static/js/kubeinstall.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
+<body>
+
+        <header class="main_header">
+                <div class="wrapper">
+                        <div class="logo">
+                                <a href="#" Title="kubeinstall Home">
+                                        <img src="static/img/kubeinstall_logo.png" alt="kubeinstall_logo">
+                                </a>
+                        </div>
+                        <nav class="top_buttons">
+                                <ul>
+                                        <li class="big_button">
+                                                <div class="out_border">
+                                                        <div class="button_wrapper">
+                                                                <div class="in_border" onclick="document.getElementById('log_black').style.display='block';document.getElementById('log_content').style.display='block'">
+                                                                        <a {{if eq .Lang "cn"}} href="/logs?label={{.Label}}&opt={{.Opt}}&lang=en" {{else}} href="/logs?label={{.Label}}&opt={{.Opt}}&lang=cn" {{end}} title="{{if eq .Lang "cn"}}切换语言{{else}}Switch Language{{end}}" class="the_button">
+                                                                                {{if eq .Lang "cn"}}
+                                                                                        <span class="i_32_en"></span>
+                                                                                {{else}}
+                                                                                        <span class="i_32_cn"></span>
+                                                                                {{end}}
+                                                                        </a>
+                                                                </div>
+                                                        </div>
+                                                </div>
+                                        </li>
+                                        <li class="big_button">
+                                                <div class="out_border">
+                                                        <div class="button_wrapper">
+                                                                <div class="in_border">
+                                                                        <a href="##" title="{{if eq .Lang "cn"}}版本信息{{else}}Version Information{{end}}" class="the_button bdC"><span class="i_32_info"></span></a>
+                                                                        <div class="dialog bDialog" title="{{if eq .Lang "cn"}}版本信息{{else}}Version Information{{end}}"><span class="label lwParagraph"><b>{{if eq .Lang "cn"}}[版本]{{else}}[Version]{{end}}</b> <br>&nbsp;&nbsp;&nbsp;&nbsp;Version: {{.Version}} <br>&nbsp;&nbsp;&nbsp;&nbsp;Release Date: {{.Releasedate}} <br><br><b>{{if eq .Lang "cn"}}[兼容性]{{else}}[Compatibility]{{end}}</b> <br>&nbsp;&nbsp;&nbsp;&nbsp;Kubernetes: {{.Compatiblek8s}}<br>&nbsp;&nbsp;&nbsp;&nbsp;OS: {{.Compatibleos}} <br>&nbsp;&nbsp;&nbsp;&nbsp;Hardware: X86 | AMD64 <br><br></span></div>
+                                                                </div>
+                                                        </div>
+                                                </div>
+                                        </li>
+                                </ul>
+                        </nav>
+                </div>
+        </header>
+
+	<div class="wrapper small_menu">
+		<ul class="menu_small_buttons">
+			<li><a title="{{if eq .Lang "cn"}}信息概览{{else}}Information Overview{{end}}" class="i_22_dashboard" href="/?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}"></a></li>
+			<li><a title="{{if eq .Lang "cn"}}管理Kubernetes集群{{else}}Managing Kubernetes Clusters{{end}}" class="i_22_cluster" href="clusterlist?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}"></a></li>
+			<li><a title="{{if eq .Lang "cn"}}管理Kubernetes Master{{else}}Managing Kubernetes Master{{end}}" class="i_22_master" href="masteradmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}"></a></li>
+			<li><a title="{{if eq .Lang "cn"}}管理Kubernetes Node{{else}}Managing Kubernetes Nodes{{end}}" class="i_22_node" href="nodeadmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}"></a></li>
+			<li><a title="{{if eq .Lang "cn"}}常用工具{{else}}Common Tools{{end}}" class="i_22_tools" href="tools?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}"></a></li>
+			<li><a title="{{if eq .Lang "cn"}}查看各类日志{{else}}View all kinds of logs{{end}}" class="i_22_logs smActive" href="logs?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}"></a></li>
+		</ul>
+	</div>
+
+	<div class="wrapper contents_wrapper">
+		
+		<aside class="sidebar">
+			<ul class="tab_nav">
+				<li class="i_32_dashboard">
+					<a href="/?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" title="{{if eq .Lang "cn"}}基本信息{{else}}Basic information{{end}}">
+						<span class="tab_label">Dashboard</span>
+						<span class="tab_info">{{if eq .Lang "cn"}}信息概览{{else}}Overview{{end}}</span>
+					</a>
+				</li>
+				<li class="i_32_cluster">
+					<a href="clusterlist?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" title="{{if eq .Lang "cn"}}管理Kubernetes集群{{else}}Managing Kubernetes Clusters{{end}}">
+						<span class="tab_label">Cluster</span>
+						<span class="tab_info">{{if eq .Lang "cn"}}集群管理{{else}}Management{{end}}</span>
+					</a>
+				</li>
+				<li class="i_32_master">
+					<a href="masteradmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" title="{{if eq .Lang "cn"}}管理Kubernetes Master{{else}}Managing Kubernetes Master{{end}}">
+						<span class="tab_label">Master</span>
+						<span class="tab_info">{{if eq .Lang "cn"}}Master管理{{else}}Rebuild/Del{{end}}</span>
+					</a>
+				</li>
+				<li class="i_32_node">
+					<a href="nodeadmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" title="{{if eq .Lang "cn"}}管理Kubernetes Node{{else}}Managing Kubernetes Nodes{{end}}">
+						<span class="tab_label">Node</span>
+						<span class="tab_info">{{if eq .Lang "cn"}}Node管理{{else}}Add/Del/Op{{end}}</span>
+					</a>
+				</li>
+				<li class="i_32_tools">
+					<a href="tools?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" title="{{if eq .Lang "cn"}}实用小工具{{else}}Some Utilities Tools{{end}}">
+						<span class="tab_label">Tools</span>
+						<span class="tab_info">{{if eq .Lang "cn"}}常用工具{{else}}Utilities Tools{{end}}</span>
+					</a>
+				</li>
+				<li class="active_tab i_32_logs">
+					<a href="logs?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" title="{{if eq .Lang "cn"}}查看各类日志{{else}}View All Kinds of Logs{{end}}">
+						<span class="tab_label">Logs</span>
+						<span class="tab_info">{{if eq .Lang "cn"}}操作日志{{else}}View Logs{{end}}</span>
+					</a>
+				</li>
+			</ul>
+		</aside>
+
+		<div class="contents">
+			<div class="grid_wrapper">
+
+				<div class="g_6 contents_header">
+					<h3 class="i_16_logs tab_label">{{if eq .Lang "cn"}}操作日志{{else}}Operation logs{{end}}</h3>
+					<div><span class="label">{{if eq .Lang "cn"}}Kubernetes集群安装/卸载、Master和Node管理等日志。{{else}}Installation, uninstall, master and node management logs.{{end}}</span></div>
+				</div>
+
+				<div class="g_6 contents_options">
+					<div class="simple_buttons">
+						<div class="bwIcon i_16_k8s">
+							<select name="k8sname" onchange="self.location.href=options[selectedIndex].value" class="switch_select">
+								<option value="none" selected disabled hidden>{{if eq .Lang "cn"}}切换Kubernetes集群{{else}}Switch Kubernetes{{end}}</option>
+	                                                        {{ range $v := .Selectlist}}
+        	                                                    {{ if ne $v.Status "notinstall" }}
+								 	<option value="logs?label={{$v.Label}}&opt={{$v.Optnow}}" {{ if eq $v.Label $v.Labelnow }} selected="selected" {{end}} >{{ $v.Label }}</option>
+                        	                                    {{ end }}
+                                	                        {{ end }}
+							</select>
+						</div>
+					</div>
+					<div class="simple_buttons">
+						<div class="bwIcon i_16_tabs">
+							<select name="logname" onchange="self.location.href=options[selectedIndex].value" class="switch_select">
+								<option value="none" selected disabled hidden>{{if eq .Lang "cn"}}选择操作日志类型{{else}}Select Log Type{{end}}</option>
+							  	<option value="logs?label={{.Label}}&opt=install" {{ if eq .Opt "install" }} selected="selected" {{end}} >{{if eq .Lang "cn"}}K8S集群安装日志{{else}}Log of K8S Install{{end}}</option>
+							  	<option value="logs?label={{.Label}}&opt=uninstall" {{ if eq .Opt "uninstall" }} selected="selected" {{end}} >{{if eq .Lang "cn"}}K8S集群卸载日志{{else}}Log of K8S Uninstall{{end}}</option>
+							  	<option value="logs?label={{.Label}}&opt=rebuildmaster" {{ if eq .Opt "rebuildmaster" }} selected="selected" {{end}} >{{if eq .Lang "cn"}}K8S Master修复日志{{else}}Log of Master Rebuild{{end}}</option>
+							  	<option value="logs?label={{.Label}}&opt=delmaster" {{ if eq .Opt "delmaster" }} selected="selected" {{end}} >{{if eq .Lang "cn"}}K8S Master删除日志{{else}}Log of Master Delete{{end}}</option>
+							  	<option value="logs?label={{.Label}}&opt=addnode" {{ if eq .Opt "addnode" }} selected="selected" {{end}} >{{if eq .Lang "cn"}}K8S Node添加日志{{else}}Log of Node Add{{end}}</option>
+							  	<option value="logs?label={{.Label}}&opt=delnode" {{ if eq .Opt "delnode" }} selected="selected" {{end}} >{{if eq .Lang "cn"}}K8S Node删除日志{{else}}Log of Node Delete{{end}}</option>
+                                                                <option value="logs?opt=systemlog" {{ if eq .Opt "systemlog" }} selected="selected" {{end}} >{{if eq .Lang "cn"}}Kube-Install系统日志{{else}}Platform System Logs{{end}}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<!-- Separator -->
+				<div class="g_12 separator"><span></span></div>
+				<div class="g_12">
+					<div class="widget_header wwOptions">
+						<h4 class="widget_header_title wwIcon i_16_data">{{ if ne .Label "" }}{{ if eq .Label ".default" }}{{if eq .Lang "cn"}}默认{{else}}default{{end}}{{else}}{{.Label}}{{if eq .Lang "cn"}}集群的{{else}}-Cluster{{end}}{{end}}{{end}}{{ if ne .Opt "systemlog" }} "{{.Opt}}" {{if eq .Lang "cn"}}操作{{else}}Operation {{end}}{{else}}Kube-Install {{end}}{{if eq .Lang "cn"}}日志信息{{else}}Logs{{end}}{{ if eq .Opt "systemlog" }} ({{if eq .Lang "cn"}}登录到后台服务器的data/logs/kubeinstalld目录可以查看到更多系统日志{{else}}Check the "data/logs/kubeinstalld directory" of the system to get more logs.{{end}}){{end}}</h4>
+					</div>
+					<div class="widget_contents noPadding cli_font">
+						<br>
+						{{ if ne .Clog "" }}
+							{{ .Clog }}
+						{{end}}
+						<br><br>
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+
+
+
+	<footer>
+		<div class="wrapper">
+			<span class="copyright">
+				Kube-Install Version {{.Version}} &nbsp; | &nbsp; Powered By <a target="_blank" href="https://cloudnativer.github.io">CloudNativer</a>
+			</span>
+		</div>
+	</footer>
+</body>
+</html>

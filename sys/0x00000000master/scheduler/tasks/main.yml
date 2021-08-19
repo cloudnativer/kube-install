@@ -1,6 +1,6 @@
 - name: 1.Create kube-scheduler service startup file
   template:
-    src: ../templates/kube-scheduler.service.j2
+    src: "../templates/kube-scheduler.service-{{k8sver}}.j2"
     dest: "/etc/systemd/system/kube-scheduler.service"
 - name: 2.Create {{k8s_install_home}}/kubernetes/kube-scheduler directory
   file: 

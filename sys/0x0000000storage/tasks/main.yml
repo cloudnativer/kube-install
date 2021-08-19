@@ -1,6 +1,6 @@
 - name: 1.Decompress etcd software package
   unarchive:
-    src: "{{software_home}}/pkg/etcd-v3.3.18.tar.gz"
+    src: "{{kipath}}/pkg/etcd-v3.3.18.tar.gz"
     dest: /usr/local/bin/
     mode: 0755
 - name: 2.Create {{k8s_install_home}}/etcd data directory
@@ -17,7 +17,7 @@
     dest: /etc/systemd/system/etcd.service
 - name: 5.Distribution etcd cert file
   copy: 
-    src: /etc/kubernetes/
+    src: "{{kipath}}/data/output{{sub_process_dir}}/cert/"
     dest: /etc/kubernetes/
 - name: 6.Set service startup
   shell: "systemctl enable etcd"

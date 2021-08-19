@@ -1,13 +1,13 @@
 - name: 1.Distribution kubelet cert
   copy: 
-    src: /etc/kubernetes/ 
+    src: "{{kipath}}/data/output{{sub_process_dir}}/cert/"
     dest: /etc/kubernetes/
 - name: 2.Clean up invalid certificates
-  shell: "cd /etc/kubernetes/ssl/ && ls |grep '^kubelet'|while read i;do mv $i $i.bak;done"
+  shell: "cd /etc/kubernetes/ssl/ && ls |grep '^kubelet'|while read i;do mv $i /etc/kubernetes/bak/$i.bak;done"
   ignore_errors: yes
 - name: 3.Copy kubelet.config.json
   template:
-    src: ../templates/kubelet.config.json.j2
+    src: "../templates/kubelet.config.json-{{k8sver}}.j2"
     dest: /etc/kubernetes/kubelet.config.json
 - name: 4.Set IPVS rules
   shell: "/usr/local/bin/ipvsinit.sh"
@@ -18,7 +18,7 @@
     state: directory
 - name: 6.Create kubelet service startup file
   template:
-    src: ../templates/kubelet.service.j2
+    src: "../templates/kubelet.service-{{k8sver}}.j2"
     dest: /etc/systemd/system/kubelet.service
 - name: 7.Set service startup
   shell: "systemctl enable kubelet"

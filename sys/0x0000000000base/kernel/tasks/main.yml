@@ -1,16 +1,12 @@
-- name: 1.Create kernel package
-  file:
-    path: "{{software_home}}/temp"
-    state: directory
 - name: 2.Decompress kernel package
   #update os to kernel4.19
   unarchive:
-    src: "{{software_home}}/pkg/kernel4.19.tar.gz"
-    dest: "{{software_home}}/temp"
+    src: "{{kipath}}/pkg/kernel4.19.tar.gz"
+    dest: "/tmp/.kubeinstalltemp/data{{sub_process_dir}}/temp/"
     mode: 0744
 - name: 3.Update kernel and grub
   template: 
-    src: ../templates/updategrub.sh.j2
-    dest: "{{software_home}}/temp/updategrub.sh"
+    src: "../templates/updategrub.sh.j2"
+    dest: "{{k8s_install_home}}/temp/updategrub.sh"
     mode: 0755
-- shell: "/bin/bash {{software_home}}/temp/updategrub.sh"
+- shell: "{{k8s_install_home}}/temp/updategrub.sh"

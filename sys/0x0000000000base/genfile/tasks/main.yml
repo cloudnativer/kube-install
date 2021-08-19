@@ -1,6 +1,6 @@
-- name: 1.Create {{software_home}} directory
+- name: 1.Create /tmp/.kubeinstalltemp{{sub_process_dir}} directory
   file:
-    path: "{{software_home}}/{{item}}"
+    path: "/tmp/.kubeinstalltemp{{sub_process_dir}}/{{item}}"
     state: directory
   with_items:
     - bin
@@ -12,36 +12,36 @@
 - name: 2.Distributing deployment files to kubernetes master, please wait...
   copy:
     src: "/root/kube-install/bin"
-    dest: "{{software_home}}/"
+    dest: "/tmp/.kubeinstalltemp{{sub_process_dir}}/"
 - copy:
     src: "/root/kube-install/docs"
-    dest: "{{software_home}}/"
+    dest: "/tmp/.kubeinstalltemp{{sub_process_dir}}/"
 - copy:
     src: "/root/kube-install/pkg"
-    dest: "{{software_home}}/"
+    dest: "/tmp/.kubeinstalltemp{{sub_process_dir}}/"
 - copy:
     src: "/root/kube-install/proc"
-    dest: "{{software_home}}/"
+    dest: "/tmp/.kubeinstalltemp{{sub_process_dir}}/"
 - copy:
     src: "/root/kube-install/config"
-    dest: "{{software_home}}/"
+    dest: "/tmp/.kubeinstalltemp{{sub_process_dir}}/"
 - copy:
     src: "/root/kube-install/yaml"
-    dest: "{{software_home}}/"
+    dest: "/tmp/.kubeinstalltemp{{sub_process_dir}}/"
 - copy:
     src: "/root/kube-install/kube-install"
-    dest: "{{software_home}}/"
+    dest: "/tmp/.kubeinstalltemp{{sub_process_dir}}/"
 - copy:
     src: "/root/kube-install/kube-install"
     dest: "/usr/local/bin/kube-install"
     mode: 0755
 - name: 3.Configure permissions for executables
-  file: path={{software_home}}/{{ item }} mode=755 owner=root group=root
+  file: path=/tmp/.kubeinstalltemp{{sub_process_dir}}/{{ item }} mode=755 owner=root group=root
   with_items:
     - proc/sshkey-init.sh
     - proc/sshops-init.sh
     - proc/getmasterconfig.sh
 - name: 4.Install distributed control software
-  shell: "{{software_home}}/proc/sshops-init.sh {{software_home}} {{software_home}}"
+  shell: "/tmp/.kubeinstalltemp{{sub_process_dir}}/proc/sshops-init.sh /tmp/.kubeinstalltemp{{sub_process_dir}} /tmp/.kubeinstalltemp{{sub_process_dir}}"
   ignore_errors: yes
 

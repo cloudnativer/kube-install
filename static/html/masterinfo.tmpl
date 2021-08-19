@@ -1,0 +1,198 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>{{if eq .Lang "cn"}}Kube-Install快速部署K8S集群(二进制方式){{else}}Kube-Install(Fast installation of k8s cluster in binary mode){{end}}</title>
+	<!--[if lt IE 9]>
+		<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<script src="static/js/Flot/excanvas.js"></script>
+	<![endif]-->
+	<!-- The Fonts -->
+        <link rel="stylesheet" href="static/css/fonts.css" />
+	<!-- The Main CSS File -->
+	<link rel="stylesheet" href="static/css/style.css" />
+	<!-- jQuery -->
+	<script src="static/js/jQuery/jquery-1.7.2.min.js"></script>
+	<!-- Flot -->
+	<script src="static/js/Flot/jquery.flot.js"></script>
+	<script src="static/js/Flot/jquery.flot.resize.js"></script>
+	<script src="static/js/Flot/jquery.flot.pie.js"></script>
+	<!-- DataTables -->
+	<script src="static/js/DataTables/jquery.dataTables.min.js"></script>
+	<!-- ColResizable -->
+	<script src="static/js/ColResizable/colResizable-1.3.js"></script>
+	<!-- jQuryUI -->
+	<script src="static/js/jQueryUI/jquery-ui-1.8.21.min.js"></script>
+	<!-- Uniform -->
+	<script src="static/js/Uniform/jquery.uniform.js"></script>
+	<!-- Tipsy -->
+	<script src="static/js/Tipsy/jquery.tipsy.js"></script>
+	<!-- Elastic -->
+	<script src="static/js/Elastic/jquery.elastic.js"></script>
+	<!-- ColorPicker -->
+	<script src="static/js/ColorPicker/colorpicker.js"></script>
+	<!-- SuperTextarea -->
+	<script src="static/js/SuperTextarea/jquery.supertextarea.min.js"></script>
+	<!-- UISpinner -->
+	<script src="static/js/UISpinner/ui.spinner.js"></script>
+	<!-- MaskedInput -->
+	<script src="static/js/MaskedInput/jquery.maskedinput-1.3.js"></script>
+	<!-- ClEditor -->
+	<script src="static/js/ClEditor/jquery.cleditor.js"></script>
+	<!-- Full Calendar -->
+	<script src="static/js/FullCalendar/fullcalendar.js"></script>
+	<!-- Color Box -->
+	<script src="static/js/ColorBox/jquery.colorbox.js"></script>
+	<!-- kubeinstall Script -->
+	<script src="static/js/kubeinstall.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
+<body>
+    <div id="result_black" class="result_overlay"></div>
+    <div id="result_content" class="result_content">
+        <div class="g_12">
+                <div style="text-align: right;"><img alt="{{if eq .Lang "cn"}}点击关闭{{else}}Close{{end}}" src="static/img/Button/close03.png" onclick="window.open('masteradmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{ .K8sver }}','_self');"/></div>
+		<div class="result_label" style="text-align: center;">{{if eq .Lang "cn"}}Kubernetes Master详细信息{{else}}Kubernetes Master Details{{end}}<br><br></div>
+                <div class="widget_contents noPadding">
+                        <table class="tables"><tbody>
+                          <tr><td {{if eq .Lang "cn"}}width="108"{{else}}width="130"{{end}}>{{if eq .Lang "cn"}}Master IP地址：{{else}}Master IP Address:{{end}}</td><td>{{ .Masterip }}</td></tr>
+                          <tr><td>{{if eq .Lang "cn"}}部署状态：{{else}}Installation Status:{{end}}</td><td>
+                                    {{ if eq .Masterstatus "adding" }} <img src="static/img/Icons/Load/load-4.gif" style="vertical-align: middle;"/> <span style="display: inline-block;">{{if eq .Lang "cn"}}添加中{{else}}Adding{{end}}</span>{{end}}
+                                    {{ if eq .Masterstatus "rebuilding" }} <img src="static/img/Icons/Load/load-4.gif" style="vertical-align: middle;"/> <span style="display: inline-block;">{{if eq .Lang "cn"}}修复中{{else}}Rebuilding{{end}}</span>{{end}}
+                                    {{ if eq .Masterstatus "deleting" }} <img src="static/img/Icons/Load/load-4.gif" style="vertical-align: middle;"/> <span style="display: inline-block;">{{if eq .Lang "cn"}}销毁中{{else}}Deleting{{end}}</span>{{end}}
+                                    {{ if eq .Masterstatus "ok" }} <img src="static/img/Icons/32/i_32_ok.png" style="vertical-align: middle;"/> <span style="display: inline-block;">{{if eq .Lang "cn"}}正常{{else}}OK{{end}}</span>{{end}}
+                                    {{ if eq .Masterstatus "notok" }} <img src="static/img/Icons/32/i_32_notok.png" style="vertical-align:middle;"/> <span style="display: inline-block;">{{if eq .Lang "cn"}}异常{{else}}Error{{end}}</span>{{end}}
+                                    {{ if eq .Masterstatus "notinstall" }} <img src="static/img/Icons/32/i_32_notinstall.png" style="vertical-align: middle;"/> <span style="display: inline-block;">{{if eq .Lang "cn"}}未部署{{else}}Not installed{{end}}</span>{{end}}
+                                    {{ if eq .Masterstatus "unknow" }} <img src="static/img/Icons/32/i_32_unknow.png" style="vertical-align: middle;"/> <span style="display: inline-block;">{{if eq .Lang "cn"}}未知状态{{else}}Unknow{{end}}</span>{{end}}
+				</td></tr>
+                          <tr><td>{{if eq .Lang "cn"}}部署目录：{{else}}Installation Dir:{{end}}</td><td>{{ .Softdir }}</td></tr>
+                          <tr><td width="100">{{if eq .Lang "cn"}}归属集群：{{else}}Belonging Cluster:{{end}}</td><td>{{ if eq .Label ".default" }} {{if eq .Lang "cn"}}默>认{{else}}default{{end}}集群 {{else}} {{.Label}} {{end}}</td></tr>
+                          <tr><td>{{if eq .Lang "cn"}}K8S组件版本：{{else}}Component Version:{{end}}</td><td>kube-apiserver {{.K8sver}}<br>kube-controller-manager {{.K8sver}}<br>kube-scheduler {{.K8sver}}</td></tr>
+                          <tr><td>{{if eq .Lang "cn"}}ETCD版本：{{else}}ETCD Version:{{end}}</td><td>etcd 3.3.18</td></tr>
+                          <tr><td>{{if eq .Lang "cn"}}操作系统版本：{{else}}OS Version:{{end}}</td><td>{{ .Ostype }}</td></tr>
+                        </tbody></table>
+                </div>
+        </div>
+    </div>
+
+        <header class="main_header">
+                <div class="wrapper">
+                        <div class="logo">
+                                <a href="#" Title="kubeinstall Home">
+                                        <img src="static/img/kubeinstall_logo.png" alt="kubeinstall_logo">
+                                </a>
+                        </div>
+                        <nav class="top_buttons">
+                                <ul>
+                                        <li class="big_button">
+                                                <div class="out_border">
+                                                        <div class="button_wrapper">
+                                                                <div class="in_border" onclick="document.getElementById('log_black').style.display='block';document.getElementById('log_content').style.display='block'">
+                                                                        <a {{if eq .Lang "cn"}} href="/clusterinfo?label={{.Label}}&lang=en" {{else}} href="/clusterinfo?label={{.Label}}&lang=cn" {{end}} title="{{if eq .Lang "cn"}}切换语言{{else}}Switch Language{{end}}" class="the_button">
+                                                                                {{if eq .Lang "cn"}}
+                                                                                        <span class="i_32_en"></span>
+                                                                                {{else}}
+                                                                                        <span class="i_32_cn"></span>
+                                                                                {{end}}
+                                                                        </a>
+                                                                </div>
+                                                        </div>
+                                                </div>
+                                        </li>
+                                        <li class="big_button">
+                                                <div class="out_border">
+                                                        <div class="button_wrapper">
+                                                                <div class="in_border">
+                                                                        <a href="##" title="{{if eq .Lang "cn"}}版本信息{{else}}Version Information{{end}}" class="the_button bdC"><span class="i_32_info"></span></a>
+                                                                        <div class="dialog bDialog" title="{{if eq .Lang "cn"}}版本信息{{else}}Version Information{{end}}"><span class="label lwParagraph"><b>{{if eq .Lang "cn"}}[版本]{{else}}[Version]{{end}}</b> <br>&nbsp;&nbsp;&nbsp;&nbsp;Version: {{.Version}} <br>&nbsp;&nbsp;&nbsp;&nbsp;Release Date: {{.Releasedate}} <br><br><b>{{if eq .Lang "cn"}}[兼容性]{{else}}[Compatibility]{{end}}</b> <br>&nbsp;&nbsp;&nbsp;&nbsp;Kubernetes: {{.Compatiblek8s}}<br>&nbsp;&nbsp;&nbsp;&nbsp;OS: {{.Compatibleos}} <br>&nbsp;&nbsp;&nbsp;&nbsp;Hardware: X86 | AMD64 <br><br></span></div>
+                                                                </div>
+                                                        </div>
+                                                </div>
+                                        </li>
+                                </ul>
+                        </nav>
+                </div>
+        </header>
+
+        <div class="wrapper small_menu">
+                <ul class="menu_small_buttons">
+                        <li><a title="{{if eq .Lang "cn"}}信息概览{{else}}Information Overview{{end}}" class="i_22_dashboard" href="/"></a></li>
+                        <li><a title="{{if eq .Lang "cn"}}管理Kubernetes集群{{else}}Managing Kubernetes Clusters{{end}}" class="i_22_cluster {{ if ne .Tools "yes" }} {{ if eq .Opt "install" }} smActive {{ end }} {{ if eq .Opt "uninstall" }} smActive {{ end }} {{ if eq .Opt "sshkey" }} smActive {{ end }} {{ end }}" href="clusterlist"></a></li>
+                        <li><a title="{{if eq .Lang "cn"}}管理Kubernetes Master{{else}}Managing Kubernetes Master{{end}}" class="i_22_master {{ if eq .Opt "delmaster" }} smActive {{ end }} {{ if eq .Opt "rebuildmaster" }} smActive {{ end }}" href="masteradmin"></a></li>
+                        <li><a title="{{if eq .Lang "cn"}}管理Kubernetes Node{{else}}Managing Kubernetes Nodes{{end}}" class="i_22_node {{ if eq .Opt "addnode" }} smActive {{ end }} {{ if eq .Opt "delnode" }} smActive {{ end }}" href="nodeadmin"></a></li>
+                        <li><a title="{{if eq .Lang "cn"}}常用工具{{else}}Common Tools{{end}}" class="i_22_tools {{ if eq .Tools "yes" }} smActive {{ end }}" href="tools"></a></li>
+                        <li><a title="{{if eq .Lang "cn"}}查看各类日志{{else}}View all kinds of logs{{end}}" class="i_22_logs" href="logs"></a></li>
+                </ul>
+        </div>
+
+        <div class="wrapper contents_wrapper">
+
+                <aside class="sidebar">
+                        <ul class="tab_nav">
+                                <li class="i_32_dashboard">
+                                        <a href="/" title="{{if eq .Lang "cn"}}基本信息{{else}}Basic information{{end}}">
+                                                <span class="tab_label">Dashboard</span>
+                                                <span class="tab_info">{{if eq .Lang "cn"}}信息概览{{else}}Information Overview{{end}}</span>
+                                        </a>
+                                </li>
+                                <li class="{{ if ne .Tools "yes" }} {{ if eq .Opt "install" }} active_tab {{ end }} {{ if eq .Opt "uninstall" }} active_tab {{ end }} {{ if eq .Opt "sshkey" }} active_tab {{ end }} {{ end }} i_32_cluster">
+                                        <a href="clusterlist" title="{{if eq .Lang "cn"}}管理Kubernetes集群{{else}}Managing Kubernetes Clusters{{end}}">
+                                                <span class="tab_label">Cluster</span>
+                                                <span class="tab_info">{{if eq .Lang "cn"}}集群管理{{else}}Cluster Management{{end}}</span>
+                                        </a>
+                                </li>
+                                <li class="{{ if eq .Opt "delmaster" }} active_tab {{ end }} {{ if eq .Opt "rebuildmaster" }} active_tab {{ end }} i_32_master">
+                                        <a href="masteradmin" title="{{if eq .Lang "cn"}}管理Kubernetes Master{{else}}Managing Kubernetes Master{{end}}">
+                                                <span class="tab_label">Master</span>
+                                                <span class="tab_info">{{if eq .Lang "cn"}}Master管理{{else}}Master management{{end}}</span>
+                                        </a>
+                                </li>
+                                <li class="{{ if eq .Opt "addnode" }} active_tab {{ end }} {{ if eq .Opt "delnode" }} active_tab {{ end }} i_32_node">
+                                        <a href="nodeadmin" title="{{if eq .Lang "cn"}}管理Kubernetes Node{{else}}Managing Kubernetes Nodes{{end}}">
+                                                <span class="tab_label">Node</span>
+                                                <span class="tab_info">{{if eq .Lang "cn"}}Node管理{{else}}Node management{{end}}</span>
+                                        </a>
+                                </li>
+                                <li class="{{ if eq .Tools "yes" }} active_tab {{ end }} i_32_tools">
+                                        <a href="tools" title="{{if eq .Lang "cn"}}实用小工具{{else}}Some Common Tools{{end}}">
+                                                <span class="tab_label">Tools</span>
+                                                <span class="tab_info">{{if eq .Lang "cn"}}常用工具{{else}}Common Tools{{end}}</span>
+                                        </a>
+                                </li>
+                                <li class="i_32_logs">
+                                        <a href="logs" title="{{if eq .Lang "cn"}}查看各类日志{{else}}View all kinds of logs{{end}}">
+                                                <span class="tab_label">Logs</span>
+                                                <span class="tab_info">{{if eq .Lang "cn"}}{{if eq .Lang "cn"}}操作{{else}}operation{{end}}日志{{else}}Operation logs{{end}}</span>
+                                        </a>
+                                </li>
+                        </ul>
+                </aside>
+
+		<div class="contents">
+			<div class="grid_wrapper">
+
+				<div class="g_6 contents_header">
+					<h3 class="i_16_node tab_label">{{ if eq .Opt "install" }} Kubernetes{{if eq .Lang "cn"}}集群管理{{else}}Cluster Management{{end}} {{ end }} {{ if eq .Opt "uninstall" }} Kubernetes{{if eq .Lang "cn"}}集群管理{{else}}Cluster Management{{end}} {{ end }} {{ if eq .Opt "sshkey" }} Kubernetes{{if eq .Lang "cn"}}集群管理{{else}}Cluster Management{{end}} {{ end }} {{ if eq .Opt "delmaster" }} Kubernetes {{if eq .Lang "cn"}}Master管理{{else}}Master management{{end}} {{ end }} {{ if eq .Opt "rebuildmaster" }} Kubernetes {{if eq .Lang "cn"}}Master管理{{else}}Master management{{end}} {{ end }} {{ if eq .Opt "addnode" }} Kubernetes {{if eq .Lang "cn"}}Node管理{{else}}Node management{{end}} {{ end }} {{ if eq .Opt "delnode" }} Kubernetes {{if eq .Lang "cn"}}Node管理{{else}}Node management{{end}} {{ end }}</h3>
+					<div><span class="label">{{ if eq .Opt "install" }} {{if eq .Lang "cn"}}Kubernetes{{if eq .Lang "cn"}}集群的{{else}}cluster{{end}}安装、卸载、节点管理、信息查看等{{if eq .Lang "cn"}}操作{{else}}operation{{end}}{{else}}Kubernetes cluster installation, uninstall, node management, information view and other operations{{end}} {{ end }} {{ if eq .Opt "uninstall" }} {{if eq .Lang "cn"}}Kubernetes{{if eq .Lang "cn"}}集群的{{else}}cluster{{end}}安装、卸载、节点管理、信息查看等{{if eq .Lang "cn"}}操作{{else}}operation{{end}}{{else}}Kubernetes cluster installation, uninstall, node management, information view and other operations{{end}} {{ end }} {{ if eq .Opt "sshkey" }} {{if eq .Lang "cn"}}Kubernetes{{if eq .Lang "cn"}}集群的{{else}}cluster{{end}}安装、卸载、节点管理、信息查看等{{if eq .Lang "cn"}}操作{{else}}operation{{end}}{{else}}Kubernetes cluster installation, uninstall, node management, information view and other operations{{end}} {{ end }} {{ if eq .Opt "delmaster" }} {{if eq .Lang "cn"}}Kubernetes集群中的Master节点的销毁与修复{{if eq .Lang "cn"}}操作{{else}}operation{{end}}{{else}}Destruction and rebuild of master node in kubernetes cluster{{end}} {{ end }} {{ if eq .Opt "rebuildmaster" }} {{if eq .Lang "cn"}}Kubernetes集群中的Master节点的销毁与修复{{if eq .Lang "cn"}}操作{{else}}operation{{end}}{{else}}Destruction and rebuild of master node in kubernetes cluster{{end}} {{ end }} {{ if eq .Opt "addnode" }} {{if eq .Lang "cn"}}Kubernetes集群中的Node节点的新增扩容与销毁{{if eq .Lang "cn"}}操作{{else}}operation{{end}}{{else}}Expansion and destruction of node in kubernetes cluster{{end}} {{ end }} {{ if eq .Opt "delnode" }} {{if eq .Lang "cn"}}Kubernetes集群中的Node节点的新增扩容与销毁{{if eq .Lang "cn"}}操作{{else}}operation{{end}}{{else}}New expansion and destruction of node in kubernetes cluster{{end}} {{ end }}</span></div>
+				</div>
+
+                                <!-- Separator -->
+                                <div class="g_12 separator"><span></span></div>
+                                <div class="g_12">
+					View cluster info
+                                </div>
+
+			</div>
+		</div>
+
+	
+	<footer>
+		<div class="wrapper">
+			<span class="copyright">
+				Kube-Install Version {{.Version}} &nbsp; | &nbsp; Powered By <a target="_blank" href="https://cloudnativer.github.io">CloudNativer</a>
+			</span>
+		</div>
+	</footer>
+</body>
+</html>

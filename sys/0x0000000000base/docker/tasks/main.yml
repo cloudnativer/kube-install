@@ -48,7 +48,7 @@
     state: directory
 - name: 3.Decompress docker software package
   unarchive:
-    src: "{{software_home}}/pkg/docker.tgz"
+    src: "{{kipath}}/pkg/docker.tgz"
     dest: /usr/bin/
     mode: 0755
 - template:

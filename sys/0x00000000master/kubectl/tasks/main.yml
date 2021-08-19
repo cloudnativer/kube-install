@@ -4,5 +4,9 @@
     state: directory
 - name: 2.Create local.kubeconfig file
   copy:
-    src: "/etc/kubernetes/ssl/local.kubeconfig"
+    src: "{{kipath}}/data/output{{sub_process_dir}}/cert/ssl/local.kubeconfig"
     dest: "/root/.kube/config"
+- name: 3.Generate kubectl program file
+  shell: "cp -rf /usr/local/bin/kubectl /usr/sbin/"
+  ignore_errors: yes
+

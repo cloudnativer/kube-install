@@ -1,27 +1,32 @@
 - name: 1.Create base package directory
   file:
-    path: "{{software_home}}/temp/basepkg-{{ostype}}"
+    path: "{{k8s_install_home}}/temp/"
+    state: directory
+- file:
+    path: "/tmp/.kubeinstalltemp/data{{sub_process_dir}}/temp/"
+    state: directory
+- file:
+    path: "/etc/kubernetes/bak/"
+    state: directory
+- file:
+    path: "/usr/local/bin/"
     state: directory
 - name: 2.Perform installation pretreatment
-  copy: 
-    src: ../templates/preinstall.sh
-    dest: "{{software_home}}/temp/preinstall.sh"
+  template: 
+    src: "../templates/preinstall.sh.j2"
+    dest: "{{k8s_install_home}}/temp/preinstall.sh"
     mode: 0755
-- shell: "{{software_home}}/temp/preinstall.sh"
+- shell: "{{k8s_install_home}}/temp/preinstall.sh"
   ignore_errors: yes
-- name: 3.Installation base package
-  #include ipvsadm ipset telnet expect ntp curl net-tools lrzsz gcc gcc-c++ yum-utils psmisc pcre-devel openssl-devel wget tree vim conntrack sysstat libseccomp lsof traceroute
-  copy:
-    src: "{{software_home}}/pkg/{{ostype}}/basepkg-{{ostype}}/"
-    dest: "{{software_home}}/temp/basepkg-{{ostype}}/"
-- shell: "rpm -U {{software_home}}/temp/basepkg-{{ostype}}/*.rpm --force --nodeps"
-  args:
-    warn: False
-  ignore_errors: yes
-- name: 4.Turn off firewall
+- name: 3.Turn off firewall
   service: 
     name: firewalld 
     state: stopped 
+    enabled: false
+  ignore_errors: yes
+- service:
+    name: ufw
+    state: stopped
     enabled: false
   ignore_errors: yes
 - service:
@@ -29,16 +34,16 @@
     state: stopped
     enabled: false
   ignore_errors: yes
-- name: 5.Turn off selinux
+- name: 4.Turn off selinux
   lineinfile:
     dest: /etc/selinux/config
     regexp: '^SELINUX='
     line: 'SELINUX=disabled'
   ignore_errors: yes
-- name: 6.Turn off postfix
+- name: 5.Turn off postfix
   shell: "systemctl stop postfix && systemctl disable postfix"
   ignore_errors: yes
-- name: 7.Set system limit
+- name: 6.Set system limit
   lineinfile:
     dest: /etc/security/limits.conf
     line: "{{item}}"
@@ -49,28 +54,28 @@
     - '* hard nproc 65536'
     - '* soft memlock unlimited'
     - '* hard memlock unlimited'
-- name: 8.Set ipvs_modules
+- name: 7.Set ipvs_modules
   copy:
     src: ../templates/ipvs.modules
     dest: /etc/sysconfig/modules/
     mode: 0755
-#- name: 9.Add nf_conntrack_ipv4 parameter configuration
+#- name: 8.Add nf_conntrack_ipv4 parameter configuration
 #  #If your operating system is a 3.* kernel, you need to remove the comments in this section.
 #  shell: "echo 'modprobe -- nf_conntrack_ipv4' >> /etc/sysconfig/modules/ipvs.modules"
-- name: 9.Run ipvs_modules
+- name: 8.Run ipvs_modules
   shell: "bash /etc/sysconfig/modules/ipvs.modules"
   ignore_errors: yes
-- name: 10.Add sysctl parameter configuration
+- name: 9.Add sysctl parameter configuration
   copy:
     src: ../templates/kubernetes.conf
     dest: /etc/sysctl.d/
-#- name: 11.Add tcp_tw_recycle parameter configuration
+#- name: 9.Add tcp_tw_recycle parameter configuration
 #  #If your operating system is a 3.* kernel, you need to remove the comments in this section.
 #  shell: "echo 'net.ipv4.tcp_tw_recycle=0' >> /etc/sysctl.d/kubernetes.conf"
-- name: 11.Set sysctl parameter configuration
+- name: 10.Set sysctl parameter configuration
   shell: sysctl -p /etc/sysctl.d/kubernetes.conf
   ignore_errors: yes
-- name: 12.Create journal directory
+- name: 11.Create journal directory
   file: 
     path: /var/log/journal
     state: directory
@@ -102,12 +107,17 @@
     state: directory
 - name: 17.Decompress k8s software package
   unarchive:
-    src: "{{software_home}}/pkg/kube-server.tar.gz"
+    src: "{{kipath}}/pkg/k8s/k8s-{{k8sver}}.tar.gz"
     dest: /usr/local/bin/
     mode: 0755
-- name: 18.Decompress helm software package
+- name: 18.Decompress cfssl software package
   unarchive:
-    src: "{{software_home}}/pkg/helm-v3.5.3.tar.gz"
+    src: "{{kipath}}/pkg/cfssl.tgz"
+    dest: /usr/local/bin/
+    mode: 0755
+- name: 19.Decompress helm software package
+  unarchive:
+    src: "{{kipath}}/pkg/helm-v3.5.3.tar.gz"
     dest: /usr/local/bin/
     mode: 0755
 

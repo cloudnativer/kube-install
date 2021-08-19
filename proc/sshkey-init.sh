@@ -1,26 +1,23 @@
 #/bin/bash
 
+# example: ./proc/sshkey-init.sh "192.168.122.11 192.168.122.12 192.168.122.13 192.168.122.14 192.168.122.15" "123456789"
+# $1 is ip list
+# $2 is user
+# $3 is password  
 
-#$1 is password   $2 is ip list   $3 is softdir   $4is currentdir   $5 is option
-
-
-if [ -f $4"/config/"$5".inventory" ];then
-  rm -rf $4"/config/"$5".inventory"
-fi
-
-if [ "$5" == "install" ];then
-  mkdir -p $3
-fi
 
 if [ ! -f "/root/.ssh/id_rsa" ];then
   ssh-keygen -t rsa -P "" -f /root/.ssh/id_rsa
 fi
 
-for sship in $2;
-do
-  sshpass -p $1 ssh-copy-id -p 22 root@$sship >/dev/null 2>&1
-done
-
+if [ "$3" == "" ];then
+    ssh-copy-id -p 22 $2@$1 >/dev/null 2>&1
+else
+    for sship in $1;
+    do
+        sshpass -p $3 ssh-copy-id -p 22 $2@$sship >/dev/null 2>&1
+    done
+fi
 
 
 

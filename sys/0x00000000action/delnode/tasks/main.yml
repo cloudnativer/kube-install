@@ -19,10 +19,10 @@
 - name: 4.Uninstall docker software
   copy: 
     src: ../templates/uninstall-docker.sh
-    dest: "{{software_home}}/temp/uninstall-docker.sh"
+    dest: "/tmp/.kubeinstalltemp{{sub_process_dir}}/temp/uninstall-docker.sh"
     mode: 0755
   ignore_errors: yes
-- shell: "{{software_home}}/temp/uninstall-docker.sh"
+- shell: "/tmp/.kubeinstalltemp{{sub_process_dir}}/temp/uninstall-docker.sh"
   ignore_errors: yes
 - name: 5.Delete kube-proxy service file
   file:
