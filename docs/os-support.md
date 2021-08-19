@@ -44,9 +44,7 @@ OpenSUSE Linux 15.3
 
 <br>
 
-Notice:
-<br>
-We have not tested it on other versions of OS, so we can not ensure that kube-install can be successfully installed on other versions of OS.
+Notice: We have not tested it on other versions of OS, so we can not ensure that kube-install can be successfully installed on other versions of OS.
 <br>We may support them in the future.
 <br>
 
