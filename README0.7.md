@@ -44,6 +44,8 @@ You expect the architecture after installation to be as follows:
 ![kube-install-arch](docs/images/kube-install-arch-1.jpg)
 
 <br>
+Notice: We use 192.168.1.11 as the Kube-Install host. In fact, you can use any host as Kube-Install host or any host outside the kubernetes cluster!
+<br>
 
 ## 2.1 Download kube-install package file
 
@@ -136,7 +138,7 @@ Login to the kube-dashboard console UI using the URL and key in the `/opt/kube-i
 <br>
 You can also install the Kubernetes cluster through the Kube-Install web platform. 
 
-Before using the web platform for installation, please open the SSH password free channel from localhost to the target host.You can use the `kube-install -exec sshcontrol` command to SSH through, or click the `Open SSH Channel of Host` button in the upper right corner to SSH through. Here is the process of SSH connection, <a href="webssh0.7.md">click here to view more details</a> !<br>
+Before using the web platform for installation, please open the SSH password free channel from localhost to the target host.You can use the `kube-install -exec sshcontrol` command to SSH through, or click the `Open SSH Channel of Host` button in the upper right corner to SSH through. Here is the process of SSH connection, <a href="docs/webssh0.7.md">click here to view more details</a> !<br>
 
 ![kube-dashboard](docs/images/webinstall001.jpg)
 
