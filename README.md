@@ -155,7 +155,7 @@ Click the `Install Kubernetes` button in the upper right corner to start the ins
 
 ![kube-dashboard](docs/images/webinstall002.jpg)
 
-For the installation process using the web platform, <a href="docs/webinstall0.7.md">click here to view more details</a> !<br>
+For the installation process using the web platform, <a href="docs/webinstall0.7.md">click here to view more details</a> !
 
 <br>
 <br>
