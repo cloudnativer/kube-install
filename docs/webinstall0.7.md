@@ -5,7 +5,7 @@
 
 <br>
 
-## open the SSH password free channel to the target host
+## Open the SSH password free channel to the target host
 
 Before using the web platform for installation, please open the SSH password free channel from localhost to the target host.You can use the `kube-install -exec sshcontrol` command to SSH through, or click the `Open SSH Channel of Host` button in the upper right corner to SSH through.
 <br>
