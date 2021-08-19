@@ -142,13 +142,20 @@ Before using the web platform for installation, please open the SSH password fre
 
 First run the web management service with the `kube-install -daemon` command, and then open `http://your_Kube-Install_host_IP:9080` with a browser.
 
+```
+#
+# ./kube-install -daemon
+```
+
+Notice: The web service listens to `TCP 9080` port by default. You can also use the `-listen` parameter to modify the port number that the web service listens to.
+
 ![kube-dashboard](docs/images/webinstall001.jpg)
 
 Click the `Install Kubernetes` button in the upper right corner to start the installation operation.
 
 ![kube-dashboard](docs/images/webinstall002.jpg)
 
-For the installation process using the web platform, <a href="docs/webinstall0.7.md">click here to view more details</a> !<br>
+For the installation process using the web platform, <a href="docs/webinstall0.7.md">click here to view more details</a> !
 
 <br>
 <br>
