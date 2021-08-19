@@ -35,6 +35,8 @@ Red Hat Enterprise Linux(RHEL) 8.1
 Red Hat Enterprise Linux(RHEL) 8.2
 Red Hat Enterprise Linux(RHEL) 8.3
 Red Hat Enterprise Linux(RHEL) 8.4
+Red Hat Enterprise Linux(RHEL) 8.5
+Ubuntu Server 20.*
 OpenSUSE Linux 15.1
 OpenSUSE Linux 15.2
 OpenSUSE Linux 15.3
@@ -44,9 +46,7 @@ OpenSUSE Linux 15.3
 
 Notice:
 <br>
-We have not tested it on other versions of RHEL and SUSE, so we can not ensure that kube-install can be successfully installed on other versions of RHEL and SUSE.
+We have not tested it on other versions of OS, so we can not ensure that kube-install can be successfully installed on other versions of OS.
+<br>We may support them in the future.
 <br>
-Currently, we don't support the Ubuntu, Debian and other operating systems, and we may support them in the future.
-<br>
-
 

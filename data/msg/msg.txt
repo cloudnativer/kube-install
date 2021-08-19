@@ -1,7 +1,7 @@
-<div class='g_12'><div class='info iDialog'>[Info] 2021-08-19 20:18:06.721793414 +0800 CST m=+814.750784164 Kubernetes cluster (12211) has been installed successfully! </div></div>
-<div class='g_12'><div class='info iDialog'>[Info] 2021-08-19 20:26:58.767387159 +0800 CST m=+1346.796377982 Installing kubernetes cluster of 12241 cluster ...</div></div>
-<div class='g_12'><div class='info iDialog'>[Info] 2021-08-19 20:31:30.09894565 +0800 CST m=+1618.127936386 Deleting kubernetes master of 12281 cluster ... </div></div>
-<div class='g_12'><div class='info iDialog'>[Info] 2021-08-19 20:31:48.056105042 +0800 CST m=+1636.085095848 The master of 12281 cluster has been deleted successfully! </div></div>
-<div class='g_12'><div class='info iDialog'>[Info] 2021-08-19 20:32:04.288249202 +0800 CST m=+1652.317239933 Rebuilding kubernetes master of 12281 cluster ...</div></div>
-<div class='g_12'><div class='info iDialog'>[Info] 2021-08-19 20:37:14.60261728 +0800 CST m=+1962.631608053 The master of 12281 cluster has been rebuilt successfully! </div></div>
-<div class='g_12'><div class='info iDialog'>[Info] 2021-08-19 20:38:20.910168473 +0800 CST m=+2028.939159132 Kubernetes cluster (12241) has been installed successfully! </div></div>
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -116,16 +116,22 @@ Login to the kube-dashboard console UI using the URL and key in the `/opt/kube-i
 
 <br>
 
-## 2.5 Use configuration file to install
+## 2.5 Use the web platform to install
 
 <br>
-You can also install the Kubernetes cluster through the prewritten configuration file. 
+You can also install the Kubernetes cluster through the Kube-Install web platform. 
 
-```
-# ./kube-install -opt install -cfg your.cfg
-```
+Before using the web platform for installation, please open the SSH password free channel from localhost to the target host.You can use the `kube-install -exec sshcontrol` command to SSH through, or click the `Open SSH Channel of Host` button in the upper right corner to SSH through.
 
-The cluster is installed through the pre written configuration file. Click here to <a href="docs/cfg0.7.md">see more detailed configuration file introduction</a>.<br>
+![kube-dashboard](docs/images/webinstall001.jpg)
+
+Click the `Install Kubernetes` button in the upper right corner to start the installation operation.
+
+![kube-dashboard](docs/images/webinstall002.jpg)
+
+For the installation process using the web platform, <a href="docs/webinstall0.7.md">click here to view more details</a> !<br>
+
+<br>
 <br>
 <br>
 
@@ -163,13 +169,11 @@ The architecture after installation is shown in the following figure:
 ![kube-install-arch](docs/images/kube-install-arch-2.jpg)
 
 <br>
-You can also add nodes through the pre written configuration file. 
+You can also install the Kubernetes cluster through the Kube-Install web platform. For the installation process using the web platform, <a href="docs/webinstall0.7.md">click here to view more details</a> ! <br>
 
-```
-# kube-install -opt addnode -cfg your.cfg
-```
+![kube-dashboard](docs/images/webinstall002.jpg)
 
-The node is added through the pre written configuration file. Click here to <a href="docs/cfg0.7.md">see more detailed configuration file introduction</a>.<br>
+<br>
 
 Notice: you can <a href="docs/operation0.6.md">click here to view more operation documents</a> about add k8s-node, delete k8s-node, delete k8s-master, rebuild k8s-master, and uninstall cluster.
 
@@ -192,6 +196,19 @@ The parameters about kube-install can be viewed using the `kube-install help` co
 <br>
 
 The build can be completed automatically by executing the `make` command. You can also <a href="docs/build.md">see more detailed build instructions here</a>.<br>
+
+<br>
+<br>
+
+
+# [6] How to Contribute
+
+Fork it
+Create your feature branch (git checkout -b my-new-feature)
+Commit your changes (git commit -am 'Add some feature')
+Push to the branch (git push origin my-new-feature)
+Create new Pull Request
+
 
 <br>
 <br>
