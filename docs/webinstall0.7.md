@@ -5,6 +5,15 @@
 
 <br>
 
+## Run the web management service
+
+First run the web management service with the `kube-install -daemon` command, and then open `http://your_Kube-Install_host_IP:9080` with a browser.
+```
+#
+# ./kube-install -daemon
+```
+Notice: The web service listens to TCP 9080 port by default. You can also use the `-listen` parameter to modify the port number that the web service listens to.
+
 ## Open the SSH password free channel to the target host
 
 Before using the web platform for installation, please open the SSH password free channel from localhost to the target host.You can use the `kube-install -exec sshcontrol` command to SSH through, or click the `Open SSH Channel of Host` button in the upper right corner to SSH through.
