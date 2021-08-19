@@ -12,7 +12,7 @@ First run the web management service with the `kube-install -daemon` command, an
 #
 # ./kube-install -daemon
 ```
-Notice: The web service listens to TCP 9080 port by default. You can also use the `-listen` parameter to modify the port number that the web service listens to.
+Notice: The web service listens to TCP `9080` port by default. You can also use the `-listen` parameter to modify the port number that the web service listens to.
 
 ## Open the SSH password free channel to the target host
 
