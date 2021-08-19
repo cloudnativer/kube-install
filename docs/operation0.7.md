@@ -6,7 +6,7 @@
 If you have four servers, kubernetes master software is installed on the three servers (192.168.1.11, 192.168.1.12, 192.168.1.13), and kubernetes node software is installed on the three servers (192.168.1.11, 192.168.1.12, 192.168.1.13, 192.168.1.14). <br>
 <table>
 <tr><td><b>IP Address</b></td><td><b>Role</b></td><td><b>OS Version</b></td><td><b>Root Password</b></td></tr>
-<tr><td>192.168.1.11</td><td>k8s-master,k8s-node</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
+<tr><td>192.168.1.11</td><td>k8s-master,k8s-node,kube-install</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
 <tr><td>192.168.1.12</td><td>k8s-master,k8s-node</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
 <tr><td>192.168.1.13</td><td>k8s-master,k8s-node</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
 <tr><td>192.168.1.14</td><td>k8s-node</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
@@ -36,7 +36,7 @@ You will install two servers (192.168.1.15 and 192.168.1.16) as k8s-node and joi
 <tr><td><b>192.168.1.16</b></td><td>k8s-node</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
 </table>
 
-Select any k8s-master server, and execute the following command on it:<br>
+Execute the following command on Kube-Instal host:<br>
 
 ```
 # kube-install -opt addnode -node "192.168.1.15,192.168.1.16" -sshpwd "cloudnativer" -k8sver "1.22" -ostype "centos7" -label "192168001011"
@@ -58,7 +58,7 @@ The architecture after installation is shown in the following figure:
 
 <br>
 You will delete the two k8s-nodes (192.168.1.15 and 192.168.1.16) from the kubernetets cluster.
-Select any k8s-master server, and execute the following command on it:<br>
+Execute the following command on Kube-Instal host:<br>
 
 ```
 # kube-install -opt delnode -node "192.168.1.13,192.168.1.15" -sshpwd "cloudnativer" -label "192168001011"
@@ -77,7 +77,7 @@ The architecture after installation is shown in the following figure:
 
 <br>
 You will Delete the k8s-master (192.168.1.13) from the kubernetets cluster.
-Select any k8s-master server, and execute the following command on it:<br>
+Execute the following command on Kube-Instal host:<br>
 
 ```
 # kube-install -opt delmaster -master "192.168.1.13" -sshpwd "cloudnativer" -label "192168001011"
@@ -96,7 +96,7 @@ The architecture after installation is shown in the following figure:
 
 <br>
 You will rebuild the damaged k8s-master (192.168.1.13) in the kubernetets cluster.
-Select any k8s-master server, and execute the following command on it:<br>
+Execute the following command on Kube-Instal host:<br>
 
 ```
 # kube-install -opt rebuildmaster -rebuildmaster "192.168.1.13" -sshpwd "cloudnativer" -k8sver "1.22" -ostype "centos7" -label "192168001011"
@@ -119,7 +119,7 @@ The architecture after installation is shown in the following figure:
 
 <br>
 You will uninstall kubernetets cluster.
-Select any k8s-master server, and execute the following command on it:<br>
+Execute the following command on Kube-Instal host:<br>
 
 ```
 # kube-install -opt uninstall -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -sshpwd "cloudnativer" -label "192168001011"
