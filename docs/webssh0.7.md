@@ -1,5 +1,5 @@
 
-# open the SSH password free channel
+# Open the SSH password free channel
 
 <br>
 
