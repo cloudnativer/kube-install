@@ -42,7 +42,7 @@ Select any k8s-master server, and execute the following command on it:<br>
 # kube-install -opt addnode -node "192.168.1.15,192.168.1.16" -sshpwd "cloudnativer" -ostype "centos7"
 ```
 
-Notice: Please make sure that the `-ostype` flag you entered is correct, only support `rhel7`, `rhel8`, `centos7`, `centos8`, `suse15` these types of "ostype".<br>
+Notice: Please make sure that the `-ostype` flag you entered is correct, only support `rhel7`, `rhel8`, `centos7`, `centos8`, `ubuntu20`, `suse15` these types of "ostype".<br>
 If you need to specify the directory path to add Kubernetes node, you can set it using the `-softdir` parameter.<br>
 In addition, you can also install the Kubernetes cluster through the Kube-Install web platform. For the installation process using the web platform, <a href="docs/webinstall0.7.md">click here to view more details</a> ! <br>
 
@@ -102,7 +102,7 @@ Select any k8s-master server, and execute the following command on it:<br>
 # kube-install -opt rebuildmaster -rebuildmaster "192.168.1.13" -sshpwd "cloudnativer" -ostype "centos7"
 ```
 
-Notice: Please make sure that the `-ostype` flag you entered is correct, only support `rhel7`, `rhel8`, `centos7`, `centos8`, `suse15` these types of "ostype".<br>
+Notice: Please make sure that the `-ostype` flag you entered is correct, only support `rhel7`, `rhel8`, `centos7`, `centos8`, `ubuntu20`, `suse15` these types of "ostype".<br>
 Notice: If you specify the `-softdir` parameter value during the installation operation, please specify the same `-softdir` parameter value during the rebuildmaster operation.<br>
 In addition, you can also install the Kubernetes cluster through the Kube-Install web platform. For the installation process using the web platform, <a href="docs/webinstall0.7.md">click here to view more details</a> ! <br>
 

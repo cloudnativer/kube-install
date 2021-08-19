@@ -10,7 +10,7 @@ One click fast installation of highly available kubernetes cluster, as well as a
 Compatibility matrix:
 <table>
 <tr><td><b>kube-install Version</b></td><td><b>Supported Kubernetes Version</b></td><td><b>Supported OS Version</b></td></tr>
-<tr><td> kube-install v0.7.* </td><td> kubernetes v1.22 , kubernetes v1.21 , kubernetes v1.20 , <br> kubernetes v1.19 , kubernetes v1.18 , kubernetes v1.17 , <br> kubernetes v1.16 , kubernetes v1.15 , kubernetes v1.14 </td><td> CentOS 7 , RHEL 7 , <br> CentOS 8 , RHEL 8 , <br> SUSE Linux 15 </td></tr>
+<tr><td> kube-install v0.7.* </td><td> kubernetes v1.22 , kubernetes v1.21 , kubernetes v1.20 , <br> kubernetes v1.19 , kubernetes v1.18 </td><td> CentOS 7 , RHEL 7 , <br> CentOS 8 , RHEL 8 , <br> Ubuntu 20, SUSE <br>Linux 15 </td></tr>
 <tr><td> kube-install v0.6.* </td><td> kubernetes v1.22 , kubernetes v1.21 , kubernetes v1.20 , <br> kubernetes v1.19 , kubernetes v1.18 , kubernetes v1.17 , <br> kubernetes v1.16 , kubernetes v1.15 , kubernetes v1.14 </td><td> CentOS 7 , RHEL 7 , <br> CentOS 8 , RHEL 8 , <br> SUSE Linux 15 </td></tr>
 <tr><td> kube-install v0.5.* </td><td> kubernetes v1.21 , kubernetes v1.20 , kubernetes v1.19 , <br> kubernetes v1.18 , kubernetes v1.17 , kubernetes v1.16 , <br> kubernetes v1.15 , kubernetes v1.14 </td><td> CentOS 7 , RHEL 7 </td></tr>
 <tr><td> kube-install v0.4.* </td><td> kubernetes v1.21 , kubernetes v1.20 , kubernetes v1.19 , <br> kubernetes v1.18 , kubernetes v1.17 , kubernetes v1.16 , <br> kubernetes v1.15 , kubernetes v1.14 </td><td> CentOS 7 , RHEL 7 </td></tr>
@@ -18,6 +18,7 @@ Compatibility matrix:
 <tr><td> kube-install v0.2.* </td><td> kubernetes v1.14 </td><td> CentOS 7 </td></tr>
 <tr><td> kube-install v0.1.* </td><td> kubernetes v1.14 </td><td> CentOS 7 </td></tr>
 </table>
+
 <br>
 Notice: kube-install supports CentOS 7, CentOS 8, SUSE 15, RHEL 7 and RHEL 8 operating system environments. For a list of supported operating system distributions, please refer to <a href="docs/os-support.md">OS support list</a>.
 <br>
@@ -48,17 +49,13 @@ You expect the architecture after installation to be as follows:
 
 You can download the `kube-install-*.tgz` package from https://github.com/cloudnativer/kube-install/releases. <br>
 
-![download-pkg](docs/images/download-pkg.jpg)
-
-If you want to install version 1.18 of kubernetes, download the `kube-install-for-k8s1.18-*.tgz` package file.If you want to install version 1.15 of kubernetes, download the `kube-install-for-k8s1.15-*.tgz` package file...In the same way, you can download the version you want.<br>
-
-For example, we are now installing kubernetes v1.21, and we have downloaded the `kube-install-for-k8s1.21-v0.7.0-beta.tgz` package.<br>
+For example, we have downloaded the `kube-install-v0.7.0-beta2.tgz` package.<br>
 
 
 ```
 # cd /root/
-# curl -O https://github.com/cloudnativer/kube-install/releases/download/v0.7.0-beta/kube-install-for-k8s1.21-v0.7.0-beta.tgz
-# tar -zxvf kube-install-for-k8s1.21-v0.7.0-beta.tgz
+# curl -O https://github.com/cloudnativer/kube-install/releases/download/v0.7.0-beta2/kube-install-v0.7.0-beta2.tgz
+# tar -zxvf kube-install-v0.7.0-beta2.tgz
 # cd /root/kube-install/
 ```
 
@@ -74,8 +71,24 @@ Please operate in the root user environment. Perform the system environment init
 # ./kube-install -opt init -ostype "centos7"
 ```
 
-Notice: Please make sure that the `-ostype` flag you entered is correct, only support `rhel7`, `rhel8`, `centos7`, `centos8`, `suse15` these types of "ostype".<br>
+Notice: Please make sure that the `-ostype` flag you entered is correct, only support `rhel7`, `rhel8`, `centos7`, `centos8`, `ubuntu20`, `suse15` these types of "ostype".<br>
 In addition, if you need to specify the directory path to the Kubernetes cluster installation, you can set it using the `-softdir` parameter.
+
+<br>
+
+## 2.3 open the SSH password free channel
+
+<br>
+Before using the web platform for installation, please open the SSH password free channel from localhost to the target host.
+
+You can open the SSH password free channel by manually, or through the `kube-install -exec sshcontrol` command.<br>
+
+```
+# cd /root/kube-install/
+# ./kube-install -exec sshcontrol -sship "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -sshpass "cloudnativer"
+```
+
+Or click the `Open SSH Channel of Host` button in the web platform to SSH through. Here is the process of SSH connection, <a href="webssh0.7.md">click here to view more details</a> !<br>
 
 <br>
 
@@ -89,7 +102,7 @@ Please operate in the root user environment. Execute on the k8s-master selected 
 # ./kube-install -opt install -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -sshpwd "cloudnativer" -ostype "centos7"
 ```
 
-Notice: Please make sure that the `-ostype` flag you entered is correct, only support `rhel7`, `rhel8`, `centos7`, `centos8`, `suse15` these types of "ostype".<br>
+Notice: Please make sure that the `-ostype` flag you entered is correct, only support `rhel7`, `rhel8`, `centos7`, `centos8`, `ubuntu20`, `suse15` these types of "ostype".<br>
 In addition, if you need to specify the directory path to the Kubernetes cluster installation, you can set it using the `-softdir` parameter.
 
 <br>
@@ -121,7 +134,7 @@ Login to the kube-dashboard console UI using the URL and key in the `/opt/kube-i
 <br>
 You can also install the Kubernetes cluster through the Kube-Install web platform. 
 
-Before using the web platform for installation, please open the SSH password free channel from localhost to the target host.You can use the `kube-install -exec sshcontrol` command to SSH through, or click the `Open SSH Channel of Host` button in the upper right corner to SSH through.
+Before using the web platform for installation, please open the SSH password free channel from localhost to the target host.You can use the `kube-install -exec sshcontrol` command to SSH through, or click the `Open SSH Channel of Host` button in the upper right corner to SSH through. Here is the process of SSH connection, <a href="webssh0.7.md">click here to view more details</a> !<br>
 
 ![kube-dashboard](docs/images/webinstall001.jpg)
 
@@ -159,7 +172,7 @@ Select any k8s-master server, and execute the following command on it:<br>
 # kube-install -opt addnode -node "192.168.1.15,192.168.1.16" -sshpwd "cloudnativer" -ostype "centos7"
 ```
 
-Notice: Please make sure that the `-ostype` flag you entered is correct, only support `rhel7`, `rhel8`, `centos7`, `centos8`, `suse15` these types of "ostype".<br>
+Notice: Please make sure that the `-ostype` flag you entered is correct, only support `rhel7`, `rhel8`, `centos7`, `centos8`, `ubuntu20`, `suse15` these types of "ostype".<br>
 In addition, if you need to specify the directory path to add Kubernetes node, you can set it using the `-softdir` parameter.
 
 <br>
