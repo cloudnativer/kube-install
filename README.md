@@ -66,7 +66,7 @@ For example, we have downloaded the `kube-install-allinone-v0.7.0-beta2.tgz` pac
 ## 2.2 Initialize system environment
 
 <br>
-Please operate in the root user environment. Perform the system environment initialization operation on the k8s-master selected above: <br>
+Please operate in the root user environment. Perform the system environment initialization operation on the Kube-Install host selected above: <br>
 
 ```
 # cd /root/kube-install/
@@ -94,10 +94,10 @@ Or click the `Open SSH Channel of Host` button in the web platform to SSH throug
 
 <br>
 
-## 2.3 Install kubernetes cluster
+## 2.4 One click Install kubernetes cluster
 
 <br>
-Please operate in the root user environment. Execute on the k8s-master selected above:<br>
+Please operate in the root user environment. Execute on the Kube-Install host selected above:<br>
 
 ```
 # cd /root/kube-install/
@@ -110,10 +110,10 @@ In addition, if you need to specify the directory path to the Kubernetes cluster
 <br>
 
 
-## 2.4 Login kubernetes dashboard UI
+## 2.5 Login kubernetes dashboard UI
 
 <br>
-Execute the following command on the k8s-master you selected to view the kube-dashboard console URL and key:<br>
+Execute the following command on the Kube-Install you selected to view the kube-dashboard console URL and key:<br>
 
 ```
 # cat /opt/kube-install/loginkey.txt
@@ -131,7 +131,7 @@ Login to the kube-dashboard console UI using the URL and key in the `/opt/kube-i
 
 <br>
 
-## 2.5 Use the web platform to install
+## 2.6 Use the web platform to install
 
 <br>
 You can also install the Kubernetes cluster through the Kube-Install web platform. 
@@ -154,7 +154,7 @@ For the installation process using the web platform, <a href="docs/webinstall0.7
 
 <br>
 
-After kube-install is installed, you can directly execute `kube-install` command in any directory of any k8s-master server.Kube-install can not only quickly install the highly available kubernetes cluster, but also add k8s-node, delete k8s-node, delete k8s-master and rebuild k8s-master.<br>
+Kube-install can not only quickly install the highly available kubernetes cluster, but also add k8s-node, delete k8s-node, delete k8s-master and rebuild k8s-master.<br>
 
 Suppose you expect to install two servers (192.168.1.15 and 192.168.1.16) as k8s-nodes and join the kubernetets cluster in Chapter [2].
 
@@ -168,7 +168,7 @@ Suppose you expect to install two servers (192.168.1.15 and 192.168.1.16) as k8s
 <tr><td><b>192.168.1.16</b></td><td>k8s-node</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
 </table>
 
-Select any k8s-master server, and execute the following command on it:<br>
+Execute the following command on Kube-Install host:<br>
 
 ```
 # kube-install -opt addnode -node "192.168.1.15,192.168.1.16" -sshpwd "cloudnativer" -k8sver "1.22" -ostype "centos7" -label "192168001011"
