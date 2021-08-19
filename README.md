@@ -44,6 +44,8 @@ You expect the architecture after installation to be as follows:
 ![kube-install-arch](docs/images/kube-install-arch-1.jpg)
 
 <br>
+Notice: We use 192.168.1.11 as the Kube-Install host. In fact, you can use any host as Kube-Install host or any host outside the kubernetes cluster!
+<br>
 
 ## 2.1 Download kube-install package file
 
