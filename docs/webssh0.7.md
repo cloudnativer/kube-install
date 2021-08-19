@@ -39,3 +39,20 @@ Notice: Before using the web platform for installation, please open the SSH pass
 <br>
 <br>
 
+## Solutions to SSH channel opening failure
+
+
+You can try to open the SSH channel again after executing the following command on the target host:
+
+```
+# sudo sed -i "/PermitRootLogin/d" /etc/ssh/sshd_config
+# sudo sh -c "echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config" 
+# sudo sed -i "/StrictHostKeyChecking/s/^#//; /StrictHostKeyChecking/s/ask/no/" /etc/ssh/ssh_config
+# sudo systemctl restart sshd
+```
+
+Or you can use "root" user to manually open the SSH channel from the local host to the target host.
+
+<br>
+<br>
+<br>
