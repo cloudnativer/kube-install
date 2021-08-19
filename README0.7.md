@@ -8,6 +8,7 @@ One click fast installation of highly available kubernetes cluster, as well as a
 
 <br>
 Compatibility matrix:
+
 <table>
 <tr><td><b>kube-install Version</b></td><td><b>Supported Kubernetes Version</b></td><td><b>Supported OS Version</b></td></tr>
 <tr><td> kube-install v0.7.* </td><td> kubernetes v1.22 , kubernetes v1.21 , kubernetes v1.20 , <br> kubernetes v1.19 , kubernetes v1.18 </td><td> CentOS 7 , RHEL 7 , <br> CentOS 8 , RHEL 8 , <br> SUSE Linux 15 , <br> Ubuntu 20 </td></tr>
@@ -100,7 +101,7 @@ Please operate in the root user environment. Execute on the k8s-master selected 
 
 ```
 # cd /root/kube-install/
-# ./kube-install -opt install -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -sshpwd "cloudnativer" -ostype "centos7"
+# ./kube-install -opt install -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -sshpwd "cloudnativer" -k8sver "1.22" -ostype "centos7" -label "192168001011"
 ```
 
 Notice: Please make sure that the `-ostype` flag you entered is correct, only support `rhel7`, `rhel8`, `centos7`, `centos8`, `ubuntu20`, `suse15` these types of "ostype".<br>
@@ -170,7 +171,7 @@ Suppose you expect to install two servers (192.168.1.15 and 192.168.1.16) as k8s
 Select any k8s-master server, and execute the following command on it:<br>
 
 ```
-# kube-install -opt addnode -node "192.168.1.15,192.168.1.16" -sshpwd "cloudnativer" -ostype "centos7"
+# kube-install -opt addnode -node "192.168.1.15,192.168.1.16" -sshpwd "cloudnativer" -k8sver "1.22" -ostype "centos7" -label "192168001011"
 ```
 
 Notice: Please make sure that the `-ostype` flag you entered is correct, only support `rhel7`, `rhel8`, `centos7`, `centos8`, `ubuntu20`, `suse15` these types of "ostype".<br>

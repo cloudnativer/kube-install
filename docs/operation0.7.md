@@ -39,7 +39,7 @@ You will install two servers (192.168.1.15 and 192.168.1.16) as k8s-node and joi
 Select any k8s-master server, and execute the following command on it:<br>
 
 ```
-# kube-install -opt addnode -node "192.168.1.15,192.168.1.16" -sshpwd "cloudnativer" -ostype "centos7"
+# kube-install -opt addnode -node "192.168.1.15,192.168.1.16" -sshpwd "cloudnativer" -k8sver "1.22" -ostype "centos7" -label "192168001011"
 ```
 
 Notice: Please make sure that the `-ostype` flag you entered is correct, only support `rhel7`, `rhel8`, `centos7`, `centos8`, `ubuntu20`, `suse15` these types of "ostype".<br>
@@ -61,7 +61,7 @@ You will delete the two k8s-nodes (192.168.1.15 and 192.168.1.16) from the kuber
 Select any k8s-master server, and execute the following command on it:<br>
 
 ```
-# kube-install -opt delnode -node "192.168.1.13,192.168.1.15" -sshpwd "cloudnativer"
+# kube-install -opt delnode -node "192.168.1.13,192.168.1.15" -sshpwd "cloudnativer" -label "192168001011"
 ```
 
 Notice: If you specify the `-softdir` parameter value during the installation or addnode operation, please specify the same `-softdir` parameter value during the delnode operation.<br>
@@ -80,7 +80,7 @@ You will Delete the k8s-master (192.168.1.13) from the kubernetets cluster.
 Select any k8s-master server, and execute the following command on it:<br>
 
 ```
-# kube-install -opt delmaster -master "192.168.1.13" -sshpwd "cloudnativer"
+# kube-install -opt delmaster -master "192.168.1.13" -sshpwd "cloudnativer" -label "192168001011"
 ```
 
 Notice: If you specify the `-softdir` parameter value during the installation operation, please specify the same `-softdir` parameter value during the delmaster operation.<br>
@@ -99,7 +99,7 @@ You will rebuild the damaged k8s-master (192.168.1.13) in the kubernetets cluste
 Select any k8s-master server, and execute the following command on it:<br>
 
 ```
-# kube-install -opt rebuildmaster -rebuildmaster "192.168.1.13" -sshpwd "cloudnativer" -ostype "centos7"
+# kube-install -opt rebuildmaster -rebuildmaster "192.168.1.13" -sshpwd "cloudnativer" -k8sver "1.22" -ostype "centos7" -label "192168001011"
 ```
 
 Notice: Please make sure that the `-ostype` flag you entered is correct, only support `rhel7`, `rhel8`, `centos7`, `centos8`, `ubuntu20`, `suse15` these types of "ostype".<br>
@@ -122,7 +122,7 @@ You will uninstall kubernetets cluster.
 Select any k8s-master server, and execute the following command on it:<br>
 
 ```
-# kube-install -opt uninstall -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -sshpwd "cloudnativer"
+# kube-install -opt uninstall -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -sshpwd "cloudnativer" -label "192168001011"
 ```
 
 Notice: If you specify the `-softdir` parameter value during the installation operation, please specify the same `-softdir` parameter value during the uninstall operation.<br>
