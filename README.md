@@ -140,6 +140,8 @@ You can also install the Kubernetes cluster through the Kube-Install web platfor
 
 Before using the web platform for installation, please open the SSH password free channel from localhost to the target host.You can use the `kube-install -exec sshcontrol` command to SSH through, or click the `Open SSH Channel of Host` button in the upper right corner to SSH through. Here is the process of SSH connection, <a href="docs/webssh0.7.md">click here to view more details</a> !<br>
 
+First run the web management service with the `kube-install -daemon` command, and then open `http://your_Kube-Install_host_IP:9080` with a browser.
+
 ![kube-dashboard](docs/images/webinstall001.jpg)
 
 Click the `Install Kubernetes` button in the upper right corner to start the installation operation.
