@@ -11,7 +11,11 @@ Click the `Install Schedule Calendar` button to view Install Schedule Calendar T
 
 ![kube-dashboard](images/schedule002.jpg)
 
+The calendar above shows the kubernetes cluster label, the time schedule of the installation in progress or planned. 
 
+<br>
+
+Notice: The task plan just made needs to wait 1 minute to display!
 
 <br>
 <br>
