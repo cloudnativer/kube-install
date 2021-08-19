@@ -51,13 +51,13 @@ You expect the architecture after installation to be as follows:
 
 You can download the `kube-install-*.tgz` package from https://github.com/cloudnativer/kube-install/releases. <br>
 
-For example, we have downloaded the `kube-install-v0.7.0-beta2.tgz` package.<br>
+For example, we have downloaded the `kube-install-allinone-v0.7.0-beta2.tgz` package.<br>
 
 
 ```
 # cd /root/
-# curl -O https://github.com/cloudnativer/kube-install/releases/download/v0.7.0-beta2/kube-install-v0.7.0-beta2.tgz
-# tar -zxvf kube-install-v0.7.0-beta2.tgz
+# curl -O https://github.com/cloudnativer/kube-install/releases/download/v0.7.0-beta2/kube-install-allinone-v0.7.0-beta2.tgz
+# tar -zxvf kube-install-allinone-v0.7.0-beta2.tgz
 # cd /root/kube-install/
 ```
 
