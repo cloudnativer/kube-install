@@ -90,7 +90,7 @@ You can open the SSH password free channel by manually, or through the `kube-ins
 # ./kube-install -exec sshcontrol -sship "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -sshpass "cloudnativer"
 ```
 
-Or click the `Open SSH Channel of Host` button in the web platform to SSH through. Here is the process of SSH connection, <a href="webssh0.7.md">click here to view more details</a> !<br>
+Or click the `Open SSH Channel of Host` button in the web platform to SSH through. Here is the process of SSH connection, <a href="docs/webssh0.7.md">click here to view more details</a> !<br>
 
 <br>
 
@@ -190,7 +190,7 @@ You can also install the Kubernetes cluster through the Kube-Install web platfor
 
 <br>
 
-Notice: you can <a href="docs/operation0.6.md">click here to view more operation documents</a> about add k8s-node, delete k8s-node, delete k8s-master, rebuild k8s-master, and uninstall cluster.
+Notice: you can <a href="docs/operation0.7.md">click here to view more operation documents</a> about add k8s-node, delete k8s-node, delete k8s-master, rebuild k8s-master, and uninstall cluster.
 
 <br>
 <br>
@@ -225,6 +225,5 @@ Push to the branch (git push origin my-new-feature) <br>
 Create new Pull Request <br>
 <br>
 <br>
-
 
 
