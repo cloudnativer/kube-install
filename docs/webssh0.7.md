@@ -7,7 +7,7 @@ You can use the `kube-install -exec sshcontrol` command to SSH through, or click
 
 <br>
 
-## use the Web platform to SSH through.
+## Use the Web platform to SSH through.
 
 You can click the `Open SSH Channel of Host` button in the upper right corner to SSH through.
 
@@ -24,7 +24,7 @@ Click `Submit` button to open SSH channel automatically.
 <br>
 <br>
 
-## use the CLI command to SSH through.
+## Use the CLI command to SSH through.
 
 
 use the `kube-install -exec sshcontrol` command to SSH through.
