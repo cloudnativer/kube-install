@@ -20,6 +20,8 @@ Requires=sshd.service
   
 [Service]
 ExecStart=/root/kube-install/kube-install -daemon
+User=root
+Environment="USER=root"
 PrivateTmp=true
 LimitNOFILE=65536
 TimeoutStartSec=5
