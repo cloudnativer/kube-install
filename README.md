@@ -196,9 +196,9 @@ The architecture after installation is shown in the following figure:
 ![kube-install-arch](docs/images/kube-install-arch-2.jpg)
 
 <br>
-You can also install the Kubernetes cluster through the Kube-Install web platform. For the installation process using the web platform, <a href="docs/webinstall0.7.md">click here to view more details</a> ! <br>
+You can also add Kubernetes node through the Kube-Install web platform. For the installation process using the web platform, <a href="docs/webinstall0.7.md">click here to view more details</a> ! <br>
 
-![kube-dashboard](docs/images/webinstall002.jpg)
+![kube-dashboard](docs/images/webnodeadd001.jpg)
 
 <br>
 
