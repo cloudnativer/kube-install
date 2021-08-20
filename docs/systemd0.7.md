@@ -9,7 +9,7 @@ You can run Kube-Install in systemd service mode.
 
 ## Prepare systemd service file
 
-Prepare `kube-install.service` file as follows:
+Prepare `kube-install.service` file as follows, <a href="../kube-install.service">here is a sample file for reference</a>.
 
 ```
 [Unit]
