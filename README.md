@@ -103,7 +103,7 @@ Please operate in the root user environment. Execute on the Kube-Install host se
 
 ```
 # cd /root/kube-install/
-# ./kube-install -opt install -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -sshpwd "cloudnativer" -k8sver "1.22" -ostype "centos7" -label "192168001011"
+# ./kube-install -opt install -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -k8sver "1.22" -ostype "centos7" -label "192168001011"
 ```
 
 Notice: Please make sure that the `-ostype` flag you entered is correct, only support `rhel7`, `rhel8`, `centos7`, `centos8`, `ubuntu20`, `suse15` these types of "ostype".<br>
@@ -182,7 +182,7 @@ Suppose you expect to install two servers (192.168.1.15 and 192.168.1.16) as k8s
 Execute the following command on Kube-Install host:<br>
 
 ```
-# kube-install -opt addnode -node "192.168.1.15,192.168.1.16" -sshpwd "cloudnativer" -k8sver "1.22" -ostype "centos7" -label "192168001011"
+# kube-install -opt addnode -node "192.168.1.15,192.168.1.16" -k8sver "1.22" -ostype "centos7" -label "192168001011"
 ```
 
 Notice: Please make sure that the `-ostype` flag you entered is correct, only support `rhel7`, `rhel8`, `centos7`, `centos8`, `ubuntu20`, `suse15` these types of "ostype".<br>
