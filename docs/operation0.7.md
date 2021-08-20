@@ -132,9 +132,10 @@ Execute the following command on Kube_install host:<br>
 ```
 
 Notice: If you specify the `-softdir` parameter value during the installation operation, please specify the same `-softdir` parameter value during the uninstall operation.<br>
-In addition, you can also uninstall the Kubernetes cluster through the Kube-Install web platform. For the installation process using the web platform, <a href="docs/webinstall0.7.md">click here to view more details</a> ! <br>
 
 ![kube-dashboard](images/webinstall002.jpg)
+
+In addition, you can also uninstall the Kubernetes cluster through the Kube-Install web platform. For the installation process using the web platform, <a href="docs/webinstall0.7.md">click here to view more details</a> ! 
 
 <br>
 <br>
