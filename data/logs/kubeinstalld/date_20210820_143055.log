@@ -22,3 +22,13 @@
 [Error] 2021-08-20 14:56:20.959271486 +0800 CST m=+1525.689303741 An error occurred: open /go/src/kube-install/data/output: no such file or directory
 [Error] 2021-08-20 14:57:22.000251171 +0800 CST m=+1586.730283429 An error occurred: open /go/src/kube-install/data/output: no such file or directory
 [Error] 2021-08-20 14:58:23.045897426 +0800 CST m=+1647.775929686 An error occurred: open /go/src/kube-install/data/output: no such file or directory
+[Error] 2021-08-20 14:59:24.06054724 +0800 CST m=+1708.790579504 An error occurred: open /go/src/kube-install/data/output: no such file or directory
+[Error] 2021-08-20 15:00:25.10737794 +0800 CST m=+1769.837410192 An error occurred: open /go/src/kube-install/data/output: no such file or directory
+[Error] 2021-08-20 15:01:26.521119388 +0800 CST m=+1831.251151661 An error occurred: open /go/src/kube-install/data/output: no such file or directory
+[Error] 2021-08-20 15:02:27.569695765 +0800 CST m=+1892.299728026 An error occurred: open /go/src/kube-install/data/output: no such file or directory
+[Error] 2021-08-20 15:03:28.59591855 +0800 CST m=+1953.325950807 An error occurred: open /go/src/kube-install/data/output: no such file or directory
+[Error] 2021-08-20 15:04:29.666343453 +0800 CST m=+2014.396375712 An error occurred: open /go/src/kube-install/data/output: no such file or directory
+[Error] 2021-08-20 15:05:30.712969827 +0800 CST m=+2075.443002086 An error occurred: open /go/src/kube-install/data/output: no such file or directory
+[Error] 2021-08-20 15:06:31.760465635 +0800 CST m=+2136.490497907 An error occurred: open /go/src/kube-install/data/output: no such file or directory
+[Error] 2021-08-20 15:07:32.776947671 +0800 CST m=+2197.506979934 An error occurred: open /go/src/kube-install/data/output: no such file or directory
+[Error] 2021-08-20 15:08:33.826612791 +0800 CST m=+2258.556645049 An error occurred: open /go/src/kube-install/data/output: no such file or directory

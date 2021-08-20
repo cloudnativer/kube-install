@@ -32,7 +32,9 @@ WantedBy=multi-user.target
 ```
 
 Then, copy `kube-install.service` file to `/etc/systemd/system/kube-install.service`.
+
 <br>
+
 Notice: Please fill in the actual full path of `kube-install` binary file after `ExecStart=` parameter.
 
 <br>
@@ -55,6 +57,7 @@ Start the service using the `systemctl start kube-install` command:
    ...
 
 ```
+<br>
 
 ## Set the service startup
 
