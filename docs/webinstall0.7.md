@@ -26,7 +26,7 @@ kube-install -exec sshcontrol -sship "192.168.1.11,192.168.1.12,192.168.1.13,192
 
 Or click the `Open SSH Channel of Host` button in the upper right corner to SSH through.
 
-![kube-dashboard](images/webinstall001.jpg)
+![kube-dashboard](images/webssh001.jpg)
 
 Here is the process of SSH connection, <a href="webssh0.7.md">click here to view more details</a> !<br>
 
@@ -38,6 +38,10 @@ Here is the process of SSH connection, <a href="webssh0.7.md">click here to view
 The kubernetes node is added through the pre written configuration file.
 <br>
 Fill in relevant installation parameters in the pop-up form:
+
+![kube-dashboard](images/webinstall001.jpg)
+
+Then click the `Install Kubernetes` button in the upper right corner to SSH through.
 
 ![kube-dashboard](images/webinstall003.png)
 
