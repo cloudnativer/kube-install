@@ -5,10 +5,14 @@
 - name: 2.Clean up invalid certificates
   shell: "cd /etc/kubernetes/ssl/ && ls |grep '^kubelet'|while read i;do mv $i /etc/kubernetes/bak/$i.bak;done"
   ignore_errors: yes
-- name: 3.Copy kubelet.config.json
+- name: 3.Copy kubelet config and shell file
   template:
     src: "../templates/kubelet.config.json-{{k8sver}}.j2"
     dest: /etc/kubernetes/kubelet.config.json
+- copy:
+    src: "../templates/resolvinit.sh"
+    dest: "/usr/local/bin/"
+    mode: 0755    
 - name: 4.Set IPVS rules
   shell: "/usr/local/bin/ipvsinit.sh"
   ignore_errors: yes
@@ -20,6 +24,7 @@
     path: "/run/systemd/resolv.conf"
     state: touch
     mode: 0755
+  ignore_errors: yes
 - name: 6.Create kubelet service startup file
   template:
     src: "../templates/kubelet.service-{{k8sver}}.j2"

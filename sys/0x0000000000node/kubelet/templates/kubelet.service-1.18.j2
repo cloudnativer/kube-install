@@ -6,6 +6,7 @@ Requires=docker.service
 
 [Service]
 WorkingDirectory={{k8s_install_home}}/kubernetes/kubelet
+ExecStartPre=/usr/local/bin/resolvinit.sh
 ExecStart=/usr/local/bin/kubelet \
   --bootstrap-kubeconfig=/etc/kubernetes/ssl/bootstrap.kubeconfig \
   --cert-dir=/etc/kubernetes/ssl \
