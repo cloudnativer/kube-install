@@ -34,7 +34,7 @@ kube-install -exec sshcontrol -sship "192.168.1.11,192.168.1.12,192.168.1.13,192
 ```
 
 <br>
-Notice: Notice: Before starting the installation, please open the SSH password free channel from localhost to the target host.
+Notice: Before starting the installation, please open the SSH password free channel from localhost to the target host.
 
 <br>
 <br>
