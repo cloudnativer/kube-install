@@ -11,7 +11,7 @@ You can use the `kube-install -exec sshcontrol` command to SSH through, or click
 
 You can click the `Open SSH Channel of Host` button in the upper right corner to SSH through.
 
-![kube-dashboard](images/webinstall001.jpg)
+![kube-dashboard](images/webssh001.jpg)
 
 Enter the IP address of the target host. Multiple hosts are separated by English commas. And Enter the root account password of the target host.
 
