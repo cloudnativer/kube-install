@@ -55,13 +55,14 @@ You can download the `kube-install-*.tgz` package from https://github.com/cloudn
 
 For example, we have downloaded the `kube-install-allinone-v0.7.0-beta2.tgz` package.<br>
 
-
 ```
 # cd /root/
 # curl -O https://github.com/cloudnativer/kube-install/releases/download/v0.7.0-beta2/kube-install-allinone-v0.7.0-beta2.tgz
 # tar -zxvf kube-install-allinone-v0.7.0-beta2.tgz
 # cd /root/kube-install/
 ```
+
+Notice: If your network quality is poor and the download package is slow, you can use the download tool that supports breakpoint continuation to download.
 
 <br>
 
