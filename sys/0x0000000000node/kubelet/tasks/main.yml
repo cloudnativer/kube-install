@@ -16,6 +16,10 @@
   file:
     path: "{{k8s_install_home}}/kubernetes/kubelet"
     state: directory
+- file:
+    path: "/run/systemd/resolv.conf"
+    state: touch
+    mode: 0755
 - name: 6.Create kubelet service startup file
   template:
     src: "../templates/kubelet.service-{{k8sver}}.j2"
