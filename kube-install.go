@@ -109,11 +109,6 @@ func main() {
         // Run as a daemon process.
         case *daemonFlag , *dFlag :
             fmt.Println("Notice: If you are prompted to enter the password below, please enter the root password again! \n")
-            var ipArray = []string{"127.0.0.1"}
-            err_host := kilib.SshKey(ipArray, "", currentDir)
-            if err_host != nil {
-                panic("[Error] "+time.Now().String()+" Kube-Install start failed ! \nThere is a problem with the local SSH key. \n")
-            }
             if listen != "" {
                 kilib.DaemonRun(Version,ReleaseDate,CompatibleK8S,CompatibleOS,listen,currentDir,currentUser,kissh,logName,"DAEMON")
             } else {

@@ -1,0 +1,3 @@
+[Error] 2021-08-20 14:34:59.499173809 +0800 CST m=+244.229206062 An error occurred: open /go/src/kube-install/data/output: no such file or directory
+[Error] 2021-08-20 14:36:00.509426019 +0800 CST m=+305.239458272 An error occurred: open /go/src/kube-install/data/output: no such file or directory
+[Error] 2021-08-20 14:37:01.516504682 +0800 CST m=+366.246536945 An error occurred: open /go/src/kube-install/data/output: no such file or directory
