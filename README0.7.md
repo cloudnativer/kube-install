@@ -134,11 +134,14 @@ Login to the kube-dashboard console UI using the URL and key in the `/opt/kube-i
 
 <br>
 
-## 2.6 Use the web platform to install
+# [3] Use the web platform to install kubernetes cluster
 
 <br>
 You can also install the Kubernetes cluster through the Kube-Install web platform. 
 <br>
+
+## Run Kube-Install web service
+
 First run the web management service with the `kube-install -daemon` command, and then open `http://your_Kube-Install_host_IP:9080` with a web browser.
 
 ```
@@ -146,13 +149,13 @@ First run the web management service with the `kube-install -daemon` command, an
 # ./kube-install -daemon
 ```
 
-Notice: The web service listens to `TCP 9080` port by default. You can also use the `-listen` parameter to modify the port number that the web service listens to. You can run Kube-Install in systemd service mode, <a href="docs/systemd0.7.md">click here to view more details</a> !<br>
+Notice: The web service listens to `TCP 9080` port by default. You can also use the `-listen` parameter to modify the port number that the web service listens to. You can run Kube-Install as a systemd service, <a href="docs/systemd0.7.md">click here to view more details</a> !<br>
 
-![kube-dashboard](docs/images/webinstall001.jpg)
+## Use the web platform to install 
 
 Second, Click the `Install Kubernetes` button in the upper right corner to start the installation operation.
 
-<br>
+![kube-dashboard](docs/images/webinstall001.jpg)
 
 Notice: Before starting the installation, please open the SSH password free channel from localhost to the target host.You can use the `kube-install -exec sshcontrol` command to SSH through, or click the `Open SSH Channel of Host` button in the upper right corner to SSH through. Here is the process of SSH connection, <a href="docs/webssh0.7.md">click here to view more details</a> !<br>
 
@@ -163,7 +166,7 @@ For the installation process using the web platform, <a href="docs/webinstall0.7
 <br>
 <br>
 
-# [3] Operation and maintenance
+# [4] Add Node, Delete Node, Rebuild Master, and Uninstall
 
 <br>
 
@@ -209,7 +212,7 @@ Notice: you can <a href="docs/operation0.7.md">click here to view more operation
 <br>
 
 
-# [4] Parameter introduction
+# [5] Parameter introduction
 
 <br>
 
@@ -219,7 +222,7 @@ The parameters about kube-install can be viewed using the `kube-install help` co
 <br>
 
 
-# [5] How to build it
+# [6] How to build it
 
 <br>
 
@@ -229,7 +232,7 @@ The build can be completed automatically by executing the `make` command. You ca
 <br>
 
 
-# [6] How to Contribute
+# [7] How to Contribute
 
 Fork it <br>
 Create your feature branch (git checkout -b my-new-feature) <br>
