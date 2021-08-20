@@ -80,7 +80,7 @@ In addition, if you need to specify the directory path to the Kubernetes cluster
 
 <br>
 
-## 2.3 open the SSH password free channel
+## 2.3 Open the SSH password free channel
 
 <br>
 Before using the web platform for installation, please open the SSH password free channel from localhost to the target host.

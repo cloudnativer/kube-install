@@ -30,12 +30,12 @@ Restart=always
 WantedBy=multi-user.target
 
 ```
-Notice: Please fill in the actual full path of `kube-install` binary file after `ExecStart` parameter.
-
-<br>
 
 Then, copy `kube-install.service` file to `/etc/systemd/system/kube-install.service`.
+<br>
+Notice: Please fill in the actual full path of `kube-install` binary file after `ExecStart=` parameter.
 
+<br>
 
 ## Start the service
 
