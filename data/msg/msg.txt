@@ -1,7 +1,7 @@
- 
- 
- 
- 
- 
- 
- 
+<div class='g_12'><div class='info iDialog'>[Info] 2021-08-23 16:47:44.057537625 +0800 CST m=+604.370751838 Installing kubernetes cluster of 12241 cluster ...</div></div>
+<div class='g_12'><div class='info iDialog'>[Info] 2021-08-23 16:47:48.62639602 +0800 CST m=+608.939610060 Installing kubernetes cluster of 12281 cluster ...</div></div>
+<div class='g_12'><div class='info iDialog'>[Info] 2021-08-23 16:47:52.798780149 +0800 CST m=+613.111994172 Installing kubernetes cluster of 12291 cluster ...</div></div>
+<div class='g_12'><div class='info iDialog'>[Info] 2021-08-23 17:00:40.177802101 +0800 CST m=+1380.491016140 Kubernetes cluster (12291) has been installed successfully! </div></div>
+<div class='g_12'><div class='info iDialog'>[Info] 2021-08-23 17:01:35.866358077 +0800 CST m=+1436.179572123 Kubernetes cluster (12281) has been installed successfully! </div></div>
+<div class='g_12'><div class='info iDialog'>[Info] 2021-08-23 17:01:51.346802028 +0800 CST m=+1451.660016190 Kubernetes cluster (12211) has been installed successfully! </div></div>
+<div class='g_12'><div class='info iDialog'>[Info] 2021-08-23 17:03:00.389390043 +0800 CST m=+1520.702604187 Kubernetes cluster (12241) has been installed successfully! </div></div>

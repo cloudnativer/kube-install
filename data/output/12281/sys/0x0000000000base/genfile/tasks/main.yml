@@ -1,0 +1,14 @@
+- name: 1.Create {{software_home}} directory
+  file:
+    path: "{{software_home}}"
+    state: directory
+- file:
+    path: "/tmp/.kubeinstalltemp/data/12281/pkg/"
+    state: directory
+- name: 2.Distributing deployment files to target host, please wait...
+  copy:
+    src: "/go/src/kube-install/pkg/{{ostype}}"
+    dest: "/tmp/.kubeinstalltemp/data/12281/pkg/"
+- copy:
+    src: "/go/src/kube-install/sys"
+    dest: "/tmp/.kubeinstalltemp/data/12281/"

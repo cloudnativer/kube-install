@@ -3,7 +3,7 @@
 
 <br>
 
- Through the schedule widget, you can also view all installation task plan calendars. You can click the `Tools` button to view Utilities Tools.
+Using the schedule widget, you can also view all installation task plan calendars. You can click the `Tools` button to view Utilities Tools.
 
 ![kube-dashboard](images/schedule001.jpg)
 

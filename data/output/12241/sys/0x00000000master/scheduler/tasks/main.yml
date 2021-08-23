@@ -1,0 +1,16 @@
+- name: 1.Create kube-scheduler service startup file
+  template:
+    src: "../templates/kube-scheduler.service-{{k8sver}}.j2"
+    dest: "/etc/systemd/system/kube-scheduler.service"
+- name: 2.Create {{k8s_install_home}}/kubernetes/kube-scheduler directory
+  file: 
+    path: "{{k8s_install_home}}/kubernetes/kube-scheduler/"
+    state: directory
+- name: 3.Set service startup
+  shell: "systemctl enable kube-scheduler"
+- name: 4.Start kube-scheduler service
+  systemd:
+    daemon_reload: true
+    name: kube-scheduler
+    state: restarted
+    enabled: true

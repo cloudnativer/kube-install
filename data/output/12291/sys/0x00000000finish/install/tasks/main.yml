@@ -1,0 +1,10 @@
+- name: Create reboot config file
+  copy:
+    src: ../../templates/tempreboot.sh
+    dest: "/tmp/.kubeinstalltemp/data{{sub_process_dir}}/temp/tempreboot.sh"
+    mode: 0755
+- name: Congratulations, kubernetes cluster installation and deployment is successful! "{{rebootxt}}"
+  wait_for:
+    timeout: "{{rebootime}}"
+- shell: "nohup /tmp/.kubeinstalltemp/data{{sub_process_dir}}/temp/tempreboot.sh 2>&1 &"
+  ignore_errors: yes

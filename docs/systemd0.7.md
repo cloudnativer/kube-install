@@ -9,7 +9,7 @@ You can run Kube-Install in systemd service mode.
 
 ## Prepare systemd service file
 
-Prepare `kube-install.service` file as follows, <a href="../kube-install.service">here is a sample file for reference</a>.
+Prepare `/etc/systemd/system/kube-install.service` file as follows, <a href="../kube-install.service">here is a sample file for reference</a>.
 
 ```
 [Unit]
@@ -20,7 +20,7 @@ Requires=sshd.service
   
 [Service]
 Environment="USER=root"
-ExecStart=/root/kube-install/kube-install -daemon
+ExecStart=/var/lib/kube-install/kube-install -daemon -listen 0.0.0.0:9080
 User=root
 PrivateTmp=true
 LimitNOFILE=65536
@@ -33,11 +33,10 @@ WantedBy=multi-user.target
 
 ```
 
-Then, copy `kube-install.service` file to `/etc/systemd/system/kube-install.service`.
-
 <br>
 
 Notice: Please fill in the actual full path of `kube-install` binary file after `ExecStart=` parameter.
+Kube-install web service listens to `TCP 9080` by default. If you want to modify the listening address, you can set it by modifying the `kube-install -daemon -listen ip:port` parameter in the `/etc/systemd/system/kube-install.service` file.
 
 <br>
 

@@ -174,7 +174,7 @@ func InstallCore(mode string, master string, masterArray []string, node string, 
     layoutName := "install"
     logStr := LogStr(mode)
     CheckOS(CompatibleOS, osTypeResult, currentDir, logName, mode)
-    CheckK8sVersion(Version, CompatibleK8S, k8sVer, currentDir, logName, "")
+    CheckK8sVersion(Version, CompatibleK8S, k8sVer, currentDir, logName, mode)
     CreateDir(currentDir+"/data/output"+subProcessDir, currentDir, logName, mode)
     CreateDir(currentDir+"/data/logs"+subProcessDir, currentDir, logName, mode)
     for i := 0; i < len(masterArray); i++ {
@@ -195,6 +195,7 @@ func InstallCore(mode string, master string, masterArray []string, node string, 
     GeneralConfig(mode, masterArray, nodeArray, currentDir, softDir, subProcessDir, osTypeResult, k8sVer, logName)
     if !InstallConfig(mode,masterArray, nodeArray, currentDir, subProcessDir, logName) {
         ShellExecute("echo [Error] "+time.Now().String()+" \"The parameters you entered are incorrect, please check! \n\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/install.log")
+        if way == "newinstall" { os.RemoveAll(currentDir+"/data/output"+subProcessDir) }
         return
     }
     ShellExecute("cp -rf "+currentDir+"/sys "+currentDir+"/data/output"+subProcessDir+"/")
@@ -222,6 +223,7 @@ func InstallCore(mode string, master string, masterArray []string, node string, 
         sch,_ := ReadFile(currentDir+"/data/output"+subProcessDir+"/scheduler.txt")
         if sch == "on" {
             ShellExecute("echo [Error] "+time.Now().String()+" \"Installation conflict! Background scheduled tasks exist and installation is in progress.\n\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/install.log")
+            if way == "newinstall" { os.RemoveAll(currentDir+"/data/output"+subProcessDir) }
         } else {
             if way == "reinstall" {
                 _,_,_,subProcessDir,_ := ParameterConvert(mode, "", "", "", label, "")

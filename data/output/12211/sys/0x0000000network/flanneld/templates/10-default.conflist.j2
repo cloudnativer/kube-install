@@ -1,0 +1,16 @@
+{
+  "cniVersion": "0.3.0",
+  "name": "flannel",
+  "plugins":
+    [
+      {
+        "type": "flannel",
+        "delegate": {
+           "bridge": "docker0",
+           "isDefaultGateway": true,
+           "mtu": 1400
+  }
+      },
+      { "type": "portmap", "capabilities": { "portMappings": true } }
+    ]
+}

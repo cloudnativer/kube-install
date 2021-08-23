@@ -1,0 +1,112 @@
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] Loaded HTML Templates (19): 
+	- nodeinfo.tmpl
+	- optresult.tmpl
+	- 
+	- 403.html
+	- 404.html
+	- favicon.ico
+	- master.tmpl
+	- masterinfo.tmpl
+	- calendarscheduler.tmpl
+	- clusteradd.tmpl
+	- logs.tmpl
+	- clusterdel.tmpl
+	- deleteschedule.tmpl
+	- index.tmpl
+	- login.tmpl
+	- node.tmpl
+	- tools.tmpl
+	- cluster.tmpl
+	- clusterinfo.tmpl
+
+[GIN-debug] GET    /static/*filepath         --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (3 handlers)
+[GIN-debug] HEAD   /static/*filepath         --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (3 handlers)
+[GIN-debug] GET    /                         --> kube-install/lib.DaemonRun.func1 (3 handlers)
+[GIN-debug] POST   /login                    --> kube-install/lib.DaemonRun.func2 (3 handlers)
+[GIN-debug] GET    /clusterlist              --> kube-install/lib.DaemonRun.func3 (3 handlers)
+[GIN-debug] GET    /clusterinfo              --> kube-install/lib.DaemonRun.func4 (3 handlers)
+[GIN-debug] GET    /clusteradd               --> kube-install/lib.DaemonRun.func5 (3 handlers)
+[GIN-debug] GET    /clusterdel               --> kube-install/lib.DaemonRun.func6 (3 handlers)
+[GIN-debug] GET    /deleteschedule           --> kube-install/lib.DaemonRun.func7 (3 handlers)
+[GIN-debug] GET    /masteradmin              --> kube-install/lib.DaemonRun.func8 (3 handlers)
+[GIN-debug] GET    /masterinfo               --> kube-install/lib.DaemonRun.func9 (3 handlers)
+[GIN-debug] GET    /nodeadmin                --> kube-install/lib.DaemonRun.func10 (3 handlers)
+[GIN-debug] GET    /nodeinfo                 --> kube-install/lib.DaemonRun.func11 (3 handlers)
+[GIN-debug] GET    /nodeadd                  --> kube-install/lib.DaemonRun.func12 (3 handlers)
+[GIN-debug] GET    /tools                    --> kube-install/lib.DaemonRun.func13 (3 handlers)
+[GIN-debug] GET    /calendarscheduler        --> kube-install/lib.DaemonRun.func14 (3 handlers)
+[GIN-debug] GET    /logs                     --> kube-install/lib.DaemonRun.func15 (3 handlers)
+[GIN-debug] POST   /install                  --> kube-install/lib.DaemonRun.func16 (3 handlers)
+[GIN-debug] POST   /rebuildmaster            --> kube-install/lib.DaemonRun.func17 (3 handlers)
+[GIN-debug] POST   /delmaster                --> kube-install/lib.DaemonRun.func18 (3 handlers)
+[GIN-debug] POST   /addnode                  --> kube-install/lib.DaemonRun.func19 (3 handlers)
+[GIN-debug] POST   /delnode                  --> kube-install/lib.DaemonRun.func20 (3 handlers)
+[GIN-debug] POST   /uninstall                --> kube-install/lib.DaemonRun.func21 (3 handlers)
+[GIN-debug] POST   /deleteinstallschedule    --> kube-install/lib.DaemonRun.func22 (3 handlers)
+[GIN-debug] POST   /sshkey                   --> kube-install/lib.DaemonRun.func23 (3 handlers)
+[GIN-debug] Listening and serving HTTP on 0.0.0.0:9080
+[GIN] 2021/08/23 - 15:04:44 | 200 |   32.851483ms |    10.57.237.10 | GET      "/?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/08/23 - 15:04:44 | 404 |       1.149µs |    10.57.237.10 | GET      "/favicon.ico"
+[GIN] 2021/08/23 - 15:04:44 | 200 |   38.575752ms |    10.57.237.10 | GET      "/clusterlist?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/08/23 - 15:04:59 | 200 |   42.650296ms |    10.57.237.10 | GET      "/masteradmin?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/08/23 - 15:05:06 | 200 |   35.348542ms |    10.57.237.10 | GET      "/logs?label=&opt=rebuildmaster"
+[GIN] 2021/08/23 - 15:05:06 | 404 |         864ns |    10.57.237.10 | GET      "/favicon.ico"
+[GIN] 2021/08/23 - 15:05:08 | 200 |   40.325979ms |    10.57.237.10 | GET      "/nodeadmin?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/08/23 - 15:05:10 | 200 |   35.652331ms |    10.57.237.10 | POST     "/delnode?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/08/23 - 15:05:10 | 200 |     438.002µs |    10.57.237.10 | GET      "/static/img/Icons/16/i_16_tooltip.png"
+[GIN] 2021/08/23 - 15:05:10 | 404 |       1.267µs |    10.57.237.10 | GET      "/favicon.ico"
+[GIN] 2021/08/23 - 15:05:12 | 200 |   38.561742ms |    10.57.237.10 | GET      "/nodeadmin?label=&softdir=/opt/kube-install&ostype=&k8sver="
+[GIN] 2021/08/23 - 15:05:12 | 404 |       1.104µs |    10.57.237.10 | GET      "/favicon.ico"
+[GIN] 2021/08/23 - 15:05:15 | 200 |   35.039016ms |    10.57.237.10 | GET      "/masteradmin?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/08/23 - 15:05:16 | 200 |    46.05989ms |    10.57.237.10 | GET      "/nodeadmin?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/08/23 - 15:05:16 | 404 |         745ns |    10.57.237.10 | GET      "/favicon.ico"
+[GIN] 2021/08/23 - 15:05:17 | 200 |   31.624486ms |    10.57.237.10 | POST     "/delnode?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/08/23 - 15:05:19 | 200 |   42.339701ms |    10.57.237.10 | GET      "/nodeadmin?label=&softdir=/opt/kube-install&ostype=&k8sver="
+[GIN] 2021/08/23 - 15:05:24 | 200 |   34.650833ms |    10.57.237.10 | GET      "/tools?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/08/23 - 15:05:31 | 200 |   36.338015ms |    10.57.237.10 | GET      "/calendarscheduler?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/08/23 - 15:05:31 | 200 |     150.793µs |    10.57.237.10 | GET      "/static/css/fullcalendar.min.css"
+[GIN] 2021/08/23 - 15:05:31 | 200 |     165.226µs |    10.57.237.10 | GET      "/static/css/fullcalendar.print.min.css"
+[GIN] 2021/08/23 - 15:05:31 | 200 |     353.069µs |    10.57.237.10 | GET      "/static/js/Moment/moment.min.js"
+[GIN] 2021/08/23 - 15:05:31 | 200 |   16.604555ms |    10.57.237.10 | GET      "/static/js/FullCalendar/fullcalendar-3.2.0.min.js"
+[GIN] 2021/08/23 - 15:05:31 | 200 |   29.250743ms |    10.57.237.10 | GET      "/static/js/jQuery/jquery-1.9.1.js"
+[GIN] 2021/08/23 - 15:05:31 | 200 |   53.692997ms |    10.57.237.10 | GET      "/static/js/jQueryUI/jquery-ui-1.10.2.js"
+[GIN] 2021/08/23 - 15:05:31 | 200 |     190.501µs |    10.57.237.10 | GET      "/static/img/Icons/16/i_16_calendar.png"
+[GIN] 2021/08/23 - 15:05:31 | 404 |       1.227µs |    10.57.237.10 | GET      "/favicon.ico"
+[GIN] 2021/08/23 - 15:05:42 | 200 |   28.807052ms |    10.57.237.10 | GET      "/tools?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/08/23 - 15:05:43 | 200 |   26.492191ms |    10.57.237.10 | GET      "/calendarscheduler?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/08/23 - 15:05:45 | 200 |   30.972006ms |    10.57.237.10 | GET      "/tools?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/08/23 - 15:05:45 | 200 |   37.688521ms |    10.57.237.10 | GET      "/logs?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/08/23 - 15:05:47 | 200 |   46.176845ms |    10.57.237.10 | GET      "/nodeadmin?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/08/23 - 15:05:47 | 404 |         818ns |    10.57.237.10 | GET      "/favicon.ico"
+[GIN] 2021/08/23 - 15:05:47 | 200 |    38.15268ms |    10.57.237.10 | GET      "/masteradmin?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/08/23 - 15:05:49 | 200 |   39.023722ms |    10.57.237.10 | GET      "/nodeadmin?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/08/23 - 15:05:49 | 404 |         976ns |    10.57.237.10 | GET      "/favicon.ico"
+[GIN] 2021/08/23 - 15:08:39 | 200 |   38.528193ms |    10.57.237.10 | GET      "/masteradmin?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/08/23 - 15:08:40 | 200 |   40.468912ms |    10.57.237.10 | GET      "/nodeadmin?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/08/23 - 15:08:46 | 200 |   35.178339ms |    10.57.237.10 | GET      "/logs?label=&opt=addnode"
+[GIN] 2021/08/23 - 15:08:47 | 404 |       1.734µs |    10.57.237.10 | GET      "/favicon.ico"
+[GIN] 2021/08/23 - 15:08:50 | 200 |   35.378104ms |    10.57.237.10 | GET      "/masteradmin?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/08/23 - 15:08:51 | 200 |   37.004946ms |    10.57.237.10 | GET      "/nodeadmin?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/08/23 - 15:08:53 | 200 |   31.615779ms |    10.57.237.10 | GET      "/tools?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/08/23 - 15:08:54 | 200 |   41.728445ms |    10.57.237.10 | GET      "/logs?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/08/23 - 15:08:55 | 200 |   32.812081ms |    10.57.237.10 | GET      "/logs?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/08/23 - 15:08:55 | 200 |   27.535055ms |    10.57.237.10 | GET      "/tools?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/08/23 - 15:08:56 | 200 |   39.205042ms |    10.57.237.10 | GET      "/clusterlist?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+562 +0800 CST m=+244.796135603 An error occurred: open /go/src/kube-install/data/output: no such file or directory
+[Error] 2021-08-23 15:08:46.950188853 +0800 CST m=+244.799174030 An error occurred: open /go/src/kube-install/data/output: no such file or directory
+[Error] 2021-08-23 15:08:50.19277836 +0800 CST m=+248.041763380 An error occurred: open /go/src/kube-install/data/output: no such file or directory
+[Error] 2021-08-23 15:08:50.195988963 +0800 CST m=+248.044974188 An error occurred: open /go/src/kube-install/data/output: no such file or directory
+[Error] 2021-08-23 15:08:51.668635216 +0800 CST m=+249.517620299 An error occurred: open /go/src/kube-install/data/output: no such file or directory
+[Error] 2021-08-23 15:08:51.672468923 +0800 CST m=+249.521454049 An error occurred: open /go/src/kube-install/data/output: no such file or directory
+[Error] 2021-08-23 15:08:54.838587834 +0800 CST m=+252.687572897 An error occurred: open /go/src/kube-install/data/output: no such file or directory
+[Error] 2021-08-23 15:08:54.842577126 +0800 CST m=+252.691562259 An error occurred: open /go/src/kube-install/data/output: no such file or directory
+[Error] 2021-08-23 15:08:55.572982457 +0800 CST m=+253.421967574 An error occurred: open /go/src/kube-install/data/output: no such file or directory
+[Error] 2021-08-23 15:08:55.576224675 +0800 CST m=+253.425209748 An error occurred: open /go/src/kube-install/data/output: no such file or directory
+[Error] 2021-08-23 15:08:56.679417582 +0800 CST m=+254.528402589 An error occurred: open /go/src/kube-install/data/output: no such file or directory
+[Error] 2021-08-23 15:08:56.682344328 +0800 CST m=+254.531329463 An error occurred: open /go/src/kube-install/data/output: no such file or directory

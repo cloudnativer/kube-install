@@ -1,0 +1,149 @@
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] Loaded HTML Templates (19): 
+	- 
+	- master.tmpl
+	- node.tmpl
+	- nodeinfo.tmpl
+	- optresult.tmpl
+	- tools.tmpl
+	- 404.html
+	- calendarscheduler.tmpl
+	- clusteradd.tmpl
+	- clusterinfo.tmpl
+	- logs.tmpl
+	- login.tmpl
+	- masterinfo.tmpl
+	- cluster.tmpl
+	- clusterdel.tmpl
+	- deleteschedule.tmpl
+	- favicon.ico
+	- index.tmpl
+	- 403.html
+
+[GIN-debug] GET    /static/*filepath         --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (3 handlers)
+[GIN-debug] HEAD   /static/*filepath         --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (3 handlers)
+[GIN-debug] GET    /                         --> kube-install/lib.DaemonRun.func1 (3 handlers)
+[GIN-debug] POST   /login                    --> kube-install/lib.DaemonRun.func2 (3 handlers)
+[GIN-debug] GET    /clusterlist              --> kube-install/lib.DaemonRun.func3 (3 handlers)
+[GIN-debug] GET    /clusterinfo              --> kube-install/lib.DaemonRun.func4 (3 handlers)
+[GIN-debug] GET    /clusteradd               --> kube-install/lib.DaemonRun.func5 (3 handlers)
+[GIN-debug] GET    /clusterdel               --> kube-install/lib.DaemonRun.func6 (3 handlers)
+[GIN-debug] GET    /deleteschedule           --> kube-install/lib.DaemonRun.func7 (3 handlers)
+[GIN-debug] GET    /masteradmin              --> kube-install/lib.DaemonRun.func8 (3 handlers)
+[GIN-debug] GET    /masterinfo               --> kube-install/lib.DaemonRun.func9 (3 handlers)
+[GIN-debug] GET    /nodeadmin                --> kube-install/lib.DaemonRun.func10 (3 handlers)
+[GIN-debug] GET    /nodeinfo                 --> kube-install/lib.DaemonRun.func11 (3 handlers)
+[GIN-debug] GET    /nodeadd                  --> kube-install/lib.DaemonRun.func12 (3 handlers)
+[GIN-debug] GET    /tools                    --> kube-install/lib.DaemonRun.func13 (3 handlers)
+[GIN-debug] GET    /calendarscheduler        --> kube-install/lib.DaemonRun.func14 (3 handlers)
+[GIN-debug] GET    /logs                     --> kube-install/lib.DaemonRun.func15 (3 handlers)
+[GIN-debug] POST   /install                  --> kube-install/lib.DaemonRun.func16 (3 handlers)
+[GIN-debug] POST   /rebuildmaster            --> kube-install/lib.DaemonRun.func17 (3 handlers)
+[GIN-debug] POST   /delmaster                --> kube-install/lib.DaemonRun.func18 (3 handlers)
+[GIN-debug] POST   /addnode                  --> kube-install/lib.DaemonRun.func19 (3 handlers)
+[GIN-debug] POST   /delnode                  --> kube-install/lib.DaemonRun.func20 (3 handlers)
+[GIN-debug] POST   /uninstall                --> kube-install/lib.DaemonRun.func21 (3 handlers)
+[GIN-debug] POST   /deleteinstallschedule    --> kube-install/lib.DaemonRun.func22 (3 handlers)
+[GIN-debug] POST   /sshkey                   --> kube-install/lib.DaemonRun.func23 (3 handlers)
+[GIN-debug] Listening and serving HTTP on 0.0.0.0:9080
+[GIN] 2021/08/23 - 15:40:19 | 200 |   42.738408ms |    10.57.237.10 | GET      "/masteradmin?label=12211&softdir=%2fopt%2fkube-install&ostype=rhel7&k8sver=1.23"
+[GIN] 2021/08/23 - 15:40:19 | 304 |      107.54µs |    10.57.237.10 | GET      "/static/img/Icons/16/i_16_master.png"
+[GIN] 2021/08/23 - 15:40:19 | 404 |       1.139µs |    10.57.237.10 | GET      "/favicon.ico"
+[GIN] 2021/08/23 - 15:40:19 | 200 |   34.342416ms |    10.57.237.10 | GET      "/clusterlist?label=12211&softdir=%2fopt%2fkube-install&ostype=&k8sver=1.23"
+[GIN] 2021/08/23 - 15:40:19 | 404 |        1.26µs |    10.57.237.10 | GET      "/favicon.ico"
+[GIN] 2021/08/23 - 15:40:38 | 200 |   34.981813ms |    10.57.237.10 | POST     "/install?label=12211&softdir=%2fopt%2fkube-install&ostype=tools=no"
+[GIN] 2021/08/23 - 15:40:38 | 200 |     526.614µs |    10.57.237.10 | GET      "/static/img/Button/result01.png"
+[GIN] 2021/08/23 - 15:40:38 | 404 |       1.782µs |    10.57.237.10 | GET      "/favicon.ico"
+[GIN] 2021/08/23 - 15:40:39 | 200 |   35.117354ms |    10.57.237.10 | GET      "/clusterlist?label=12211&softdir=/opt/kube-install&ostype=rhel7&k8sver=1.23"
+[GIN] 2021/08/23 - 15:40:39 | 200 |     138.878µs |    10.57.237.10 | GET      "/static/img/Icons/Preview/clock_disable.png"
+[GIN] 2021/08/23 - 15:41:13 | 200 |   27.585888ms |    10.57.237.10 | POST     "/install?label=12211&softdir=%2fopt%2fkube-install&ostype=rhel7tools=no"
+[GIN] 2021/08/23 - 15:41:15 | 200 |   38.367164ms |    10.57.237.10 | GET      "/clusterlist?label=12241&softdir=/opt/kube-install&ostype=ubuntu20&k8sver=1.17"
+[GIN] 2021/08/23 - 15:41:15 | 200 |     119.297µs |    10.57.237.10 | GET      "/static/img/Icons/Preview/clock_enable.png"
+[GIN] 2021/08/23 - 15:41:15 | 200 |     294.781µs |    10.57.237.10 | GET      "/static/img/Icons/32/i_32_notok.png"
+[GIN] 2021/08/23 - 15:41:15 | 200 |      70.408µs |    10.57.237.10 | GET      "/static/img/Icons/32/i_32_unknow.png"
+[GIN] 2021/08/23 - 15:41:15 | 404 |         914ns |    10.57.237.10 | GET      "/favicon.ico"
+[GIN] 2021/08/23 - 15:41:29 | 200 |   37.828821ms |    10.57.237.10 | GET      "/logs?label=12211&opt=install"
+[GIN] 2021/08/23 - 15:41:29 | 304 |       91.48µs |    10.57.237.10 | GET      "/static/img/Icons/16/i_16_logs.png"
+[GIN] 2021/08/23 - 15:41:29 | 304 |      35.627µs |    10.57.237.10 | GET      "/static/img/Icons/16/i_16_tabs.png"
+[GIN] 2021/08/23 - 15:41:29 | 304 |      50.203µs |    10.57.237.10 | GET      "/static/img/Icons/16/i_16_data.png"
+[GIN] 2021/08/23 - 15:41:38 | 200 |   28.646651ms |    10.57.237.10 | GET      "/deleteschedule?label=12241&softdir=%2fopt%2fkube-install&ostype=ubuntu20&k8sver=1.17&scheduler=on&instime=2021-08-23%2015%3a41&tools=no"
+[GIN] 2021/08/23 - 15:41:38 | 404 |         708ns |    10.57.237.10 | GET      "/favicon.ico"
+[GIN] 2021/08/23 - 15:41:39 | 200 |   30.912576ms |    10.57.237.10 | POST     "/deleteinstallschedule?label=12241&softdir=&ostype=&k8sver=&tools=no"
+[GIN] 2021/08/23 - 15:41:39 | 404 |       1.306µs |    10.57.237.10 | GET      "/favicon.ico"
+[GIN] 2021/08/23 - 15:41:40 | 200 |   36.701749ms |    10.57.237.10 | GET      "/clusterlist?label=12241&softdir=&ostype=&k8sver="
+[GIN] 2021/08/23 - 15:41:40 | 404 |       1.291µs |    10.57.237.10 | GET      "/favicon.ico"
+[GIN] 2021/08/23 - 15:46:46 | 200 |  2.910455278s |    10.57.237.10 | POST     "/sshkey?label=12241&softdir=&ostype=&tools=no"
+[GIN] 2021/08/23 - 15:46:46 | 404 |         980ns |    10.57.237.10 | GET      "/favicon.ico"
+[GIN] 2021/08/23 - 15:46:55 | 200 |   35.217872ms |    10.57.237.10 | GET      "/clusterlist?label=12241&softdir=&ostype=&k8sver="
+[GIN] 2021/08/23 - 15:47:31 | 200 |   34.905723ms |    10.57.237.10 | GET      "/tools?label=12241&softdir=&ostype=&k8sver="
+[GIN] 2021/08/23 - 15:47:31 | 304 |        76.8µs |    10.57.237.10 | GET      "/static/img/Button/sshkey.png"
+[GIN] 2021/08/23 - 15:47:31 | 304 |     146.021µs |    10.57.237.10 | GET      "/static/img/Button/k8s.png"
+[GIN] 2021/08/23 - 15:47:31 | 304 |        69.9µs |    10.57.237.10 | GET      "/static/img/Icons/16/i_16_tools.png"
+[GIN] 2021/08/23 - 15:47:31 | 304 |      78.892µs |    10.57.237.10 | GET      "/static/img/Button/calendar.png"
+[GIN] 2021/08/23 - 15:47:31 | 304 |     150.886µs |    10.57.237.10 | GET      "/static/img/Icons/16/i_16_settings.png"
+[GIN] 2021/08/23 - 15:47:31 | 404 |         905ns |    10.57.237.10 | GET      "/favicon.ico"
+[GIN] 2021/08/23 - 15:48:27 | 200 |  36.27934537s |    10.57.237.10 | POST     "/sshkey?label=12241&softdir=&ostype=&k8sver=&tools=yes"
+[GIN] 2021/08/23 - 15:48:28 | 404 |       1.088µs |    10.57.237.10 | GET      "/favicon.ico"
+[GIN] 2021/08/23 - 15:48:32 | 200 |   33.913451ms |    10.57.237.10 | GET      "/tools?label=12241&softdir=&ostype=&k8sver=?label=12241&softdir=&ostype=&k8sver="
+[GIN] 2021/08/23 - 15:48:32 | 404 |        1.12µs |    10.57.237.10 | GET      "/favicon.ico"
+[GIN] 2021/08/23 - 15:48:33 | 200 |    37.59994ms |    10.57.237.10 | GET      "/clusterlist?label=12241&softdir=&ostype=&k8sver=%3flabel%3d12241"
+[GIN] 2021/08/23 - 15:48:33 | 404 |       1.167µs |    10.57.237.10 | GET      "/favicon.ico"
+[GIN] 2021/08/23 - 15:48:40 | 200 |   35.117522ms |    10.57.237.10 | GET      "/clusteradd?label=12211&master=%5b192.168.122.11%5d&softdir=%2fopt%2fkube-install&ostype=rhel7&k8sver=1.23&status=notok&way=reinstall&tools=no"
+[GIN] 2021/08/23 - 15:48:41 | 404 |        2.09µs |    10.57.237.10 | GET      "/favicon.ico"
+[GIN] 2021/08/23 - 15:48:43 | 200 |   43.877844ms |    10.57.237.10 | POST     "/install?label=12211&softdir=%2fopt%2fkube-install&ostype=rhel7"
+[GIN] 2021/08/23 - 15:48:45 | 200 |   39.426688ms |    10.57.237.10 | GET      "/clusterlist?label=12211&softdir=/opt/kube-install&ostype=rhel7&k8sver=1.23"
+[GIN] 2021/08/23 - 15:48:46 | 200 |    27.32623ms |    10.57.237.10 | GET      "/clusteradd?label=12241&master=%5b192.168.122.41%20192.168.122.42%20192.168.122.43%5d&softdir=%2fopt%2fkube-install&ostype=ubuntu20&k8sver=1.17&status=unknow&way=reinstall&tools=no"
+[GIN] 2021/08/23 - 15:48:47 | 404 |       1.474µs |    10.57.237.10 | GET      "/favicon.ico"
+[GIN] 2021/08/23 - 15:48:50 | 200 |   36.331557ms |    10.57.237.10 | POST     "/install?label=12241&softdir=%2fopt%2fkube-install&ostype=ubuntu20"
+[GIN] 2021/08/23 - 15:48:51 | 200 |   37.868418ms |    10.57.237.10 | GET      "/clusterlist?label=12241&softdir=/opt/kube-install&ostype=ubuntu20&k8sver=1.17"
+[GIN] 2021/08/23 - 15:49:16 | 200 |   44.544697ms |    10.57.237.10 | POST     "/install?label=12241&softdir=%2fopt%2fkube-install&ostype=ubuntu20tools=no"
+[GIN] 2021/08/23 - 15:49:16 | 404 |       1.333µs |    10.57.237.10 | GET      "/favicon.ico"
+[GIN] 2021/08/23 - 15:49:18 | 200 |   40.203914ms |    10.57.237.10 | GET      "/clusterlist?label=12281&softdir=/opt/kube-install&ostype=rhel8&k8sver=1.23"
+[GIN] 2021/08/23 - 15:49:18 | 404 |         926ns |    10.57.237.10 | GET      "/favicon.ico"
+[GIN] 2021/08/23 - 15:49:46 | 200 |   42.566423ms |    10.57.237.10 | POST     "/install?label=12281&softdir=%2fopt%2fkube-install&ostype=rhel8tools=no"
+[GIN] 2021/08/23 - 15:49:48 | 200 |   29.856003ms |    10.57.237.10 | GET      "/clusterlist?label=12291&softdir=/opt/xxx/yyy&ostype=suse15&k8sver=1.17"
+[GIN] 2021/08/23 - 15:49:48 | 404 |       1.232µs |    10.57.237.10 | GET      "/favicon.ico"
+[GIN] 2021/08/23 - 15:49:50 | 200 |   33.032258ms |    10.57.237.10 | GET      "/masteradmin?label=12291&softdir=%2fopt%2fxxx%2fyyy&ostype=suse15&k8sver=1.17"
+[GIN] 2021/08/23 - 15:49:50 | 200 |     395.515µs |    10.57.237.10 | GET      "/static/img/Icons/32/i_32_notinstall.png"
+[GIN] 2021/08/23 - 15:49:50 | 404 |       3.855µs |    10.57.237.10 | GET      "/favicon.ico"
+[GIN] 2021/08/23 - 15:49:50 | 200 |   22.449394ms |    10.57.237.10 | GET      "/clusterlist?label=12291&softdir=%2fopt%2fxxx%2fyyy&ostype=suse15&k8sver=1.17"
+[GIN] 2021/08/23 - 15:49:51 | 404 |         938ns |    10.57.237.10 | GET      "/favicon.ico"
+[GIN] 2021/08/23 - 15:49:52 | 200 |    26.01015ms |    10.57.237.10 | GET      "/masteradmin?label=12291&softdir=%2fopt%2fxxx%2fyyy&ostype=suse15&k8sver=1.17"
+[GIN] 2021/08/23 - 15:49:52 | 200 |    25.87264ms |    10.57.237.10 | GET      "/clusterlist?label=12291&softdir=%2fopt%2fxxx%2fyyy&ostype=suse15&k8sver=1.17"
+[GIN] 2021/08/23 - 15:50:15 | 200 |   37.556203ms |    10.57.237.10 | GET      "/masteradmin?label=12291&softdir=%2fopt%2fxxx%2fyyy&ostype=suse15&k8sver=1.17"
+[GIN] 2021/08/23 - 15:50:16 | 200 |   18.545547ms |    10.57.237.10 | GET      "/?label=12291&softdir=%2fopt%2fxxx%2fyyy&ostype=suse15&k8sver=1.17"
+[GIN] 2021/08/23 - 15:50:16 | 304 |      79.962µs |    10.57.237.10 | GET      "/static/img/Textures/users_stats.png"
+[GIN] 2021/08/23 - 15:50:16 | 404 |       1.114µs |    10.57.237.10 | GET      "/favicon.ico"
+[GIN] 2021/08/23 - 15:50:16 | 200 |    32.65888ms |    10.57.237.10 | GET      "/clusterlist?label=12291&softdir=%2fopt%2fxxx%2fyyy&ostype=suse15&k8sver=1.17"
+[GIN] 2021/08/23 - 15:50:20 | 200 |   43.492037ms |    10.57.237.10 | GET      "/logs?label=12211&opt=install"
+[GIN] 2021/08/23 - 15:50:23 | 200 |   18.016008ms |    10.57.237.10 | GET      "/logs?label=12281&opt=install"
+[GIN] 2021/08/23 - 15:50:23 | 404 |       1.218µs |    10.57.237.10 | GET      "/favicon.ico"
+[GIN] 2021/08/23 - 15:50:27 | 200 |   30.728202ms |    10.57.237.10 | GET      "/clusterlist?label=12291&softdir=%2fopt%2fxxx%2fyyy&ostype=suse15&k8sver=1.17"
+[GIN] 2021/08/23 - 15:53:45 | 200 |   25.990917ms |    10.57.237.10 | GET      "/clusterlist?label=12291&softdir=%2fopt%2fxxx%2fyyy&ostype=suse15&k8sver=1.17"
+[GIN] 2021/08/23 - 15:53:51 | 200 |   30.423237ms |    10.57.237.10 | GET      "/clusterlist?label=12291&softdir=%2fopt%2fxxx%2fyyy&ostype=suse15&k8sver=1.17"
+[GIN] 2021/08/23 - 15:54:01 | 200 |   29.900156ms |    10.57.237.10 | GET      "/clusterlist?label=12291&softdir=%2fopt%2fxxx%2fyyy&ostype=suse15&k8sver=1.17"
+[GIN] 2021/08/23 - 15:54:04 | 200 |   31.676056ms |    10.57.237.10 | GET      "/logs?label=12281&opt=install"
+[GIN] 2021/08/23 - 15:54:04 | 404 |         967ns |    10.57.237.10 | GET      "/favicon.ico"
+[GIN] 2021/08/23 - 15:54:14 | 200 |   36.370688ms |    10.57.237.10 | GET      "/logs?label=12241&opt=install"
+[GIN] 2021/08/23 - 15:54:21 | 200 |   44.393964ms |    10.57.237.10 | GET      "/clusterlist?label=12291&softdir=%2fopt%2fxxx%2fyyy&ostype=suse15&k8sver=1.17"
+[GIN] 2021/08/23 - 15:54:51 | 200 |    25.56691ms |    10.57.237.10 | GET      "/clusterlist?label=12291&softdir=%2fopt%2fxxx%2fyyy&ostype=suse15&k8sver=1.17"
+[GIN] 2021/08/23 - 15:54:52 | 200 |   46.032418ms |    10.57.237.10 | GET      "/clusterlist?label=12291&softdir=%2fopt%2fxxx%2fyyy&ostype=suse15&k8sver=1.17"
+[GIN] 2021/08/23 - 15:55:10 | 200 |   32.899836ms |    10.57.237.10 | GET      "/masteradmin?label=12291&softdir=%2fopt%2fxxx%2fyyy&ostype=suse15&k8sver=1.17"
+[GIN] 2021/08/23 - 15:55:11 | 200 |   21.274518ms |    10.57.237.10 | GET      "/clusterlist?label=12291&softdir=%2fopt%2fxxx%2fyyy&ostype=suse15&k8sver=1.17"
+[GIN] 2021/08/23 - 16:03:44 | 200 |   39.177095ms |    10.57.237.10 | GET      "/masteradmin?label=12291&softdir=%2fopt%2fxxx%2fyyy&ostype=suse15&k8sver=1.17"
+[GIN] 2021/08/23 - 16:03:45 | 200 |   39.208361ms |    10.57.237.10 | GET      "/clusterlist?label=12291&softdir=%2fopt%2fxxx%2fyyy&ostype=suse15&k8sver=1.17"
+[GIN] 2021/08/23 - 16:03:54 | 200 |   37.385543ms |    10.57.237.10 | GET      "/logs?label=12211&opt=install"
+[GIN] 2021/08/23 - 16:04:22 | 200 |   48.809263ms |    10.57.237.10 | GET      "/logs?label=12241&opt=install"
+[GIN] 2021/08/23 - 16:04:26 | 200 |   33.003629ms |    10.57.237.10 | GET      "/logs?label=12281&opt=install"
+[GIN] 2021/08/23 - 16:04:26 | 404 |       1.223µs |    10.57.237.10 | GET      "/favicon.ico"
+[GIN] 2021/08/23 - 16:04:44 | 200 |    40.12363ms |    10.57.237.10 | GET      "/clusterlist?label=12291&softdir=%2fopt%2fxxx%2fyyy&ostype=suse15&k8sver=1.17"
+[GIN] 2021/08/23 - 16:04:46 | 200 |   29.502167ms |    10.57.237.10 | GET      "/logs?label=12291&opt=install"
+[GIN] 2021/08/23 - 16:07:41 | 200 |    33.71814ms |    10.57.237.10 | GET      "/clusterlist?label=12291&softdir=%2fopt%2fxxx%2fyyy&ostype=suse15&k8sver=1.17"
+[GIN] 2021/08/23 - 16:07:41 | 304 |     100.642µs |    10.57.237.10 | GET      "/static/css/fonts.css"
+[GIN] 2021/08/23 - 16:07:41 | 304 |      64.415µs |    10.57.237.10 | GET      "/static/css/style.css"
+[GIN] 2021/08/23 - 16:07:41 | 304 |      96.451µs |    10.57.237.10 | GET      "/static/img/Button/close03.png"

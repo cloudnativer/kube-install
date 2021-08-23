@@ -1,0 +1,45 @@
+###--------------------------------------General Configuration---------------------------------###
+
+[kissh]
+127.0.0.1 ip=127.0.0.1
+
+[master1]
+192.168.122.41 ip=192.168.122.41
+
+[k8s:vars]
+k8s_install_home="/opt/kube-install/k8s"
+k8s_addons_home="/go/src/kube-install/data/output/12241/addons"
+software_home="/opt/kube-install"
+kipath="/go/src/kube-install"
+sub_process_dir="/12241"
+rebootime="1"
+rebootxt="The operating system will automatically restart to take effect on the cluster configuration."
+### Kubernetes Master Configuration ###
+ostype="ubuntu20"
+k8sver="1.17"
+master_iplist="\"192.168.122.41\",\"192.168.122.42\",\"192.168.122.43\""
+etcd_initial="192.168.122.41=https://192.168.122.41:2380,192.168.122.42=https://192.168.122.42:2380,192.168.122.43=https://192.168.122.43:2380"
+etcd_endpoints="https://192.168.122.41:2379,https://192.168.122.42:2379,https://192.168.122.43:2379"
+ingress_upstream=""
+ipvsinit_shell = "ipvsadm -A -t 10.254.0.3:6443 -s rr  && ipvsadm -a -t 10.254.0.3:6443 -r 192.168.122.41:6443 -m && ipvsadm -a -t 10.254.0.3:6443 -r 192.168.122.42:6443 -m && ipvsadm -a -t 10.254.0.3:6443 -r 192.168.122.43:6443 -m"
+master1_ip = "192.168.122.41"
+master_vip = "10.254.0.3"
+master_vport="6443"
+k8sdashboardversion="v2.2.0"
+
+### addons_ip配置 ###
+addons_ip1="192.168.122.44"
+addons_ip2="192.168.122.41"
+addons_ip3="192.168.122.42"
+
+### traefik configuration ###
+traefik_admin_port="80"
+traefik_data_port="8080"
+
+### k8s network配置 ###
+service_cidr="10.254.0.0/16"
+service_svc_ip="10.254.0.1"
+service_dns_svc_ip="10.254.0.2"
+pod_cidr="10.244.0.0/16"
+
+

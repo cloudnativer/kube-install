@@ -1,0 +1,24 @@
+#!/bin/bash
+
+
+grubfile=""
+for i in {"/boot/grub2/grub.cfg","/boot/efi/EFI/centos/grub.cfg","/boot/efi/EFI/redhat/grub.cfg"} ;
+do
+    if [ -f $i ]; then 
+        grubfile=$i
+        break
+    fi
+done
+
+if [ "$grubfile" != "" ]; then
+    chattr -ai $grubfile
+    rpm -U /tmp/.kubeinstalltemp/data{{sub_process_dir}}/temp/kernel4.19/*.rpm --force --nodeps
+    sed -i 's/auto/512M/g' /etc/default/grub
+    sed -i 's/crashkernel=512M rhgb quiet/crashkernel=512M rhgb quiet intel_idle.max_cstate=0 processor.max_cstate=1 intel_pstate=disable idle=poll nopti spectre_v2=off/g' /etc/default/grub
+    grub2-set-default $[`awk -F\' '$1=="menuentry " {print $2}' $grubfile | sed -n '/4.19.12/='`-1]
+    grub2-mkconfig -o $grubfile
+else
+    echo "kube-install: Your grub file has been detected to be incompatible!" >> /var/log/message
+    exit 1
+fi
+

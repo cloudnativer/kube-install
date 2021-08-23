@@ -248,7 +248,7 @@
                                 </div>
                                 <form action="/delnode?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" id="nodeadmin" name="nodeadmin" method="post" enctype="multipart/form-data" target="_self">
 				<div class="g_2">
-					<input type="submit" value="{{if eq .Lang "cn"}}销毁Node{{else}}Delete Node{{end}}" class="submitIt simple_buttons" />
+					<input {{ if ne .Label "" }} type="submit" {{else}} type="button" {{end}} value="{{if eq .Lang "cn"}}销毁Node{{else}}Delete Node{{end}}" class="submitIt simple_buttons" />
 				</div>
 				<div class="g_2">
 					<input type="button" class="submitIt simple_buttons" onclick="addnodelog()" value="{{if eq .Lang "cn"}}查看添加日志{{else}}View Add Log{{end}}">

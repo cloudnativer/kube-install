@@ -1,0 +1,57 @@
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] Loaded HTML Templates (19): 
+	- clusterinfo.tmpl
+	- login.tmpl
+	- nodeinfo.tmpl
+	- optresult.tmpl
+	- 
+	- calendarscheduler.tmpl
+	- clusteradd.tmpl
+	- logs.tmpl
+	- masterinfo.tmpl
+	- node.tmpl
+	- 403.html
+	- cluster.tmpl
+	- tools.tmpl
+	- favicon.ico
+	- master.tmpl
+	- deleteschedule.tmpl
+	- index.tmpl
+	- 404.html
+	- clusterdel.tmpl
+
+[GIN-debug] GET    /static/*filepath         --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (3 handlers)
+[GIN-debug] HEAD   /static/*filepath         --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (3 handlers)
+[GIN-debug] GET    /                         --> kube-install/lib.DaemonRun.func1 (3 handlers)
+[GIN-debug] POST   /login                    --> kube-install/lib.DaemonRun.func2 (3 handlers)
+[GIN-debug] GET    /clusterlist              --> kube-install/lib.DaemonRun.func3 (3 handlers)
+[GIN-debug] GET    /clusterinfo              --> kube-install/lib.DaemonRun.func4 (3 handlers)
+[GIN-debug] GET    /clusteradd               --> kube-install/lib.DaemonRun.func5 (3 handlers)
+[GIN-debug] GET    /clusterdel               --> kube-install/lib.DaemonRun.func6 (3 handlers)
+[GIN-debug] GET    /deleteschedule           --> kube-install/lib.DaemonRun.func7 (3 handlers)
+[GIN-debug] GET    /masteradmin              --> kube-install/lib.DaemonRun.func8 (3 handlers)
+[GIN-debug] GET    /masterinfo               --> kube-install/lib.DaemonRun.func9 (3 handlers)
+[GIN-debug] GET    /nodeadmin                --> kube-install/lib.DaemonRun.func10 (3 handlers)
+[GIN-debug] GET    /nodeinfo                 --> kube-install/lib.DaemonRun.func11 (3 handlers)
+[GIN-debug] GET    /nodeadd                  --> kube-install/lib.DaemonRun.func12 (3 handlers)
+[GIN-debug] GET    /tools                    --> kube-install/lib.DaemonRun.func13 (3 handlers)
+[GIN-debug] GET    /calendarscheduler        --> kube-install/lib.DaemonRun.func14 (3 handlers)
+[GIN-debug] GET    /logs                     --> kube-install/lib.DaemonRun.func15 (3 handlers)
+[GIN-debug] POST   /install                  --> kube-install/lib.DaemonRun.func16 (3 handlers)
+[GIN-debug] POST   /rebuildmaster            --> kube-install/lib.DaemonRun.func17 (3 handlers)
+[GIN-debug] POST   /delmaster                --> kube-install/lib.DaemonRun.func18 (3 handlers)
+[GIN-debug] POST   /addnode                  --> kube-install/lib.DaemonRun.func19 (3 handlers)
+[GIN-debug] POST   /delnode                  --> kube-install/lib.DaemonRun.func20 (3 handlers)
+[GIN-debug] POST   /uninstall                --> kube-install/lib.DaemonRun.func21 (3 handlers)
+[GIN-debug] POST   /deleteinstallschedule    --> kube-install/lib.DaemonRun.func22 (3 handlers)
+[GIN-debug] POST   /sshkey                   --> kube-install/lib.DaemonRun.func23 (3 handlers)
+[GIN-debug] Listening and serving HTTP on 0.0.0.0:9080
+[GIN] 2021/08/23 - 15:25:30 | 200 |   25.731319ms |    10.57.237.10 | POST     "/install?label=12211&softdir=%2fopt%2fkube-install&ostype=centos7tools=no"
+[GIN] 2021/08/23 - 15:25:32 | 200 |   30.047735ms |    10.57.237.10 | GET      "/clusterlist?label=12211&softdir=/opt/kube-install&ostype=centos7&k8sver=1.23"
+[GIN] 2021/08/23 - 15:25:44 | 200 |   28.656252ms |    10.57.237.10 | POST     "/install?label=12211&softdir=%2fopt%2fkube-install&ostype=centos7tools=no"
+[GIN] 2021/08/23 - 15:25:47 | 200 |   24.529174ms |    10.57.237.10 | GET      "/clusterlist?label=12211&softdir=/opt/kube-install&ostype=centos7&k8sver=1.23"

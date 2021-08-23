@@ -1,20 +1,19 @@
-[Unit]
-Description=kube-install One click fast installation of highly available kubernetes cluster.
-Documentation=https://cloudnativer.github.io/
-After=sshd.service
-Requires=sshd.service
-  
-[Service]
-Environment="USER=root"
-ExecStart=/root/kube-install/kube-install -daemon
-User=root
-PrivateTmp=true
-LimitNOFILE=65536
-TimeoutStartSec=5
-RestartSec=10
-Restart=always
+[Unit] 
+Description=kube-install One click fast installation of highly available kubernetes cluster. 
+Documentation=https://cloudnativer.github.io 
+After=sshd.service 
+Requires=sshd.service 
 
-[Install]
-WantedBy=multi-user.target
+[Service] 
+Environment="USER=root" 
+ExecStart=/var/lib/kube-install/kube-install -daemon 
+User=root 
+PrivateTmp=true 
+LimitNOFILE=65536 
+TimeoutStartSec=5 
+RestartSec=10 
+Restart=always 
 
+[Install] 
+WantedBy=multi-user.target 
 

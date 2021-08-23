@@ -59,9 +59,9 @@ func main() {
 
     // Set the version number and release date of Kube-Install.
     const (
-        Version string = "v0.7.0-beta2"
-        ReleaseDate string = "8/19/2021"
-        CompatibleK8S string = "1.18, 1.19, 1.20, 1.21, and 1.22"
+        Version string = "v0.7.0"
+        ReleaseDate string = "9/25/2021"
+        CompatibleK8S string = "1.17, 1.18, 1.19, 1.20, 1.21, 1.22, and 1.23"
         CompatibleOS string = "CentOS linux 7, CentOS linux 8, RHEL 7, RHEL 8, Ubuntu 20, and SUSE 15"
     )
 
@@ -102,6 +102,7 @@ func main() {
                 if err_host != nil {
                     panic("[Error] "+time.Now().String()+" Initialization failed ! There is a problem with the local SSH key. \n        (Please try again with root user)\n")
                 } else {
+                    kilib.CreateSystemdService("", currentDir, logName)
                     fmt.Println("\n\nInitialization completed!\n")
                 }
             }

@@ -36,7 +36,7 @@ You will install two servers (192.168.1.15 and 192.168.1.16) as k8s-node and joi
 <tr><td><b>192.168.1.16</b></td><td>k8s-node</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
 </table>
 
-Execute the following command on Kube_install host:<br>
+Execute the following command on kube-install host:<br>
 
 ```
 # kube-install -exec addnode -node "192.168.1.15,192.168.1.16" -k8sver "1.22" -ostype "centos7" -label "192168001011"
@@ -47,7 +47,7 @@ If you need to specify the directory path to add Kubernetes node, you can set it
 
 ![kube-dashboard](images/webnodeadd001.jpg)
 
-In addition, you can also add Kubernetes node through the Kube-Install web platform. For the installation process using the web platform, <a href="docs/webinstall0.7.md">click here to view more details</a> ! <br>
+In addition, you can also add Kubernetes node using the Kube-Install web platform. For the installation process using the web platform, <a href="docs/webinstall0.7.md">click here to view more details</a> ! <br>
 
 <br>
 
@@ -61,7 +61,7 @@ The architecture after installation is shown in the following figure:
 
 <br>
 You will delete the two k8s-nodes (192.168.1.15 and 192.168.1.16) from the kubernetets cluster.
-Execute the following command on Kube_install host:<br>
+Execute the following command on kube-install host:<br>
 
 ```
 # kube-install -exec delnode -node "192.168.1.13,192.168.1.15" -label "192168001011"
@@ -71,7 +71,7 @@ Notice: If you specify the `-softdir` parameter value during the installation or
 
 ![kube-dashboard](images/webnodeadd001.jpg)
 
-In addition, you can also delete Kubernetes node through the Kube-Install web platform. For the installation process using the web platform, <a href="docs/webinstall0.7.md">click here to view more details</a> ! <br>
+In addition, you can also delete Kubernetes node using the Kube-Install web platform. For the installation process using the web platform, <a href="docs/webinstall0.7.md">click here to view more details</a> ! <br>
 
 <br>
 
@@ -85,14 +85,14 @@ The architecture after installation is shown in the following figure:
 
 <br>
 You will Delete the k8s-master (192.168.1.13) from the kubernetets cluster.
-Execute the following command on Kube_install host:<br>
+Execute the following command on kube-install host:<br>
 
 ```
 # kube-install -exec delmaster -master "192.168.1.13" -label "192168001011"
 ```
 
 Notice: If you specify the `-softdir` parameter value during the installation operation, please specify the same `-softdir` parameter value during the delmaster operation.<br>
-In addition, you can also delete Kubernetes master through the Kube-Install web platform. For the installation process using the web platform, <a href="docs/webinstall0.7.md">click here to view more details</a> ! <br>
+In addition, you can also delete Kubernetes master using the Kube-Install web platform. For the installation process using the web platform, <a href="docs/webinstall0.7.md">click here to view more details</a> ! <br>
 
 The architecture after installation is shown in the following figure:
 
@@ -104,15 +104,15 @@ The architecture after installation is shown in the following figure:
 
 <br>
 You will rebuild the damaged k8s-master (192.168.1.13) in the kubernetets cluster.
-Execute the following command on Kube_install host:<br>
+Execute the following command on kube-install host:<br>
 
 ```
 # kube-install -exec rebuildmaster -rebuildmaster "192.168.1.13" -k8sver "1.22" -ostype "centos7" -label "192168001011"
 ```
 
 Notice: Please make sure that the `-ostype` flag you entered is correct, only support `rhel7`, `rhel8`, `centos7`, `centos8`, `ubuntu20`, `suse15` these types of "ostype".<br>
-Notice: If you specify the `-softdir` parameter value during the installation operation, please specify the same `-softdir` parameter value during the rebuildmaster operation.<br>
-In addition, you can also rebuild Kubernetes master through the Kube-Install web platform. For the installation process using the web platform, <a href="docs/webinstall0.7.md">click here to view more details</a> ! <br>
+If you specify the `-softdir` parameter value during the installation operation, please specify the same `-softdir` parameter value during the rebuildmaster operation.<br>
+In addition, you can also rebuild Kubernetes master using the Kube-Install web platform. For the installation process using the web platform, <a href="docs/webinstall0.7.md">click here to view more details</a> ! <br>
 
 <br>
 
@@ -127,7 +127,7 @@ The architecture after installation is shown in the following figure:
 
 <br>
 You will uninstall kubernetets cluster.
-Execute the following command on Kube_install host:<br>
+Execute the following command on kube-install host:<br>
 
 ```
 # kube-install -exec uninstall -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -label "192168001011"
@@ -137,7 +137,7 @@ Notice: If you specify the `-softdir` parameter value during the installation op
 
 ![kube-dashboard](images/webinstall002.jpg)
 
-In addition, you can also uninstall the Kubernetes cluster through the Kube-Install web platform. For the installation process using the web platform, <a href="docs/webinstall0.7.md">click here to view more details</a> ! 
+In addition, you can also uninstall the Kubernetes cluster using the Kube-Install web platform. For the installation process using the web platform, <a href="docs/webinstall0.7.md">click here to view more details</a> ! 
 
 <br>
 <br>

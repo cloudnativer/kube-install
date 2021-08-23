@@ -1,0 +1,75 @@
+###--------------------------------------General Configuration---------------------------------###
+
+[kissh]
+127.0.0.1 ip=127.0.0.1
+
+[master1]
+192.168.122.81 ip=192.168.122.81
+
+[k8s:vars]
+k8s_install_home="/opt/kube-install/k8s"
+k8s_addons_home="/go/src/kube-install/data/output/12281/addons"
+software_home="/opt/kube-install"
+kipath="/go/src/kube-install"
+sub_process_dir="/12281"
+rebootime="1"
+rebootxt="The operating system will automatically restart to take effect on the cluster configuration."
+### Kubernetes Master Configuration ###
+ostype="rhel8"
+k8sver="1.23"
+master_iplist="\"192.168.122.81\",\"192.168.122.82\",\"192.168.122.83\""
+etcd_initial="192.168.122.81=https://192.168.122.81:2380,192.168.122.82=https://192.168.122.82:2380,192.168.122.83=https://192.168.122.83:2380"
+etcd_endpoints="https://192.168.122.81:2379,https://192.168.122.82:2379,https://192.168.122.83:2379"
+ingress_upstream=""
+ipvsinit_shell = "ipvsadm -A -t 10.254.0.3:6443 -s rr  && ipvsadm -a -t 10.254.0.3:6443 -r 192.168.122.81:6443 -m && ipvsadm -a -t 10.254.0.3:6443 -r 192.168.122.82:6443 -m && ipvsadm -a -t 10.254.0.3:6443 -r 192.168.122.83:6443 -m"
+master1_ip = "192.168.122.81"
+master_vip = "10.254.0.3"
+master_vport="6443"
+k8sdashboardversion="v2.2.0"
+
+### addons_ip配置 ###
+addons_ip1="192.168.122.81"
+addons_ip2="192.168.122.82"
+addons_ip3="192.168.122.83"
+
+### traefik configuration ###
+traefik_admin_port="80"
+traefik_data_port="8080"
+
+### k8s network配置 ###
+service_cidr="10.254.0.0/16"
+service_svc_ip="10.254.0.1"
+service_dns_svc_ip="10.254.0.2"
+pod_cidr="10.244.0.0/16"
+
+
+###----------------------------------Kubernetes Master IP List------------------------------###
+
+[master]
+192.168.122.81 ip=192.168.122.81
+192.168.122.82 ip=192.168.122.82
+192.168.122.83 ip=192.168.122.83
+
+[etcd]
+192.168.122.81 ip=192.168.122.81 etcdname=kube0
+192.168.122.82 ip=192.168.122.82 etcdname=kube1
+192.168.122.83 ip=192.168.122.83 etcdname=kube2
+
+
+
+###-----------------------------------Kubernetes Node IP List-------------------------------###
+
+[node]
+192.168.122.81 ip=192.168.122.81
+192.168.122.82 ip=192.168.122.82
+192.168.122.83 ip=192.168.122.83
+192.168.122.84 ip=192.168.122.84
+
+[k8s:children]
+kissh
+master1
+master
+etcd
+node
+
+

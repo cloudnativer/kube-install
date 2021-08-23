@@ -1,0 +1,21 @@
+# ------------------- Dashboard Service ------------------- #
+
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    APPNAME: kube-system
+    CLUSTER: kube-system-dashboard
+  name: kube-dashboard
+  namespace: kube-system
+spec:
+  type: NodePort
+  selector:
+    APPNAME: kube-system
+    CLUSTER: kube-system-dashboard
+  ports:
+  - port: 443
+    targetPort: 8443
+    nodePort: 50000
+
+

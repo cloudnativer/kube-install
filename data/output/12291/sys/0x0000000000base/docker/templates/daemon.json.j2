@@ -1,0 +1,26 @@
+{
+    "exec-opts": ["native.cgroupdriver=systemd"],
+    "log-driver": "json-file",
+    "log-opts": {
+        "max-size": "10m"
+    },
+    "data-root": "{{k8s_install_home}}/docker/containerd",
+    "insecure-registries": [
+    "{{addons_ip3}}:5000"
+    ]
+}
+overlay2
+{
+    "storage-driver": "overlay2",
+    "storage-opts": "overlay2.override_kernel_check=true",
+    "exec-opts": ["native.cgroupdriver=systemd"],
+    "log-driver": "json-file",
+    "log-opts": {
+        "max-size": "10m"
+    },
+    "data-root": "{{k8s_install_home}}/docker/containerd",
+    "insecure-registries": [
+    "{{addons_ip3}}:5000"
+    ]
+}
+

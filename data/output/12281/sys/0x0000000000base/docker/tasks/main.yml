@@ -1,0 +1,62 @@
+- name: 1.Cleaning up garbage files left in history
+  file:
+    path: "{{k8s_install_home}}/.temp/"
+    state: directory
+- service:
+    name: kubelet
+    state: stopped
+    enabled: false
+  ignore_errors: yes
+- service:
+    name: kube-proxy
+    state: stopped
+    enabled: false
+  ignore_errors: yes
+- service:
+    name: docker
+    state: stopped
+    enabled: false
+  ignore_errors: yes
+- service:
+    name: flanneld
+    state: stopped
+    enabled: false
+  ignore_errors: yes
+- file:
+    path: /etc/systemd/system/kubelet.service
+    state: absent
+  ignore_errors: yes
+- file:
+    path: /etc/systemd/system/kube-proxy.service
+    state: absent
+  ignore_errors: yes
+- file:
+    path: /etc/systemd/system/flanneld.service
+    state: absent
+  ignore_errors: yes
+- copy:
+    src: ../../../0x00000000action/delnode/templates/uninstall-docker.sh
+    dest: "{{k8s_install_home}}/.temp/uninstall-docker.sh"
+    mode: 0755
+  ignore_errors: yes
+- shell: "{{k8s_install_home}}/.temp/uninstall-docker.sh"
+  ignore_errors: yes
+
+- name: 2.Create docker config dir
+  file:
+    path: "/etc/docker/"
+    state: directory
+- name: 3.Decompress docker software package
+  unarchive:
+    src: "{{kipath}}/pkg/docker.tgz"
+    dest: /usr/bin/
+    mode: 0755
+- template:
+    src: ../templates/daemon.json.j2
+    dest: "/etc/docker/daemon.json"
+- name: 4.Create docker service
+  template:
+    src: ../templates/docker.service
+    dest: /etc/systemd/system/docker.service
+
+

@@ -1,0 +1,26 @@
+- name: 1.Enable csr-crb configuration
+  file:
+    dest: /etc/kubernetes/ssl
+    mode: 0644
+    recurse: yes
+- shell: "/usr/local/bin/kubectl apply -f /etc/kubernetes/apiserver-to-kubelet.yaml"
+- shell: "/usr/local/bin/kubectl apply -f /etc/kubernetes/cert-renew-rbac.yaml"
+- shell: "/usr/local/bin/kubectl apply -f /etc/kubernetes/ipvsinit_svc.yaml"
+- shell: "/usr/local/bin/kubectl apply -f /etc/kubernetes/ipvsinit_ep.yaml"
+- name: 2.Wait 90s
+  wait_for:
+    timeout: 90
+- name: 3.Approve node csr
+  shell: "/usr/local/bin/kubectl get csr | awk '/Pending/ {print $1}' | xargs kubectl certificate approve"
+  ignore_errors: yes
+- name: 4.Wait 30s
+  wait_for:
+    timeout: 30
+- name: 5. Setting scheduling label for k8s node
+  shell: "/usr/local/bin/kubectl label node {{addons_ip1}} dashboard=turnon --overwrite"
+  ignore_errors: yes
+- shell: "/usr/local/bin/kubectl label node {{addons_ip2}} dashboard=turnon --overwrite"
+  ignore_errors: yes
+- shell: "/usr/local/bin/kubectl label node {{addons_ip3}} registry=turnon --overwrite"
+  ignore_errors: yes
+  

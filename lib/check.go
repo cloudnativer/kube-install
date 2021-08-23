@@ -1,6 +1,7 @@
 package kilib
 
 import (
+//    "fmt"
     "net"
     "time"
     "os"
@@ -45,14 +46,14 @@ func CheckOS(CompatibleOS string, osType string, currentDir string, logName stri
 
 func CheckK8sVersion(Version string, CompatibleK8S string, k8sVer string, currentDir string, logName string, mode string) {
     logStr := LogStr(mode)
-    if k8sVer == "1.18" || k8sVer == "1.19" || k8sVer == "1.20" || k8sVer == "1.21" || k8sVer == "1.22" {
+    if k8sVer == "1.17" || k8sVer == "1.18" || k8sVer == "1.19" || k8sVer == "1.20" || k8sVer == "1.21" || k8sVer == "1.22" || k8sVer == "1.22" {
         return
     } else {
         if mode == "DAEMON" {
             ShellExecute("echo [Info] "+time.Now().String()+" \"The \"k8sver\" parameter you entered is incorrect, please check! \n\""+logStr+currentDir+"/data/logs/kubeinstalld/"+logName+".log")
             return
         } else {
-            panic("Please make sure that the \"-k8sver\" parameter you entered is correct! \n--------------------------------------------------------------------------\nKube-Install "+Version+" only supports "+CompatibleK8S+" versions of kubernetes. \n\nNotice: If you want to install the old version(1.14, 1.15, 1.16, 1.17) of kubernetes, you can use the historical release of kube-install.\n")
+            panic("Please make sure that the \"-k8sver\" parameter you entered is correct! \n--------------------------------------------------------------------------\nKube-Install "+Version+" only supports "+CompatibleK8S+" versions of kubernetes. \n\nNotice: If you want to install the old version(1.14, 1.15, 1.16) of kubernetes, you can use the historical release of kube-install.\n")
         }
     }
 }

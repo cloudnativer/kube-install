@@ -1,0 +1,119 @@
+### 
+- name: 0.Create addons directory
+  file:
+    path: "{{kipath}}/data/output{{sub_process_dir}}/addons/{{item}}"
+    state: directory
+  with_items:
+    - coredns
+    - dashboard
+    - metrics-server
+    - heapster
+    - helm
+    - traefik
+    - registry
+    - temp
+
+
+### 1.Deploy coredns
+- name: 1.1 Create coredns.yaml file
+  template:
+    src: "../templates/1.coredns/coredns.yaml.j2"
+    dest: "{{kipath}}/data/output{{sub_process_dir}}/addons/coredns/coredns.yaml"
+- name: 1.2 Deploy coredns
+  shell: "{{kipath}}/proc/.bin/kubectl --kubeconfig={{kipath}}/data/output{{sub_process_dir}}/cert/ssl/kube-install.kubeconfig apply -f {{kipath}}/data/output{{sub_process_dir}}/addons/coredns/coredns.yaml"
+
+### 2.Deploy dashboard
+### 2.部署dashboard
+- name: 2.0 Clean up the dashboard-admin left by historical installation
+  shell: "{{kipath}}/proc/.bin/kubectl --kubeconfig={{kipath}}/data/output{{sub_process_dir}}/cert/ssl/kube-install.kubeconfig delete serviceaccounts dashboard-admin -n kube-system"
+  ignore_errors: yes
+- name: 2.1 Copy dashboard.yaml file
+  template:
+    src: "../templates/2.dashboard/{{item}}.j2"
+    dest: "{{kipath}}/data/output{{sub_process_dir}}/addons/dashboard/{{item}}"
+  with_items:
+    - kubernetes-dashboard-deployment.yaml
+    - kubernetes-dashboard-service.yaml
+- copy:
+    src: "../templates/2.dashboard/{{item}}"
+    dest: "{{kipath}}/data/output{{sub_process_dir}}/addons/dashboard/{{item}}"
+  with_items:
+    - kubernetes-dashboard-admin-rbac.yaml
+    - kubernetes-dashboard-rbac-minimal.yaml
+- name: 2.2 Deploy dashboard
+  shell: "{{kipath}}/proc/.bin/kubectl --kubeconfig={{kipath}}/data/output{{sub_process_dir}}/cert/ssl/kube-install.kubeconfig apply -f {{kipath}}/data/output{{sub_process_dir}}/addons/dashboard/"
+- name: 2.3 Show ADMIN_SECRET
+  shell: "{{kipath}}/proc/.bin/kubectl --kubeconfig={{kipath}}/data/output{{sub_process_dir}}/cert/ssl/kube-install.kubeconfig get secrets -n kube-system | grep dashboard-admin | awk '{print $1}'"
+  register: admin_secret
+- name: 2.4 Create DASHBOARD_LOGIN_TOKEN
+  shell: "{{kipath}}/proc/.bin/kubectl --kubeconfig={{kipath}}/data/output{{sub_process_dir}}/cert/ssl/kube-install.kubeconfig describe secret -n kube-system {{admin_secret.stdout}} | grep -E '^token' | awk '{print $2}'"
+  register: dashboard_login_token
+- name: 2.5 Create dashboard_login_token files
+  shell: "echo \"{{dashboard_login_token.stdout}}\" > {{kipath}}/data/output{{sub_process_dir}}/cert/dashboard_login_token.txt"
+
+### 6.Deploy registry
+- name: 6.1 Create docker-registry.yaml file
+  template:
+    src: "../templates/6.registry/docker-registry.yaml.j2"
+    dest: "{{kipath}}/data/output{{sub_process_dir}}/addons/registry/docker-registry.yaml"
+- name: 6.2 Deploy registry
+  shell: "{{kipath}}/proc/.bin/kubectl --kubeconfig={{kipath}}/data/output{{sub_process_dir}}/cert/ssl/kube-install.kubeconfig apply -f {{kipath}}/data/output{{sub_process_dir}}/addons/registry/docker-registry.yaml"
+
+### 3.Deploy metrics-server
+- name: 3.1 Create metrics-server.yaml file
+  template:
+    src: "../templates/3.metrics-server/metrics-server-deployment.yaml.j2"
+    dest: "{{kipath}}/data/output{{sub_process_dir}}/addons/metrics-server/metrics-server-deployment.yaml"
+- copy:
+    src: "../templates/3.metrics-server/{{item}}"
+    dest: "{{kipath}}/data/output{{sub_process_dir}}/addons/metrics-server/{{item}}"
+  with_items:
+    - aggregated-metrics-reader.yaml
+    - auth-delegator.yaml
+    - auth-reader.yaml
+    - metrics-apiservice.yaml
+    - metrics-server-service.yaml
+    - resource-reader.yaml
+- name: 3.2 Deploy metrics-server
+  shell: "{{kipath}}/proc/.bin/kubectl --kubeconfig={{kipath}}/data/output{{sub_process_dir}}/cert/ssl/kube-install.kubeconfig apply -f {{kipath}}/data/output{{sub_process_dir}}/addons/metrics-server/"
+  ignore_errors: yes
+- name: 3.3 Create metrics-server rbac
+  shell: "{{kipath}}/proc/.bin/kubectl --kubeconfig={{kipath}}/data/output{{sub_process_dir}}/cert/ssl/kube-install.kubeconfig create clusterrolebinding the-boss --user system:anonymous --clusterrole cluster-admin"
+  ignore_errors: yes
+
+### 4.Deploy traefik
+- name: 4.1 Create traefik.yaml file
+  template:
+    src: "../templates/4.traefik/{{item}}.j2"
+    dest: "{{kipath}}/data/output{{sub_process_dir}}/addons/traefik/{{item}}"
+  with_items:
+    - "traefik-ds.yaml"
+    - "traefik-ui.yaml-{{k8sver}}"
+- copy:
+    src: "../templates/4.traefik/{{item}}"
+    dest: "{{kipath}}/data/output{{sub_process_dir}}/addons/traefik/{{item}}"
+  with_items:
+    - traefik-config.yaml
+    - traefik-rbac.yaml
+- name: 4.2 Deploy traefik
+  shell: "{{kipath}}/proc/.bin/kubectl --kubeconfig={{kipath}}/data/output{{sub_process_dir}}/cert/ssl/kube-install.kubeconfig apply -f {{kipath}}/data/output{{sub_process_dir}}/addons/traefik/"
+  ignore_errors: yes
+
+### 5.Deploy heapster
+- name: 5.1 Create heapster.yaml file
+  template:
+    src: "../templates/5.heapster/heapster-Deployment.yaml.j2"
+    dest: "{{kipath}}/data/output{{sub_process_dir}}/addons/heapster/heapster-Deployment.yaml"
+- copy:
+    src: "../templates/5.heapster/{{item}}"
+    dest: "{{kipath}}/data/output{{sub_process_dir}}/addons/heapster/{{item}}"
+  with_items:
+    - heapster-rbac.yaml
+    - heapster-ServiceAccount.yaml
+    - heapster-svc.yaml
+- name: 5.2 Deploy heapster
+  shell: "{{kipath}}/proc/.bin/kubectl --kubeconfig={{kipath}}/data/output{{sub_process_dir}}/cert/ssl/kube-install.kubeconfig apply -f {{kipath}}/data/output{{sub_process_dir}}/addons/heapster/"
+  ignore_errors: yes
+
+
+
