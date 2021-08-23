@@ -1,8 +1,13 @@
-One click fast installation of highly available kubernetes cluster, as well as addition of kubernetes node, deletion of kubernetes node, destruction of kubernetes master, rebuild of kubernetes master, and uninstallation of cluster in later operation and maintenance stage.
+One click fast installation of highly available kubernetes cluster, as well as addition of kubernetes node, deletion of kubernetes node, destruction of kubernetes master, rebuild of kubernetes master, and uninstallation of cluster.
 <br>
 
 ![kube-install](docs/images/kube-install-logo.jpg)
 
+<br>
+
+Switch Languages: <a href="README0.7.md">English documents</a> | <a href="README0.7-zh.md">中文文档</a>
+
+<br>
 
 # [1] Compatibility
 
@@ -44,7 +49,7 @@ You expect the architecture after installation to be as follows:
 ![kube-install-arch](docs/images/kube-install-arch-1.jpg)
 
 <br>
-Notice: We use 192.168.1.11 as the Kube-Install host. In fact, you can use any host as Kube-Install host or any host outside the kubernetes cluster!
+Notice: We use 192.168.1.11 as the kube-install host. In fact, you can use any host as kube-install host or any host outside the kubernetes cluster!
 <br>
 
 ## 2.1 Download kube-install package file
@@ -69,7 +74,7 @@ Notice: If your network quality is poor and the download package is slow, you ca
 ## 2.2 Initialize system environment
 
 <br>
-Please operate in the root user environment. Perform the system environment initialization operation on the Kube-Install host selected above: <br>
+Please operate in the root user environment. Perform the system environment initialization operation on the kube-install host selected above: <br>
 
 ```
 # cd /root/kube-install/
@@ -77,16 +82,15 @@ Please operate in the root user environment. Perform the system environment init
 ```
 
 Notice: Please make sure that the `-ostype` flag you entered is correct, only support `rhel7`, `rhel8`, `centos7`, `centos8`, `ubuntu20`, `suse15` these types of "ostype".<br>
-In addition, if you need to specify the directory path to the Kubernetes cluster installation, you can set it using the `-softdir` parameter.
 
 <br>
 
 ## 2.3 Open the SSH password free channel
 
 <br>
-Before using the web platform for installation, please open the SSH password free channel from localhost to the target host.
+Before installation, please open the SSH password free channel from localhost to the target host.
 
-You can open the SSH password free channel by manually, or through the `kube-install -exec sshcontrol` command.<br>
+You can open the SSH password free channel by manually, or using the `kube-install -exec sshcontrol` command.<br>
 
 ```
 # cd /root/kube-install/
@@ -100,7 +104,7 @@ Or click the `Open SSH Channel of Host` button in the web platform to SSH throug
 ## 2.4 One click Install kubernetes cluster
 
 <br>
-Please operate in the root user environment. Execute on the Kube-Install host selected above:<br>
+Please operate in the root user environment. Execute on the kube-install host selected above:<br>
 
 ```
 # cd /root/kube-install/
@@ -116,7 +120,7 @@ In addition, if you need to specify the directory path to the Kubernetes cluster
 ## 2.5 Login kubernetes dashboard UI
 
 <br>
-Execute the following command on the Kube-Install you selected to view the kube-dashboard console URL and key:<br>
+Execute the following command on the kube-install you selected to view the kube-dashboard console URL and key:<br>
 
 ```
 # cat /opt/kube-install/loginkey.txt
@@ -137,19 +141,29 @@ Login to the kube-dashboard console UI using the URL and key in the `/opt/kube-i
 # [3] Use the web platform to install kubernetes cluster
 
 <br>
-You can also install the Kubernetes cluster through the Kube-Install web platform. 
+You can also install the Kubernetes cluster using the kube-install web platform. 
 <br>
 
-## Run Kube-Install web service
+## Run kube-install web service
 
-First run the web management service with the `kube-install -daemon` command, and then open `http://your_Kube-Install_host_IP:9080` with a web browser.
+First run the web management service with the `systemctl start kube-install` command, and then open `http://your_kube-install_host_IP:9080` with a web browser.
 
 ```
-# cd /root/kube-install/
-# ./kube-install -daemon
+# systemctl start kube-install.service
+#
+# systemctl status kube-install.service
+  ● kube-install.service - kube-install One click fast installation of highly available kubernetes cluster.
+     Loaded: loaded (/etc/systemd/system/kube-install.service; disabled; vendor preset: disabled)
+     Active: active (running) since Fri 2021-08-20 14:30:55 CST; 21min ago
+       Docs: https://cloudnativer.github.io/
+   Main PID: 2768 (kube-install)
+     CGroup: /system.slice/kube-install.service
+             └─2768 /go/src/kube-install/kube-install -daemon
+   ...
+
 ```
 
-Notice: The web service listens to `TCP 9080` port by default. You can also use the `-listen` parameter to modify the port number that the web service listens to. You can run Kube-Install as a systemd service, <a href="docs/systemd0.7.md">click here to view more details</a> !<br>
+Notice: Kube-install web service listens to `TCP 9080` by default. If you want to modify the listening address, you can set it by modifying the `kube-install -daemon -listen ip:port` parameter in the `/etc/systemd/system/kube-install.service` file, <a href="docs/systemd0.7.md">click here to view more details</a> ! <br>
 
 ## Use the web platform to install 
 
@@ -184,7 +198,7 @@ Suppose you expect to install two servers (192.168.1.15 and 192.168.1.16) as k8s
 <tr><td><b>192.168.1.16</b></td><td>k8s-node</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
 </table>
 
-Execute the following command on Kube-Install host:<br>
+Execute the following command on kube-install host:<br>
 
 ```
 # kube-install -exec addnode -node "192.168.1.15,192.168.1.16" -k8sver "1.22" -ostype "centos7" -label "192168001011"
@@ -200,7 +214,7 @@ The architecture after installation is shown in the following figure:
 ![kube-install-arch](docs/images/kube-install-arch-2.jpg)
 
 <br>
-You can also add Kubernetes node through the Kube-Install web platform. For the installation process using the web platform, <a href="docs/webinstall0.7.md">click here to view more details</a> ! <br>
+You can also add Kubernetes node using the kube-install web platform. For the installation process using the web platform, <a href="docs/webinstall0.7.md">click here to view more details</a> ! <br>
 
 ![kube-dashboard](docs/images/webnodeadd001.jpg)
 
@@ -212,11 +226,11 @@ Notice: you can <a href="docs/operation0.7.md">click here to view more operation
 <br>
 
 
-# [5] Parameter introduction
+# [5] Command line help documentation
 
 <br>
 
-The parameters about kube-install can be viewed using the `kube-install help` command. You can also <a href="docs/parameters0.7.md">see more detailed parameter introduction here</a>.<br>
+You can execute `kube-install -help` command to view the command line help document of kube-install, or <a href="docs/parameters0.7.md">click here to view more command line help documents</a>.<br>
 
 <br>
 <br>
@@ -234,16 +248,13 @@ The build can be completed automatically by executing the `make` command. You ca
 
 # [7] How to Contribute
 
-If you encounter problems during use, you can submit ISSUES to us. You can also fork the source code, and then try to repair the bug and submit PR to us.<br>
-```
-git checkout -b new-branch
-git commit -am "add some features or fix some bugs."
-git push origin new-branch
-```
-Please submit ISSUES or PR to us!
+Fork it <br>
+Create your feature branch (git checkout -b my-new-feature) <br>
+Commit your changes (git commit -am 'Add some feature') <br>
+Push to the branch (git push origin my-new-feature) <br>
+Create new Pull Request <br>
+<br>
+<br>
 
-<br>
-<br>
-<br>
 
 
