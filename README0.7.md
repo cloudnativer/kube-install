@@ -5,7 +5,7 @@ One click fast installation of highly available kubernetes cluster, as well as a
 
 <br>
 
-Switch Languages: <a href="README0.7.md">English documents</a> | <a href="README0.7-zh.md">中文文档</a>
+Switch Languages: <a href="README0.7.md">English Documents</a> | <a href="README0.7-zh.md">中文文档</a>
 
 <br>
 
