@@ -56,7 +56,7 @@
 
 <br>
 
-你可以从https://github.com/cloudnativer/kube-install/releases这里下载`kube-install-*.tgz`软件包。 <br>
+你可以从 https://github.com/cloudnativer/kube-install/releases 这里下载`kube-install-*.tgz`软件包。 <br>
 举例，下载`kube-install-allinone-v0.7.0.tgz`软件包进行安装：<br>
 
 ```
