@@ -62,7 +62,7 @@
 
 ```
 # cd /root/
-# curl -O https://github.com/cloudnativer/kube-install/releases/download/v0.7.0-beta2/kube-install-allinone-v0.7.0.tgz
+# curl -O https://github.com/cloudnativer/kube-install/releases/download/v0.7.0/kube-install-allinone-v0.7.0.tgz
 # tar -zxvf kube-install-allinone-v0.7.0.tgz
 # cd /root/kube-install/
 ```
