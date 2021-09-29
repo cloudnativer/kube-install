@@ -80,7 +80,7 @@ Please operate in the root user environment. Perform the system environment init
 
 ```
 # cd /root/kube-install/
-# ./kube-install -exec init -ostype "centos7"
+# ./kube-install -init -ostype "centos7"
 ```
 
 Notice: Please make sure that the `-ostype` flag you entered is correct, only support `rhel7`, `rhel8`, `centos7`, `centos8`, `ubuntu20`, `suse15` these types of "ostype".<br>
