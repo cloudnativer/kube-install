@@ -34,7 +34,7 @@ Notice: kube-install supports CentOS 7, CentOS 8, SUSE 15, RHEL 7 and RHEL 8 ope
 <br>
 <br>
 
-# [2] How to install?
+# [2]  Use the CLI to install kubernetes cluster
 
 <br>
 
