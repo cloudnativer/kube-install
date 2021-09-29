@@ -7,7 +7,7 @@
 
 <br>
 
-切换语言： <a href="README0.7.md">English Documents</a> | <a href="README0.7-zh-hk.md">繁体中文文档</a> | <a href="README0.7-zh.md">简体中文文档</a>
+切换语言： <a href="README0.7.md">English Documents</a> | <a href="README0.7-zh-hk.md">繁体中文文档</a> | <a href="README0.7-zh.md">简体中文文档</a> | <a href="README0.7-jp.md">日本語の文書</a>
 
 <br>
 
