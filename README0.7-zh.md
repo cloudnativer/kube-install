@@ -74,11 +74,11 @@
 ## 2.2 初始化系统环境
 
 <br>
-首先你需要使用root用户对kube-install源安装机本地环境进行初始化操作，进入解压后的软件目录执行`-exec init`命令：<br>
+首先你需要使用root用户对kube-install源安装机本地环境进行初始化操作，进入解压后的软件目录执行`kube-install -init`命令：<br>
 
 ```
 # cd /root/kube-install/
-# ./kube-install -exec init -ostype "centos7"
+# ./kube-install -init -ostype "centos7"
 ```
 
 注意：kube-install软件支持`rhel7`, `rhel8`, `centos7`, `centos8`, `ubuntu20`, `suse15`等版本的操作系统，在做初始化操作的时候，请确保`-ostype`参数设置正确。<br>
@@ -145,11 +145,11 @@
 
 ## 运行kube-install的Web管理服务
 
-首先，你需要执行`kube-install -exec init`命令初始化系统环境(如果前面已经初始化过了可以跳过)，然后执行`systemctl start kube-install`命令来运行kube-install的Web管理平台服务。
+首先，你需要执行`kube-install -init`命令初始化系统环境(如果前面已经初始化过了可以跳过)，然后执行`systemctl start kube-install`命令来运行kube-install的Web管理平台服务。
 
 ```
 # cd /root/kube-install/
-# ./kube-install -exec init -ostype "centos7"
+# ./kube-install -init -ostype "centos7"
 #
 # systemctl start kube-install.service
 #
