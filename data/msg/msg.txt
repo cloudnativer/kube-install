@@ -1,7 +1,7 @@
-<div class='g_12'><div class='info iDialog'>[Info] 2021-08-23 16:47:44.057537625 +0800 CST m=+604.370751838 Installing kubernetes cluster of 12241 cluster ...</div></div>
-<div class='g_12'><div class='info iDialog'>[Info] 2021-08-23 16:47:48.62639602 +0800 CST m=+608.939610060 Installing kubernetes cluster of 12281 cluster ...</div></div>
-<div class='g_12'><div class='info iDialog'>[Info] 2021-08-23 16:47:52.798780149 +0800 CST m=+613.111994172 Installing kubernetes cluster of 12291 cluster ...</div></div>
-<div class='g_12'><div class='info iDialog'>[Info] 2021-08-23 17:00:40.177802101 +0800 CST m=+1380.491016140 Kubernetes cluster (12291) has been installed successfully! </div></div>
-<div class='g_12'><div class='info iDialog'>[Info] 2021-08-23 17:01:35.866358077 +0800 CST m=+1436.179572123 Kubernetes cluster (12281) has been installed successfully! </div></div>
-<div class='g_12'><div class='info iDialog'>[Info] 2021-08-23 17:01:51.346802028 +0800 CST m=+1451.660016190 Kubernetes cluster (12211) has been installed successfully! </div></div>
-<div class='g_12'><div class='info iDialog'>[Info] 2021-08-23 17:03:00.389390043 +0800 CST m=+1520.702604187 Kubernetes cluster (12241) has been installed successfully! </div></div>
+<div class='g_12'><div class='info iDialog'>[Info] 2021-09-29 19:52:43.872828729 +0800 CST m=+92.466133390 Uninstalling kubernetes cluster of cloudnativerk8s001 cluster ... </div></div>
+<div class='g_12'><div class='info iDialog'>[Info] 2021-09-29 19:54:04.444276159 +0800 CST m=+173.037580844 Kubernetes cluster (cloudnativerk8s001) has been uninstalled successfully! </div></div>
+<div class='g_12'><div class='info iDialog'>[Info] 2021-09-29 19:55:15.61003569 +0800 CST m=+244.203340401 Installing kubernetes cluster of cloudnativerk8s002 cluster ...</div></div>
+<div class='g_12'><div class='info iDialog'>[Info] 2021-09-29 20:06:31.031208213 +0800 CST m=+919.624512918 Kubernetes cluster (cloudnativerk8s003) has been installed successfully! </div></div>
+<div class='g_12'><div class='error iDialog'>[Error] 2021-09-29 20:06:59.764184932 +0800 CST m=+948.357489653 Kubernetes cluster (cloudnativerk8s001) install failed! </div></div>
+<div class='g_12'><div class='info iDialog'>[Info] 2021-09-29 20:07:34.525609355 +0800 CST m=+983.118914032 Kubernetes cluster (cloudnativerk8s004) has been installed successfully! </div></div>
+<div class='g_12'><div class='info iDialog'>[Info] 2021-09-29 20:07:41.915532915 +0800 CST m=+990.508837647 Kubernetes cluster (cloudnativerk8s005) has been installed successfully! </div></div>

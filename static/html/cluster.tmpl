@@ -4,12 +4,14 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>{{if eq .Lang "cn"}}Kube-Install快速部署K8S集群(二进制方式){{else}}Kube-Install(Fast installation of k8s cluster in binary mode){{end}}</title>
+	<title>{{if eq .Lang "cn"}}Kube-Install(二进制方式部署K8S集群){{else}}Kube-Install(installation of K8S in binary mode){{end}}</title>
 	<!--[if lt IE 9]>
 		<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
 		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 		<script src="static/js/Flot/excanvas.js"></script>
 	<![endif]-->
+        <!-- The Favicon Ico -->
+        <link rel="icon" href="/static/img/favicon.ico" type="image/x-icon" />
 	<!-- The Fonts -->
         <link rel="stylesheet" href="static/css/fonts.css" />
 	<!-- The Main CSS File -->
@@ -328,7 +330,7 @@
 								{{else}}<img src="static/img/Icons/Preview/clock_disable.png" {{if eq .Lang "cn"}}title="未开启" alt="未开启"{{else}}title="Enabled" alt="Enabled"{{end}} style="vertical-align: middle;"/><br><span style="display: inline-block;">{{if eq .Lang "cn"}}暂无{{else}}Disabled{{end}}</span>{{end}}
                                                                         </td>
                                                                         <td>
-                                                                        {{ if eq $v.Status "ok" }} <a href="clusterinfo?label={{$v.K8t}}" style="background:#99FF99;">{{if eq $v.Lang "cn"}}查看详细{{else}}View Details{{end}}</a> | <a href="https://{{.K8sdashboardip}}:50000" target="_blank" style="background:#99FF99;">{{if eq $v.Lang "cn"}}Web控制台{{else}}Kube-Dashboard{{end}}</a> | <a href="masteradmin?label={{ $v.K8t }}&softdir={{ $v.Sdr }}&ostype={{ $v.Ostype }}&k8sver={{ $v.K8v }}" style="background:#CCFFFF;"> {{if eq $v.Lang "cn"}}Master管理{{else}}Master Management{{end}} </a> | <a href="nodeadmin?label={{ $v.K8t }}&softdir={{ $v.Sdr }}&ostype={{ $v.Ostype }}&k8sver={{ $v.K8v }}" style="background:#CCFFFF;"> {{if eq $v.Lang "cn"}}Node管理{{else}}Node Management{{end}} </a> | {{end}} 
+                                                                        {{ if eq $v.Status "unknow" }} <a href="clusterinfo?label={{$v.K8t}}" style="background:#99FF99;">{{if eq $v.Lang "cn"}}查看详细{{else}}View Details{{end}}</a> | {{end}} {{ if eq $v.Status "ok" }} <a href="clusterinfo?label={{$v.K8t}}" style="background:#99FF99;">{{if eq $v.Lang "cn"}}查看详细{{else}}View Details{{end}}</a> | <a href="https://{{.K8sdashboardip}}:50000" target="_blank" style="background:#99FF99;">{{if eq $v.Lang "cn"}}Web控制台{{else}}Kube-Dashboard{{end}}</a> | <a href="masteradmin?label={{ $v.K8t }}&softdir={{ $v.Sdr }}&ostype={{ $v.Ostype }}&k8sver={{ $v.K8v }}" style="background:#CCFFFF;"> {{if eq $v.Lang "cn"}}Master管理{{else}}Master Management{{end}} </a> | <a href="nodeadmin?label={{ $v.K8t }}&softdir={{ $v.Sdr }}&ostype={{ $v.Ostype }}&k8sver={{ $v.K8v }}" style="background:#CCFFFF;"> {{if eq $v.Lang "cn"}}Node管理{{else}}Node Management{{end}} </a> | {{end}} 
 																		{{ if eq $v.Scheduler "on" }}
 																			<a href="deleteschedule?label={{ $v.K8t }}&softdir={{ $v.Sdr }}&ostype={{ $v.Ost }}&k8sver={{ $v.K8v }}&scheduler={{ $v.Scheduler }}&instime={{ $v.Instime }}&tools=no" style="background:#CCFFFF;">{{if eq .Lang "cn"}}取消定时安装{{else}}Remove Installation Schedule{{end}} | </a>
 	                                                                    {{else}}

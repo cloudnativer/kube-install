@@ -1,4 +1,6 @@
-One click fast installation of highly available kubernetes cluster, as well as addition of kubernetes node, deletion of kubernetes node, destruction of kubernetes master, rebuild of kubernetes master, and uninstallation of cluster.
+The highly available kubernetes cluster can be installed offline with one click in binary mode, as well as addition of kubernetes node, deletion of kubernetes node, destruction of kubernetes master, rebuild of kubernetes master, and uninstallation of cluster.
+<br>
+(There is no need to install any software on the target host. You can deploy the highly available kubernetes cluster offline only by using an empty host!)
 <br>
 
 ![kube-install](docs/images/kube-install-logo.jpg)
@@ -16,11 +18,11 @@ Compatibility matrix:
 
 <table>
 <tr><td><b>kube-install Version</b></td><td><b>Supported Kubernetes Version</b></td><td><b>Supported OS Version</b></td><td><b>Documentation</b></td></tr>
-<tr><td> kube-install v0.7.* </td><td> kubernetes v1.23 , kubernetes v1.22 , kubernetes v1.21 , <br> kubernetes v1.20 , kubernetes v1.19 , kubernetes v1.18, <br> kubernetes v1.17 </td><td> CentOS 7 , RHEL 7 , <br> CentOS 8 , RHEL 8 , <br> SUSE Linux 15 , <br> Ubuntu 20 </td><td><a href="README0.7.md">README0.7.md</a></td></tr>
-<tr><td> kube-install v0.6.* </td><td> kubernetes v1.22 , kubernetes v1.21 , kubernetes v1.20 , <br> kubernetes v1.19 , kubernetes v1.18 , kubernetes v1.17 , <br> kubernetes v1.16 , kubernetes v1.15 , kubernetes v1.14 </td><td> CentOS 7 , RHEL 7 , <br> CentOS 8 , RHEL 8 , <br> SUSE Linux 15 </td><td><a href="README0.6.md">README0.6.md</a></td></tr>
-<tr><td> kube-install v0.5.* </td><td> kubernetes v1.21 , kubernetes v1.20 , kubernetes v1.19 , <br> kubernetes v1.18 , kubernetes v1.17 , kubernetes v1.16 , <br> kubernetes v1.15 , kubernetes v1.14 </td><td> CentOS 7 , RHEL 7 </td><td><a href="README0.5.md">README0.5.md</a></td></tr>
-<tr><td> kube-install v0.4.* </td><td> kubernetes v1.21 , kubernetes v1.20 , kubernetes v1.19 , <br> kubernetes v1.18 , kubernetes v1.17 , kubernetes v1.16 , <br> kubernetes v1.15 , kubernetes v1.14 </td><td> CentOS 7 , RHEL 7 </td><td><a href="README0.4.md">README0.4.md</a></td></tr>
-<tr><td> kube-install v0.3.* </td><td> kubernetes v1.18 , kubernetes v1.17 , kubernetes v1.16 , <br> kubernetes v1.15 , kubernetes v1.14 </td><td>CentOS 7</td><td><a href="README0.3.md">README0.3.md</a></td></tr>
+<tr><td> kube-install v0.7.* </td><td> kubernetes v1.23, v1.22, v1.20, v1.19, v1.18, v1.17 </td><td> CentOS 7 , RHEL 7 , CentOS 8 , RHEL 8 , SUSE Linux 15 , Ubuntu 20 </td><td><a href="README0.7.md">README0.7.md</a></td></tr>
+<tr><td> kube-install v0.6.* </td><td> kubernetes v1.22, v1.21, v1.20, v1.19, v1.18, v1.17, v1.16, v1.15, v1.14 </td><td> CentOS 7 , RHEL 7 , CentOS 8 , RHEL 8 , SUSE Linux 15 </td><td><a href="README0.6.md">README0.6.md</a></td></tr>
+<tr><td> kube-install v0.5.* </td><td> kubernetes v1.21, v1.20, v1.19, v1.18, v1.17, v1.16, v1.15, v1.14 </td><td> CentOS 7 , RHEL 7 </td><td><a href="README0.5.md">README0.5.md</a></td></tr>
+<tr><td> kube-install v0.4.* </td><td> kubernetes v1.21, v1.20, v1.19, v1.18, v1.17, v1.16, v1.15, v1.14 </td><td> CentOS 7 , RHEL 7 </td><td><a href="README0.4.md">README0.4.md</a></td></tr>
+<tr><td> kube-install v0.3.* </td><td> kubernetes v1.18, v1.17, v1.16, v1.15, v1.14 </td><td>CentOS 7</td><td><a href="README0.3.md">README0.3.md</a></td></tr>
 <tr><td> kube-install v0.2.* </td><td> kubernetes v1.14 </td><td> CentOS 7 </td><td><a href="README0.2.md">README0.2.md</a></td></tr>
 <tr><td> kube-install v0.1.* </td><td> kubernetes v1.14 </td><td> CentOS 7 </td><td><a href="README0.1.md">README0.1.md</a></td></tr>
 </table>
@@ -58,12 +60,12 @@ Notice: We use 192.168.1.11 as the kube-install host. In fact, you can use any h
 
 You can download the `kube-install-*.tgz` package from https://github.com/cloudnativer/kube-install/releases. <br>
 
-For example, we have downloaded the `kube-install-allinone-v0.7.0-beta2.tgz` package.<br>
+For example, we have downloaded the `kube-install-allinone-v0.7.0.tgz` package.<br>
 
 ```
 # cd /root/
-# curl -O https://github.com/cloudnativer/kube-install/releases/download/v0.7.0-beta2/kube-install-allinone-v0.7.0-beta2.tgz
-# tar -zxvf kube-install-allinone-v0.7.0-beta2.tgz
+# curl -O https://github.com/cloudnativer/kube-install/releases/download/v0.7.0-beta2/kube-install-allinone-v0.7.0.tgz
+# tar -zxvf kube-install-allinone-v0.7.0.tgz
 # cd /root/kube-install/
 ```
 
@@ -248,13 +250,24 @@ The build can be completed automatically by executing the `make` command. You ca
 
 # [7] How to Contribute
 
-Fork it <br>
-Create your feature branch (git checkout -b my-new-feature) <br>
-Commit your changes (git commit -am 'Add some feature') <br>
-Push to the branch (git push origin my-new-feature) <br>
-Create new Pull Request <br>
-<br>
+If you have problems in use, <a href="https://github.com/cloudnativer/kube-install/issues">you can click here submit issues to us</a>, or fork it and submit PR.
 <br>
 
+```
+# git clone your-fork-code
+# git checkout -b your-new-branch
+# git commit -am "Fix bug or add some feature"
+# git push origin your-new-branch
+```
+
+<br>
+Welcome to submit issues or PR to us.
+
+<br>
+Thank you to every contributor!
+
+<br>
+<br>
+<br>
 
 

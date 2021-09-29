@@ -4,12 +4,14 @@
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="refresh" {{ if eq .Tools "yes" }}content="9;URL=tools?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}"{{ else }} {{ if eq .Opt "install" }} content="9;URL=clusterlist?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" {{ end }} {{ if eq .Opt "uninstall" }} content="9;URL=clusterlist?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" {{ end }} {{ if eq .Opt "sshkey" }} content="9;URL=clusterlist?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" {{ end }} {{ if eq .Opt "delmaster" }} content="9;URL=masteradmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" {{ end }} {{ if eq .Opt "rebuildmaster" }} content="9;URL=masteradmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" {{ end }} {{ if eq .Opt "addnode" }} content="9;URL=nodeadmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" {{ end }} {{ if eq .Opt "delnode" }} content="9;URL=nodeadmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" {{ end }} {{ if eq .Opt "deleteschedule" }} content="9;URL=clusterlist?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" {{ end }} {{ end }} />
-	<title>{{if eq .Lang "cn"}}Kube-Install快速部署K8S集群(二进制方式){{else}}Kube-Install(Fast installation of k8s cluster in binary mode){{end}}</title>
+	<title>{{if eq .Lang "cn"}}Kube-Install(二进制方式部署K8S集群){{else}}Kube-Install(installation of K8S in binary mode){{end}}</title>
 	<!--[if lt IE 9]>
 		<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
 		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 		<script src="static/js/Flot/excanvas.js"></script>
 	<![endif]-->
+        <!-- The Favicon Ico -->
+        <link rel="icon" href="/static/img/favicon.ico" type="image/x-icon" />
 	<!-- The Fonts -->
         <link rel="stylesheet" href="static/css/fonts.css" />
 	<!-- The Main CSS File -->

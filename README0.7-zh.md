@@ -1,4 +1,6 @@
-一键化快速安装高可用的kubernetes集群，同时支持添加kubernetes节点、删除kubernetes节点、销毁kubernetes主机、重建kubernetes主机、卸载集群等。
+二进制方式一键离线安装高可用的kubernetes集群，同时支持添加kubernetes节点、删除kubernetes节点、销毁kubernetes主机、重建kubernetes主机、卸载集群等。
+<br>
+(不需要在目标主机上安装任何软件，只需要有纯净的裸机即可离线完成高可用kubernetes集群的部署！)
 <br>
 
 ![kube-install](docs/images/kube-install-logo.jpg)
@@ -16,15 +18,14 @@
 
 <table>
 <tr><td><b>kube-install版本</b></td><td><b>支持的Kubernetes版本</b></td><td><b>支持的操作系统</b></td><td><b>相关文档</b></td></tr>
-<tr><td> kube-install v0.7.* </td><td> kubernetes v1.23 , kubernetes v1.22 , kubernetes v1.21 , <br> kubernetes v1.20 , kubernetes v1.19 , kubernetes v1.18, <br> kubernetes v1.17 </td><td> CentOS 7 , RHEL 7 , <br> CentOS 8 , RHEL 8 , <br> SUSE Linux 15 , <br> Ubuntu 20 </td><td><a href="README0.7.md">README0.7-zh.md</a></td></tr>
-<tr><td> kube-install v0.6.* </td><td> kubernetes v1.22 , kubernetes v1.21 , kubernetes v1.20 , <br> kubernetes v1.19 , kubernetes v1.18 , kubernetes v1.17 , <br> kubernetes v1.16 , kubernetes v1.15 , kubernetes v1.14 </td><td> CentOS 7 , RHEL 7 , <br> CentOS 8 , RHEL 8 , <br> SUSE Linux 15 </td><td><a href="README0.6.md">README0.6.md</a></td></tr>
-<tr><td> kube-install v0.5.* </td><td> kubernetes v1.21 , kubernetes v1.20 , kubernetes v1.19 , <br> kubernetes v1.18 , kubernetes v1.17 , kubernetes v1.16 , <br> kubernetes v1.15 , kubernetes v1.14 </td><td> CentOS 7 , RHEL 7 </td><td><a href="README0.5.md">README0.5.md</a></td></tr>
-<tr><td> kube-install v0.4.* </td><td> kubernetes v1.21 , kubernetes v1.20 , kubernetes v1.19 , <br> kubernetes v1.18 , kubernetes v1.17 , kubernetes v1.16 , <br> kubernetes v1.15 , kubernetes v1.14 </td><td> CentOS 7 , RHEL 7 </td><td><a href="README0.4.md">README0.4.md</a></td></tr>
-<tr><td> kube-install v0.3.* </td><td> kubernetes v1.18 , kubernetes v1.17 , kubernetes v1.16 , <br> kubernetes v1.15 , kubernetes v1.14 </td><td>CentOS 7</td><td><a href="README0.3.md">README0.3.md</a></td></tr>
+<tr><td> kube-install v0.7.* </td><td> kubernetes v1.23, v1.22, v1.20, v1.19, v1.18, v1.17 </td><td> CentOS 7 , RHEL 7 , CentOS 8 , RHEL 8 , SUSE Linux 15 , Ubuntu 20 </td><td><a href="README0.7.md">README0.7.md</a></td></tr>
+<tr><td> kube-install v0.6.* </td><td> kubernetes v1.22, v1.21, v1.20, v1.19, v1.18, v1.17, v1.16, v1.15, v1.14 </td><td> CentOS 7 , RHEL 7 , CentOS 8 , RHEL 8 , SUSE Linux 15 </td><td><a href="README0.6.md">README0.6.md</a></td></tr>
+<tr><td> kube-install v0.5.* </td><td> kubernetes v1.21, v1.20, v1.19, v1.18, v1.17, v1.16, v1.15, v1.14 </td><td> CentOS 7 , RHEL 7 </td><td><a href="README0.5.md">README0.5.md</a></td></tr>
+<tr><td> kube-install v0.4.* </td><td> kubernetes v1.21, v1.20, v1.19, v1.18, v1.17, v1.16, v1.15, v1.14 </td><td> CentOS 7 , RHEL 7 </td><td><a href="README0.4.md">README0.4.md</a></td></tr>
+<tr><td> kube-install v0.3.* </td><td> kubernetes v1.18, v1.17, v1.16, v1.15, v1.14 </td><td>CentOS 7</td><td><a href="README0.3.md">README0.3.md</a></td></tr>
 <tr><td> kube-install v0.2.* </td><td> kubernetes v1.14 </td><td> CentOS 7 </td><td><a href="README0.2.md">README0.2.md</a></td></tr>
 <tr><td> kube-install v0.1.* </td><td> kubernetes v1.14 </td><td> CentOS 7 </td><td><a href="README0.1.md">README0.1.md</a></td></tr>
 </table>
-
 
 <br>
 注意：kube-install支持CentOS 7、CentOS 8、SUSE 15、RHEL 7和RHEL 8操作系统环境，<a href="docs/os-support.md">点击这里查看kube-install所支持的操作系统发行版的列表</a>。
@@ -61,8 +62,8 @@
 
 ```
 # cd /root/
-# curl -O https://github.com/cloudnativer/kube-install/releases/download/v0.7.0-beta2/kube-install-allinone-v0.7.0-beta2.tgz
-# tar -zxvf kube-install-allinone-v0.7.0-beta2.tgz
+# curl -O https://github.com/cloudnativer/kube-install/releases/download/v0.7.0-beta2/kube-install-allinone-v0.7.0.tgz
+# tar -zxvf kube-install-allinone-v0.7.0.tgz
 # cd /root/kube-install/
 ```
 
@@ -244,7 +245,20 @@ Kube-install不仅可以很方便的安装单机和高可用的kubernetes集群�
 # [6] 欢迎提交Issues和PR
 
 如果你在使用过程中遇到问题，可以点击https://github.com/cloudnativer/kube-install/issues向我们提交Issues，也可以Fork源代码，然后尝试修复BUG之后，向我们提交PR。<br>
-欢迎给我们提交Issues和PR！
+<br>
+
+```
+# git clone your-fork-code
+# git checkout -b your-new-branch
+# git commit -am "Fix bug or add some feature"
+# git push origin your-new-branch
+```
+
+<br>
+欢迎给我们提交Issues和PR。
+<br>
+谢谢每一位贡献者！
+
 <br>
 <br>
 <br>

@@ -6,7 +6,7 @@ Requires=sshd.service
 
 [Service] 
 Environment="USER=root" 
-ExecStart=/var/lib/kube-install/kube-install -daemon 
+ExecStart=/go/src/kube-install/kube-install -daemon 
 User=root 
 PrivateTmp=true 
 LimitNOFILE=65536 

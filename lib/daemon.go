@@ -145,7 +145,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
     // Create http router
     router := gin.Default()
     router.LoadHTMLGlob(currentDir+"/static/html/*")
-    router.StaticFS("/static", http.Dir(currentDir+"/static")) 
+    router.StaticFS("/static", http.Dir(currentDir+"/static/staticfs")) 
 
     // Background regular inspection statistics of various states
     go MinutePeriodSchedule(currentDir ,kissh, logName , mode)
