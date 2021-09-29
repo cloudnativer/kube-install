@@ -33,7 +33,7 @@
 <br>
 <br>
 
-# [2] 快速安装kubernetes集群
+# [2] 通过命令行快速安装kubernetes集群
 
 <br>
 
