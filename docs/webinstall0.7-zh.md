@@ -7,11 +7,11 @@
 
 ## 运行kube-install的Web管理服务
 
-首先，你需要执行`kube-install -exec init`命令初始化系统环境(如果前面已经初始化过了可以跳过)，然后执行`systemctl start kube-install`命令来运行kube-install的Web管理平台服务。
+首先，你需要执行`kube-install -init`命令初始化系统环境(如果前面已经初始化过了可以跳过)，然后执行`systemctl start kube-install`命令来运行kube-install的Web管理平台服务。
 
 ```
 # cd /root/kube-install/
-# ./kube-install -exec init -ostype "centos7"
+# ./kube-install -init -ostype "centos7"
 #
 # systemctl start kube-install.service
 #
