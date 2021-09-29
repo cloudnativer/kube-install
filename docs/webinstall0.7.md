@@ -7,7 +7,7 @@
 
 ## Run the web management service
 
-First, you need to execute the 'kube-install -exec init' command to initialize the system environment (you can skip if you have already initialized earlier), and then execute the 'systemctl start kube-install' command to run the web management platform service of kube-install.
+First, you need to execute the 'kube-install -init' command to initialize the system environment (you can skip if you have already initialized earlier), and then execute the 'systemctl start kube-install' command to run the web management platform service of kube-install.
 
 ```
 #
