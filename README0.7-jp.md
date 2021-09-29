@@ -28,7 +28,7 @@
 </table>
 
 <br>
-注意：kube-installはCentOS 7、CentOS 8、SUSE 15、RHEL 7、RHEL 8のオペレーティングシステム環境に対応しています。<a href="docs/os-support.md">ここをクリックして、kube-installがサポートするオペレーティングシステムの発行版のリストを調べます。
+注意：kube-installはCentOS 7、CentOS 8、SUSE 15、RHEL 7、RHEL 8のオペレーティングシステム環境に対応しています。<a href="docs/os-support.md">ここをクリックして、kube-installがサポートするオペレーティングシステムの発行版のリストを調べます<a>。
 <br>
 <br>
 <br>
