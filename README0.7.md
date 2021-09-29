@@ -34,7 +34,7 @@ Notice: kube-install supports CentOS 7, CentOS 8, SUSE 15, RHEL 7 and RHEL 8 ope
 <br>
 <br>
 
-# [2]  Use the CLI to install kubernetes cluster
+# [2]  Install kubernetes cluster by CLI
 
 <br>
 
@@ -140,7 +140,7 @@ Login to the kube-dashboard console UI using the URL and key in the `/opt/kube-i
 
 <br>
 
-# [3] Use the web platform to install kubernetes cluster
+# [3] Install kubernetes cluster by web platform
 
 <br>
 You can also install the Kubernetes cluster using the kube-install web platform. 
