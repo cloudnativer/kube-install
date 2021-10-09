@@ -181,7 +181,7 @@ kube-installのウェブ管理プラットフォームを通じて、kubernetes�
 
 ![kube-dashboard](docs/images/webinstall002.jpg)
 
-<a href="docs/webinstall0.7-zh.md">ここをクリックして、より多くのkube-installのWeb管理プラットフォームを通じて配置の詳細を見ることができます</a>。
+<a href="docs/webinstall0.7.md">ここをクリックして、より多くのkube-installのWeb管理プラットフォームを通じて配置の詳細を見ることができます</a>。
 <br>
 <br>
 <br>
@@ -220,13 +220,13 @@ Kube-installソースホストにrootユーザを使用して以下のコマン�
 
 <br>
 
-`kube-install -exec addnode`コマンドを使用してk8s-nodeノードの拡張を行うほか、あなたも同様にkube-installのWeb管理プラットフォームを使用してk8s-nodeノードの拡張を行うことができます。<a href="docs/webinstall0.7-zh.md">ここをクリックしてkube-installのWeb管理プラットフォームを使ってk8s-nodeノードを拡張する方法を確認できます</a>。
+`kube-install -exec addnode`コマンドを使用してk8s-nodeノードの拡張を行うほか、あなたも同様にkube-installのWeb管理プラットフォームを使用してk8s-nodeノードの拡張を行うことができます。<a href="docs/webinstall0.7.md">ここをクリックしてkube-installのWeb管理プラットフォームを使ってk8s-nodeノードを拡張する方法を確認できます</a>。
 
 ![kube-dashboard](docs/images/webnodeadd001.jpg)
 
 <br>
 
-注意：<a href="docs/operation0.7-zh.md">ここをクリックして、もっと多くのk8s-nodeとk8s-masterを破壊し、k8s-masterを修復し、クラスタをアンロードする操作につ>
+注意：<a href="docs/operation0.7.md">ここをクリックして、もっと多くのk8s-nodeとk8s-masterを破壊し、k8s-masterを修復し、クラスタをアンロードする操作につ>
 いて確認してください</a>。
 
 <br>
