@@ -90,7 +90,7 @@
     <div id="cal_black" class="result_overlay"></div>
     <div id="cal_content" class="result_content">
         <div class="widget_header wwOptions">
-                <h4 class="widget_header_title wwIcon i_16_calendar">{{if eq .Lang "cn"}}查看部署计划日程{{if eq .Schedulelist ""}} &nbsp;&nbsp; (当前暂无部署日程计划) {{end}}{{else}}Installation Schedule Calendar{{if eq .Schedulelist ""}} &nbsp;&nbsp; (There is currently no installation schedule) {{end}}{{end}}</h4>
+                <h4 class="widget_header_title wwIcon i_16_calendar">{{if eq .Lang "cn"}}查看部署计划日程{{if eq .Schedulelist ""}} &nbsp;&nbsp; (当前暂无部署日程计划) {{end}}{{else}}Installation Schedule Calendar{{if eq .Schedulelist ""}} &nbsp;&nbsp; (no schedule) {{end}}{{end}}</h4>
                 <div style="text-align: right;"><a href="/tools?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" ><img alt="{{if eq .Lang "cn"}}点击关闭{{else}}Close{{end}}" src="static/img/Button/close03.png" /></a></div>
         </div>
 	<div class="widget_contents lPreview" >

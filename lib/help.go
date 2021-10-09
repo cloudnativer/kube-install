@@ -60,8 +60,6 @@ EXAMPLES:
     kube-install -daemon -listen "0.0.0.0:8888"
   Display software version information
     kube-install -version
-
-=================================================================
     `)
 }
 

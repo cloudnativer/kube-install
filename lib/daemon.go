@@ -448,9 +448,9 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
         for _, i := range labelArray {
             label := string(i)
             _,_,_,subProcessDir,_ := ParameterConvert(mode, "", "", "", label, "")
-            k8sVer,_ = ReadFile(currentDir+"/data/output"+subProcessDir+"/k8sver.txt")
+            k8v,_ = ReadFile(currentDir+"/data/output"+subProcessDir+"/k8sver.txt")
             stus,_ := GetClusterStatus(label,currentDir,logName,mode)
-            selectlist = append(selectlist, SelectList{label,labelNow,"",k8sVer,softDir,osType,stus})
+            selectlist = append(selectlist, SelectList{label,labelNow,"",k8v,softDir,osType,stus})
         }
         c.HTML(http.StatusOK, "master.tmpl", gin.H{
             "Lang"           : Lang,
@@ -520,9 +520,9 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
         for _, i := range labelArray {
             label := string(i)
             _,_,_,subProcessDir,_ := ParameterConvert(mode, "", "", "", label, "")
-            k8sVer,_ = ReadFile(currentDir+"/data/output"+subProcessDir+"/k8sver.txt")
+            k8v,_ = ReadFile(currentDir+"/data/output"+subProcessDir+"/k8sver.txt")
             stus,_ := GetClusterStatus(label,currentDir,logName,mode)
-            selectlist = append(selectlist, SelectList{label,labelNow,"",k8sVer,softDir,osType,stus})
+            selectlist = append(selectlist, SelectList{label,labelNow,"",k8v,softDir,osType,stus})
         }
         c.HTML(http.StatusOK, "node.tmpl", gin.H{
             "Lang"           : Lang,
