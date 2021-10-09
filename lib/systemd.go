@@ -6,6 +6,7 @@ import (
 )
 
 
+// Automatically generate Systemd service startup file.
 func CreateSystemdService(mode string, currentDir string, logName string) bool {
     os.RemoveAll(currentDir+"/kube-install.service")
     os.RemoveAll("/etc/systemd/system/kube-install.service")

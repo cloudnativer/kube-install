@@ -5,6 +5,7 @@ import (
 )
 
 
+// Open the SSH key channel to the target host.
 func SshKey(ipArray []string, sshPass string, currentDir string) error {
     var err error
     idrsa,err_idrsa := ReadFile("/root/.ssh/id_rsa")
@@ -24,6 +25,7 @@ func SshKey(ipArray []string, sshPass string, currentDir string) error {
     return err
 }
 
+// Initialize and install the most basic operation tool components.
 func SshOpsInit(currentDir string, osType string, mode string) error {
     err := ShellExecute(currentDir+"/proc/sshops-init.sh \""+currentDir+"\" \""+osType+"\"")
     return err

@@ -8,8 +8,8 @@ import (
 	//    "time"
 )
 
+// Initialize the key and value of creating database (temporarily replaced by file) to prepare for later transformation into database.
 func DatabaseInit(currentDir string, subProcessDir string, logName string, mode string) {
-	// Initialize the key and value of creating database (temporarily replaced by file) to prepare for later transformation into database.
 	CreateDir(currentDir+"/data/logs"+subProcessDir+"/logs", currentDir, logName, mode)
 	CreateDir(currentDir+"/data/output"+subProcessDir+"/masters", currentDir, logName, mode)
 	CreateDir(currentDir+"/data/output"+subProcessDir+"/nodes", currentDir, logName, mode)
@@ -31,11 +31,13 @@ func DatabaseInit(currentDir string, subProcessDir string, logName string, mode 
 	CreateFile(currentDir+"/data/output"+subProcessDir+"/progressbar.txt", currentDir, logName, mode)
 }
 
+// Update the contents of the database.
 func DatabaseUpdate(key string, value string, currentDir string, logName string, mode string) error {
 	err := ioutil.WriteFile(key, []byte(value), 0666)
 	return err
 }
 
+// Query the master information in the cluster.
 func GetClusterMaster(label string, currentDir string, logName string, mode string) map[string]string {
 	var masterStatusMap map[string]string
 	masterStatusMap = make(map[string]string)
@@ -66,6 +68,7 @@ func GetClusterMaster(label string, currentDir string, logName string, mode stri
 	return masterStatusMap
 }
 
+// Query the node information in the cluster.
 func GetClusterNode(label string, currentDir string, logName string, mode string) map[string]string {
 	var ndArray []string
 	var nodeStatusMap map[string]string
@@ -124,6 +127,7 @@ func GetClusterNode(label string, currentDir string, logName string, mode string
 	return nodeStatusMap
 }
 
+// Query the kubeconfig in the cluster.
 func GetClusterKubecfg(label string, currentDir string, mode string) string {
 	_, _, _, subProcessDir, _ := ParameterConvert(mode, "", "", "", label, "")
 	kubecfg, err := ReadFile(currentDir + "/data/output" + subProcessDir + "/cert/ssl/kube-install.kubeconfig")
@@ -134,6 +138,7 @@ func GetClusterKubecfg(label string, currentDir string, mode string) string {
 	}
 }
 
+// Query the addons information in the cluster.
 func GetClusterAddons(label string, currentDir string, mode string) (string, string, string) {
 	_, _, _, subProcessDir, _ := ParameterConvert(mode, "", "", "", label, "")
 	registryip, err_registryip := ReadFile(currentDir + "/data/output" + subProcessDir + "/addons/addonsip/registryip.txt")
@@ -146,6 +151,7 @@ func GetClusterAddons(label string, currentDir string, mode string) (string, str
 	}
 }
 
+// Query the directory information of cluster installation.
 func GetClusterSoftdir(label string, currentDir string, mode string) string {
 	_, _, _, subProcessDir, _ := ParameterConvert(mode, "", "", "", label, "")
 	kdr, err := ReadFile(currentDir + "/data/output" + subProcessDir + "/softdir.txt")
@@ -156,6 +162,7 @@ func GetClusterSoftdir(label string, currentDir string, mode string) string {
 	}
 }
 
+// Query the status information in the cluster.
 func GetClusterStatus(label string, currentDir string, logName string, mode string) (string, string) {
 	var sch string
 	var err_sch error
@@ -186,6 +193,7 @@ func GetClusterStatus(label string, currentDir string, logName string, mode stri
 	}
 }
 
+// Query the OS type of cluster installation.
 func GetClusterOstype(label string, currentDir string, mode string) string {
 	_, _, _, subProcessDir, _ := ParameterConvert(mode, "", "", "", label, "")
 	ostype, err := ReadFile(currentDir + "/data/output" + subProcessDir + "/ostype.txt")
@@ -196,6 +204,7 @@ func GetClusterOstype(label string, currentDir string, mode string) string {
 	}
 }
 
+// Query the version of kubernetes cluster installation.
 func GetClusterK8sVer(label string, currentDir string, mode string) string {
 	_, _, _, subProcessDir, _ := ParameterConvert(mode, "", "", "", label, "")
 	k8sver, err := ReadFile(currentDir + "/data/output" + subProcessDir + "/k8sver.txt")
@@ -205,3 +214,4 @@ func GetClusterK8sVer(label string, currentDir string, mode string) string {
 		return k8sver
 	}
 }
+

@@ -1,7 +1,6 @@
 package kilib
 
 import (
-//    "fmt"
     "os"
     "io"
     "net/http"
@@ -135,6 +134,7 @@ type SshKeyForm struct {
 }
 
 
+// Run the web server program and schedule program.
 func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, CompatibleOS string, listenIPandPort string, currentDir string, currentUser string, kissh string, logName string, mode string) {
 
     // Create kube-install daemon log file
@@ -155,6 +155,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
        Kube-Install Web Backend
     **********************************************************************/
 
+    // home page
     router.GET("/", func(c *gin.Context) {
         langFromWeb := c.Query("lang")
         Lang := ChangeLang(langFromWeb, currentDir, logName, mode)
@@ -209,6 +210,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
         })
     })
 
+    // login page
     router.POST("/login", func(c *gin.Context) {
         var form LoginForm
         // in this case proper binding will be automatically selected
@@ -262,6 +264,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
         })
     })
 
+    // cluster info page
     router.GET("/clusterinfo", func(c *gin.Context) {
         langFromWeb := c.Query("lang")
         Lang := ChangeLang(langFromWeb, currentDir, logName, mode)
@@ -315,6 +318,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
         })
     })
 
+    // page of add cluster
     router.GET("/clusteradd", func(c *gin.Context) {
         langFromWeb := c.Query("lang")
         Lang := ChangeLang(langFromWeb, currentDir, logName, mode)
@@ -360,6 +364,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
         })
     })
 
+    // page of delete cluster
     router.GET("/clusterdel", func(c *gin.Context) {
         langFromWeb := c.Query("lang")
         Lang := ChangeLang(langFromWeb, currentDir, logName, mode)
@@ -395,6 +400,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
         })
     })
 
+    // page of delete schedule
     router.GET("/deleteschedule", func(c *gin.Context) {
         langFromWeb := c.Query("lang")
         Lang := ChangeLang(langFromWeb, currentDir, logName, mode)
@@ -423,6 +429,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
         })
     })
 
+    // master page
     router.GET("/masteradmin", func(c *gin.Context) {
         var masterlist []MasterList
         var selectlist []SelectList
@@ -469,6 +476,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
         })
     })
 
+    // page of master info
     router.GET("/masterinfo", func(c *gin.Context) {
         langFromWeb := c.Query("lang")
         Lang := ChangeLang(langFromWeb, currentDir, logName, mode)
@@ -495,6 +503,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
         })
     })
 
+    // node page
     router.GET("/nodeadmin", func(c *gin.Context) {
         var nodelist []NodeList
         var selectlist []SelectList
@@ -543,6 +552,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
         })
     })
 
+    // page of node info
     router.GET("/nodeinfo", func(c *gin.Context) {
         langFromWeb := c.Query("lang")
         Lang := ChangeLang(langFromWeb, currentDir, logName, mode)
@@ -577,6 +587,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
         })
     })
 
+    // page of add node
     router.GET("/nodeadd", func(c *gin.Context) {
         langFromWeb := c.Query("lang")
         Lang := ChangeLang(langFromWeb, currentDir, logName, mode)
@@ -596,6 +607,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
         })
     })
 
+    // tools page
     router.GET("/tools", func(c *gin.Context) {
         langFromWeb := c.Query("lang")
         Lang := ChangeLang(langFromWeb, currentDir, logName, mode)
@@ -617,6 +629,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
         })
     })
 
+    // page of calendar scheduler
     router.GET("/calendarscheduler", func(c *gin.Context) {
         langFromWeb := c.Query("lang")
         Lang := ChangeLang(langFromWeb, currentDir, logName, mode)
@@ -640,6 +653,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
         })
     })
 
+    // logs page
     router.GET("/logs", func(c *gin.Context) {
         var selectlist []SelectList
         var clog string
@@ -708,6 +722,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
        Kube-Install Operation Process
     **********************************************************************/
 
+    // operation of install
     router.POST("/install",func(c *gin.Context) {
         var form ClusterAddForm
         var master,node,osType,k8sVer,softDir,label,installTime,way string
@@ -778,6 +793,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
         }
     })
 
+    // operation of rebuild master
     router.POST("/rebuildmaster",func(c *gin.Context) {
         var form MasterrebuildForm
         var masterArray []string
@@ -827,6 +843,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
         }
     })
 
+    // operation of delete master
     router.POST("/delmaster",func(c *gin.Context) {
         var form MasterDelForm
         var masterArray []string
@@ -872,6 +889,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
         }
     })
 
+    // operation of add node
     router.POST("/addnode",func(c *gin.Context) {
         var form NodeAddForm
         var node,softDir,label,k8sVer,osType string
@@ -927,6 +945,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
         }
     })
 
+    // operation of delete node
     router.POST("/delnode",func(c *gin.Context) {
         var form NodeDelForm
         var nodeArray []string
@@ -972,6 +991,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
         }
     })
 
+    // operation of uninstall
     router.POST("/uninstall",func(c *gin.Context) {
         var form ClusterDelForm
         var master,node,softDir,label,k8sVer,osType string
@@ -1022,6 +1042,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
         }
     })
 
+    // operation of delete install schedule
     router.POST("/deleteinstallschedule",func(c *gin.Context) {
         tools := c.Query("tools")
         label := c.DefaultQuery("label", "")
@@ -1053,6 +1074,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
         c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "deleteschedule", "Result": scheduleResult, "Info": scheduleInfo, "Softdir": softDir, "Ostype": osType, "Tools": tools,"Lang": Lang, "Version" : Version, "Releasedate" : ReleaseDate, "Compatiblek8s" : CompatibleK8S, "Compatibleos" : CompatibleOS})
     })
 
+    // Open the SSH key channel
     router.POST("/sshkey",func(c *gin.Context) {
         var form SshKeyForm
         var sshIp,sshPass string
@@ -1102,7 +1124,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 
 
 
-    // 运行KubeInstall Daemon
+    // Run kube-install Daemon
     router.Run(listenIPandPort)
 
 }

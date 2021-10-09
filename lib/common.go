@@ -10,6 +10,7 @@ import (
 	"strings"
 )
 
+// The operation of copying files.
 func CopyFile(src string, dst string) (int64, error) {
 	sourceFileStat, err := os.Stat(src)
 	if err != nil {
@@ -35,6 +36,7 @@ func CopyFile(src string, dst string) (int64, error) {
 	return nBytes, err
 }
 
+// Create a directory.
 func CreateDir(dir string, currentDir string, logName string, mode string) {
 	_, err := os.Stat(dir)
 	if err != nil {
@@ -43,6 +45,7 @@ func CreateDir(dir string, currentDir string, logName string, mode string) {
 	}
 }
 
+// Create an empty file.
 func CreateFile(filePth string, currentDir string, logName string, mode string) {
 	_, err := os.Stat(filePth)
 	if err != nil {
@@ -53,6 +56,7 @@ func CreateFile(filePth string, currentDir string, logName string, mode string) 
 	}
 }
 
+// Read all directories and return a slice.
 func GetAllDir(pathname string, currentDir string, logName string, mode string) ([]string, error) {
 	var s []string
 	rd, err := ioutil.ReadDir(pathname)
@@ -67,6 +71,7 @@ func GetAllDir(pathname string, currentDir string, logName string, mode string) 
 	return s, err
 }
 
+// Switch the language display of the web interface.
 func ChangeLang(langFromWeb string, currentDir string, logName string, mode string) string {
 	var Lang string
 	if langFromWeb != "" {
@@ -83,6 +88,7 @@ func ChangeLang(langFromWeb string, currentDir string, logName string, mode stri
 	return Lang
 }
 
+// Setting of progress bar.
 func ProgressBar(n int, char string) (s string) {
 	for i := 1; i <= n; i++ {
 		s += char
@@ -90,6 +96,7 @@ func ProgressBar(n int, char string) (s string) {
 	return
 }
 
+// Reads the contents of the specified file.
 func ReadFile(filePth string) (string, error) {
 	file, err := os.Open(filePth)
 	if err != nil {
@@ -104,6 +111,7 @@ func ReadFile(filePth string) (string, error) {
 	}
 }
 
+// Reads the contents of the file into an array.
 func ReadFileAsArray(filePath string) ([]string, error) {
 	result := []string{}
 	b, err := ioutil.ReadFile(filePath)
@@ -121,6 +129,7 @@ func ReadFileAsArray(filePath string) ([]string, error) {
 	return result, nil
 }
 
+// Log of shell asynchronous execution.
 func ShellAsynclog(reader io.ReadCloser) error {
 	cache := ""
 	buf := make([]byte, 2048)
@@ -139,6 +148,7 @@ func ShellAsynclog(reader io.ReadCloser) error {
 	}
 }
 
+// Execute the shell and return an error message.
 func ShellExecute(shellfile string) error {
 	cmd := exec.Command("sh", "-c", shellfile)
 	stdout, _ := cmd.StdoutPipe()
@@ -156,6 +166,7 @@ func ShellExecute(shellfile string) error {
 	return nil
 }
 
+// Execute the shell and return the output of the execution.
 func ShellOutput(strCommand string) string {
 	cmd := exec.Command("sh", "-c", strCommand)
 	stdout, _ := cmd.StdoutPipe()
@@ -172,6 +183,7 @@ func ShellOutput(strCommand string) string {
 	return string(out_bytes)
 }
 
+// Determines whether an array contains a string.
 func StrInArray(value string, list []string) bool {
 	for _, v := range list {
 		if v == value {
@@ -181,6 +193,7 @@ func StrInArray(value string, list []string) bool {
 	return false
 }
 
+// Define how the shell log is displayed according to different modes.
 func LogStr(mode string) string {
 	var logStr string
 	if mode == "DAEMON" {
@@ -190,3 +203,4 @@ func LogStr(mode string) string {
 	}
 	return logStr
 }
+

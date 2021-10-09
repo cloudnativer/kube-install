@@ -1,16 +1,12 @@
 package kilib
 
 import (
-//   "fmt"
     "os"
-//    "io/ioutil"
     "time"
-//    "strings"
-//    "strconv"
 )
 
 
-
+// Rebuild the core operation part of the master.
 func RebuildMasterCore(mode string, masterArray []string, currentDir string, kissh string, subProcessDir string, currentUser string, label string, softDir string, logName string) {
     opt := "rebuildmaster"
     logStr := LogStr(mode)
@@ -49,6 +45,7 @@ func RebuildMasterCore(mode string, masterArray []string, currentDir string, kis
     }
 }
 
+// Delete the core operation part of the master.
 func DeleteMasterCore(mode string, masterArray []string, currentDir string, kissh string, subProcessDir string, currentUser string, label string, softDir string, logName string) {
     opt := "delmaster"
     logStr := LogStr(mode)
@@ -85,6 +82,7 @@ func DeleteMasterCore(mode string, masterArray []string, currentDir string, kiss
     }
 }
 
+// Add the core operation part of the node.
 func AddNodeCore(mode string, node string, nodeArray []string, currentDir string, kissh string, subProcessDir string, currentUser string, label string, softDir string, osTypeResult string, logName string, CompatibleOS string) {
     opt := "addnode"
     logStr := LogStr(mode)
@@ -127,6 +125,7 @@ func AddNodeCore(mode string, node string, nodeArray []string, currentDir string
     }
 }
 
+// Delete the core operation part of the node.
 func DeleteNodeCore(mode string, nodeArray []string, currentDir string, kissh string, subProcessDir string, currentUser string, label string, softDir string, logName string) {
     opt := "delnode"
     logStr := LogStr(mode)
@@ -169,6 +168,7 @@ func DeleteNodeCore(mode string, nodeArray []string, currentDir string, kissh st
     }
 }
 
+// Install the core operation part of the cluster.
 func InstallCore(mode string, master string, masterArray []string, node string, nodeArray []string, softDir string, currentDir string, kissh string, subProcessDir string, currentUser string, label string, osTypeResult string, osType string, k8sVer string, logName string, Version string, CompatibleK8S string, CompatibleOS string, installTime string, way string) {
     opt := "install"
     layoutName := "install"
@@ -294,6 +294,7 @@ func InstallCore(mode string, master string, masterArray []string, node string, 
     }
 }
 
+// Uninstall the core operation part of the cluster.
 func UninstallCore(mode string, master string, masterArray []string, node string, nodeArray []string, softDir string, currentDir string, kissh string, subProcessDir string, currentUser string, label string, osTypeResult string, logName string, CompatibleOS string) {
     opt := "uninstall"
     logStr := LogStr(mode)
@@ -379,6 +380,7 @@ func UninstallCore(mode string, master string, masterArray []string, node string
     }
 }
 
+// The core operation part of schedule installation.
 func InstallScheduler(label string, masterArray []string, nodeArray []string, kissh string, currentDir string, opt string, layoutName string, subProcessDir string, logName string, mode string) {
     logStr := LogStr(mode)
     _,err_sdr := CopyFile(currentDir+"/data/output"+subProcessDir+"/softdirtemp.txt", currentDir+"/data/output"+subProcessDir+"/softdir.txt")
@@ -446,6 +448,7 @@ func InstallScheduler(label string, masterArray []string, nodeArray []string, ki
     }
 }
 
+// Perform the operation of deleting node.
 func ExecuteDeleteNode(nodeArray []string, currentDir string, subProcessDir string, opt string, mode string){
     var delNodeList string
     logStr := LogStr(mode)
@@ -466,6 +469,7 @@ func ExecuteDeleteNode(nodeArray []string, currentDir string, subProcessDir stri
     ShellExecute(currentDir+"/proc/.bin/kubectl --kubeconfig "+currentDir+"/data/output"+subProcessDir+"/cert/ssl/kube-install.kubeconfig delete node "+delNodeList+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/"+opt+".log")
 }
 
+// Execute the operation commands of the core part.
 func ExecuteOpt(kiCommand string, currentDir string, opt string, layoutName string, subProcessDir string, mode string) error {
     logStr := LogStr(mode)
     inventoryName := opt

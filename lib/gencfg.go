@@ -9,7 +9,7 @@ import (
 
 
 
-
+// Set the node IP address for addons scheduling.
 func CreateAddonsNode(nodeArray []string) (string,string,string){
     var addonsIp1,addonsIp2,addonsIp3 string
     node_num := len(nodeArray)
@@ -24,6 +24,7 @@ func CreateAddonsNode(nodeArray []string) (string,string,string){
     return addonsIp1,addonsIp2,addonsIp3 
 }
 
+// Generate basic general configuration information.
 func GeneralConfig(mode string, masterArray []string, nodeArray []string, currentDir string, softDir string, subProcessDir string, ostype string, k8sVer string, logName string) {
     inventory_file, err := os.Create(currentDir+"/data/output"+subProcessDir+"/general.inventory")
     CheckErr(err,currentDir,logName,mode)
@@ -71,6 +72,7 @@ func GeneralConfig(mode string, masterArray []string, nodeArray []string, curren
     inventory_file.WriteString("\n### k8s network配置 ###\nservice_cidr=\"10.254.0.0/16\"\nservice_svc_ip=\"10.254.0.1\"\nservice_dns_svc_ip=\"10.254.0.2\"\npod_cidr=\"10.244.0.0/16\"\n\n\n")
 }
 
+// Generate install configuration information.
 func InstallConfig(mode string, masterArray []string, nodeArray []string, currentDir string, subProcessDir string, logName string) bool {
     _,err_cp := CopyFile(currentDir+"/data/output"+subProcessDir+"/general.inventory", currentDir+"/data/output"+subProcessDir+"/install.inventory")
     if err_cp != nil {
@@ -114,6 +116,7 @@ func InstallConfig(mode string, masterArray []string, nodeArray []string, curren
     return true
 }
 
+// Generate configuration information of add node.
 func AddnodeConfig(mode string, addNodeArray []string, currentDir string, subProcessDir string, logName string) bool {
     _,err_cp := CopyFile(currentDir+"/data/output"+subProcessDir+"/general.inventory", currentDir+"/data/output"+subProcessDir+"/addnode.inventory")
     if err_cp != nil {
@@ -142,6 +145,7 @@ func AddnodeConfig(mode string, addNodeArray []string, currentDir string, subPro
     return true
 }
 
+// Generate configuration information of delete node.
 func DelnodeConfig(mode string, delNodeArray []string, currentDir string, subProcessDir string, logName string) bool {
     _,err_cp := CopyFile(currentDir+"/data/output"+subProcessDir+"/general.inventory", currentDir+"/data/output"+subProcessDir+"/delnode.inventory")
     if err_cp != nil {
@@ -170,6 +174,7 @@ func DelnodeConfig(mode string, delNodeArray []string, currentDir string, subPro
     return true
 }
 
+// Generate configuration information of rebuild master.
 func RebuildmasterConfig(mode string, rebuildMasterArray []string, currentDir string, subProcessDir string, logName string) bool {
     _,err_cp := CopyFile(currentDir+"/data/output"+subProcessDir+"/general.inventory", currentDir+"/data/output"+subProcessDir+"/rebuildmaster.inventory")
     if err_cp != nil {
@@ -207,6 +212,7 @@ func RebuildmasterConfig(mode string, rebuildMasterArray []string, currentDir st
     return true
 }
 
+// Generate configuration information of delete master.
 func DelmasterConfig(mode string, delMasterArray []string, currentDir string, subProcessDir string, logName string) bool {
     _,err_cp := CopyFile(currentDir+"/data/output"+subProcessDir+"/general.inventory", currentDir+"/data/output"+subProcessDir+"/delmaster.inventory")
     if err_cp != nil {

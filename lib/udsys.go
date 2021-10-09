@@ -6,7 +6,7 @@ import (
 )
 
 
-
+// Adaptively update the genfile process file. 
 func InstallGenfile(mode string, currentDir string, subProcessDir string, logName string) {
     genfile_file, err := os.Create(currentDir+"/data/output"+subProcessDir+"/sys/0x0000000000base/genfile/tasks/main.yml") 
     CheckErr(err,currentDir,logName,mode)
@@ -15,6 +15,7 @@ func InstallGenfile(mode string, currentDir string, subProcessDir string, logNam
 
 }
 
+// Adaptively update the IpvsYaml process file.
 func InstallIpvsYaml(mode string, currentDir string, masterArray []string, subProcessDir string, logName string) {
     var ipvsinitYaml string
     master_num := len(masterArray)

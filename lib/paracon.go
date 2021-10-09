@@ -5,6 +5,7 @@ import (
 )
 
 
+// Serialize or convert the input parameters.
 func ParameterConvert(mode string, master string, node string, softDir string, label string, osType string) ([]string, []string, string, string, string) {
 
     //Convert OS type

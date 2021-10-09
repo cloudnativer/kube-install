@@ -5,7 +5,7 @@ import (
 )
 
 
-
+// Displays the detailed help information of the kube-install.
 func ShowHelp(){
     fmt.Println(`Usage of kube-install: 
 kube-install [OPTION] { [COMMAND] OBJECT [ARGS]... } 

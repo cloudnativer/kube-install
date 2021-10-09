@@ -39,10 +39,12 @@ func SortMapByValue(m map[string]int) PairList {
     return p
 }
 
+// Schedule task schedule in seconds.
 func SecondPeriodSchedule() {
     return
 }
 
+// Schedule task schedule in minutes.
 func MinutePeriodSchedule(currentDir string, kissh string, logName string, mode string) {
     for {
         var k8sNum,stuOk,stuInstall,stuUninstall,stuNotok,stuUnknow,stuAll int
@@ -198,10 +200,12 @@ func MinutePeriodSchedule(currentDir string, kissh string, logName string, mode 
     }
 }
 
+// Schedule task schedule in hours.
 func HourPeriodSchedule() {
     return
 }
 
+// Schedule task plan in days.
 func DayPeriodSchedule() {
     return
 }

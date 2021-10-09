@@ -7,6 +7,7 @@ import (
 	"time"
 )
 
+// Check and handle common errors.
 func CheckErr(err error, currentDir string, logName string, mode string) {
 	logStr := LogStr(mode)
 	if err != nil {
@@ -19,6 +20,7 @@ func CheckErr(err error, currentDir string, logName string, mode string) {
 	}
 }
 
+// Check whether the IP address is correct.
 func CheckIP(ipv4 string) bool {
 	address := net.ParseIP(ipv4)
 	if address == nil {
@@ -28,6 +30,7 @@ func CheckIP(ipv4 string) bool {
 	}
 }
 
+// Check whether the operating system version is supported.
 func CheckOS(CompatibleOS string, osType string, currentDir string, logName string, mode string) {
 	logStr := LogStr(mode)
 	if osType == "unknow" || osType == "" {
@@ -42,6 +45,7 @@ func CheckOS(CompatibleOS string, osType string, currentDir string, logName stri
 	}
 }
 
+// Check whether the kubernetes version is supported.
 func CheckK8sVersion(Version string, CompatibleK8S string, k8sVer string, currentDir string, logName string, mode string) {
 	logStr := LogStr(mode)
 	if k8sVer == "1.17" || k8sVer == "1.18" || k8sVer == "1.19" || k8sVer == "1.20" || k8sVer == "1.21" || k8sVer == "1.22" || k8sVer == "1.23" {
@@ -56,6 +60,7 @@ func CheckK8sVersion(Version string, CompatibleK8S string, k8sVer string, curren
 	}
 }
 
+// Check whether the network port is correct.
 func CheckPort(port int) bool {
 	if (port <= 1) || (port >= 65535) {
 		return false
@@ -64,12 +69,14 @@ func CheckPort(port int) bool {
 	}
 }
 
+// Check whether the parameters are input normally.
 func CheckParam(option string, paramName string, param string) {
 	if param == "" {
 		panic("When performing " + option + " operation, you must enter " + paramName + " parameter, please check!")
 	}
 }
 
+// Check whether the file exists.
 func CheckFileExist(path string, fileName string, currentDir string, logName string, mode string) {
 	logStr := LogStr(mode)
 	_, err := os.Stat(path + fileName)
@@ -82,3 +89,4 @@ func CheckFileExist(path string, fileName string, currentDir string, logName str
 		}
 	}
 }
+
