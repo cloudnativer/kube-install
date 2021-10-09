@@ -445,6 +445,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
         }
         labelArray,err := GetAllDir(currentDir+"/data/output",currentDir,logName,mode)
         CheckErr(err,currentDir,logName,mode)
+        var k8v string
         for _, i := range labelArray {
             label := string(i)
             _,_,_,subProcessDir,_ := ParameterConvert(mode, "", "", "", label, "")
@@ -517,6 +518,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
         }
         labelArray,err := GetAllDir(currentDir+"/data/output",currentDir,logName,mode)
         CheckErr(err,currentDir,logName,mode)
+        var k8v string
         for _, i := range labelArray {
             label := string(i)
             _,_,_,subProcessDir,_ := ParameterConvert(mode, "", "", "", label, "")

@@ -1,4 +1,4 @@
-The highly available kubernetes cluster can be installed offline with one click in binary mode, as well as addition of kubernetes node, deletion of kubernetes node, destruction of kubernetes master, rebuild of kubernetes master, and uninstallation of cluster.
+The highly available multiple kubernetes cluster can be installed offline with one click in binary mode, as well as schedule installation, addition of kubernetes node, deletion of kubernetes node, destruction of kubernetes master, rebuild of kubernetes master, and uninstallation of cluster.
 <br>
 (There is no need to install any software on the target host. You can deploy the highly available kubernetes cluster offline only by using an empty host!)
 <br>

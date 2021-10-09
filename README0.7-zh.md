@@ -1,4 +1,4 @@
-二进制方式一键离线安装高可用的kubernetes集群，同时支持添加kubernetes节点、删除kubernetes节点、销毁kubernetes主机、重建kubernetes主机、卸载集群等。
+二进制方式一键离线安装高可用的多kubernetes集群，支持定时安装、添加kubernetes节点、删除kubernetes节点、销毁kubernetes主机、重建kubernetes主机、卸载集群等。
 <br>
 (不需要在目标主机上安装任何软件，只需要有纯净的裸机即可离线完成高可用kubernetes集群的部署！)
 <br>
