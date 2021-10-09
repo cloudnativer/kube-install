@@ -20,7 +20,7 @@ Usage of kube-install:
 kube-install [OPTION] { [COMMAND] OBJECT [ARGS]... } 
 
 OPTIONS:
-  d, daemon        Run as a daemon service. (Enable this switch to use the web console for management)
+  d, daemon        Run as a daemon service.(Enable this switch to use the web console for management)
   e, exec          Deploy and uninstall kubernetes cluster.(Use with "init | sshcontrol | install | addnode | delnode | delmaster | rebuildmaster | uninstall")
   h, help          Display usage help information of kube-install.
   i, init          Initialize the local system environment.
@@ -37,8 +37,9 @@ COMMAND:
   uninstall        Uninstall kubernetes cluster.
 
 OBJECT:
+  k8sver           Specifies the version of k8s software installed.(Default is "1.22")
   label            In the case of deploying and operating multiple kubernetes clusters, it is necessary to specify a label to uniquely identify a kubernetes cluster.
-  listen           Set the IP and port on which the daemon service listens. (Default is "0.0.0.0:9080")
+  listen           Set the IP and port on which the daemon service listens.(Default is "0.0.0.0:9080")
   master           The IP address of kubernetes master host.
   node             The IP address of kubernetes node host.
   ostype           Specifies the distribution OS type: "centos7 | centos8 | rhel7 | rhel8 | ubuntu20 | suse15".

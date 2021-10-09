@@ -42,11 +42,15 @@ func AddnodeYML(mode string, softDir string, currentDir string, currentUser stri
 }
 
 // Generate orchestration for delete node.
-func DelnodeYML(mode string, softDir string, currentDir string, currentUser string, logName string) {
+func DelnodeYML(mode string, softDir string, currentDir string, currentUser string, logName string, force bool) {
+    var clearFileStr string
+    if force{
+        clearFileStr = "- remote_user: root\n  hosts: delnode\n  gather_facts: no\n  roles:\n    - "+softDir+"/sys/0x00000000action/clearresidue\n"
+    }
     delnode_file, err := os.Create(softDir+"/k8scluster-delnode.yml")
     CheckErr(err,currentDir,logName,mode)
     defer delnode_file.Close()
-    delnode_file.WriteString("- remote_user: root\n  hosts: delnode\n  gather_facts: no\n  roles:\n    - "+softDir+"/sys/0x00000000action/delnode\n")
+    delnode_file.WriteString("- remote_user: root\n  hosts: delnode\n  gather_facts: no\n  roles:\n    - "+softDir+"/sys/0x00000000action/delnode\n"+clearFileStr)
 }
 
 // Generate orchestration for rebuild master.
@@ -58,11 +62,15 @@ func RebuildmasterYML(mode string, softDir string, currentDir string, currentUse
 }
 
 // Generate orchestration for delete master.
-func DelmasterYML(mode string, softDir string, currentDir string, currentUser string, logName string) {
+func DelmasterYML(mode string, softDir string, currentDir string, currentUser string, logName string, force bool) {
+    var clearFileStr string
+    if force{
+        clearFileStr = "- remote_user: root\n  hosts: delmaster\n  gather_facts: no\n  roles:\n    - "+softDir+"/sys/0x00000000action/clearresidue\n"
+    }
     delmaster_file, err := os.Create(softDir+"/k8scluster-delmaster.yml")
     CheckErr(err,currentDir,logName,mode)
     defer delmaster_file.Close()
-    delmaster_file.WriteString("- remote_user: root\n  hosts: delmaster\n  gather_facts: no\n  roles:\n    - "+softDir+"/sys/0x00000000action/delmaster\n")
+    delmaster_file.WriteString("- remote_user: root\n  hosts: delmaster\n  gather_facts: no\n  roles:\n    - "+softDir+"/sys/0x00000000action/delmaster\n"+clearFileStr)
 }
 
 

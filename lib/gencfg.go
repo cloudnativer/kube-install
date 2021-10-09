@@ -65,11 +65,11 @@ func GeneralConfig(mode string, masterArray []string, nodeArray []string, curren
     }
     // Addons IP Configuration
     addonsIp1,addonsIp2,addonsIp3 := CreateAddonsNode(nodeArray)
-    inventory_file.WriteString("\n### addons_ip配置 ###\naddons_ip1=\""+addonsIp1+"\"\naddons_ip2=\""+addonsIp2+"\"\naddons_ip3=\""+addonsIp3+"\"\n")
+    inventory_file.WriteString("\n### addons_ip configuration ###\naddons_ip1=\""+addonsIp1+"\"\naddons_ip2=\""+addonsIp2+"\"\naddons_ip3=\""+addonsIp3+"\"\n")
     DatabaseUpdate(currentDir+"/data/output"+subProcessDir+"/addons/addonsip/registryip.txt", addonsIp1, currentDir, logName, mode)
     DatabaseUpdate(currentDir+"/data/output"+subProcessDir+"/addons/addonsip/k8sdashboardip.txt", addonsIp3, currentDir, logName, mode)
     inventory_file.WriteString("\n### traefik configuration ###\ntraefik_admin_port=\"80\"\ntraefik_data_port=\"8080\"\n")
-    inventory_file.WriteString("\n### k8s network配置 ###\nservice_cidr=\"10.254.0.0/16\"\nservice_svc_ip=\"10.254.0.1\"\nservice_dns_svc_ip=\"10.254.0.2\"\npod_cidr=\"10.244.0.0/16\"\n\n\n")
+    inventory_file.WriteString("\n### k8s network configuration ###\nservice_cidr=\"10.254.0.0/16\"\nservice_svc_ip=\"10.254.0.1\"\nservice_dns_svc_ip=\"10.254.0.2\"\npod_cidr=\"10.244.0.0/16\"\n\n\n")
 }
 
 // Generate install configuration information.

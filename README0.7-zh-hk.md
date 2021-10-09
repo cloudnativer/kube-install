@@ -59,12 +59,12 @@
 <br>
 
 你可以從https://github.com/cloudnativer/kube-install/releases 這裡下載`kube-install-*.tgz`套裝軟體。<br>
-舉例，下載`kube-install-allinone-v0.7.0.tgz`套裝軟體進行安裝：<br>
+舉例，下載`kube-install-allinone-v0.7.1.tgz`套裝軟體進行安裝：<br>
 
 ```
 # cd /root/
-# curl -O https://github.com/cloudnativer/kube-install/releases/download/v0.7.0/kube-install-allinone-v0.7.0.tgz
-# tar -zxvf kube-install-allinone-v0.7.0.tgz
+# curl -O https://github.com/cloudnativer/kube-install/releases/download/v0.7.1/kube-install-allinone-v0.7.1.tgz
+# tar -zxvf kube-install-allinone-v0.7.1.tgz
 # cd /root/kube-install/
 ```
 

@@ -63,7 +63,7 @@ func DeleteMasterCore(mode string, masterArray []string, currentDir string, kiss
         ShellExecute("echo [Error] "+time.Now().String()+" \"The parameters you entered are incorrect, please check! \n\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/delmaster.log")
         return
     }
-    DelmasterYML("",currentDir+"/data/output"+subProcessDir, currentDir, currentUser, logName)
+    DelmasterYML("",currentDir+"/data/output"+subProcessDir, currentDir, currentUser, logName, false)
     err_delmaster := ExecuteOpt(kissh, currentDir, opt, opt, subProcessDir, "")
     if err_delmaster != nil {
         for i := 0; i < len(masterArray); i++ {
@@ -146,7 +146,7 @@ func DeleteNodeCore(mode string, nodeArray []string, currentDir string, kissh st
         }
         return
     }
-    DelnodeYML("",currentDir+"/data/output"+subProcessDir,currentDir,currentUser,logName)
+    DelnodeYML("", currentDir+"/data/output"+subProcessDir, currentDir, currentUser, logName, false)
     ExecuteDeleteNode(nodeArray, currentDir, subProcessDir, opt, mode)
     ShellExecute("echo [Info] "+time.Now().String()+" \"The system is scheduling pod to other healthy nodes in the cluster. Please wait... \n\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/delnode.log")
     time.Sleep(time.Duration(30)*time.Second)
@@ -326,8 +326,8 @@ func UninstallCore(mode string, master string, masterArray []string, node string
         ShellExecute("echo [Error] "+time.Now().String()+" \"The parameters you entered are incorrect, please check! \n\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/uninstall.log")
         return
     }
-    DelmasterYML("",currentDir+"/data/output"+subProcessDir, currentDir, currentUser, logName)
-    DelnodeYML("",currentDir+"/data/output"+subProcessDir, currentDir, currentUser, logName)
+    DelmasterYML("",currentDir+"/data/output"+subProcessDir, currentDir, currentUser, logName, true)
+    DelnodeYML("",currentDir+"/data/output"+subProcessDir, currentDir, currentUser, logName, true)
     ShellExecute("echo [Info] "+time.Now().String()+" \"Loading operation configuration ... \n\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/uninstall.log")
     err_delnode := ExecuteOpt(kissh, currentDir, opt, "delnode", subProcessDir, "")
     if err_delnode != nil {

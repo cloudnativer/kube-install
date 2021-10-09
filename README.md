@@ -60,12 +60,12 @@ Notice: We use 192.168.1.11 as the kube-install host. In fact, you can use any h
 
 You can download the `kube-install-*.tgz` package from https://github.com/cloudnativer/kube-install/releases. <br>
 
-For example, we have downloaded the `kube-install-allinone-v0.7.0.tgz` package.<br>
+For example, we have downloaded the `kube-install-allinone-v0.7.1.tgz` package.<br>
 
 ```
 # cd /root/
-# curl -O https://github.com/cloudnativer/kube-install/releases/download/v0.7.0/kube-install-allinone-v0.7.0.tgz
-# tar -zxvf kube-install-allinone-v0.7.0.tgz
+# curl -O https://github.com/cloudnativer/kube-install/releases/download/v0.7.1/kube-install-allinone-v0.7.1.tgz
+# tar -zxvf kube-install-allinone-v0.7.1.tgz
 # cd /root/kube-install/
 ```
 

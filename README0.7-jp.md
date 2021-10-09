@@ -59,12 +59,12 @@
 
 
 あなたは https://github.com/cloudnativer/kube-install/releases ここで `kube-install-*.tgz` ソフトパッケージをダウンロードします。 <br>
-例えば `kube-install-allinone-v0.7.0.tgz`パッケージをダウンロードしてインストールします：<br>
+例えば `kube-install-allinone-v0.7.1.tgz`パッケージをダウンロードしてインストールします：<br>
 
 ```
 # cd /root/
-# curl -O https://github.com/cloudnativer/kube-install/releases/download/v0.7.0/kube-install-allinone-v0.7.0.tgz
-# tar -zxvf kube-install-allinone-v0.7.0.tgz
+# curl -O https://github.com/cloudnativer/kube-install/releases/download/v0.7.1/kube-install-allinone-v0.7.1.tgz
+# tar -zxvf kube-install-allinone-v0.7.1.tgz
 # cd /root/kube-install/
 ```
 
