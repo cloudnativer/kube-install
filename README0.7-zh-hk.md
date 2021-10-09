@@ -1,7 +1,5 @@
 二進位方式一鍵離線安裝高可用的多kubernetes集羣，支持定時安裝、添加kubernetes節點、删除kubernetes節點、銷毀kubernetes主機、重建kubernetes主機、卸載集羣等。
-
 <br>
-
 （不需要在目標主機上安裝任何軟件，只需要有純淨的裸機即可離線完成高可用kubernetes集羣的部署！）
 
 <br>
