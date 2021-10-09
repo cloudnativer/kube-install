@@ -1,4 +1,4 @@
-二進位管道一鍵離線安裝高可用的多kubernetes集羣，支持定時安裝、添加kubernetes節點、删除kubernetes節點、銷毀kubernetes主機、重建kubernetes主機、卸載集羣等。
+二進位方式一鍵離線安裝高可用的多kubernetes集羣，支持定時安裝、添加kubernetes節點、删除kubernetes節點、銷毀kubernetes主機、重建kubernetes主機、卸載集羣等。
 
 <br>
 
