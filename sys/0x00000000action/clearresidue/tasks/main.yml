@@ -1,0 +1,57 @@
+- name: 1.Delete {{software_home}} dir
+  file:
+    path: "{{software_home}}"
+    state: absent
+  ignore_errors: yes
+- name: 2.Delete cert file
+  file:
+    path: /etc/kubernetes
+    state: absent
+  ignore_errors: yes
+- name: 3.Stop TTY service
+  service:
+    name: kube-install-ttyd
+    state: stopped
+    enabled: false
+  ignore_errors: yes
+- file:
+    path: /usr/local/bin/ttyd
+    state: absent
+  ignore_errors: yes
+- name: 4.Delete kubectl file
+  file:
+    path: /usr/sbin/kubectl
+    state: absent
+  ignore_errors: yes
+- name: 5.Delete other bin file
+  file:
+    path: /usr/local/bin/{{item}}
+    state: absent
+  with_items:
+    - bandwidth
+    - dhcp
+    - flannel
+    - host-device
+    - ipvlan
+    - kubeadm
+    - kubectl
+    - kubectl-convert
+    - kubelet
+    - kube-proxy
+    - macvlan
+    - mounter
+    - ptp
+    - sbr
+    - tuning
+    - bridge
+    - firewall
+    - flanneld
+    - host-local
+    - ipvsinit.sh
+    - loopback
+    - mk-docker-opts.sh
+    - portmap
+    - resolvinit.sh
+    - static
+    - vlan
+  ignore_errors: yes

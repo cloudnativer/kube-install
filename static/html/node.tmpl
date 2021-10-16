@@ -1,0 +1,324 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>{{if eq .Lang "cn"}}Kube-Install(二进制方式部署K8S集群){{else}}Kube-Install(installation of K8S in binary mode){{end}}</title>
+	<!--[if lt IE 9]>
+		<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<script src="static/js/Flot/excanvas.js"></script>
+	<![endif]-->
+        <!-- The Favicon Ico -->
+        <link rel="icon" href="/static/img/favicon.ico" type="image/x-icon" />
+	<!-- The Fonts -->
+        <link rel="stylesheet" href="static/css/fonts.css" />
+	<!-- The Main CSS File -->
+	<link rel="stylesheet" href="static/css/style.css" />
+	<!-- jQuery -->
+	<script src="static/js/jQuery/jquery-1.7.2.min.js"></script>
+	<!-- Flot -->
+	<script src="static/js/Flot/jquery.flot.js"></script>
+	<script src="static/js/Flot/jquery.flot.resize.js"></script>
+	<script src="static/js/Flot/jquery.flot.pie.js"></script>
+	<!-- DataTables -->
+	<script src="static/js/DataTables/jquery.dataTables.min.js"></script>
+	<!-- ColResizable -->
+	<script src="static/js/ColResizable/colResizable-1.3.js"></script>
+	<!-- jQuryUI -->
+	<script src="static/js/jQueryUI/jquery-ui-1.8.21.min.js"></script>
+	<!-- Uniform -->
+	<script src="static/js/Uniform/jquery.uniform.js"></script>
+	<!-- Tipsy -->
+	<script src="static/js/Tipsy/jquery.tipsy.js"></script>
+	<!-- Elastic -->
+	<script src="static/js/Elastic/jquery.elastic.js"></script>
+	<!-- ColorPicker -->
+	<script src="static/js/ColorPicker/colorpicker.js"></script>
+	<!-- SuperTextarea -->
+	<script src="static/js/SuperTextarea/jquery.supertextarea.min.js"></script>
+	<!-- UISpinner -->
+	<script src="static/js/UISpinner/ui.spinner.js"></script>
+	<!-- MaskedInput -->
+	<script src="static/js/MaskedInput/jquery.maskedinput-1.3.js"></script>
+	<!-- ClEditor -->
+	<script src="static/js/ClEditor/jquery.cleditor.js"></script>
+	<!-- Full Calendar -->
+	<script src="static/js/FullCalendar/fullcalendar.js"></script>
+	<!-- Color Box -->
+	<script src="static/js/ColorBox/jquery.colorbox.js"></script>
+	<!-- kubeinstall Script -->
+	<script src="static/js/kubeinstall.js"></script>
+    <script language="javascript">
+        function delnodelog(){
+            window.open("logs?label={{ .Label }}&opt=delnode",'_blank');
+        }
+        function addnodelog(){
+            window.open("logs?label={{ .Label }}&opt=addnode",'_blank');
+        }
+    </script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
+<body>
+    <div id="node_black" class="black_overlay"></div>
+    <div id="progress_content" class="progress_content">
+           <div style="text-align: center;">
+               <img alt="{{if eq .Lang "cn"}}正在操作中，请稍候…{{else}}Operation in progress, please wait{{end}}" src="static/img/Icons/Load/load-8.gif"/>
+               {{if eq .Lang "cn"}}&nbsp;操作中，请稍候…{{else}}&nbsp;Operating,please wait{{end}}
+           </div>
+    </div>
+    <div id="node_content" class="white_content">
+	{{ if ne .Label "" }}
+	    {{ if eq .Status "ok" }}
+                <div class="widget_header wwOptions">
+                        <h4 class="widget_header_title wwIcon i_16_node">{{if eq .Lang "cn"}}给Kubernetes集群新增Node节点{{else}}Add node to kubernetes cluster{{end}}</h4>
+	                <div style="text-align: right;"><img alt="{{if eq .Lang "cn"}}点击关闭{{else}}Close{{end}}" src="static/img/Button/close03.png" onclick = "document.getElementById('node_content').style.display='none';document.getElementById('node_black').style.display='none'"/></div>
+                </div>
+		<div class="widget_contents noPadding">
+                        <form action="/addnode?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" id="nodeadd" name="nodeadd" method="post" enctype="multipart/form-data" target="_self" >
+                                <div class="line_grid">
+                                        <div class="g_3"><span class="label">{{if eq .Lang "cn"}}Kubernetes集群标示{{else}}Kubernetes cluster label{{end}}</span></div>
+                                        <div class="g_9">
+                                                <input name="label" value="{{.Label}}" class="readonly_field" type="text" readonly />
+                                                <div class="field_notice">{{if eq .Lang "cn"}}无需修改！添加Kubernetes Node的时候，集群标示是{{if eq .Lang "cn"}}默认{{else}}default{{end}}从系统后台中获取的。{{else}}No need to modify! When adding node, the cluster label is obtained from the system background by default.{{end}}</div>
+                                        </div>
+                                </div>
+				<div class="line_grid">
+					<div class="g_3"><span class="label">{{if eq .Lang "cn"}}Kubernetes Node IP地址{{else}}Kubernetes Node IP address{{end}} <span class="must">*</span></span></div>
+					<div class="g_9">
+						<input name="node" id="node" value="{{.Node}}" class="simple_field" type="text" required />
+						<div class="field_notice">{{if eq .Lang "cn"}}填写要部署的Kubernetes Node主机IP地址，多个IP请用英文逗号","隔开{{else}}Fill in the IP address of the kubernetes node host to be deployed. Separate multiple IP addresses with English comma ","{{end}}</div>
+					</div>
+				</div>
+				<div class="line_grid">
+					<div class="g_3"><span class="label">{{if eq .Lang "cn"}}操作系统类型{{else}}Operating system type{{end}} <span class="must">*</span></span>
+					</div>
+					<div class="g_9">
+						<select name="ostype" class="simple_form">
+                                                  <option value="centos7" {{ if eq .Ostype "centos7" }} selected="selected" {{end}} >CentOS Linux 7</option>
+                                                  <option value="centos8" {{ if eq .Ostype "centos8" }} selected="selected" {{end}} >CentOS Linux 8</option>
+                                                  <option value="rhel7" {{ if eq .Ostype "rhel7" }} selected="selected" {{end}} >Red Hat Enterprise Linux 7</option>
+                                                  <option value="rhel8" {{ if eq .Ostype "rhel8" }} selected="selected" {{end}} >Red Hat Enterprise Linux 8</option>
+                                                  <option value="ubuntu20" {{ if eq .Ostype "ubuntu20" }} selected="selected" {{end}} >Ubuntu Server 20</option>
+						  <option value="suse15" {{ if eq .Ostype "suse15" }} selected="selected" {{end}} >OpenSUSE 15</option>
+						</select>
+                                                <div class="field_notice">{{if eq .Lang "cn"}}选择目标主机的操作系统类型。相同批次的主机操作系统需要保持一致{{else}}Select the operating system type of the target host. Host operating systems of the same batch need to be consistent!{{end}}</div>
+					</div>
+				</div>
+				<div class="line_grid">
+					<div class="g_3"><span class="label">{{if eq .Lang "cn"}}部署到目标主机路径{{else}}Deploy to target host path{{end}} </span></div>
+					<div class="g_9">
+						<input name="softdir" {{ if eq .Softdir "" }} value="/opt/kube-install" {{else}} value="{{.Softdir}}" {{end}} class="simple_field" type="text" required readonly />
+						<div class="field_notice">{{if eq .Lang "cn"}}无需修改！相同kubernetes集群的node主机路径需要保持同样的标准，以便于后期的运维管理。{{else}}No need to modify! The node host path of the same kubernetes cluster needs to maintain the same standard for later operation and maintenance management.{{end}}</div>
+					</div>
+				</div>
+				<div class="line_grid">
+					<div class="g_10" style="text-align: center;">
+						<br>
+						<input type="hidden" name="k8sver" value="{{.K8sver}}"/>
+                                                <input type="submit" value="{{if eq .Lang "cn"}}确认添加{{else}}Submit{{end}}" class="submitIt simple_buttons" /> &nbsp;&nbsp;&nbsp;&nbsp;
+                                                <input type="reset" value="{{if eq .Lang "cn"}}重新填写{{else}}Reset{{end}}" class="submitIt simple_buttons" />
+						<br><br><br><br><br>
+					</div>
+				</div>
+			</form>
+	    	</div>
+	    {{else}}
+                <div style="text-align: right;"><img alt="{{if eq .Lang "cn"}}点击关闭{{else}}Close{{end}}" src="static/img/Button/close03.png" onclick = "document.getElementById('node_content').style.display='none';document.getElementById('node_black').style.display='none'"/></div>
+                <div class="result_label" style="text-align:center;"><br><img alt="添加失败！" src="static/img/Button/result02.png" /><br><br>{{if eq .Lang "cn"}}添加失败！Kubernetes集群状态不正常，此时无法添加Node！{{else}}Failed to add! Kubernetes cluster status is unhealthy. Node cannot be added at this time! {{end}}<br><br><br><br>(1) Step 1: you can <a onclick = "document.getElementById('node_content').style.display='none';document.getElementById('node_black').style.display='none'"><b><u>click here to return to the {{if eq .Lang "cn"}}[Kubernetes Node管理]{{else}}[Kubernetes Node Management]{{end}} page</u></b></a>;<br><br>(2) Step 2: You need to manually check the health of {{.Label}} cluster.<br><br>(3) Step 3: then add the node.</div>
+	    {{end}}
+	{{else}}
+	        <div style="text-align: right;"><img alt="{{if eq .Lang "cn"}}点击关闭{{else}}Close{{end}}" src="static/img/Button/close03.png" onclick = "document.getElementById('node_content').style.display='none';document.getElementById('node_black').style.display='none'"/></div>
+		<div class="result_label" style="text-align:center;"><br><img alt="添加失败！" src="static/img/Button/result02.png" /><br><br>{{if eq .Lang "cn"}}添加失败！请先选定一个Kubernetes集群！{{else}}Failed to add! Please select a kubernetes cluster first! {{end}}<br><br><br><br>(1) Step 1: you can <a onclick = "document.getElementById('node_content').style.display='none';document.getElementById('node_black').style.display='none'"><b><u>click here to return to the {{if eq .Lang "cn"}}[Kubernetes Node管理]{{else}}[Kubernetes Node Management]{{end}} page</u></b></a>;<br><br>(2) Step 2: click the {{if eq .Lang "cn"}}[切换Kubernetes集群]{{else}}[Switch Kubernetes]{{end}} button to select the kubernetes clusters.<br><br>(3) Step 3: then add the node.</div>
+	{{end}}
+    </div>
+
+        <header class="main_header">
+                <div class="wrapper">
+                        <div class="logo">
+                                <a href="#" Title="kubeinstall Home">
+                                        <img src="static/img/kubeinstall_logo.png" alt="kubeinstall_logo">
+                                </a>
+                        </div>
+                        <nav class="top_buttons">
+                                <ul>
+                                        <li class="big_button">
+                                                <div class="out_border">
+                                                        <div class="button_wrapper">
+                                                                <div class="in_border" onclick="document.getElementById('log_black').style.display='block';document.getElementById('log_content').style.display='block'">
+                                                                        <a {{if eq .Lang "cn"}} href="/nodeadmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&lang=en" {{else}} href="/nodeadmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&lang=cn" {{end}} title="{{if eq .Lang "cn"}}切换语言{{else}}Switch Language{{end}}" class="the_button">
+                                                                                {{if eq .Lang "cn"}}
+                                                                                        <span class="i_32_en"></span>
+                                                                                {{else}}
+                                                                                        <span class="i_32_cn"></span>
+                                                                                {{end}}
+                                                                        </a>
+                                                                </div>
+                                                        </div>
+                                                </div>
+                                        </li>
+                                        <li class="big_button">
+                                                <div class="out_border">
+                                                        <div class="button_wrapper">
+                                                                <div class="in_border">
+                                                                        <a href="##" title="{{if eq .Lang "cn"}}版本信息{{else}}Version Information{{end}}" class="the_button bdC"><span class="i_32_info"></span></a>
+                                                                        <div class="dialog bDialog" title="{{if eq .Lang "cn"}}版本信息{{else}}Version Information{{end}}"><span class="label lwParagraph"><b>{{if eq .Lang "cn"}}[版本]{{else}}[Version]{{end}}</b> <br>&nbsp;&nbsp;&nbsp;&nbsp;Version: {{.Version}} <br>&nbsp;&nbsp;&nbsp;&nbsp;Release Date: {{.Releasedate}} <br><br><b>{{if eq .Lang "cn"}}[兼容性]{{else}}[Compatibility]{{end}}</b> <br>&nbsp;&nbsp;&nbsp;&nbsp;Kubernetes: {{.Compatiblek8s}}<br>&nbsp;&nbsp;&nbsp;&nbsp;OS: {{.Compatibleos}} <br>&nbsp;&nbsp;&nbsp;&nbsp;Hardware: X86 | AMD64 <br><br></span></div>
+                                                                </div>
+                                                        </div>
+                                                </div>
+                                        </li>
+                                </ul>
+                        </nav>
+                </div>
+        </header>
+
+        <div class="wrapper small_menu">
+                <ul class="menu_small_buttons">
+                        <li><a title="{{if eq .Lang "cn"}}信息概览{{else}}Information Overview{{end}}" class="i_22_dashboard" href="/?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}"></a></li>
+                        <li><a title="{{if eq .Lang "cn"}}管理Kubernetes集群{{else}}Managing Kubernetes Clusters{{end}}" class="i_22_cluster" href="clusterlist?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}"></a></li>
+                        <li><a title="{{if eq .Lang "cn"}}管理Kubernetes Master{{else}}Managing Kubernetes Master{{end}}" class="i_22_master" href="masteradmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}"></a></li>
+                        <li><a title="{{if eq .Lang "cn"}}管理Kubernetes Node{{else}}Managing Kubernetes Nodes{{end}}" class="i_22_node smActive" href="nodeadmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}"></a></li>
+                        <li><a title="{{if eq .Lang "cn"}}常用工具{{else}}Common Tools{{end}}" class="i_22_tools" href="tools?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}"></a></li>
+                        <li><a title="{{if eq .Lang "cn"}}查看各类日志{{else}}View all kinds of logs{{end}}" class="i_22_logs" href="logs?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}"></a></li>
+                </ul>
+        </div>
+
+        <div class="wrapper contents_wrapper">
+
+                <aside class="sidebar">
+                        <ul class="tab_nav">
+                                <li class="i_32_dashboard">
+                                        <a href="/?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" title="{{if eq .Lang "cn"}}基本信息{{else}}Basic information{{end}}">
+                                                <span class="tab_label">Dashboard</span>
+                                                <span class="tab_info">{{if eq .Lang "cn"}}信息概览{{else}}Overview{{end}}</span>
+                                        </a>
+                                </li>
+                                <li class="i_32_cluster">
+                                        <a href="clusterlist?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" title="{{if eq .Lang "cn"}}管理Kubernetes集群{{else}}Managing Kubernetes Clusters{{end}}">
+                                                <span class="tab_label">Cluster</span>
+                                                <span class="tab_info">{{if eq .Lang "cn"}}集群管理{{else}}Management{{end}}</span>
+                                        </a>
+                                </li>
+                                <li class="i_32_master">
+                                        <a href="masteradmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" title="{{if eq .Lang "cn"}}管理Kubernetes Master{{else}}Managing Kubernetes Master{{end}}">
+                                                <span class="tab_label">Master</span>
+                                                <span class="tab_info">{{if eq .Lang "cn"}}Master管理{{else}}Rebuild/Del{{end}}</span>
+                                        </a>
+                                </li>
+                                <li class="active_tab i_32_node">
+                                        <a href="nodeadmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" title="{{if eq .Lang "cn"}}管理Kubernetes Node{{else}}Managing Kubernetes Nodes{{end}}">
+                                                <span class="tab_label">Node</span>
+                                                <span class="tab_info">{{if eq .Lang "cn"}}Node管理{{else}}Add/Del/Op{{end}}</span>
+                                        </a>
+                                </li>
+                                <li class="i_32_tools">
+                                        <a href="tools?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" title="{{if eq .Lang "cn"}}实用小工具{{else}}Some Utilities Tools{{end}}">
+                                                <span class="tab_label">Tools</span>
+                                                <span class="tab_info">{{if eq .Lang "cn"}}常用工具{{else}}Utilities Tools{{end}}</span>
+                                        </a>
+                                </li>
+                                <li class="i_32_logs">
+                                        <a href="logs?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" title="{{if eq .Lang "cn"}}查看各类日志{{else}}View All Kinds of Logs{{end}}">
+                                                <span class="tab_label">Logs</span>
+                                                <span class="tab_info">{{if eq .Lang "cn"}}操作日志{{else}}View Logs{{end}}</span>
+                                        </a>
+                                </li>
+                        </ul>
+                </aside>
+
+		<div class="contents">
+			<div class="grid_wrapper">
+
+				<div class="g_6 contents_header">
+					<h3 class="i_16_node tab_label">Kubernetes {{if eq .Lang "cn"}}Node管理{{else}}Node Management{{end}}</h3>
+					<div><span class="label">{{if eq .Lang "cn"}}Kubernetes集群中的Node节点的新增扩容与销毁操作{{else}}Expansion and destruction of node in kubernetes cluster{{end}}</span></div>
+				</div>
+
+                                <div class="g_6 contents_options">
+                                        <div class="simple_buttons">
+                                                <div class="bwIcon i_16_k8s">
+                                                        <select name="k8sname" onchange="self.location.href=options[selectedIndex].value" class="switch_select">
+                                                                <option value="none" selected disabled hidden>{{if eq .Lang "cn"}}切换Kubernetes集群{{else}}Switch Kubernetes{{end}}</option>
+                                                                {{ range $v := .Selectlist}}
+                                                                    {{ if ne $v.Status "notinstall" }}
+                                                                        <option value="nodeadmin?label={{$v.Label}}&k8sver={{$v.K8sver}}&softdir={{$v.Softdir}}&ostype={{$v.Ostype}}" {{ if eq $v.Label $v.Labelnow }} selected="selected" {{end}} >{{ $v.Label }}</option>
+                                                                    {{ end }}
+                                                                {{ end }}
+                                                        </select>
+                                                </div>
+                                        </div>
+                                </div>
+
+				<!-- Separator -->
+				<div class="g_12 separator"><span></span></div>
+
+                                <div class="g_2">
+                                        <button onclick = "document.getElementById('node_content').style.display='block';document.getElementById('node_black').style.display='block'" class="submitIt simple_buttons">{{if eq .Lang "cn"}}添加Node{{else}}Add Node{{end}}</button>
+                                </div>
+                                <form action="/delnode?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" id="nodeadmin" name="nodeadmin" method="post" enctype="multipart/form-data" target="_self">
+				<div class="g_2">
+					<input {{ if ne .Label "" }} type="submit" {{else}} type="button" {{end}} value="{{if eq .Lang "cn"}}销毁Node{{else}}Delete Node{{end}}" class="submitIt simple_buttons" />
+				</div>
+				<div class="g_2">
+					<input type="button" class="submitIt simple_buttons" onclick="addnodelog()" value="{{if eq .Lang "cn"}}查看添加日志{{else}}View Add Log{{end}}">
+				</div>
+				<div class="g_2">
+					<input type="button" class="submitIt simple_buttons" onclick="delnodelog()" value="{{if eq .Lang "cn"}}{{if eq .Lang "cn"}}查看销毁日志{{else}}View Delete Log{{end}}{{else}}View Delete Log{{end}}">
+				</div>
+
+				<div class="g_12">
+					<div class="widget_contents noPadding twCheckbox">
+						<table class="tables datatable noObOLine">
+							<thead>
+								<tr>
+									<th>
+										<input type="checkbox" class="simple_form tMainC">
+									</th>
+									<th>{{if eq .Lang "cn"}}Node IP地址{{else}}Node IP Address{{end}}</th>
+									<th>{{if eq .Lang "cn"}}部署状态{{else}}Installation Status{{end}}</th>
+                                                                        <th>{{if eq .Lang "cn"}}终端状态{{else}}Terminal Status{{end}}</th>
+                                                                        <th>{{if eq .Lang "cn"}}更多操作{{else}}More Operation{{end}}</th>
+								</tr>
+							</thead>
+							<tbody>
+								{{ range .Nodelist }}{{ if ne .Nodestatus "notinstall" }}
+									<tr class="status_open">
+										<td><input type="checkbox" class="simple_form" name="node" value="{{ .Node }}"></td>
+										<td>{{ .Node }}</td>
+										<td align="center">
+									{{ if eq .Nodestatus "adding" }} <img src="static/img/Icons/Load/load-4.gif" style="vertical-align: middle;"/> <span style="display: inline-block;">{{if eq .Lang "cn"}}部署中{{else}}Deploying{{end}}</span>{{end}}
+									{{ if eq .Nodestatus "deleting" }} <img src="static/img/Icons/Load/load-2.gif" style="vertical-align: middle;"/> <span style="display: inline-block;">{{if eq .Lang "cn"}}销毁中{{else}}Deleting{{end}}</span>{{end}}
+									{{ if eq .Nodestatus "ok" }} <img src="static/img/Icons/32/i_32_ok.png" style="vertical-align: middle;"/> <span style="display: inline-block;">{{if eq .Lang "cn"}}正常{{else}}OK{{end}}</span>{{end}}
+									{{ if eq .Nodestatus "notok" }} <img src="static/img/Icons/32/i_32_notok.png" style="vertical-align: middle;"/> <span style="display: inline-block;">{{if eq .Lang "cn"}}异常{{else}}Error{{end}}</span>{{end}}
+									{{ if eq .Nodestatus "notinstall" }} <img src="static/img/Icons/32/i_32_notinstall.png" style="vertical-align: middle;"/> <span style="display: inline-block;">{{if eq .Lang "cn"}}未部署{{else}}Not installed{{end}}</span>{{end}}
+									{{ if eq .Nodestatus "unknow" }} <img src="static/img/Icons/32/i_32_unknow.png" style="vertical-align: middle;"/> <span style="display: inline-block;">{{if eq .Lang "cn"}}未知状态{{else}}Unknow{{end}}</span>{{end}}
+										</td>
+                                                                                <td align="center">
+                                                                        {{ if eq .TTYstatus "enable" }} <img src="static/img/Icons/32/i_32_ttyenable.png" style="vertical-align: middle;"/> <span style="display: inline-block;">{{if eq .Lang "cn"}}已启用{{else}}Enable{{end}}</span> {{else}} <img src="static/img/Icons/32/i_32_ttydisable.png" style="vertical-align: middle;"/> <span style="display: inline-block;">{{if eq .Lang "cn"}}已禁用{{else}}Disable{{end}}</span>{{end}}
+                                                                                </td>
+                                                                                <td align="center">{{ if eq .Nodestatus "ok" }}<a href="nodeinfo?label={{ .Label }}&nodeip={{ .Node }}&softdir={{ .Softdir }}&k8sver={{ .K8sver }}&nodestatus={{ .Nodestatus }}&ostype={{ .Ostype }}" style="background:#2E8B57; background-color:#2E8B57; color:#ffffff;">&nbsp;&nbsp;{{if eq .Lang "cn"}}查看详细{{else}}View Details{{end}}&nbsp;&nbsp;</a>{{end}} {{ if eq .TTYstatus "enable" }}<a href="http://{{ .Node }}:7681" target="_blank" style="background:#2E8B57; background-color:#2E8B57; color:#ffffff;">&nbsp;&nbsp;{{if eq .Lang "cn"}}登录终端{{else}}Web Terminal{{end}}&nbsp;&nbsp;</a>{{end}} | {{ if eq .TTYstatus "enable" }} <a onclick="document.getElementById('progress_content').style.display='block';document.getElementById('node_black').style.display='block';window.open('tty?ttyip={{ .Node }}&ttyoption=disable&opt=nodetty&label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}','_self');" href="##" style="background:#5182B6; background-color:#5182B6; color:#ffffff;">&nbsp;&nbsp;{{if eq .Lang "cn"}}禁用终端{{else}}Disable Terminal{{end}}&nbsp;&nbsp;</a> {{else}} <a onclick="document.getElementById('progress_content').style.display='block';document.getElementById('node_black').style.display='block';window.open('tty?ttyip={{ .Node }}&ttyoption=enable&opt=nodetty&label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}','_self');" href="##" style="background:#5182B6; background-color:#5182B6; color:#ffffff;">&nbsp;&nbsp;{{if eq .Lang "cn"}}启用终端{{else}}Enable Terminal{{end}}&nbsp;&nbsp;</a> {{end}} </td>
+
+									</tr>
+								{{end}}{{end}}
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<input type="hidden" name="label" value="{{.Label}}">
+				<input type="hidden" name="k8sver" value="{{.K8sver}}"/>
+				<input type="hidden" name="softdir" value="{{.Softdir}}">
+				<input type="hidden" name="ostype" value="{{.Ostype}}">
+				</form>
+
+			</div>
+		</div>
+
+	
+	<footer>
+		<div class="wrapper">
+			<span class="copyright">
+				Kube-Install Version {{.Version}} &nbsp; | &nbsp; Powered By <a target="_blank" href="https://cloudnativer.github.io">CloudNativer</a>
+			</span>
+		</div>
+	</footer>
+</body>
+</html>

@@ -1,0 +1,47 @@
+- name: 1.Create /tmp/.kubeinstalltemp{{sub_process_dir}} directory
+  file:
+    path: "/tmp/.kubeinstalltemp{{sub_process_dir}}/{{item}}"
+    state: directory
+  with_items:
+    - bin
+    - docs
+    - pkg
+    - proc
+    - config
+    - yaml
+- name: 2.Distributing deployment files to kubernetes master, please wait...
+  copy:
+    src: "/root/kube-install/bin"
+    dest: "/tmp/.kubeinstalltemp{{sub_process_dir}}/"
+- copy:
+    src: "/root/kube-install/docs"
+    dest: "/tmp/.kubeinstalltemp{{sub_process_dir}}/"
+- copy:
+    src: "/root/kube-install/pkg"
+    dest: "/tmp/.kubeinstalltemp{{sub_process_dir}}/"
+- copy:
+    src: "/root/kube-install/proc"
+    dest: "/tmp/.kubeinstalltemp{{sub_process_dir}}/"
+- copy:
+    src: "/root/kube-install/config"
+    dest: "/tmp/.kubeinstalltemp{{sub_process_dir}}/"
+- copy:
+    src: "/root/kube-install/yaml"
+    dest: "/tmp/.kubeinstalltemp{{sub_process_dir}}/"
+- copy:
+    src: "/root/kube-install/kube-install"
+    dest: "/tmp/.kubeinstalltemp{{sub_process_dir}}/"
+- copy:
+    src: "/root/kube-install/kube-install"
+    dest: "/usr/local/bin/kube-install"
+    mode: 0755
+- name: 3.Configure permissions for executables
+  file: path=/tmp/.kubeinstalltemp{{sub_process_dir}}/{{ item }} mode=755 owner=root group=root
+  with_items:
+    - sys/0x00000000000ssh/sshkey-init.sh
+    - sys/0x00000000000ssh/sshops-init.sh
+    - proc/getmasterconfig.sh
+- name: 4.Install distributed control software
+  shell: "/tmp/.kubeinstalltemp{{sub_process_dir}}/sys/0x00000000000ssh/sshops-init.sh /tmp/.kubeinstalltemp{{sub_process_dir}} /tmp/.kubeinstalltemp{{sub_process_dir}}"
+  ignore_errors: yes
+

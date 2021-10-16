@@ -1,0 +1,363 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>{{if eq .Lang "cn"}}Kube-Install(二进制方式部署K8S集群){{else}}Kube-Install(installation of K8S in binary mode){{end}}</title>
+	<!--[if lt IE 9]>
+		<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<script src="static/js/Flot/excanvas.js"></script>
+	<![endif]-->
+        <!-- The Favicon Ico -->
+        <link rel="icon" href="/static/img/favicon.ico" type="image/x-icon" />
+	<!-- The Fonts -->
+        <link rel="stylesheet" href="static/css/fonts.css" />
+	<!-- The Main CSS File -->
+	<link rel="stylesheet" href="static/css/style.css" />
+	<!-- jQuery -->
+	<script src="static/js/jQuery/jquery-1.7.2.min.js"></script>
+	<!-- Flot -->
+	<script src="static/js/Flot/jquery.flot.js"></script>
+	<script src="static/js/Flot/jquery.flot.resize.js"></script>
+	<script src="static/js/Flot/jquery.flot.pie.js"></script>
+	<!-- DataTables -->
+	<script src="static/js/DataTables/jquery.dataTables.min.js"></script>
+	<!-- ColResizable -->
+	<script src="static/js/ColResizable/colResizable-1.3.js"></script>
+	<!-- jQuryUI -->
+	<script src="static/js/jQueryUI/jquery-ui-1.8.21.min.js"></script>
+	<!-- Uniform -->
+	<script src="static/js/Uniform/jquery.uniform.js"></script>
+	<!-- Tipsy -->
+	<script src="static/js/Tipsy/jquery.tipsy.js"></script>
+	<!-- Elastic -->
+	<script src="static/js/Elastic/jquery.elastic.js"></script>
+        <!-- Echarts -->
+        <script src="static/js/Echarts/echarts.min.js"></script>
+	<!-- ColorPicker -->
+	<script src="static/js/ColorPicker/colorpicker.js"></script>
+	<!-- SuperTextarea -->
+	<script src="static/js/SuperTextarea/jquery.supertextarea.min.js"></script>
+	<!-- UISpinner -->
+	<script src="static/js/UISpinner/ui.spinner.js"></script>
+	<!-- MaskedInput -->
+	<script src="static/js/MaskedInput/jquery.maskedinput-1.3.js"></script>
+	<!-- ClEditor -->
+	<script src="static/js/ClEditor/jquery.cleditor.js"></script>
+	<!-- Full Calendar -->
+	<script src="static/js/FullCalendar/fullcalendar.js"></script>
+	<!-- Color Box -->
+	<script src="static/js/ColorBox/jquery.colorbox.js"></script>
+	<!-- kubeinstall Script -->
+	<script src="static/js/kubeinstall.js"></script>
+	<script>  
+	            //绘制饼图  
+	            function drawCircle(canvasId, data_arr, color_arr, text_arr)  
+	            {  
+	                var c = document.getElementById(canvasId);  
+	                var ctx = c.getContext("2d");  
+	  
+	                var radius = c.height / 2 - 4; //半径  
+	                var ox = radius + 22, oy = radius + 5; //圆心  
+	  
+	                var width = 20, height = 10; //图例宽和高  
+	                var posX = ox * 2 + 22, posY = 20;   //  
+	                var textX = posX + width + 5, textY = posY + 10;  
+	  
+	                var startAngle = 0; //起始弧度  
+	                var endAngle = 0;   //结束弧度  
+	                for (var i = 0; i < data_arr.length; i++)  
+	                {  
+	                    //绘制饼图  
+	                    endAngle = endAngle + ( data_arr[i] / 100 ) * Math.PI * 2; //结束弧度  
+	                    ctx.fillStyle = color_arr[i];  
+	                    ctx.beginPath();  
+	                    ctx.moveTo(ox, oy); //移动到到圆心  
+	                    ctx.arc(ox, oy, radius, startAngle, endAngle, false);  
+	                    ctx.closePath();  
+	                    ctx.fill();  
+	                    startAngle = endAngle; //设置起始弧度  
+	  
+	                    //绘制比例图及文字  
+	                    ctx.fillStyle = color_arr[i];  
+	                    ctx.fillRect(posX, posY + 20 * i, width, height);  
+	                    ctx.moveTo(posX, posY + 20 * i);  
+	                    ctx.font = 'bold 12px 微软雅黑';    //斜体 30像素 微软雅黑字体  
+	                    ctx.fillStyle = color_arr[i]; //"#000000";  
+	                    var percent = text_arr[i] + "：" + data_arr[i] + "%";  
+	                    ctx.fillText(percent, textX, textY + 20 * i);  
+	                }  
+	            }  
+	  
+	            function init() {  
+	                //绘制饼图  
+	                //比例数据和颜色  
+	                var data_arr = [{{.Status1}}, {{.Status2}}, {{.Status3}}, {{.Status4}}, {{.Status5}}];  
+	                var color_arr = ["#009933",'#003366','#CC00FF','#FF0033','#999999'];  
+			{{if eq .Lang "cn"}}
+                        	var text_arr = ["正常", "部署中", "卸载中", "异常", "未知状态"];
+			{{else}}
+                        	var text_arr = ["OK", "Installing", "Uninstalling", "Error", "Unknow"];
+			{{end}}
+	                drawCircle("canvas_circle", data_arr, color_arr, text_arr);  
+	            }  
+	  
+	            //页面加载时执行init()函数  
+	            window.onload = init;  
+
+	</script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
+<body>
+        <header class="main_header">
+                <div class="wrapper">
+                        <div class="logo">
+                                <a href="#" Title="kubeinstall Home">
+                                        <img src="static/img/kubeinstall_logo.png" alt="kubeinstall_logo">
+                                </a>
+                        </div>
+                        <nav class="top_buttons">
+                                <ul>
+                                        <li class="big_button">
+                                                <div class="out_border">
+                                                        <div class="button_wrapper">
+                                                                <div class="in_border" onclick="document.getElementById('log_black').style.display='block';document.getElementById('log_content').style.display='block'">
+                                                                        <a {{if eq .Lang "cn"}} href="/?lang=en" {{else}} href="/?lang=cn" {{end}} title="{{if eq .Lang "cn"}}切换语言{{else}}Switch Language{{end}}" class="the_button">
+										{{if eq .Lang "cn"}}
+											<span class="i_32_en"></span>
+										{{else}} 
+	                                                                                <span class="i_32_cn"></span>
+										{{end}}
+                                                                        </a>
+                                                                </div>
+                                                        </div>
+                                                </div>
+                                        </li>
+                                        <li class="big_button">
+                                                <div class="out_border">
+                                                        <div class="button_wrapper">
+                                                                <div class="in_border">
+                                                                        <a href="##" title="{{if eq .Lang "cn"}}版本信息{{else}}Version Information{{end}}" class="the_button bdC"><span class="i_32_info"></span></a>
+                                                                        <div class="dialog bDialog" title="{{if eq .Lang "cn"}}版本信息{{else}}Version Information{{end}}"><span class="label lwParagraph"><b>{{if eq .Lang "cn"}}[版本]{{else}}[Version]{{end}}</b> <br>&nbsp;&nbsp;&nbsp;&nbsp;Version: {{.Version}} <br>&nbsp;&nbsp;&nbsp;&nbsp;Release Date: {{.Releasedate}} <br><br><b>{{if eq .Lang "cn"}}[兼容性]{{else}}[Compatibility]{{end}}</b> <br>&nbsp;&nbsp;&nbsp;&nbsp;Kubernetes: {{.Compatiblek8s}}<br>&nbsp;&nbsp;&nbsp;&nbsp;OS: {{.Compatibleos}} <br>&nbsp;&nbsp;&nbsp;&nbsp;Hardware: X86 | AMD64 <br><br></span></div>
+                                                                </div>
+                                                        </div>
+                                                </div>
+                                        </li>
+                                </ul>
+                        </nav>
+                </div>
+        </header>
+
+	<div class="wrapper small_menu">
+		<ul class="menu_small_buttons">
+			<li><a title="{{if eq .Lang "cn"}}信息概览{{else}}Information Overview{{end}}" class="i_22_dashboard smActive" href="/?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}"></a></li>
+			<li><a title="{{if eq .Lang "cn"}}管理Kubernetes集群{{else}}Managing Kubernetes Clusters{{end}}" class="i_22_cluster" href="clusterlist?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}"></a></li>
+			<li><a title="{{if eq .Lang "cn"}}管理Kubernetes Master{{else}}Managing Kubernetes Master{{end}}" class="i_22_master" href="masteradmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}"></a></li>
+			<li><a title="{{if eq .Lang "cn"}}管理Kubernetes Node{{else}}Managing Kubernetes Nodes{{end}}" class="i_22_node" href="nodeadmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}"></a></li>
+			<li><a title="{{if eq .Lang "cn"}}常用工具{{else}}Common Tools{{end}}" class="i_22_tools" href="tools?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}"></a></li>
+			<li><a title="{{if eq .Lang "cn"}}查看各类日志{{else}}View all kinds of logs{{end}}" class="i_22_logs" href="logs?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}"></a></li>
+		</ul>
+	</div>
+
+	<div class="wrapper contents_wrapper">
+		
+		<aside class="sidebar">
+			<ul class="tab_nav">
+				<li class="active_tab i_32_dashboard">
+					<a href="/?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" title="{{if eq .Lang "cn"}}基本信息{{else}}Basic information{{end}}">
+						<span class="tab_label">Dashboard</span>
+						<span class="tab_info">{{if eq .Lang "cn"}}信息概览{{else}}Overview{{end}}</span>
+					</a>
+				</li>
+				<li class="i_32_cluster">
+					<a href="clusterlist?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" title="{{if eq .Lang "cn"}}管理Kubernetes集群{{else}}Managing Kubernetes Clusters{{end}}">
+						<span class="tab_label">Cluster</span>
+						<span class="tab_info">{{if eq .Lang "cn"}}集群管理{{else}}Management{{end}}</span>
+					</a>
+				</li>
+				<li class="i_32_master">
+					<a href="masteradmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" title="{{if eq .Lang "cn"}}管理Kubernetes Master{{else}}Managing Kubernetes Master{{end}}">
+						<span class="tab_label">Master</span>
+						<span class="tab_info">{{if eq .Lang "cn"}}Master管理{{else}}Rebuild/Del{{end}}</span>
+					</a>
+				</li>
+				<li class="i_32_node">
+					<a href="nodeadmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" title="{{if eq .Lang "cn"}}管理Kubernetes Node{{else}}Managing Kubernetes Nodes{{end}}">
+						<span class="tab_label">Node</span>
+						<span class="tab_info">{{if eq .Lang "cn"}}Node管理{{else}}Add/Del/Op{{end}}</span>
+					</a>
+				</li>
+				<li class="i_32_tools">
+					<a href="tools?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" title="{{if eq .Lang "cn"}}实用小工具{{else}}Some Utilities Tools{{end}}">
+						<span class="tab_label">Tools</span>
+						<span class="tab_info">{{if eq .Lang "cn"}}常用工具{{else}}Utilities Tools{{end}}</span>
+					</a>
+				</li>
+				<li class="i_32_logs">
+					<a href="logs?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" title="{{if eq .Lang "cn"}}查看各类日志{{else}}View All Kinds of Logs{{end}}">
+						<span class="tab_label">Logs</span>
+						<span class="tab_info">{{if eq .Lang "cn"}}操作日志{{else}}View Logs{{end}}</span>
+					</a>
+				</li>
+			</ul>
+		</aside>
+
+		<div class="contents">
+			<div class="grid_wrapper">
+
+				<!-- Quick Statistics -->
+				<div class="g_3 quick_stats">
+					<div class="big_stats visitor_stats">
+						{{.K8snum}}
+					</div>
+					<h5 class="stats_info">{{if eq .Lang "cn"}}K8S集群数量{{else}}Number of Kubernetes{{end}}</h5>
+				</div>
+				<div class="g_3 quick_stats">
+					<div class="big_stats tickets_stats">
+						{{.Syscpu}}%
+					</div>
+					<h5 class="stats_info">{{if eq .Lang "cn"}}系统CPU占用{{else}}System CPU Usage{{end}}</h5>
+				</div>
+				<div class="g_3 quick_stats">
+					<div class="big_stats users_stats">
+						{{.Sysmem}}%
+					</div>
+					<h5 class="stats_info">{{if eq .Lang "cn"}}系统内存占用{{else}}System Memory Usage{{end}}</h5>
+				</div>
+				<div class="g_3 quick_stats">
+					<div class="big_stats orders_stats">
+						{{.Sysdisk}}%
+					</div>
+					<h5 class="stats_info">{{if eq .Lang "cn"}}系统磁盘占用{{else}}System Disk Usage{{end}}</h5>
+				</div>
+
+				<div class="g_12 separator under_stat"><span></span></div>
+
+				<!-- Chats -->
+				<!-- Pie Charts -->
+				<div class="g_6">
+					<div class="widget_header">
+						<h4 class="widget_header_title wwIcon i_16_pie">{{if eq .Lang "cn"}}{{if eq .Lang "cn"}}K8S集群部署状态{{else}}K8s cluster installation status{{end}}占比{{else}}Proportion of Kubernetes Installation Status{{end}}</h4>
+					</div>
+					<div class="widget_contents">
+						<canvas id="canvas_circle" width="380" height="165"> </canvas>  
+					</div>
+				</div>
+
+                                <div class="g_6">
+                                        <div class="widget_header">
+                                                <h4 class="widget_header_title wwIcon i_16_pie">{{if eq .Lang "cn"}}K8S集群节点数量Top5{{else}}Top 5 Number of Kubernetes Nodes{{end}}</h4>
+                                        </div>
+                                        <div class="widget_contents">
+						<div id="k8snodenum" style="width: 380px;height:165px;"></div>
+                                                <script type="text/javascript">
+                                                    var myChart = echarts.init(document.getElementById('k8snodenum'));
+
+                                                    //初始化数据
+                                                    var category = [ {{ range .K8slist }} {{.K8s}}, {{end}} ];
+                                                    var barData = [ {{ range .K8slist }} {{.Nodenum}}, {{end}} ];
+
+                                                    var option = {
+                                                        tooltip: {
+                                                            trigger: 'axis',
+                                                            axisPointer: {
+                                                                type: 'shadow'
+                                                            }
+                                                        },
+                                                        grid: {
+                                                            left: '3%',
+                                                            right: '6%',
+                                                            top: '4%',
+                                                            bottom: '3%',
+                                                            containLabel: true
+                                                        },
+                                                        xAxis: {
+                                                            type: 'value',
+                                                            axisLine: {
+                                                                show: false
+                                                            },
+                                                            axisTick: {
+                                                                show: false
+                                                            }
+                                                        },
+                                                        yAxis: {
+                                                            type: 'category',
+                                                            data: category,
+                                                            splitLine: {show: false},
+                                                            axisLine: {
+                                                                show: false
+                                                            },
+                                                            axisTick: {
+                                                                show: false
+                                                            },
+                                                            offset: 10,
+                                                            nameTextStyle: {
+                                                                fontSize: 15
+                                                            }
+                                                        },
+                                                        series: [
+                                                            {
+                                                                name: '数量',
+                                                                type: 'bar',
+                                                                data: barData,
+                                                                barWidth: 14,
+                                                                barGap: 10,
+                                                                smooth: true,
+                                                                label: {
+                                                                    normal: {
+                                                                        show: true,
+                                                                        position: 'right',
+                                                                        offset: [5, -2],
+                                                                        textStyle: {
+                                                                            color: '#F68300',
+                                                                            fontSize: 13
+                                                                        }
+                                                                    }
+                                                                },
+                                                                itemStyle: {
+                                                                    emphasis: {
+                                                                        barBorderRadius: 7
+                                                                    },
+                                                                    normal: {
+                                                                        barBorderRadius: 7,
+                                                                        color: new echarts.graphic.LinearGradient(
+                                                                            0, 0, 1, 0,
+                                                                            [
+                                                                                {offset: 0, color: '#3977E6'},
+                                                                                {offset: 1, color: '#37BBF8'}
+
+                                                                            ]
+                                                                        )
+                                                                    }
+                                                                }
+                                                            }
+                                                        ]
+                                                    };
+                                                    myChart.setOption(option);
+                                                </script>
+                                        </div>
+                                </div>
+
+				<div class="g_12">
+					<div class="widget_header">
+						<h4 class="widget_header_title wwIcon i_16_chats">{{if eq .Lang "cn"}}Kube-Install系统最新消息{{else}}Kube-Install System Latest Messages{{end}}</h4>
+					</div>
+					<div class="widget_contents noPadding">
+						{{.Msg}} <br>
+					</div>
+				</div>
+
+		</div>
+
+
+	</div>
+
+	<footer>
+		<div class="wrapper">
+			<span class="copyright">
+				Kube-Install Version {{.Version}} &nbsp; | &nbsp; Powered By <a target="_blank" href="https://cloudnativer.github.io">CloudNativer</a>
+			</span>
+		</div>
+	</footer>
+</body>
+</html>

@@ -1,0 +1,31 @@
+[Unit]
+Description=Kubernetes Kubelet
+Documentation=https://github.com/GoogleCloudPlatform/kubernetes
+After=docker.service
+Requires=docker.service
+
+[Service]
+WorkingDirectory={{k8s_install_home}}/kubernetes/kubelet
+ExecStartPre=/usr/local/bin/resolvinit.sh
+ExecStart=/usr/local/bin/kubelet \
+  --bootstrap-kubeconfig=/etc/kubernetes/ssl/bootstrap.kubeconfig \
+  --cert-dir=/etc/kubernetes/ssl \
+  --network-plugin=cni \
+  --cni-conf-dir=/etc/cni/net.d \
+  --cni-bin-dir=/usr/local/bin/ \
+  --fail-swap-on=false \
+  --kubeconfig=/etc/kubernetes/ssl/kubelet.kubeconfig \
+  --config=/etc/kubernetes/kubelet.config.json \
+  --hostname-override={{ip}} \
+  --pod-infra-container-image={{addons_ip3}}:5000/pause-amd64:3.1 \
+  --max-pods=210 \
+  --alsologtostderr=true \
+  --logtostderr=false \
+  --root-dir={{k8s_install_home}}/kubernetes/kubelet \
+  --log-dir={{k8s_install_home}}/kubernetes/kubelet \
+  --v=2
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

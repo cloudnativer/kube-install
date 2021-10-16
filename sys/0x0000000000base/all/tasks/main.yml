@@ -1,0 +1,132 @@
+- name: 1.Create base package directory
+  file:
+    path: "{{k8s_install_home}}/temp/"
+    state: directory
+- file:
+    path: "/tmp/.kubeinstalltemp/data{{sub_process_dir}}/temp/"
+    state: directory
+- file:
+    path: "/etc/kubernetes/bak/"
+    state: directory
+- file:
+    path: "/usr/local/bin/"
+    state: directory
+- name: 2.Perform installation pretreatment
+  template: 
+    src: "../templates/preinstall.sh.j2"
+    dest: "{{k8s_install_home}}/temp/preinstall.sh"
+    mode: 0755
+- shell: "{{k8s_install_home}}/temp/preinstall.sh"
+  ignore_errors: yes
+- name: 3.Turn off firewall
+  service: 
+    name: firewalld 
+    state: stopped 
+    enabled: false
+  ignore_errors: yes
+- service:
+    name: ufw
+    state: stopped
+    enabled: false
+  ignore_errors: yes
+- service:
+    name: SuSEfirewall2
+    state: stopped
+    enabled: false
+  ignore_errors: yes
+- name: 4.Turn off selinux
+  lineinfile:
+    dest: /etc/selinux/config
+    regexp: '^SELINUX='
+    line: 'SELINUX=disabled'
+  ignore_errors: yes
+- name: 5.Turn off postfix
+  shell: "systemctl stop postfix && systemctl disable postfix"
+  ignore_errors: yes
+- name: 6.Set system limit
+  lineinfile:
+    dest: /etc/security/limits.conf
+    line: "{{item}}"
+  with_items:
+    - '* soft nofile 65536'
+    - '* hard nofile 65536'
+    - '* soft nproc 65536'
+    - '* hard nproc 65536'
+    - '* soft memlock unlimited'
+    - '* hard memlock unlimited'
+- name: 7.Set ipvs_modules
+  copy:
+    src: ../templates/ipvs.modules
+    dest: /etc/sysconfig/modules/
+    mode: 0755
+#- name: 8.Add nf_conntrack_ipv4 parameter configuration
+#  #If your operating system is a 3.* kernel, you need to remove the comments in this section.
+#  shell: "echo 'modprobe -- nf_conntrack_ipv4' >> /etc/sysconfig/modules/ipvs.modules"
+- name: 8.Run ipvs_modules
+  shell: "bash /etc/sysconfig/modules/ipvs.modules"
+  ignore_errors: yes
+- name: 9.Add sysctl parameter configuration
+  copy:
+    src: ../templates/kubernetes.conf
+    dest: /etc/sysctl.d/
+#- name: 9.Add tcp_tw_recycle parameter configuration
+#  #If your operating system is a 3.* kernel, you need to remove the comments in this section.
+#  shell: "echo 'net.ipv4.tcp_tw_recycle=0' >> /etc/sysctl.d/kubernetes.conf"
+- name: 10.Set sysctl parameter configuration
+  shell: sysctl -p /etc/sysctl.d/kubernetes.conf
+  ignore_errors: yes
+- name: 11.Create journal directory
+  file: 
+    path: /var/log/journal
+    state: directory
+    mode: 0755
+- name: 12.Create journal.conf.d directory
+  file: 
+    path: /etc/systemd/journald.conf.d
+    state: directory
+    mode: 0755
+- name: 13.Add prophet file
+  copy:
+    src: ../templates/99-prophet.conf
+    dest: /etc/systemd/journald.conf.d/
+    mode: 0755
+- name: 14.Start systemd-journald service
+  service:
+    name: systemd-journald
+    state: restarted
+  ignore_errors: yes
+- name: 15.Install TTY software
+  copy:
+    src: "{{kipath}}/pkg/proc/.bin/ttyd"
+    dest: /usr/local/bin/
+    mode: 0755
+- copy:
+    src: ../templates/kube-install-ttyd.service
+    dest: /etc/systemd/system/
+    mode: 0644
+- name: 16.Create resolv config file
+  file:
+    path: /etc/resolv.conf 
+    state: touch
+    mode: 0644
+  ignore_errors: yes
+- name: 17.Create k8s cert directory
+  file:
+    path: "/etc/kubernetes/ssl/"
+    state: directory
+- name: 18.Decompress k8s software package
+  unarchive:
+    src: "{{kipath}}/pkg/k8s/k8s-{{k8sver}}.tar.gz"
+    dest: /usr/local/bin/
+    mode: 0755
+- name: 19.Decompress cfssl software package
+  unarchive:
+    src: "{{kipath}}/pkg/cfssl.tar.gz"
+    dest: /usr/local/bin/
+    mode: 0755
+- name: 20.Decompress helm software package
+  unarchive:
+    src: "{{kipath}}/pkg/helm-v3.5.3.tar.gz"
+    dest: /usr/local/bin/
+    mode: 0755
+
