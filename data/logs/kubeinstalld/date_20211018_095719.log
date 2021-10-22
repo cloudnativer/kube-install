@@ -1,0 +1,132 @@
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] Loaded HTML Templates (18): 
+	- node.tmpl
+	- optresult.tmpl
+	- tools.tmpl
+	- clusteradd.tmpl
+	- master.tmpl
+	- masterinfo.tmpl
+	- 
+	- 403.html
+	- clusterinfo.tmpl
+	- clusterdel.tmpl
+	- 404.html
+	- calendarscheduler.tmpl
+	- cluster.tmpl
+	- logs.tmpl
+	- nodeinfo.tmpl
+	- deleteschedule.tmpl
+	- index.tmpl
+	- login.tmpl
+
+[GIN-debug] GET    /static/*filepath         --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (3 handlers)
+[GIN-debug] HEAD   /static/*filepath         --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (3 handlers)
+[GIN-debug] GET    /                         --> kube-install/lib.DaemonRun.func1 (3 handlers)
+[GIN-debug] POST   /login                    --> kube-install/lib.DaemonRun.func2 (3 handlers)
+[GIN-debug] GET    /clusterlist              --> kube-install/lib.DaemonRun.func3 (3 handlers)
+[GIN-debug] GET    /clusterinfo              --> kube-install/lib.DaemonRun.func4 (3 handlers)
+[GIN-debug] GET    /clusteradd               --> kube-install/lib.DaemonRun.func5 (3 handlers)
+[GIN-debug] GET    /clusterdel               --> kube-install/lib.DaemonRun.func6 (3 handlers)
+[GIN-debug] GET    /deleteschedule           --> kube-install/lib.DaemonRun.func7 (3 handlers)
+[GIN-debug] GET    /masteradmin              --> kube-install/lib.DaemonRun.func8 (3 handlers)
+[GIN-debug] GET    /masterinfo               --> kube-install/lib.DaemonRun.func9 (3 handlers)
+[GIN-debug] GET    /nodeadmin                --> kube-install/lib.DaemonRun.func10 (3 handlers)
+[GIN-debug] GET    /nodeinfo                 --> kube-install/lib.DaemonRun.func11 (3 handlers)
+[GIN-debug] GET    /nodeadd                  --> kube-install/lib.DaemonRun.func12 (3 handlers)
+[GIN-debug] GET    /tools                    --> kube-install/lib.DaemonRun.func13 (3 handlers)
+[GIN-debug] GET    /calendarscheduler        --> kube-install/lib.DaemonRun.func14 (3 handlers)
+[GIN-debug] GET    /logs                     --> kube-install/lib.DaemonRun.func15 (3 handlers)
+[GIN-debug] POST   /install                  --> kube-install/lib.DaemonRun.func16 (3 handlers)
+[GIN-debug] POST   /rebuildmaster            --> kube-install/lib.DaemonRun.func17 (3 handlers)
+[GIN-debug] POST   /delmaster                --> kube-install/lib.DaemonRun.func18 (3 handlers)
+[GIN-debug] POST   /addnode                  --> kube-install/lib.DaemonRun.func19 (3 handlers)
+[GIN-debug] POST   /delnode                  --> kube-install/lib.DaemonRun.func20 (3 handlers)
+[GIN-debug] POST   /uninstall                --> kube-install/lib.DaemonRun.func21 (3 handlers)
+[GIN-debug] POST   /deleteinstallschedule    --> kube-install/lib.DaemonRun.func22 (3 handlers)
+[GIN-debug] POST   /sshkey                   --> kube-install/lib.DaemonRun.func23 (3 handlers)
+[GIN-debug] GET    /tty                      --> kube-install/lib.DaemonRun.func24 (3 handlers)
+[GIN-debug] Listening and serving HTTP on 0.0.0.0:9080
+[GIN] 2021/10/18 - 09:57:33 | 200 |   40.511762ms |    10.57.237.15 | GET      "/"
+[GIN] 2021/10/18 - 09:57:33 | 200 |     449.176µs |    10.57.237.15 | GET      "/static/css/fonts.css"
+[GIN] 2021/10/18 - 09:57:33 | 200 |     483.725µs |    10.57.237.15 | GET      "/static/js/Flot/jquery.flot.resize.js"
+[GIN] 2021/10/18 - 09:57:33 | 200 |     200.683µs |    10.57.237.15 | GET      "/static/js/Flot/jquery.flot.pie.js"
+[GIN] 2021/10/18 - 09:57:33 | 200 |     266.452µs |    10.57.237.15 | GET      "/static/js/ColResizable/colResizable-1.3.js"
+[GIN] 2021/10/18 - 09:57:33 | 200 |     264.844µs |    10.57.237.15 | GET      "/static/js/DataTables/jquery.dataTables.min.js"
+[GIN] 2021/10/18 - 09:57:33 | 200 |   19.782603ms |    10.57.237.15 | GET      "/static/js/jQuery/jquery-1.7.2.min.js"
+[GIN] 2021/10/18 - 09:57:33 | 200 |    20.90875ms |    10.57.237.15 | GET      "/static/css/style.css"
+[GIN] 2021/10/18 - 09:57:33 | 200 |   19.329742ms |    10.57.237.15 | GET      "/static/js/Flot/jquery.flot.js"
+[GIN] 2021/10/18 - 09:57:33 | 200 |   18.035638ms |    10.57.237.15 | GET      "/static/js/jQueryUI/jquery-ui-1.8.21.min.js"
+[GIN] 2021/10/18 - 09:57:33 | 200 |     208.667µs |    10.57.237.15 | GET      "/static/js/Uniform/jquery.uniform.js"
+[GIN] 2021/10/18 - 09:57:33 | 200 |     121.755µs |    10.57.237.15 | GET      "/static/js/Elastic/jquery.elastic.js"
+[GIN] 2021/10/18 - 09:57:33 | 200 |     143.018µs |    10.57.237.15 | GET      "/static/js/Tipsy/jquery.tipsy.js"
+[GIN] 2021/10/18 - 09:57:33 | 200 |     169.627µs |    10.57.237.15 | GET      "/static/js/ColorPicker/colorpicker.js"
+[GIN] 2021/10/18 - 09:57:33 | 200 |     158.039µs |    10.57.237.15 | GET      "/static/js/MaskedInput/jquery.maskedinput-1.3.js"
+[GIN] 2021/10/18 - 09:57:33 | 200 |     175.632µs |    10.57.237.15 | GET      "/static/js/UISpinner/ui.spinner.js"
+[GIN] 2021/10/18 - 09:57:33 | 200 |      96.625µs |    10.57.237.15 | GET      "/static/js/SuperTextarea/jquery.supertextarea.min.js"
+[GIN] 2021/10/18 - 09:57:33 | 200 |     236.992µs |    10.57.237.15 | GET      "/static/js/ClEditor/jquery.cleditor.js"
+[GIN] 2021/10/18 - 09:57:33 | 200 |     322.658µs |    10.57.237.15 | GET      "/static/js/FullCalendar/fullcalendar.js"
+[GIN] 2021/10/18 - 09:57:33 | 200 |     368.663µs |    10.57.237.15 | GET      "/static/js/ColorBox/jquery.colorbox.js"
+[GIN] 2021/10/18 - 09:57:33 | 200 |      76.215µs |    10.57.237.15 | GET      "/static/css/tipsy.css"
+[GIN] 2021/10/18 - 09:57:33 | 200 |     103.291µs |    10.57.237.15 | GET      "/static/css/colorpicker.css"
+[GIN] 2021/10/18 - 09:57:33 | 200 |     280.075µs |    10.57.237.15 | GET      "/static/css/normalize.css"
+[GIN] 2021/10/18 - 09:57:33 | 200 |     320.732µs |    10.57.237.15 | GET      "/static/js/kubeinstall.js"
+[GIN] 2021/10/18 - 09:57:33 | 200 |      99.983µs |    10.57.237.15 | GET      "/static/css/jquery.cleditor.css"
+[GIN] 2021/10/18 - 09:57:33 | 200 |     251.004µs |    10.57.237.15 | GET      "/static/css/fullcalendar.css"
+[GIN] 2021/10/18 - 09:57:33 | 200 |     167.162µs |    10.57.237.15 | GET      "/static/css/colorbox.css"
+[GIN] 2021/10/18 - 09:57:33 | 200 |     162.014µs |    10.57.237.15 | GET      "/static/img/kubeinstall_logo.png"
+[GIN] 2021/10/18 - 09:57:33 | 200 |     328.405µs |    10.57.237.15 | GET      "/static/img/Icons/32/i_32_cn.png"
+[GIN] 2021/10/18 - 09:57:33 | 200 |   36.877841ms |    10.57.237.15 | GET      "/static/js/Echarts/echarts.min.js"
+[GIN] 2021/10/18 - 09:57:33 | 200 |      96.362µs |    10.57.237.15 | GET      "/static/img/Icons/32/i_32_info.png"
+[GIN] 2021/10/18 - 09:57:33 | 200 |     190.343µs |    10.57.237.15 | GET      "/static/img/Textures/pattern4.png"
+[GIN] 2021/10/18 - 09:57:33 | 200 |      73.671µs |    10.57.237.15 | GET      "/static/img/Icons/32/i_32_dashboard.png"
+[GIN] 2021/10/18 - 09:57:33 | 200 |      65.309µs |    10.57.237.15 | GET      "/static/img/Icons/32/i_32_logs.png"
+[GIN] 2021/10/18 - 09:57:33 | 200 |      74.828µs |    10.57.237.15 | GET      "/static/img/Icons/32/i_32_tools.png"
+[GIN] 2021/10/18 - 09:57:33 | 200 |     124.327µs |    10.57.237.15 | GET      "/static/img/Icons/32/i_32_cluster.png"
+[GIN] 2021/10/18 - 09:57:33 | 200 |     118.723µs |    10.57.237.15 | GET      "/static/img/Icons/32/i_32_node.png"
+[GIN] 2021/10/18 - 09:57:33 | 200 |       81.17µs |    10.57.237.15 | GET      "/static/img/Icons/32/i_32_master.png"
+[GIN] 2021/10/18 - 09:57:33 | 200 |     155.455µs |    10.57.237.15 | GET      "/static/img/Textures/visitor_stats.png"
+[GIN] 2021/10/18 - 09:57:33 | 200 |     139.341µs |    10.57.237.15 | GET      "/static/img/Textures/tickets_stats.png"
+[GIN] 2021/10/18 - 09:57:33 | 200 |      162.19µs |    10.57.237.15 | GET      "/static/img/Textures/separator_line.png"
+[GIN] 2021/10/18 - 09:57:33 | 200 |     280.751µs |    10.57.237.15 | GET      "/static/img/Icons/16/i_16_chats.png"
+[GIN] 2021/10/18 - 09:57:33 | 200 |      101.06µs |    10.57.237.15 | GET      "/static/img/Textures/separator_circle.png"
+[GIN] 2021/10/18 - 09:57:33 | 200 |     128.685µs |    10.57.237.15 | GET      "/static/img/Textures/orders_stats.png"
+[GIN] 2021/10/18 - 09:57:33 | 200 |     142.955µs |    10.57.237.15 | GET      "/static/img/Textures/users_stats.png"
+[GIN] 2021/10/18 - 09:57:34 | 404 |       1.437µs |    10.57.237.15 | GET      "/apple-touch-icon-precomposed.png"
+[GIN] 2021/10/18 - 09:57:34 | 404 |         798ns |    10.57.237.15 | GET      "/apple-touch-icon.png"
+[GIN] 2021/10/18 - 09:57:39 | 200 |   32.483487ms |    10.57.237.15 | GET      "/clusterlist?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/10/18 - 09:57:39 | 200 |     132.912µs |    10.57.237.15 | GET      "/static/js/laydate/theme/default/laydate.css?v=5.3.1"
+[GIN] 2021/10/18 - 09:57:39 | 200 |     228.777µs |    10.57.237.15 | GET      "/static/img/Button/close03.png"
+[GIN] 2021/10/18 - 09:57:39 | 200 |     148.121µs |    10.57.237.15 | GET      "/static/img/Icons/Preview/clock_disable.png"
+[GIN] 2021/10/18 - 09:57:39 | 200 |      90.831µs |    10.57.237.15 | GET      "/static/img/Icons/16/i_16_cluster.png"
+[GIN] 2021/10/18 - 09:57:39 | 200 |     153.447µs |    10.57.237.15 | GET      "/static/img/Icons/32/i_32_ok.png"
+[GIN] 2021/10/18 - 09:57:39 | 200 |     203.989µs |    10.57.237.15 | GET      "/static/js/laydate/laydate.js"
+[GIN] 2021/10/18 - 09:57:39 | 200 |      90.462µs |    10.57.237.15 | GET      "/static/img/Icons/16/i_16_k8s.png"
+[GIN] 2021/10/18 - 09:57:39 | 200 |     252.879µs |    10.57.237.15 | GET      "/static/img/Icons/16/i_16_selector.png"
+[GIN] 2021/10/18 - 09:57:39 | 200 |     109.201µs |    10.57.237.15 | GET      "/static/img/Icons/16/i_16_progress.png"
+[GIN] 2021/10/18 - 09:57:39 | 200 |     126.491µs |    10.57.237.15 | GET      "/static/img/Icons/16/i_16_sorting.png"
+[GIN] 2021/10/18 - 09:57:39 | 200 |     108.433µs |    10.57.237.15 | GET      "/static/img/Icons/16/i_16_sorting_asc.png"
+[GIN] 2021/10/18 - 09:57:40 | 200 |   35.888122ms |    10.57.237.15 | GET      "/masteradmin?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/10/18 - 09:57:40 | 200 |     198.191µs |    10.57.237.15 | GET      "/static/img/Icons/16/i_16_master.png"
+[GIN] 2021/10/18 - 09:57:40 | 200 |       81.51µs |    10.57.237.15 | GET      "/static/img/Icons/Load/load-8.gif"
+[GIN] 2021/10/18 - 09:57:40 | 200 |   30.067541ms |    10.57.237.15 | GET      "/nodeadmin?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/10/18 - 09:57:40 | 200 |     239.536µs |    10.57.237.15 | GET      "/static/img/Button/result02.png"
+[GIN] 2021/10/18 - 09:57:40 | 200 |     112.118µs |    10.57.237.15 | GET      "/static/img/Icons/16/i_16_node.png"
+[GIN] 2021/10/18 - 09:57:41 | 200 |   36.229329ms |    10.57.237.15 | GET      "/tools?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/10/18 - 09:57:41 | 200 |     229.197µs |    10.57.237.15 | GET      "/static/img/Button/sshkey.png"
+[GIN] 2021/10/18 - 09:57:41 | 200 |     419.702µs |    10.57.237.15 | GET      "/static/img/Button/k8s.png"
+[GIN] 2021/10/18 - 09:57:41 | 200 |     120.574µs |    10.57.237.15 | GET      "/static/img/Icons/16/i_16_data.png"
+[GIN] 2021/10/18 - 09:57:41 | 200 |     108.914µs |    10.57.237.15 | GET      "/static/img/Icons/16/i_16_tools.png"
+[GIN] 2021/10/18 - 09:57:41 | 200 |     244.865µs |    10.57.237.15 | GET      "/static/img/Button/calendar.png"
+[GIN] 2021/10/18 - 09:57:41 | 200 |     100.307µs |    10.57.237.15 | GET      "/static/img/Icons/16/i_16_settings.png"
+[GIN] 2021/10/18 - 09:57:41 | 200 |   35.168968ms |    10.57.237.15 | GET      "/logs?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/10/18 - 09:57:41 | 200 |      94.439µs |    10.57.237.15 | GET      "/static/img/Icons/16/i_16_logs.png"
+[GIN] 2021/10/18 - 09:57:41 | 200 |      63.817µs |    10.57.237.15 | GET      "/static/img/Icons/16/i_16_tabs.png"
+[GIN] 2021/10/18 - 09:57:41 | 200 |   27.596055ms |    10.57.237.15 | GET      "/clusterlist?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/10/18 - 10:07:29 | 200 | 17.547324472s |    10.57.237.15 | POST     "/sshkey?label=&softdir=%2fopt%2fkube-install&ostype=&tools=no"
+[GIN] 2021/10/18 - 10:07:29 | 200 |     169.768µs |    10.57.237.15 | GET      "/static/img/Icons/16/i_16_tooltip.png"
+[GIN] 2021/10/18 - 10:07:38 | 200 |   35.704201ms |    10.57.237.15 | GET      "/clusterlist?label=&softdir=/opt/kube-install&ostype=&k8sver="

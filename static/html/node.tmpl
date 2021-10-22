@@ -49,6 +49,42 @@
 	<script src="static/js/ColorBox/jquery.colorbox.js"></script>
 	<!-- kubeinstall Script -->
 	<script src="static/js/kubeinstall.js"></script>
+    <script>
+        var arr = [],inp;
+        onload = function(){
+            var cks = document.getElementsByName("node");
+            for(var i = 0; i < cks.length; i++){
+                var cki = cks[i];
+                cki.onchange = function(){
+                    if(this.checked){
+                        if(!document.getElementById("addnode")){
+                            inp = document.createElement("input");
+                            inp.type = "text";
+                            inp.id = "addnode";
+                        }
+                    }else{
+                        var yes = false;
+                        for(var j=0;j<cks.length;j++){
+                            if(cks[j].checked){
+                                yes = true;
+                                break;
+                            }
+                        }
+                    }
+                    inp = document.getElementById("addnode");
+                    if(!!inp){
+                        arr = [];
+                        for(var j=0;j<cks.length;j++){
+                            if(cks[j].checked){
+                                arr.push(cks[j].value);
+                            }
+                        }
+                        inp.value=arr.join(",");
+                    }
+                }
+            }
+        }
+    </script>
     <script language="javascript">
         function delnodelog(){
             window.open("logs?label={{ .Label }}&opt=delnode",'_blank');
@@ -85,7 +121,7 @@
 				<div class="line_grid">
 					<div class="g_3"><span class="label">{{if eq .Lang "cn"}}Kubernetes Node IP地址{{else}}Kubernetes Node IP address{{end}} <span class="must">*</span></span></div>
 					<div class="g_9">
-						<input name="node" id="node" value="{{.Node}}" class="simple_field" type="text" required />
+						<input name="addnode" id="addnode" class="simple_field" type="text" required />
 						<div class="field_notice">{{if eq .Lang "cn"}}填写要部署的Kubernetes Node主机IP地址，多个IP请用英文逗号","隔开{{else}}Fill in the IP address of the kubernetes node host to be deployed. Separate multiple IP addresses with English comma ","{{end}}</div>
 					</div>
 				</div>
@@ -285,7 +321,7 @@
 										<td><input type="checkbox" class="simple_form" name="node" value="{{ .Node }}"></td>
 										<td>{{ .Node }}</td>
 										<td align="center">
-									{{ if eq .Nodestatus "adding" }} <img src="static/img/Icons/Load/load-4.gif" style="vertical-align: middle;"/> <span style="display: inline-block;">{{if eq .Lang "cn"}}部署中{{else}}Deploying{{end}}</span>{{end}}
+									{{ if eq .Nodestatus "adding" }} <img src="static/img/Icons/Load/load-4.gif" style="vertical-align: middle;"/> <span style="display: inline-block;">{{if eq .Lang "cn"}}安装中{{else}}Installing{{end}}</span>{{end}}
 									{{ if eq .Nodestatus "deleting" }} <img src="static/img/Icons/Load/load-2.gif" style="vertical-align: middle;"/> <span style="display: inline-block;">{{if eq .Lang "cn"}}销毁中{{else}}Deleting{{end}}</span>{{end}}
 									{{ if eq .Nodestatus "ok" }} <img src="static/img/Icons/32/i_32_ok.png" style="vertical-align: middle;"/> <span style="display: inline-block;">{{if eq .Lang "cn"}}正常{{else}}OK{{end}}</span>{{end}}
 									{{ if eq .Nodestatus "notok" }} <img src="static/img/Icons/32/i_32_notok.png" style="vertical-align: middle;"/> <span style="display: inline-block;">{{if eq .Lang "cn"}}异常{{else}}Error{{end}}</span>{{end}}

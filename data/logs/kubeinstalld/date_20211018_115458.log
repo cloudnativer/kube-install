@@ -1,0 +1,100 @@
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] Loaded HTML Templates (18): 
+	- node.tmpl
+	- 
+	- 404.html
+	- clusteradd.tmpl
+	- clusterdel.tmpl
+	- logs.tmpl
+	- masterinfo.tmpl
+	- calendarscheduler.tmpl
+	- clusterinfo.tmpl
+	- login.tmpl
+	- nodeinfo.tmpl
+	- optresult.tmpl
+	- cluster.tmpl
+	- master.tmpl
+	- 403.html
+	- deleteschedule.tmpl
+	- index.tmpl
+	- tools.tmpl
+
+[GIN-debug] GET    /static/*filepath         --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (3 handlers)
+[GIN-debug] HEAD   /static/*filepath         --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (3 handlers)
+[GIN-debug] GET    /                         --> kube-install/lib.DaemonRun.func1 (3 handlers)
+[GIN-debug] POST   /login                    --> kube-install/lib.DaemonRun.func2 (3 handlers)
+[GIN-debug] GET    /clusterlist              --> kube-install/lib.DaemonRun.func3 (3 handlers)
+[GIN-debug] GET    /clusterinfo              --> kube-install/lib.DaemonRun.func4 (3 handlers)
+[GIN-debug] GET    /clusteradd               --> kube-install/lib.DaemonRun.func5 (3 handlers)
+[GIN-debug] GET    /clusterdel               --> kube-install/lib.DaemonRun.func6 (3 handlers)
+[GIN-debug] GET    /deleteschedule           --> kube-install/lib.DaemonRun.func7 (3 handlers)
+[GIN-debug] GET    /masteradmin              --> kube-install/lib.DaemonRun.func8 (3 handlers)
+[GIN-debug] GET    /masterinfo               --> kube-install/lib.DaemonRun.func9 (3 handlers)
+[GIN-debug] GET    /nodeadmin                --> kube-install/lib.DaemonRun.func10 (3 handlers)
+[GIN-debug] GET    /nodeinfo                 --> kube-install/lib.DaemonRun.func11 (3 handlers)
+[GIN-debug] GET    /nodeadd                  --> kube-install/lib.DaemonRun.func12 (3 handlers)
+[GIN-debug] GET    /tools                    --> kube-install/lib.DaemonRun.func13 (3 handlers)
+[GIN-debug] GET    /calendarscheduler        --> kube-install/lib.DaemonRun.func14 (3 handlers)
+[GIN-debug] GET    /logs                     --> kube-install/lib.DaemonRun.func15 (3 handlers)
+[GIN-debug] POST   /install                  --> kube-install/lib.DaemonRun.func16 (3 handlers)
+[GIN-debug] POST   /rebuildmaster            --> kube-install/lib.DaemonRun.func17 (3 handlers)
+[GIN-debug] POST   /delmaster                --> kube-install/lib.DaemonRun.func18 (3 handlers)
+[GIN-debug] POST   /addnode                  --> kube-install/lib.DaemonRun.func19 (3 handlers)
+[GIN-debug] POST   /delnode                  --> kube-install/lib.DaemonRun.func20 (3 handlers)
+[GIN-debug] POST   /uninstall                --> kube-install/lib.DaemonRun.func21 (3 handlers)
+[GIN-debug] POST   /deleteinstallschedule    --> kube-install/lib.DaemonRun.func22 (3 handlers)
+[GIN-debug] POST   /sshkey                   --> kube-install/lib.DaemonRun.func23 (3 handlers)
+[GIN-debug] GET    /tty                      --> kube-install/lib.DaemonRun.func24 (3 handlers)
+[GIN-debug] Listening and serving HTTP on 0.0.0.0:9080
+[GIN] 2021/10/18 - 11:55:15 | 200 |   3.72078533s |    10.57.237.15 | POST     "/sshkey?label=12211&softdir=%2fopt%2fkube-install&ostype=&tools=no"
+[GIN] 2021/10/18 - 11:55:22 | 200 |   41.718723ms |    10.57.237.15 | GET      "/clusterlist?label=12211&softdir=/opt/kube-install&ostype=&k8sver="
+[GIN] 2021/10/18 - 11:55:22 | 200 |    4.433997ms |    10.57.237.15 | GET      "/static/img/Icons/Load/load-2.gif"
+[GIN] 2021/10/18 - 11:55:40 | 200 |   33.960307ms |    10.57.237.15 | POST     "/install?label=12211&softdir=%2fopt%2fkube-install&ostype=tools=no"
+[GIN] 2021/10/18 - 11:55:41 | 200 |   29.377195ms |    10.57.237.15 | GET      "/clusterlist?label=12211&softdir=/opt/kube-install&ostype=centos7&k8sver=1.21"
+[GIN] 2021/10/18 - 11:55:56 | 200 |   36.713423ms |    10.57.237.15 | POST     "/install?label=12211&softdir=%2fopt%2fkube-install&ostype=centos7tools=no"
+[GIN] 2021/10/18 - 11:55:58 | 200 |   28.436387ms |    10.57.237.15 | GET      "/clusterlist?label=12291&softdir=/opt/kube-install&ostype=suse15&k8sver=1.23"
+[GIN] 2021/10/18 - 11:56:01 | 200 |   41.845958ms |    10.57.237.15 | GET      "/clusterinfo?label=12241"
+[GIN] 2021/10/18 - 11:56:06 | 200 |   38.460431ms |    10.57.237.15 | GET      "/clusterlist?label=12241&softdir=/opt/kube-install&ostype=ubuntu20&k8sver=1.21"
+[GIN] 2021/10/18 - 11:56:07 | 200 |   31.833033ms |    10.57.237.15 | GET      "/masteradmin?label=12241&softdir=%2fopt%2fkube-install&ostype=ubuntu20&k8sver=1.21"
+[GIN] 2021/10/18 - 11:56:08 | 200 |   38.706787ms |    10.57.237.15 | GET      "/?label=12241&softdir=%2fopt%2fkube-install&ostype=ubuntu20&k8sver=1.21"
+[GIN] 2021/10/18 - 11:56:13 | 200 |   32.593612ms |    10.57.237.15 | GET      "/clusterlist?label=12241&softdir=%2fopt%2fkube-install&ostype=ubuntu20&k8sver=1.21"
+[GIN] 2021/10/18 - 11:56:15 | 200 |   35.347533ms |    10.57.237.15 | GET      "/?label=12241&softdir=%2fopt%2fkube-install&ostype=ubuntu20&k8sver=1.21"
+[GIN] 2021/10/18 - 11:56:24 | 200 |   33.739256ms |    10.57.237.15 | GET      "/clusterlist?label=12241&softdir=%2fopt%2fkube-install&ostype=ubuntu20&k8sver=1.21"
+[GIN] 2021/10/18 - 11:56:24 | 200 |   29.788792ms |    10.57.237.15 | GET      "/?label=12241&softdir=%2fopt%2fkube-install&ostype=ubuntu20&k8sver=1.21"
+[GIN] 2021/10/18 - 11:56:29 | 200 |   35.652103ms |    10.57.237.15 | GET      "/clusterlist?label=12241&softdir=%2fopt%2fkube-install&ostype=ubuntu20&k8sver=1.21"
+[GIN] 2021/10/18 - 11:56:33 | 200 |   22.390091ms |    10.57.237.15 | GET      "/masteradmin?label=12241&softdir=%2fopt%2fkube-install&ostype=ubuntu20&k8sver=1.21"
+[GIN] 2021/10/18 - 11:56:34 | 200 |   55.217024ms |    10.57.237.15 | GET      "/nodeadmin?label=12241&softdir=%2fopt%2fkube-install&ostype=ubuntu20&k8sver=1.21"
+[GIN] 2021/10/18 - 11:56:35 | 200 |   27.644869ms |    10.57.237.15 | GET      "/tools?label=12241&softdir=%2fopt%2fkube-install&ostype=ubuntu20&k8sver=1.21"
+[GIN] 2021/10/18 - 11:56:36 | 200 |   28.528749ms |    10.57.237.15 | GET      "/logs?label=12241&softdir=%2fopt%2fkube-install&ostype=ubuntu20&k8sver=1.21"
+[GIN] 2021/10/18 - 11:56:36 | 200 |   26.035711ms |    10.57.237.15 | GET      "/tools?label=12241&softdir=%2fopt%2fkube-install&ostype=ubuntu20&k8sver=1.21"
+[GIN] 2021/10/18 - 11:56:36 | 200 |   45.985565ms |    10.57.237.15 | GET      "/nodeadmin?label=12241&softdir=%2fopt%2fkube-install&ostype=ubuntu20&k8sver=1.21"
+[GIN] 2021/10/18 - 11:56:37 | 200 |   38.066095ms |    10.57.237.15 | GET      "/masteradmin?label=12241&softdir=%2fopt%2fkube-install&ostype=ubuntu20&k8sver=1.21"
+[GIN] 2021/10/18 - 11:56:37 | 200 |   22.580332ms |    10.57.237.15 | GET      "/clusterlist?label=12241&softdir=%2fopt%2fkube-install&ostype=ubuntu20&k8sver=1.21"
+[GIN] 2021/10/18 - 11:56:38 | 200 |   27.820904ms |    10.57.237.15 | GET      "/?label=12241&softdir=%2fopt%2fkube-install&ostype=ubuntu20&k8sver=1.21"
+[GIN] 2021/10/18 - 11:56:40 | 200 |   28.132472ms |    10.57.237.15 | GET      "/clusterlist?label=12241&softdir=%2fopt%2fkube-install&ostype=ubuntu20&k8sver=1.21"
+[GIN] 2021/10/18 - 11:58:35 | 200 |   32.997115ms |    10.57.237.15 | GET      "/masteradmin?label=12241&softdir=%2fopt%2fkube-install&ostype=ubuntu20&k8sver=1.21"
+[GIN] 2021/10/18 - 11:58:36 | 200 |   25.211791ms |    10.57.237.15 | GET      "/clusterlist?label=12241&softdir=%2fopt%2fkube-install&ostype=ubuntu20&k8sver=1.21"
+[GIN] 2021/10/18 - 11:58:40 | 200 |   21.591361ms |    10.57.237.15 | GET      "/logs?label=12211&opt=install"
+[GIN] 2021/10/18 - 11:58:44 | 200 |   34.436792ms |    10.57.237.15 | GET      "/logs?label=12291&opt=install"
+[GIN] 2021/10/18 - 11:58:49 | 200 |   23.303402ms |    10.57.237.15 | GET      "/masteradmin?label=12241&softdir=%2fopt%2fkube-install&ostype=ubuntu20&k8sver=1.21"
+[GIN] 2021/10/18 - 11:58:50 | 200 |    38.09469ms |    10.57.237.15 | GET      "/nodeadmin?label=12241&softdir=%2fopt%2fkube-install&ostype=ubuntu20&k8sver=1.21"
+[GIN] 2021/10/18 - 11:58:50 | 200 |   26.039255ms |    10.57.237.15 | GET      "/tools?label=12241&softdir=%2fopt%2fkube-install&ostype=ubuntu20&k8sver=1.21"
+[GIN] 2021/10/18 - 11:58:51 | 200 |   36.867515ms |    10.57.237.15 | GET      "/logs?label=12241&softdir=%2fopt%2fkube-install&ostype=ubuntu20&k8sver=1.21"
+[GIN] 2021/10/18 - 11:58:51 | 200 |   46.354037ms |    10.57.237.15 | GET      "/nodeadmin?label=12241&softdir=%2fopt%2fkube-install&ostype=ubuntu20&k8sver=1.21"
+[GIN] 2021/10/18 - 11:58:52 | 200 |   39.945846ms |    10.57.237.15 | GET      "/masteradmin?label=12241&softdir=%2fopt%2fkube-install&ostype=ubuntu20&k8sver=1.21"
+[GIN] 2021/10/18 - 11:58:52 | 200 |    43.30603ms |    10.57.237.15 | GET      "/clusterlist?label=12241&softdir=%2fopt%2fkube-install&ostype=ubuntu20&k8sver=1.21"
+[GIN] 2021/10/18 - 12:08:19 | 200 |   33.081438ms |    10.57.237.15 | GET      "/masteradmin?label=12241&softdir=%2fopt%2fkube-install&ostype=ubuntu20&k8sver=1.21"
+[GIN] 2021/10/18 - 12:08:20 | 200 |   42.796996ms |    10.57.237.15 | GET      "/clusterlist?label=12241&softdir=%2fopt%2fkube-install&ostype=ubuntu20&k8sver=1.21"
+[GIN] 2021/10/18 - 12:08:21 | 200 |   31.298618ms |    10.57.237.15 | GET      "/masteradmin?label=12241&softdir=%2fopt%2fkube-install&ostype=ubuntu20&k8sver=1.21"
+[GIN] 2021/10/18 - 12:08:22 | 200 |   46.990253ms |    10.57.237.15 | GET      "/nodeadmin?label=12241&softdir=%2fopt%2fkube-install&ostype=ubuntu20&k8sver=1.21"
+[GIN] 2021/10/18 - 12:08:23 | 200 |   22.422547ms |    10.57.237.15 | GET      "/masteradmin?label=12241&softdir=%2fopt%2fkube-install&ostype=ubuntu20&k8sver=1.21"
+[GIN] 2021/10/18 - 12:08:23 | 200 |   50.937189ms |    10.57.237.15 | GET      "/clusterlist?label=12241&softdir=%2fopt%2fkube-install&ostype=ubuntu20&k8sver=1.21"
+[GIN] 2021/10/18 - 12:08:26 | 200 |   55.405018ms |    10.57.237.15 | GET      "/logs?label=12211&opt=install"
+[GIN] 2021/10/18 - 12:08:32 | 200 |   38.198961ms |    10.57.237.15 | GET      "/logs?label=12291&opt=install"
+[GIN] 2021/10/18 - 12:08:37 | 200 |    49.56936ms |    10.57.237.15 | GET      "/masteradmin?label=12241&softdir=%2fopt%2fkube-install&ostype=ubuntu20&k8sver=1.21"
+[GIN] 2021/10/18 - 12:08:37 | 200 |   32.083127ms |    10.57.237.15 | GET      "/clusterlist?label=12241&softdir=%2fopt%2fkube-install&ostype=ubuntu20&k8sver=1.21"

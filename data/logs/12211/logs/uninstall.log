@@ -1,0 +1,434 @@
+*************************************************************************************
+
+[Info] 2021-10-18 17:51:24.935596151 +0800 CST m=+6946.419634667 Uninstalling kubernetes cluster, please wait ... 
+
+    Kubernetes Cluster Label: 12211
+    Kubernetes Master: 192.168.122.11,192.168.122.12,192.168.122.13
+    Kubernetes Node: 192.168.122.12,192.168.122.13,192.168.122.14,192.168.122.11
+    System User for Uninstallation: root
+
+[Info] 2021-10-18 17:51:24.967950191 +0800 CST m=+6946.451988676 Loading operation configuration ... 
+
+PLAY [delnode] *****************************************************************
+
+TASK [/go/src/kube-install/data/output/12211/sys/0x00000000action/delnode : 1.Stop kubelet service] ***
+fatal: [192.168.122.13]: FAILED! => {"ansible_facts": {"discovered_interpreter_python": "/usr/bin/python"}, "changed": false, "msg": "Could not find the requested service kubelet: host"}
+...ignoring
+changed: [192.168.122.14]
+changed: [192.168.122.12]
+changed: [192.168.122.11]
+
+TASK [/go/src/kube-install/data/output/12211/sys/0x00000000action/delnode : 2.Stop kube-proxy service] ***
+fatal: [192.168.122.13]: FAILED! => {"ansible_facts": {"discovered_interpreter_python": "/usr/bin/python"}, "changed": false, "msg": "Could not find the requested service kube-proxy: host"}
+...ignoring
+changed: [192.168.122.12]
+changed: [192.168.122.14]
+changed: [192.168.122.11]
+
+TASK [/go/src/kube-install/data/output/12211/sys/0x00000000action/delnode : 3.Stop docker service] ***
+ok: [192.168.122.13]
+changed: [192.168.122.14]
+changed: [192.168.122.11]
+changed: [192.168.122.12]
+
+TASK [/go/src/kube-install/data/output/12211/sys/0x00000000action/delnode : 4.Uninstall docker software] ***
+fatal: [192.168.122.12]: FAILED! => {"changed": false, "checksum": "bd15c1a54c77523629ecf330c8405a873004a43c", "msg": "Destination directory /tmp/.kubeinstalltemp/12211/temp does not exist"}
+...ignoring
+fatal: [192.168.122.14]: FAILED! => {"changed": false, "checksum": "bd15c1a54c77523629ecf330c8405a873004a43c", "msg": "Destination directory /tmp/.kubeinstalltemp/12211/temp does not exist"}
+...ignoring
+fatal: [192.168.122.11]: FAILED! => {"changed": false, "checksum": "bd15c1a54c77523629ecf330c8405a873004a43c", "msg": "Destination directory /tmp/.kubeinstalltemp/12211/temp does not exist"}
+...ignoring
+fatal: [192.168.122.13]: FAILED! => {"changed": false, "checksum": "bd15c1a54c77523629ecf330c8405a873004a43c", "msg": "Destination directory /tmp/.kubeinstalltemp/12211/temp does not exist"}
+...ignoring
+
+TASK [/go/src/kube-install/data/output/12211/sys/0x00000000action/delnode : shell] ***
+fatal: [192.168.122.14]: FAILED! => {"changed": true, "cmd": "/tmp/.kubeinstalltemp/12211/temp/uninstall-docker.sh", "delta": "0:00:00.027516", "end": "2021-10-18 17:51:34.154226", "msg": "non-zero return code", "rc": 127, "start": "2021-10-18 17:51:34.126710", "stderr": "/bin/sh: /tmp/.kubeinstalltemp/12211/temp/uninstall-docker.sh: 没有那个文件或目录", "stderr_lines": ["/bin/sh: /tmp/.kubeinstalltemp/12211/temp/uninstall-docker.sh: 没有那个文件或目录"], "stdout": "", "stdout_lines": []}
+...ignoring
+fatal: [192.168.122.11]: FAILED! => {"changed": true, "cmd": "/tmp/.kubeinstalltemp/12211/temp/uninstall-docker.sh", "delta": "0:00:00.027970", "end": "2021-10-18 17:51:34.260070", "msg": "non-zero return code", "rc": 127, "start": "2021-10-18 17:51:34.232100", "stderr": "/bin/sh: /tmp/.kubeinstalltemp/12211/temp/uninstall-docker.sh: 没有那个文件或目录", "stderr_lines": ["/bin/sh: /tmp/.kubeinstalltemp/12211/temp/uninstall-docker.sh: 没有那个文件或目录"], "stdout": "", "stdout_lines": []}
+...ignoring
+fatal: [192.168.122.13]: FAILED! => {"changed": true, "cmd": "/tmp/.kubeinstalltemp/12211/temp/uninstall-docker.sh", "delta": "0:00:00.012465", "end": "2021-10-18 17:51:33.250748", "msg": "non-zero return code", "rc": 127, "start": "2021-10-18 17:51:33.238283", "stderr": "/bin/sh: /tmp/.kubeinstalltemp/12211/temp/uninstall-docker.sh: 没有那个文件或目录", "stderr_lines": ["/bin/sh: /tmp/.kubeinstalltemp/12211/temp/uninstall-docker.sh: 没有那个文件或目录"], "stdout": "", "stdout_lines": []}
+...ignoring
+fatal: [192.168.122.12]: FAILED! => {"changed": true, "cmd": "/tmp/.kubeinstalltemp/12211/temp/uninstall-docker.sh", "delta": "0:00:00.037546", "end": "2021-10-18 17:51:33.481579", "msg": "non-zero return code", "rc": 127, "start": "2021-10-18 17:51:33.444033", "stderr": "/bin/sh: /tmp/.kubeinstalltemp/12211/temp/uninstall-docker.sh: 没有那个文件或目录", "stderr_lines": ["/bin/sh: /tmp/.kubeinstalltemp/12211/temp/uninstall-docker.sh: 没有那个文件或目录"], "stdout": "", "stdout_lines": []}
+...ignoring
+
+TASK [/go/src/kube-install/data/output/12211/sys/0x00000000action/delnode : 5.Delete kube-proxy service file] ***
+ok: [192.168.122.13]
+changed: [192.168.122.14]
+changed: [192.168.122.12]
+changed: [192.168.122.11]
+
+TASK [/go/src/kube-install/data/output/12211/sys/0x00000000action/delnode : 6.Delete kubelet service file] ***
+ok: [192.168.122.13]
+changed: [192.168.122.12]
+changed: [192.168.122.14]
+changed: [192.168.122.11]
+
+PLAY [delnode] *****************************************************************
+
+TASK [/go/src/kube-install/data/output/12211/sys/0x00000000action/clearresidue : 1.Delete /opt/kube-install dir] ***
+changed: [192.168.122.13]
+fatal: [192.168.122.11]: FAILED! => {"changed": false, "msg": "rmtree failed: [Errno 16] 设备或资源忙: '/opt/kube-install/k8s/kubernetes/kubelet/pods/8d1c1373-7048-4d51-a3c1-cb6e4b8ea7cb/volumes/kubernetes.io~projected/kube-api-access-clgvb'"}
+...ignoring
+fatal: [192.168.122.12]: FAILED! => {"changed": false, "msg": "rmtree failed: [Errno 16] 设备或资源忙: '/opt/kube-install/k8s/kubernetes/kubelet/pods/2ae9bd50-e804-4af2-88f6-61391df365eb/volumes/kubernetes.io~projected/kube-api-access-hk8bp'"}
+...ignoring
+changed: [192.168.122.14]
+
+TASK [/go/src/kube-install/data/output/12211/sys/0x00000000action/clearresidue : 2.Delete cert file] ***
+changed: [192.168.122.12]
+changed: [192.168.122.13]
+changed: [192.168.122.14]
+changed: [192.168.122.11]
+
+TASK [/go/src/kube-install/data/output/12211/sys/0x00000000action/clearresidue : 3.Stop TTY service] ***
+ok: [192.168.122.13]
+ok: [192.168.122.12]
+ok: [192.168.122.11]
+ok: [192.168.122.14]
+
+TASK [/go/src/kube-install/data/output/12211/sys/0x00000000action/clearresidue : file] ***
+changed: [192.168.122.13]
+changed: [192.168.122.14]
+changed: [192.168.122.11]
+changed: [192.168.122.12]
+
+TASK [/go/src/kube-install/data/output/12211/sys/0x00000000action/clearresidue : 4.Delete kubectl file] ***
+changed: [192.168.122.14]
+changed: [192.168.122.12]
+ok: [192.168.122.13]
+changed: [192.168.122.11]
+
+TASK [/go/src/kube-install/data/output/12211/sys/0x00000000action/clearresidue : 5.Delete other bin file] ***
+changed: [192.168.122.12] => (item=bandwidth)
+changed: [192.168.122.14] => (item=bandwidth)
+ok: [192.168.122.13] => (item=bandwidth)
+changed: [192.168.122.11] => (item=bandwidth)
+ok: [192.168.122.13] => (item=dhcp)
+changed: [192.168.122.14] => (item=dhcp)
+changed: [192.168.122.12] => (item=dhcp)
+changed: [192.168.122.11] => (item=dhcp)
+ok: [192.168.122.13] => (item=flannel)
+changed: [192.168.122.14] => (item=flannel)
+changed: [192.168.122.11] => (item=flannel)
+changed: [192.168.122.12] => (item=flannel)
+ok: [192.168.122.13] => (item=host-device)
+changed: [192.168.122.14] => (item=host-device)
+changed: [192.168.122.11] => (item=host-device)
+changed: [192.168.122.12] => (item=host-device)
+ok: [192.168.122.13] => (item=ipvlan)
+changed: [192.168.122.14] => (item=ipvlan)
+changed: [192.168.122.11] => (item=ipvlan)
+changed: [192.168.122.12] => (item=ipvlan)
+changed: [192.168.122.13] => (item=kubeadm)
+changed: [192.168.122.11] => (item=kubeadm)
+changed: [192.168.122.14] => (item=kubeadm)
+changed: [192.168.122.12] => (item=kubeadm)
+changed: [192.168.122.13] => (item=kubectl)
+changed: [192.168.122.11] => (item=kubectl)
+changed: [192.168.122.14] => (item=kubectl)
+changed: [192.168.122.12] => (item=kubectl)
+changed: [192.168.122.13] => (item=kubectl-convert)
+changed: [192.168.122.11] => (item=kubectl-convert)
+changed: [192.168.122.14] => (item=kubectl-convert)
+changed: [192.168.122.12] => (item=kubectl-convert)
+changed: [192.168.122.13] => (item=kubelet)
+changed: [192.168.122.11] => (item=kubelet)
+changed: [192.168.122.14] => (item=kubelet)
+changed: [192.168.122.12] => (item=kubelet)
+changed: [192.168.122.13] => (item=kube-proxy)
+changed: [192.168.122.11] => (item=kube-proxy)
+changed: [192.168.122.14] => (item=kube-proxy)
+changed: [192.168.122.12] => (item=kube-proxy)
+ok: [192.168.122.13] => (item=macvlan)
+changed: [192.168.122.14] => (item=macvlan)
+changed: [192.168.122.11] => (item=macvlan)
+changed: [192.168.122.12] => (item=macvlan)
+changed: [192.168.122.13] => (item=mounter)
+changed: [192.168.122.14] => (item=mounter)
+changed: [192.168.122.11] => (item=mounter)
+changed: [192.168.122.12] => (item=mounter)
+ok: [192.168.122.13] => (item=ptp)
+changed: [192.168.122.14] => (item=ptp)
+changed: [192.168.122.11] => (item=ptp)
+changed: [192.168.122.12] => (item=ptp)
+ok: [192.168.122.13] => (item=sbr)
+changed: [192.168.122.14] => (item=sbr)
+changed: [192.168.122.11] => (item=sbr)
+changed: [192.168.122.12] => (item=sbr)
+ok: [192.168.122.13] => (item=tuning)
+changed: [192.168.122.14] => (item=tuning)
+changed: [192.168.122.11] => (item=tuning)
+changed: [192.168.122.12] => (item=tuning)
+ok: [192.168.122.13] => (item=bridge)
+changed: [192.168.122.14] => (item=bridge)
+changed: [192.168.122.11] => (item=bridge)
+changed: [192.168.122.12] => (item=bridge)
+ok: [192.168.122.13] => (item=firewall)
+changed: [192.168.122.14] => (item=firewall)
+changed: [192.168.122.11] => (item=firewall)
+changed: [192.168.122.12] => (item=firewall)
+ok: [192.168.122.13] => (item=flanneld)
+changed: [192.168.122.14] => (item=flanneld)
+changed: [192.168.122.11] => (item=flanneld)
+changed: [192.168.122.12] => (item=flanneld)
+ok: [192.168.122.13] => (item=host-local)
+changed: [192.168.122.14] => (item=host-local)
+changed: [192.168.122.11] => (item=host-local)
+changed: [192.168.122.12] => (item=host-local)
+ok: [192.168.122.13] => (item=ipvsinit.sh)
+changed: [192.168.122.14] => (item=ipvsinit.sh)
+changed: [192.168.122.11] => (item=ipvsinit.sh)
+changed: [192.168.122.12] => (item=ipvsinit.sh)
+ok: [192.168.122.13] => (item=loopback)
+changed: [192.168.122.14] => (item=loopback)
+changed: [192.168.122.11] => (item=loopback)
+changed: [192.168.122.12] => (item=loopback)
+ok: [192.168.122.13] => (item=mk-docker-opts.sh)
+changed: [192.168.122.14] => (item=mk-docker-opts.sh)
+changed: [192.168.122.11] => (item=mk-docker-opts.sh)
+changed: [192.168.122.12] => (item=mk-docker-opts.sh)
+ok: [192.168.122.13] => (item=portmap)
+changed: [192.168.122.14] => (item=portmap)
+changed: [192.168.122.11] => (item=portmap)
+changed: [192.168.122.12] => (item=portmap)
+ok: [192.168.122.13] => (item=resolvinit.sh)
+changed: [192.168.122.14] => (item=resolvinit.sh)
+changed: [192.168.122.11] => (item=resolvinit.sh)
+changed: [192.168.122.12] => (item=resolvinit.sh)
+ok: [192.168.122.13] => (item=static)
+changed: [192.168.122.14] => (item=static)
+changed: [192.168.122.12] => (item=static)
+changed: [192.168.122.11] => (item=static)
+ok: [192.168.122.13] => (item=vlan)
+changed: [192.168.122.14] => (item=vlan)
+changed: [192.168.122.12] => (item=vlan)
+changed: [192.168.122.11] => (item=vlan)
+
+PLAY RECAP *********************************************************************
+192.168.122.11             : ok=13   changed=10   unreachable=0    failed=0    skipped=0    rescued=0    ignored=3   
+192.168.122.12             : ok=13   changed=10   unreachable=0    failed=0    skipped=0    rescued=0    ignored=3   
+192.168.122.13             : ok=13   changed=5    unreachable=0    failed=0    skipped=0    rescued=0    ignored=4   
+192.168.122.14             : ok=13   changed=11   unreachable=0    failed=0    skipped=0    rescued=0    ignored=2   
+
+[Info] 2021-10-18 17:51:55.004862684 +0800 CST m=+6976.488901109 All kubernetes node of 12211 cluster has been uninstalled successfully! 
+
+Please wait 15 seconds before uninstalling all kubernetes masters ... 
+
+
+PLAY [delmaster] ***************************************************************
+
+TASK [/go/src/kube-install/data/output/12211/sys/0x00000000action/delmaster : 1.Stop kube-controller-manager service] ***
+fatal: [192.168.122.13]: FAILED! => {"ansible_facts": {"discovered_interpreter_python": "/usr/bin/python"}, "changed": false, "msg": "Could not find the requested service kube-controller-manager: host"}
+...ignoring
+changed: [192.168.122.11]
+changed: [192.168.122.12]
+
+TASK [/go/src/kube-install/data/output/12211/sys/0x00000000action/delmaster : 2.Stop kube-scheduler service] ***
+fatal: [192.168.122.13]: FAILED! => {"ansible_facts": {"discovered_interpreter_python": "/usr/bin/python"}, "changed": false, "msg": "Could not find the requested service kube-scheduler: host"}
+...ignoring
+changed: [192.168.122.12]
+changed: [192.168.122.11]
+
+TASK [/go/src/kube-install/data/output/12211/sys/0x00000000action/delmaster : 3.Stop kube-apiserver service] ***
+fatal: [192.168.122.13]: FAILED! => {"ansible_facts": {"discovered_interpreter_python": "/usr/bin/python"}, "changed": false, "msg": "Could not find the requested service kube-apiserver: host"}
+...ignoring
+changed: [192.168.122.12]
+changed: [192.168.122.11]
+
+TASK [/go/src/kube-install/data/output/12211/sys/0x00000000action/delmaster : 4.Stop etcd service] ***
+changed: [192.168.122.13]
+changed: [192.168.122.11]
+changed: [192.168.122.12]
+
+TASK [/go/src/kube-install/data/output/12211/sys/0x00000000action/delmaster : 5.Delete kube-controller-manager file] ***
+changed: [192.168.122.11]
+changed: [192.168.122.12]
+ok: [192.168.122.13]
+
+TASK [/go/src/kube-install/data/output/12211/sys/0x00000000action/delmaster : file] ***
+changed: [192.168.122.12]
+changed: [192.168.122.13]
+changed: [192.168.122.11]
+
+TASK [/go/src/kube-install/data/output/12211/sys/0x00000000action/delmaster : 6.Delete kube-scheduler file] ***
+changed: [192.168.122.11]
+ok: [192.168.122.13]
+changed: [192.168.122.12]
+
+TASK [/go/src/kube-install/data/output/12211/sys/0x00000000action/delmaster : file] ***
+changed: [192.168.122.12]
+changed: [192.168.122.11]
+changed: [192.168.122.13]
+
+TASK [/go/src/kube-install/data/output/12211/sys/0x00000000action/delmaster : 7.Delete kube-apiserver file] ***
+ok: [192.168.122.13]
+changed: [192.168.122.11]
+changed: [192.168.122.12]
+
+TASK [/go/src/kube-install/data/output/12211/sys/0x00000000action/delmaster : file] ***
+changed: [192.168.122.12] => (item=apiextensions-apiserver)
+changed: [192.168.122.11] => (item=apiextensions-apiserver)
+changed: [192.168.122.13] => (item=apiextensions-apiserver)
+changed: [192.168.122.11] => (item=kube-aggregator)
+changed: [192.168.122.12] => (item=kube-aggregator)
+changed: [192.168.122.13] => (item=kube-aggregator)
+changed: [192.168.122.11] => (item=kube-apiserver)
+changed: [192.168.122.12] => (item=kube-apiserver)
+changed: [192.168.122.13] => (item=kube-apiserver)
+
+TASK [/go/src/kube-install/data/output/12211/sys/0x00000000action/delmaster : 8.Delete etcd file] ***
+changed: [192.168.122.12]
+changed: [192.168.122.11]
+changed: [192.168.122.13]
+
+TASK [/go/src/kube-install/data/output/12211/sys/0x00000000action/delmaster : file] ***
+changed: [192.168.122.11] => (item=etcd)
+changed: [192.168.122.12] => (item=etcd)
+changed: [192.168.122.13] => (item=etcd)
+changed: [192.168.122.11] => (item=etcdctl)
+changed: [192.168.122.12] => (item=etcdctl)
+changed: [192.168.122.13] => (item=etcdctl)
+
+TASK [/go/src/kube-install/data/output/12211/sys/0x00000000action/delmaster : 9.Delete cfssl software file] ***
+changed: [192.168.122.11] => (item=cfssl)
+changed: [192.168.122.13] => (item=cfssl)
+changed: [192.168.122.12] => (item=cfssl)
+changed: [192.168.122.11] => (item=cfssl-certinfo)
+changed: [192.168.122.12] => (item=cfssl-certinfo)
+changed: [192.168.122.13] => (item=cfssl-certinfo)
+changed: [192.168.122.11] => (item=cfssljson)
+changed: [192.168.122.13] => (item=cfssljson)
+changed: [192.168.122.12] => (item=cfssljson)
+
+TASK [/go/src/kube-install/data/output/12211/sys/0x00000000action/delmaster : 10.Delete helm software file] ***
+changed: [192.168.122.12]
+changed: [192.168.122.11]
+changed: [192.168.122.13]
+
+PLAY [delmaster] ***************************************************************
+
+TASK [/go/src/kube-install/data/output/12211/sys/0x00000000action/clearresidue : 1.Delete /opt/kube-install dir] ***
+fatal: [192.168.122.11]: FAILED! => {"changed": false, "msg": "rmtree failed: [Errno 16] 设备或资源忙: '/opt/kube-install/k8s/kubernetes/kubelet/pods/8d1c1373-7048-4d51-a3c1-cb6e4b8ea7cb/volumes/kubernetes.io~projected/kube-api-access-clgvb'"}
+...ignoring
+fatal: [192.168.122.12]: FAILED! => {"changed": false, "msg": "rmtree failed: [Errno 16] 设备或资源忙: '/opt/kube-install/k8s/kubernetes/kubelet/pods/2ae9bd50-e804-4af2-88f6-61391df365eb/volumes/kubernetes.io~projected/kube-api-access-hk8bp'"}
+...ignoring
+ok: [192.168.122.13]
+
+TASK [/go/src/kube-install/data/output/12211/sys/0x00000000action/clearresidue : 2.Delete cert file] ***
+ok: [192.168.122.12]
+ok: [192.168.122.11]
+ok: [192.168.122.13]
+
+TASK [/go/src/kube-install/data/output/12211/sys/0x00000000action/clearresidue : 3.Stop TTY service] ***
+ok: [192.168.122.13]
+ok: [192.168.122.12]
+ok: [192.168.122.11]
+
+TASK [/go/src/kube-install/data/output/12211/sys/0x00000000action/clearresidue : file] ***
+ok: [192.168.122.12]
+ok: [192.168.122.11]
+ok: [192.168.122.13]
+
+TASK [/go/src/kube-install/data/output/12211/sys/0x00000000action/clearresidue : 4.Delete kubectl file] ***
+ok: [192.168.122.12]
+ok: [192.168.122.11]
+ok: [192.168.122.13]
+
+TASK [/go/src/kube-install/data/output/12211/sys/0x00000000action/clearresidue : 5.Delete other bin file] ***
+ok: [192.168.122.11] => (item=bandwidth)
+ok: [192.168.122.13] => (item=bandwidth)
+ok: [192.168.122.12] => (item=bandwidth)
+ok: [192.168.122.11] => (item=dhcp)
+ok: [192.168.122.13] => (item=dhcp)
+ok: [192.168.122.12] => (item=dhcp)
+ok: [192.168.122.11] => (item=flannel)
+ok: [192.168.122.13] => (item=flannel)
+ok: [192.168.122.12] => (item=flannel)
+ok: [192.168.122.13] => (item=host-device)
+ok: [192.168.122.11] => (item=host-device)
+ok: [192.168.122.12] => (item=host-device)
+ok: [192.168.122.13] => (item=ipvlan)
+ok: [192.168.122.11] => (item=ipvlan)
+ok: [192.168.122.12] => (item=ipvlan)
+ok: [192.168.122.11] => (item=kubeadm)
+ok: [192.168.122.13] => (item=kubeadm)
+ok: [192.168.122.12] => (item=kubeadm)
+ok: [192.168.122.11] => (item=kubectl)
+ok: [192.168.122.13] => (item=kubectl)
+ok: [192.168.122.12] => (item=kubectl)
+ok: [192.168.122.13] => (item=kubectl-convert)
+ok: [192.168.122.12] => (item=kubectl-convert)
+ok: [192.168.122.11] => (item=kubectl-convert)
+ok: [192.168.122.13] => (item=kubelet)
+ok: [192.168.122.12] => (item=kubelet)
+ok: [192.168.122.11] => (item=kubelet)
+ok: [192.168.122.13] => (item=kube-proxy)
+ok: [192.168.122.12] => (item=kube-proxy)
+ok: [192.168.122.11] => (item=kube-proxy)
+ok: [192.168.122.13] => (item=macvlan)
+ok: [192.168.122.11] => (item=macvlan)
+ok: [192.168.122.12] => (item=macvlan)
+ok: [192.168.122.13] => (item=mounter)
+ok: [192.168.122.11] => (item=mounter)
+ok: [192.168.122.12] => (item=mounter)
+ok: [192.168.122.13] => (item=ptp)
+ok: [192.168.122.11] => (item=ptp)
+ok: [192.168.122.12] => (item=ptp)
+ok: [192.168.122.13] => (item=sbr)
+ok: [192.168.122.11] => (item=sbr)
+ok: [192.168.122.12] => (item=sbr)
+ok: [192.168.122.13] => (item=tuning)
+ok: [192.168.122.11] => (item=tuning)
+ok: [192.168.122.12] => (item=tuning)
+ok: [192.168.122.13] => (item=bridge)
+ok: [192.168.122.11] => (item=bridge)
+ok: [192.168.122.12] => (item=bridge)
+ok: [192.168.122.13] => (item=firewall)
+ok: [192.168.122.11] => (item=firewall)
+ok: [192.168.122.12] => (item=firewall)
+ok: [192.168.122.13] => (item=flanneld)
+ok: [192.168.122.11] => (item=flanneld)
+ok: [192.168.122.12] => (item=flanneld)
+ok: [192.168.122.13] => (item=host-local)
+ok: [192.168.122.11] => (item=host-local)
+ok: [192.168.122.12] => (item=host-local)
+ok: [192.168.122.13] => (item=ipvsinit.sh)
+ok: [192.168.122.12] => (item=ipvsinit.sh)
+ok: [192.168.122.11] => (item=ipvsinit.sh)
+ok: [192.168.122.13] => (item=loopback)
+ok: [192.168.122.12] => (item=loopback)
+ok: [192.168.122.11] => (item=loopback)
+ok: [192.168.122.13] => (item=mk-docker-opts.sh)
+ok: [192.168.122.12] => (item=mk-docker-opts.sh)
+ok: [192.168.122.11] => (item=mk-docker-opts.sh)
+ok: [192.168.122.13] => (item=portmap)
+ok: [192.168.122.12] => (item=portmap)
+ok: [192.168.122.11] => (item=portmap)
+ok: [192.168.122.13] => (item=resolvinit.sh)
+ok: [192.168.122.12] => (item=resolvinit.sh)
+ok: [192.168.122.11] => (item=resolvinit.sh)
+ok: [192.168.122.13] => (item=static)
+ok: [192.168.122.12] => (item=static)
+ok: [192.168.122.11] => (item=static)
+ok: [192.168.122.13] => (item=vlan)
+ok: [192.168.122.12] => (item=vlan)
+ok: [192.168.122.11] => (item=vlan)
+
+PLAY RECAP *********************************************************************
+192.168.122.11             : ok=20   changed=14   unreachable=0    failed=0    skipped=0    rescued=0    ignored=1   
+192.168.122.12             : ok=20   changed=14   unreachable=0    failed=0    skipped=0    rescued=0    ignored=1   
+192.168.122.13             : ok=20   changed=8    unreachable=0    failed=0    skipped=0    rescued=0    ignored=3   
+
+[Info] 2021-10-18 17:53:14.435475236 +0800 CST m=+7055.919513668 Cleaning and detection after uninstallation are in progress. Please wait ... 
+
+[Info] 2021-10-18 17:53:14.441631769 +0800 CST m=+7055.925670298 Kubernetes cluster uninstall completed! 
+
+[Info] 2021-10-18 17:53:14.444678588 +0800 CST m=+7055.928717066 Cleaning up temporary cache files ... 
+
+[Info] 2021-10-18 17:53:14.466665463 +0800 CST m=+7055.950704068 Kubernetes cluster uninstall completed! 
+
+*************************************************************************************
+
+[Info] 2021-10-18 18:12:20.273960098 +0800 CST m=+8201.757998584 Cleaning and detection after installation are in progress. Please wait ... 
+
+[Info] 2021-10-19 17:47:04.362598739 +0800 CST m=+14182.367002572 Cleaning and detection after installation are in progress. Please wait ... 
+

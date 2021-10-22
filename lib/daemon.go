@@ -104,7 +104,7 @@ type NodeList struct {
 }
 
 type NodeAddForm struct {
-	Node    string `form:"node" binding:"required"`
+	Node    string `form:"addnode" binding:"required"`
 	Label   string `form:"label" binding:"required"`
 	K8sver  string `form:"k8sver" binding:"required"`
 	Softdir string `form:"softdir" binding:"required"`

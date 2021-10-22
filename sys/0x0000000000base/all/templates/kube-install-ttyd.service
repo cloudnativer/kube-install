@@ -1,6 +1,6 @@
 [Unit]
-Description=ttyd service
-Documentation=https://github.com/cloudnativer
+Description=kube-install ttyd service
+Documentation=https://cloudnativer.github.io
 After=network-online.target
 Wants=network-online.target
 

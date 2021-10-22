@@ -1,0 +1,79 @@
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] Loaded HTML Templates (18): 
+	- calendarscheduler.tmpl
+	- cluster.tmpl
+	- login.tmpl
+	- logs.tmpl
+	- master.tmpl
+	- 
+	- optresult.tmpl
+	- 404.html
+	- clusterinfo.tmpl
+	- deleteschedule.tmpl
+	- node.tmpl
+	- tools.tmpl
+	- 403.html
+	- clusteradd.tmpl
+	- clusterdel.tmpl
+	- index.tmpl
+	- masterinfo.tmpl
+	- nodeinfo.tmpl
+
+[GIN-debug] GET    /static/*filepath         --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (3 handlers)
+[GIN-debug] HEAD   /static/*filepath         --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (3 handlers)
+[GIN-debug] GET    /                         --> kube-install/lib.DaemonRun.func1 (3 handlers)
+[GIN-debug] POST   /login                    --> kube-install/lib.DaemonRun.func2 (3 handlers)
+[GIN-debug] GET    /clusterlist              --> kube-install/lib.DaemonRun.func3 (3 handlers)
+[GIN-debug] GET    /clusterinfo              --> kube-install/lib.DaemonRun.func4 (3 handlers)
+[GIN-debug] GET    /clusteradd               --> kube-install/lib.DaemonRun.func5 (3 handlers)
+[GIN-debug] GET    /clusterdel               --> kube-install/lib.DaemonRun.func6 (3 handlers)
+[GIN-debug] GET    /deleteschedule           --> kube-install/lib.DaemonRun.func7 (3 handlers)
+[GIN-debug] GET    /masteradmin              --> kube-install/lib.DaemonRun.func8 (3 handlers)
+[GIN-debug] GET    /masterinfo               --> kube-install/lib.DaemonRun.func9 (3 handlers)
+[GIN-debug] GET    /nodeadmin                --> kube-install/lib.DaemonRun.func10 (3 handlers)
+[GIN-debug] GET    /nodeinfo                 --> kube-install/lib.DaemonRun.func11 (3 handlers)
+[GIN-debug] GET    /nodeadd                  --> kube-install/lib.DaemonRun.func12 (3 handlers)
+[GIN-debug] GET    /tools                    --> kube-install/lib.DaemonRun.func13 (3 handlers)
+[GIN-debug] GET    /calendarscheduler        --> kube-install/lib.DaemonRun.func14 (3 handlers)
+[GIN-debug] GET    /logs                     --> kube-install/lib.DaemonRun.func15 (3 handlers)
+[GIN-debug] POST   /install                  --> kube-install/lib.DaemonRun.func16 (3 handlers)
+[GIN-debug] POST   /rebuildmaster            --> kube-install/lib.DaemonRun.func17 (3 handlers)
+[GIN-debug] POST   /delmaster                --> kube-install/lib.DaemonRun.func18 (3 handlers)
+[GIN-debug] POST   /addnode                  --> kube-install/lib.DaemonRun.func19 (3 handlers)
+[GIN-debug] POST   /delnode                  --> kube-install/lib.DaemonRun.func20 (3 handlers)
+[GIN-debug] POST   /uninstall                --> kube-install/lib.DaemonRun.func21 (3 handlers)
+[GIN-debug] POST   /deleteinstallschedule    --> kube-install/lib.DaemonRun.func22 (3 handlers)
+[GIN-debug] POST   /sshkey                   --> kube-install/lib.DaemonRun.func23 (3 handlers)
+[GIN-debug] GET    /tty                      --> kube-install/lib.DaemonRun.func24 (3 handlers)
+[GIN-debug] Listening and serving HTTP on 0.0.0.0:9080
+[GIN] 2021/10/18 - 11:35:00 | 200 |   41.276859ms |    10.57.237.15 | GET      "/masteradmin?label=12211&softdir=%2fopt%2fkube-install&ostype=centos7&k8sver=1.21"
+[GIN] 2021/10/18 - 11:35:00 | 200 |   41.773721ms |    10.57.237.15 | GET      "/clusterlist?label=12211&softdir=%2fopt%2fkube-install&ostype=centos7&k8sver=1.21"
+[GIN] 2021/10/18 - 11:35:02 | 200 |   48.256014ms |    10.57.237.15 | GET      "/nodeadmin?label=12211&softdir=%2fopt%2fkube-install&ostype=centos7&k8sver=1.21"
+[GIN] 2021/10/18 - 11:35:05 | 200 |   45.953361ms |    10.57.237.15 | POST     "/addnode?label=12211&softdir=%2fopt%2fkube-install&ostype=centos7&k8sver=1.21"
+[GIN] 2021/10/18 - 11:35:06 | 200 |   47.744853ms |    10.57.237.15 | GET      "/nodeadmin?label=12211&softdir=/opt/kube-install&ostype=centos7&k8sver=1.21"
+[GIN] 2021/10/18 - 11:35:16 | 200 |   40.125963ms |    10.57.237.15 | GET      "/logs?label=12211&opt=addnode"
+[GIN] 2021/10/18 - 11:35:22 | 200 |   37.153822ms |    10.57.237.15 | GET      "/logs?label=12211&opt=addnode"
+[GIN] 2021/10/18 - 11:35:24 | 200 |   45.016372ms |    10.57.237.15 | GET      "/nodeadmin?label=12211&softdir=/opt/kube-install&ostype=centos7&k8sver=1.21"
+[GIN] 2021/10/18 - 11:37:25 | 200 |   37.118891ms |    10.57.237.15 | GET      "/logs?label=12211&opt=addnode"
+[GIN] 2021/10/18 - 11:37:28 | 200 |   29.235173ms |    10.57.237.15 | GET      "/masteradmin?label=12211&softdir=%2fopt%2fkube-install&ostype=centos7&k8sver=1.21"
+[GIN] 2021/10/18 - 11:37:28 | 200 |   39.427543ms |    10.57.237.15 | GET      "/nodeadmin?label=12211&softdir=%2fopt%2fkube-install&ostype=centos7&k8sver=1.21"
+[GIN] 2021/10/18 - 11:37:52 | 200 |   50.747447ms |    10.57.237.15 | GET      "/nodeinfo?label=12211&nodeip=192.168.122.13&softdir=%2fopt%2fkube-install&k8sver=1.21&nodestatus=ok&ostype=centos7"
+[GIN] 2021/10/18 - 11:37:56 | 200 |   49.196224ms |    10.57.237.15 | GET      "/nodeadmin?label=12211&softdir=/opt/kube-install&k8sver=1.21&ostype=centos7"
+[GIN] 2021/10/18 - 11:38:00 | 200 |   40.553212ms |    10.57.237.15 | GET      "/clusterlist?label=12211&softdir=%2fopt%2fkube-install&ostype=centos7&k8sver=1.21"
+[GIN] 2021/10/18 - 11:38:28 | 200 |   42.923736ms |    10.57.237.15 | GET      "/nodeadmin?label=12211&softdir=%2fopt%2fkube-install&ostype=centos7&k8sver=1.21"
+[GIN] 2021/10/18 - 11:52:06 | 200 |   38.385303ms |    10.57.237.15 | GET      "/masteradmin?label=12211&softdir=%2fopt%2fkube-install&ostype=centos7&k8sver=1.21"
+[GIN] 2021/10/18 - 11:52:06 | 200 |   36.043495ms |    10.57.237.15 | GET      "/clusterlist?label=12211&softdir=%2fopt%2fkube-install&ostype=centos7&k8sver=1.21"
+[GIN] 2021/10/18 - 11:52:12 | 200 |   39.535214ms |    10.57.237.15 | GET      "/masteradmin?label=12211&softdir=%2fopt%2fkube-install&ostype=centos7&k8sver=1.21"
+[GIN] 2021/10/18 - 11:52:13 | 200 |   54.808833ms |    10.57.237.15 | GET      "/nodeadmin?label=12211&softdir=%2fopt%2fkube-install&ostype=centos7&k8sver=1.21"
+[GIN] 2021/10/18 - 11:52:36 | 200 |   38.842915ms |    10.57.237.15 | GET      "/masteradmin?label=12211&softdir=%2fopt%2fkube-install&ostype=centos7&k8sver=1.21"
+[GIN] 2021/10/18 - 11:52:36 | 200 |   35.632335ms |    10.57.237.15 | GET      "/clusterlist?label=12211&softdir=%2fopt%2fkube-install&ostype=&k8sver=1.21"
+[GIN] 2021/10/18 - 11:54:45 | 200 |   49.338108ms |    10.57.237.15 | GET      "/masteradmin?label=12211&softdir=%2fopt%2fkube-install&ostype=&k8sver=1.21"
+[GIN] 2021/10/18 - 11:54:46 | 200 |   34.235324ms |    10.57.237.15 | GET      "/clusterlist?label=12211&softdir=%2fopt%2fkube-install&ostype=&k8sver=1.21"
+o such file or directory
+[Error] 2021-10-18 11:54:46.710170957 +0800 CST m=+1187.962733806 An error occurred: open /go/src/kube-install/data/output/12291/masters: no such file or directory
+[Error] 2021-10-18 11:54:46.713193793 +0800 CST m=+1187.965756634 An error occurred: open /go/src/kube-install/data/output/12291/nodes: no such file or directory

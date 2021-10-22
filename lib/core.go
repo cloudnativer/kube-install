@@ -1,7 +1,7 @@
 package kilib
 
 import (
-//    "fmt"
+    "fmt"
     "os"
     "time"
 )
@@ -19,14 +19,18 @@ func RebuildMasterCore(mode string, masterArray []string, currentDir string, kis
         DatabaseUpdate(currentDir+"/data/output"+subProcessDir+"/masters/"+masterArray[i]+"/status.txt", "rebuilding", currentDir, logName, mode)
     }
     os.OpenFile(currentDir+"/data/logs"+subProcessDir+"/logs/rebuildmaster.log", os.O_RDWR|os.O_TRUNC|os.O_CREATE, 0766)
-    ShellExecute("echo \"*************************************************************************************\n\n[Info] "+time.Now().String()+" Rebuilding kubernetes master, please wait ...\n\n    Kubernetes cluster label: "+label+"\n\n\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/rebuildmaster.log")
+    ShellExecute("echo \"*************************************************************************************\n\n[Info] "+time.Now().String()+" Rebuilding kubernetes master, please wait ...\n\n    Kubernetes cluster label: "+label+"\n\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/rebuildmaster.log")
     ShellExecute("sed -i '1d' "+currentDir+"/data/msg/msg.txt")
     ShellExecute("echo \"<div class='g_12'><div class='info iDialog'>[Info] "+time.Now().String()+" Rebuilding kubernetes master of "+label+" cluster ...</div></div>\" >> "+currentDir+"/data/msg/msg.txt")
     if !RebuildmasterConfig(mode, masterArray, currentDir, subProcessDir, logName) {
         ShellExecute("echo [Error] "+time.Now().String()+" \"The parameters you entered are incorrect, please check! \n\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/rebuildmaster.log")
         return
     }
-    ShellExecute("cp -rf "+currentDir+"/sys "+currentDir+"/data/output"+subProcessDir+"/")
+    _, err := os.Stat(currentDir+"/data/output"+subProcessDir+"/sys/0x000certificate/copycfssl/templates/ipvsinit_ep.yaml")
+    if err != nil || os.IsNotExist(err) {
+        ShellExecute("cp -rf "+currentDir+"/sys "+currentDir+"/data/output"+subProcessDir+"/")
+        InstallIpvsYaml(mode, currentDir, masterArray, subProcessDir, logName)
+    }
     InstallGenfile(mode,currentDir, subProcessDir, logName)
     RebuildmasterYML("",currentDir+"/data/output"+subProcessDir, currentDir, currentUser, logName)
     err_rebuildmaster := ExecuteOpt(kissh, currentDir, opt, opt, subProcessDir, "")
@@ -38,12 +42,26 @@ func RebuildMasterCore(mode string, masterArray []string, currentDir string, kis
         ShellExecute("sed -i '1d' "+currentDir+"/data/msg/msg.txt")
         ShellExecute("echo \"<div class='g_12'><div class='error iDialog'>[Error] "+time.Now().String()+" Failed to rebuild master of "+label+" cluster! </div></div>\" >> "+currentDir+"/data/msg/msg.txt")
     } else {
+        notokMaster := ""
         for i := 0; i < len(masterArray); i++ {
-            DatabaseUpdate(currentDir+"/data/output"+subProcessDir+"/masters/"+masterArray[i]+"/status.txt", "ok", currentDir, logName, mode)
+            chkMasterStr := ShellOutput("curl -k -s --head 'https://"+masterArray[i]+":6443' | awk '/HTTP/ {print $2}' ")
+            fmt.Println(chkMasterStr)
+            if chkMasterStr == "401\n" {
+                DatabaseUpdate(currentDir+"/data/output"+subProcessDir+"/masters/"+masterArray[i]+"/status.txt", "ok", currentDir, logName, mode)
+            } else {
+                DatabaseUpdate(currentDir+"/data/output"+subProcessDir+"/masters/"+masterArray[i]+"/status.txt", "notok", currentDir, logName, mode)
+                notokMaster = notokMaster+" "+masterArray[i]
+            }
         }
-        ShellExecute("echo [Info] "+time.Now().String()+" \"Kubernetes master rebuild operation completed! \n\n*************************************************************************************\n\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/rebuildmaster.log")
-        ShellExecute("sed -i '1d' "+currentDir+"/data/msg/msg.txt")
-        ShellExecute("echo \"<div class='g_12'><div class='info iDialog'>[Info] "+time.Now().String()+" The master of "+label+" cluster has been rebuilt successfully! </div></div>\" >> "+currentDir+"/data/msg/msg.txt")
+        if notokMaster == "" {
+            ShellExecute("echo [Info] "+time.Now().String()+" \"Kubernetes master rebuild operation completed! \n\n*************************************************************************************\n\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/rebuildmaster.log")
+            ShellExecute("sed -i '1d' "+currentDir+"/data/msg/msg.txt")
+            ShellExecute("echo \"<div class='g_12'><div class='info iDialog'>[Info] "+time.Now().String()+" The master of "+label+" cluster has been rebuilt successfully! </div></div>\" >> "+currentDir+"/data/msg/msg.txt")
+        } else {
+            ShellExecute("echo [Error] "+time.Now().String()+" \"Kubernetes master rebuild failed! Please repair it manually or solve the etcd problem manually and try again. \n\n    List of failed masters: "+notokMaster+" \n\n*************************************************************************************\n\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/rebuildmaster.log")
+            ShellExecute("sed -i '1d' "+currentDir+"/data/msg/msg.txt")
+            ShellExecute("echo \"<div class='g_12'><div class='error iDialog'>[Error] "+time.Now().String()+" Failed to rebuild master of "+label+" cluster! </div></div>\" >> "+currentDir+"/data/msg/msg.txt")
+        }
     }
 }
 
@@ -108,7 +126,6 @@ func AddNodeCore(mode string, node string, nodeArray []string, currentDir string
         ShellExecute("echo [Error] "+time.Now().String()+" \"The parameters you entered are incorrect, please check! \n\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/addnode.log")
         return
     }
-    ShellExecute("cp -rf "+currentDir+"/sys "+currentDir+"/data/output"+subProcessDir+"/")
     AddnodeYML("",currentDir+"/data/output"+subProcessDir,currentDir,currentUser,osTypeResult,logName)
     err_addnode := ExecuteOpt(kissh, currentDir, opt, opt, subProcessDir, "")
     if err_addnode != nil {
@@ -119,12 +136,25 @@ func AddNodeCore(mode string, node string, nodeArray []string, currentDir string
         ShellExecute("sed -i '1d' "+currentDir+"/data/msg/msg.txt")
         ShellExecute("echo \"<div class='g_12'><div class='error iDialog'>[Error] "+time.Now().String()+" Failed to add node of "+label+" cluster! </div></div>\" >> "+currentDir+"/data/msg/msg.txt")
     } else {
-        for i := 0; i < len(nodeArray); i++ {
-            DatabaseUpdate(currentDir+"/data/output"+subProcessDir+"/nodes/"+nodeArray[i]+"/status.txt", "ok", currentDir, logName, mode)
+        for i := 1; i <= 3; i++ {
+            runStatus,_,_,_,_,_,_,_ := GetNodeInfo(label, nodeArray[0], currentDir, logName, mode)
+            if runStatus == "True" {
+                for i := 0; i < len(nodeArray); i++ {
+                    DatabaseUpdate(currentDir+"/data/output"+subProcessDir+"/nodes/"+nodeArray[i]+"/status.txt", "ok", currentDir, logName, mode)
+                }
+                ShellExecute("echo [Info] "+time.Now().String()+" \"The node of "+label+" cluster has been added successfully! \n\n*************************************************************************************\n\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/addnode.log")
+                ShellExecute("sed -i '1d' "+currentDir+"/data/msg/msg.txt")
+                ShellExecute("echo \"<div class='g_12'><div class='info iDialog'>[Info] "+time.Now().String()+" The node of "+label+" cluster has been added successfully! </div></div>\" >> "+currentDir+"/data/msg/msg.txt")
+                return
+            } 
+            time.Sleep(time.Duration(i*60)*time.Second)
         }
-        ShellExecute("echo [Info] "+time.Now().String()+" \"The node of "+label+" cluster has been added successfully! \n\n*************************************************************************************\n\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/addnode.log")
+        for i := 0; i < len(nodeArray); i++ {
+            DatabaseUpdate(currentDir+"/data/output"+subProcessDir+"/nodes/"+nodeArray[i]+"/status.txt", "notok", currentDir, logName, mode)
+        }
+        ShellExecute("echo [Error] "+time.Now().String()+" \"Kubernetes node add failed! \n\n*************************************************************************************\n\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/addnode.log")
         ShellExecute("sed -i '1d' "+currentDir+"/data/msg/msg.txt")
-        ShellExecute("echo \"<div class='g_12'><div class='info iDialog'>[Info] "+time.Now().String()+" The node of "+label+" cluster has been added successfully! </div></div>\" >> "+currentDir+"/data/msg/msg.txt")
+        ShellExecute("echo \"<div class='g_12'><div class='error iDialog'>[Error] "+time.Now().String()+" Failed to add node of "+label+" cluster! </div></div>\" >> "+currentDir+"/data/msg/msg.txt")
     }
 }
 

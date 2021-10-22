@@ -228,7 +228,7 @@
 										<td><input type="checkbox" class="simple_form" name="master" value="{{ .Master }}"></td>
 										<td>{{ .Master }}</td>
 										<td align="center">
-									{{ if eq .Masterstatus "adding" }} <img src="static/img/Icons/Load/load-4.gif" style="vertical-align: middle;"/> <span style="display: inline-block;">{{if eq .Lang "cn"}}部署中{{else}}Deploying{{end}}</span>{{end}}
+									{{ if eq .Masterstatus "adding" }} <img src="static/img/Icons/Load/load-4.gif" style="vertical-align: middle;"/> <span style="display: inline-block;">{{if eq .Lang "cn"}}安装中{{else}}Installing{{end}}</span>{{end}}
 									{{ if eq .Masterstatus "rebuilding" }} <img src="static/img/Icons/Load/load-4.gif" style="vertical-align: middle;"/> <span style="display: inline-block;">{{if eq .Lang "cn"}}修复中{{else}}Rebuilding{{end}}</span>{{end}}
 									{{ if eq .Masterstatus "deleting" }} <img src="static/img/Icons/Load/load-2.gif" style="vertical-align: middle;"/> <span style="display: inline-block;">{{if eq .Lang "cn"}}销毁中{{else}}Deleting{{end}}</span>{{end}}
 									{{ if eq .Masterstatus "ok" }} <img src="static/img/Icons/32/i_32_ok.png" style="vertical-align: middle;"/> <span style="display: inline-block;">{{if eq .Lang "cn"}}正常{{else}}OK{{end}}</span>{{end}}

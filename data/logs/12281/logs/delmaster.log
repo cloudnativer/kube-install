@@ -1,0 +1,64 @@
+*************************************************************************************
+
+[Info] 2021-10-18 14:57:11.735062155 +0800 CST m=+1022.086338712 Deleting kubernetes master, please wait ...
+
+    Kubernetes cluster label: 12281
+
+
+
+PLAY [delmaster] ***************************************************************
+
+TASK [/go/src/kube-install/data/output/12281/sys/0x00000000action/delmaster : 1.Stop kube-controller-manager service] ***
+changed: [192.168.122.81]
+
+TASK [/go/src/kube-install/data/output/12281/sys/0x00000000action/delmaster : 2.Stop kube-scheduler service] ***
+changed: [192.168.122.81]
+
+TASK [/go/src/kube-install/data/output/12281/sys/0x00000000action/delmaster : 3.Stop kube-apiserver service] ***
+changed: [192.168.122.81]
+
+TASK [/go/src/kube-install/data/output/12281/sys/0x00000000action/delmaster : 4.Stop etcd service] ***
+changed: [192.168.122.81]
+
+TASK [/go/src/kube-install/data/output/12281/sys/0x00000000action/delmaster : 5.Delete kube-controller-manager file] ***
+changed: [192.168.122.81]
+
+TASK [/go/src/kube-install/data/output/12281/sys/0x00000000action/delmaster : file] ***
+changed: [192.168.122.81]
+
+TASK [/go/src/kube-install/data/output/12281/sys/0x00000000action/delmaster : 6.Delete kube-scheduler file] ***
+changed: [192.168.122.81]
+
+TASK [/go/src/kube-install/data/output/12281/sys/0x00000000action/delmaster : file] ***
+changed: [192.168.122.81]
+
+TASK [/go/src/kube-install/data/output/12281/sys/0x00000000action/delmaster : 7.Delete kube-apiserver file] ***
+changed: [192.168.122.81]
+
+TASK [/go/src/kube-install/data/output/12281/sys/0x00000000action/delmaster : file] ***
+changed: [192.168.122.81] => (item=apiextensions-apiserver)
+ok: [192.168.122.81] => (item=kube-aggregator)
+changed: [192.168.122.81] => (item=kube-apiserver)
+
+TASK [/go/src/kube-install/data/output/12281/sys/0x00000000action/delmaster : 8.Delete etcd file] ***
+changed: [192.168.122.81]
+
+TASK [/go/src/kube-install/data/output/12281/sys/0x00000000action/delmaster : file] ***
+changed: [192.168.122.81] => (item=etcd)
+changed: [192.168.122.81] => (item=etcdctl)
+
+TASK [/go/src/kube-install/data/output/12281/sys/0x00000000action/delmaster : 9.Delete cfssl software file] ***
+changed: [192.168.122.81] => (item=cfssl)
+changed: [192.168.122.81] => (item=cfssl-certinfo)
+changed: [192.168.122.81] => (item=cfssljson)
+
+TASK [/go/src/kube-install/data/output/12281/sys/0x00000000action/delmaster : 10.Delete helm software file] ***
+changed: [192.168.122.81]
+
+PLAY RECAP *********************************************************************
+192.168.122.81             : ok=14   changed=14   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+[Info] 2021-10-18 14:57:35.296112892 +0800 CST m=+1045.647389427 Kubernetes master delete operation completed! 
+
+*************************************************************************************
+

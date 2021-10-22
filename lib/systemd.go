@@ -17,7 +17,7 @@ func CreateSystemdService(mode string, currentDir string, logName string) bool {
     CheckErr(err,currentDir,logName,mode)
     defer inventory_file.Close()
     write := bufio.NewWriter(inventory_file)
-    write.WriteString("[Unit] \nDescription=kube-install One click fast installation of highly available kubernetes cluster. \nDocumentation=https://cloudnativer.github.io \nAfter=sshd.service \nRequires=sshd.service \n\n[Service] \nEnvironment=\"USER=root\" \nExecStart="+currentDir+"/kube-install -daemon \nUser=root \nPrivateTmp=true \nLimitNOFILE=65536 \nTimeoutStartSec=5 \nRestartSec=10 \nRestart=always \n\n[Install] \nWantedBy=multi-user.target \n\n")
+    write.WriteString("[Unit] \nDescription=The highly available multiple kubernetes cluster can be installed offline with one click. \nDocumentation=https://cloudnativer.github.io \nAfter=sshd.service \nRequires=sshd.service \n\n[Service] \nEnvironment=\"USER=root\" \nExecStart="+currentDir+"/kube-install -daemon \nUser=root \nPrivateTmp=true \nLimitNOFILE=65536 \nTimeoutStartSec=5 \nRestartSec=10 \nRestart=always \n\n[Install] \nWantedBy=multi-user.target \n\n")
     write.Flush()
 
     _,err_cp := CopyFile(currentDir+"/kube-install.service", "/etc/systemd/system/kube-install.service")

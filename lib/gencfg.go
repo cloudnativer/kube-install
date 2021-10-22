@@ -4,7 +4,6 @@ import (
     "os"
     "bufio"
     "strconv"
-    "strings"
 )
 
 
@@ -98,7 +97,7 @@ func InstallConfig(mode string, masterArray []string, nodeArray []string, curren
     }
     write.WriteString("\n[etcd]\n")
     for i := 0; i < master_num; i++ {
-      write.WriteString(masterArray[i]+" ip="+masterArray[i]+" etcdname=kube"+strconv.Itoa(i)+"\n")
+      write.WriteString(masterArray[i]+" ip="+masterArray[i]+" etcdname=kube"+strconv.Itoa(i)+" initial_cluster_state=new \n")
     }
 
     // Kubernetes Node IP List
@@ -200,11 +199,7 @@ func RebuildmasterConfig(mode string, rebuildMasterArray []string, currentDir st
     }
     write.WriteString("\n[etcd]\n")
     for i := 0; i < rebuildmaster_num; i++ {
-      etcdname := ShellOutput(currentDir+"/data/output"+subProcessDir+"/sys/0x0000000000base/prestart/getmasterconfig.sh "+currentDir+"/data/output"+subProcessDir+"' etcdname "+rebuildMasterArray[i]+" 4")
-      if !strings.Contains(etcdname, "etcdname") {
-        etcdname = ShellOutput(currentDir+"/data/output"+subProcessDir+"/sys/0x0000000000base/prestart/getmasterconfig.sh "+currentDir+"/data/output"+subProcessDir+"' etcdname "+rebuildMasterArray[i]+" 3")
-      }
-      write.WriteString(rebuildMasterArray[i]+" ip="+rebuildMasterArray[i]+" "+etcdname+"\n")
+      write.WriteString(rebuildMasterArray[i]+" ip="+rebuildMasterArray[i]+" initial_cluster_state=existing \n")
     }
     write.WriteString("\n[k8s:children]\n"+"kissh\n"+"master1\n"+"master\n"+"etcd\n\n\n")
     write.Flush()
