@@ -69,6 +69,15 @@ func CheckPort(port int) bool {
 	}
 }
 
+// Check whether the cluster label is correct.
+func CheckLabel(label string) bool {
+        if len(label) > 32 {
+                return false
+        } else {
+                return true
+        }
+}
+
 // Check whether the parameters are input normally.
 func CheckParam(option string, paramName string, param string) {
 	if param == "" {

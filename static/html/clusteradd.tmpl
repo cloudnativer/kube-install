@@ -51,6 +51,27 @@
         <script src="static/js/laydate/laydate.js"></script>
 	<!-- kubeinstall Script -->
 	<script src="static/js/kubeinstall.js"></script>
+        <script>
+                $(document).ready(function(){
+			{{ if eq .Ostype "centos7" }} $("#autoupgradekernel").show(); {{end}}
+                        {{ if eq .Ostype "centos8" }} $("#autoupgradekernel").show(); {{end}}
+                        {{ if eq .Ostype "rhel7" }} $("#autoupgradekernel").show(); {{end}}
+                        {{ if eq .Ostype "rhel8" }} $("#autoupgradekernel").show(); {{end}}
+                        {{ if eq .Ostype "ubuntu20" }} $("#autoupgradekernel").show(); {{end}}
+                        {{ if eq .Ostype "suse15" }} $("#autoupgradekernel").show(); {{end}}
+                        $('#ostype').change(function() {
+                                var val = $(this).children('option:selected').val();
+                                console.log("ostype:",val);
+                                if(val == 'centos7') {
+                                        $("#autoupgradekernel").show();
+                                }else if(val == 'rhel7') {
+                                        $("#autoupgradekernel").show();
+                                }else{
+                                        $("#autoupgradekernel").hide();
+                                }
+                        });
+                });
+        </script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
 <body>
     <div id="result_black" class="result_overlay"></div>
@@ -103,15 +124,22 @@
                                         <div class="g_3"><span class="label">{{if eq .Lang "cn"}}操作系统类型{{else}}Operating system type{{end}} <span class="must">*</span></span>
                                         </div>
                                         <div class="g_9">
-                                                <select name="ostype" class="simple_form">
+                                                <select name="ostype" id="ostype" class="simple_form">
                                                   <option value="centos7" {{ if eq .Ostype "centos7" }} selected="selected" {{end}} >CentOS Linux 7</option>
-                                                  <option value="centos8" {{ if eq .Ostype "centos8" }} selected="selected" {{end}} >CentOS Linux 8</option>
                                                   <option value="rhel7" {{ if eq .Ostype "rhel7" }} selected="selected" {{end}} >Red Hat Enterprise Linux 7</option>
+                                                  <option value="centos8" {{ if eq .Ostype "centos8" }} selected="selected" {{end}} >CentOS Linux 8</option>
                                                   <option value="rhel8" {{ if eq .Ostype "rhel8" }} selected="selected" {{end}} >Red Hat Enterprise Linux 8</option>
                                                   <option value="ubuntu20" {{ if eq .Ostype "ubuntu20" }} selected="selected" {{end}} >Ubuntu Server 20</option>
                                                   <option value="suse15" {{ if eq .Ostype "suse15" }} selected="selected" {{end}} >OpenSUSE 15</option>
                                                 </select>
                                                 <div class="field_notice">{{if eq .Lang "cn"}}选择目标主机的操作系统类型。相同批次的主机操作系统需要保持一致{{else}}Select the operating system type of the target host. Host operating systems of the same batch need to be consistent!{{end}}</div>
+                                        </div>
+                                </div>
+                                <div id="autoupgradekernel" class="line_grid">
+                                        <div class="g_3"><span class="label">{{if eq .Lang "cn"}}自动升级OS内核{{else}}Automatically upgrade OS kernel{{end}} </span></div>
+                                        <div class="g_9">
+                                                <label class="label"><input type="radio" class="simple_form" name="upgradekernel" style="opacity: 0;" value="yes" >YES</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label class="label"><input type="radio" class="simple_form" name="upgradekernel" style="opacity: 0;" value="no" checked>NO</label>
+                                                <div class="field_notice">{{if eq .Lang "cn"}}由于低版本的centos7和redhat7可能缺少内核模块，这里仅支持centos7和rhel7操作系统内核的自动升级。其他操作系统不用做升级。{{else}}Because the lower versions of CentOS 7 and redhat 7 may lack kernel modules, only the kernel automatic upgrade of CentOS 7 and rhel7 operating systems is supported here, and other operating systems do not need to be upgraded. {{end}}</div>
                                         </div>
                                 </div>
                                 <div class="line_grid">

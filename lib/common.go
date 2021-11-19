@@ -203,4 +203,3 @@ func LogStr(mode string) string {
 	}
 	return logStr
 }
-

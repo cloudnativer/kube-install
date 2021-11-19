@@ -73,7 +73,7 @@
                           <tr><td>{{if eq .Lang "cn"}}Kubernetes Node：{{else}}Kubernetes Node:{{end}}</td><td>{{ .Node }}</td></tr>
                           <tr><td valign="top">ETCD Endpoints：</td><td>{{ .Etcdendpoints }}</td></tr>
                           <tr><td valign="top">{{if eq .Lang "cn"}}容器镜像仓库：{{else}}Image Registry:{{end}}</td><td><a target="_blank" href="http://{{ .Registryip }}:5000/v2/_catalog">http://{{ .Registryip }}:5000</a><br>{{ .Registryusage }}</td></tr>
-                          <tr><td valign="top">{{if eq .Lang "cn"}}Web管理控制台：{{else}}Kube-Dashboard:{{end}}</td><td style="word-break:break-all;"><a target="_blank" href="https://{{ .K8sdashboardip }}:50000">https://{{ .K8sdashboardip }}:50000</a><br>{{ .K8sdashboardusage }}</td></tr>
+                          <tr><td valign="top">{{if eq .Lang "cn"}}Web管理控制台：{{else}}Kube-Dashboard:{{end}}</td><td style="word-break:break-all;"><a target="_blank" href="https://{{ .K8sdashboardip }}:32767">https://{{ .K8sdashboardip }}:32767</a><br>{{ .K8sdashboardusage }}</td></tr>
                           <tr><td valign="top">KubeConfig：</td><td style="word-break:break-all;">{{ .Kubeconfig }}</td></tr>
                         </tbody></table>
                 </div>

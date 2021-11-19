@@ -51,100 +51,76 @@
         <script src="static/js/laydate/laydate.js"></script>
 	<!-- kubeinstall Script -->
 	<script src="static/js/kubeinstall.js"></script>
+        <script>
+		$(document).ready(function(){
+			$("#autoupgradekernel").show();
+			$('#ostype').change(function() {
+				var val = $(this).children('option:selected').val();
+				console.log("ostype:",val);	  
+				if(val == 'centos7') {
+					$("#autoupgradekernel").show();
+				}else if(val == 'rhel7') {
+					$("#autoupgradekernel").show();
+				}else{
+					$("#autoupgradekernel").hide();
+				}
+			});
+		});
+        </script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
 <body>
-    <div id="k8s_black" class="black_overlay"></div>
-    <div id="k8s_content" class="white_content">
+    <div id="panel_black" class="black_overlay">
+    </div>
+    <div id="panel_content" class="white_content">
                 <div class="widget_header wwOptions">
-                        <h4 class="widget_header_title wwIcon i_16_k8s">{{if eq .Lang "cn"}}快速安装一个新k8s集群{{else}}Fast installation of a new kubernetes cluster{{end}}</h4>
-	                <div style="text-align: right;"><img alt="{{if eq .Lang "cn"}}点击关闭{{else}}Close{{end}}" src="static/img/Button/close03.png" onclick = "document.getElementById('k8s_content').style.display='none';document.getElementById('k8s_black').style.display='none'"/></div>
+                        <h4 class="widget_header_title wwIcon i_16_settings">{{if eq .Lang "cn"}}显示或隐藏工具{{else}}Show or Hide Tools{{end}}</h4>
+	                <div style="text-align: right;"><img alt="{{if eq .Lang "cn"}}点击关闭{{else}}Close{{end}}" src="static/img/Button/close03.png" onclick = "document.getElementById('panel_content').style.display='none';document.getElementById('panel_black').style.display='none'"/></div>
                 </div>
-		<div class="widget_contents noPadding">
-			<form action="/install?tools=yes" enctype="multipart/form-data" method="post" >
-				<div class="line_grid">
-					<div class="g_3"><span class="label">{{if eq .Lang "cn"}}Kubernetes集群标示{{else}}Kubernetes cluster label{{end}} <span class="must">*</span></span></div>
-					<div class="g_9">
-						<input name="label" class="simple_field" type="text" required />
-						<div class="field_notice">{{if eq .Lang "cn"}}填写用于唯一识别这个Kubernetes{{if eq .Lang "cn"}}集群的{{else}}cluster{{end}}标示字段{{else}}Fill in the label field that uniquely identifies the kubernetes cluster{{end}}</div>
-					</div>
-				</div>
+                <div class="widget_contents noPadding">
+                        <form action="/toolswitch?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&tools=yes" enctype="multipart/form-data" method="post" >
                                 <div class="line_grid">
-                                        <div class="g_3"><span class="label">{{if eq .Lang "cn"}}选择Kubernetes版本{{else}}Kubernetes version{{end}} <span class="must">*</span></span>
-                                        </div>
+                                        <div class="g_3" style="text-align:center"><img src="static/img/Button/sshkey.png" height="55" width="60"/></div>
                                         <div class="g_9">
-                                                <select name="k8sver" class="simple_form">
-                                                  <option value="1.23" >Kubernetes v1.23</option>
-                                                  <option value="1.22" >Kubernetes v1.22</option>
-                                                  <option value="1.21" >Kubernetes v1.21</option>
-                                                  <option value="1.20" >Kubernetes v1.20</option>
-                                                  <option value="1.19" >Kubernetes v1.19</option>
-                                                  <option value="1.18" >Kubernetes v1.18</option>
-                                                  <option value="1.17" >Kubernetes v1.17</option>
-                                                </select>
-                                                <div class="field_notice">{{if eq .Lang "cn"}}选择你要安装的Kubernetes软件版本{{else}}Select the version of kubernetes software you want to install.{{end}}</div>
+                                                <label class="label"><input type="radio" class="simple_form" name="sshtool" style="opacity: 0;" value="on" {{if eq .Sshtool "on"}}checked{{end}}>{{if eq .Lang "cn"}}显示{{else}}Display{{end}}</label>
+												&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+												<label class="label"><input type="radio" class="simple_form" name="sshtool" style="opacity: 0;" value="off" {{if ne .Sshtool "on"}}checked{{end}}>{{if eq .Lang "cn"}}隐藏{{else}}Hide{{end}}</label>
+                                                <div class="field_notice">{{if eq .Lang "cn"}}你可以设置“打通主机SSH通道”工具是否显示在“工具面板”页面上{{else}}Set whether the tool of "Open SSH Channel of Host" is displayed or hidden on the "Tool Panel"{{end}}</div>
                                         </div>
                                 </div>
-				<div class="line_grid">
-					<div class="g_3"><span class="label">{{if eq .Lang "cn"}}Master IP地址{{else}}Master IP address{{end}} <span class="must">*</span></span></div>
-					<div class="g_9">
-						<input name="master" class="simple_field" type="text" required />
-						<div class="field_notice">{{if eq .Lang "cn"}}填写要部署的Kubernetes Master主机IP地址，多个IP请用英文逗号","隔开{{else}}Fill in the IP address of the kubernetes master to be deployed. Separate multiple IP addresses with English comma ","{{end}}</div>
-					</div>
-				</div>
-				<div class="line_grid">
-					<div class="g_3"><span class="label">{{if eq .Lang "cn"}}Node IP地址{{else}}Node IP address{{end}} <span class="must">*</span></span></div>
-					<div class="g_9">
-						<input name="node" class="simple_field" type="text" required />
-						<div class="field_notice">{{if eq .Lang "cn"}}填写要部署的Kubernetes Node主机IP地址，多个IP请用英文逗号","隔开{{else}}Fill in the IP address of the kubernetes node host to be deployed. Separate multiple IP addresses with English comma ","{{end}}</div>
-					</div>
-				</div>
-				<div class="line_grid">
-					<div class="g_3"><span class="label">{{if eq .Lang "cn"}}操作系统类型{{else}}Operating system type{{end}} <span class="must">*</span></span>
-					</div>
-					<div class="g_9">
-						<select name="ostype" class="simple_form">
-                                                  <option value="centos7" >CentOS Linux 7</option>
-                                                  <option value="centos8" >CentOS Linux 8</option>
-                                                  <option value="rhel7" >Red Hat Enterprise Linux 7</option>
-                                                  <option value="rhel8" >Red Hat Enterprise Linux 8</option>
-                                                  <option value="ubuntu20" >Ubuntu Server 20</option>
-						  <option value="suse15" >OpenSUSE 15</option>
-						</select>
-                                                <div class="field_notice">{{if eq .Lang "cn"}}选择目标主机的操作系统类型。相同批次的主机操作系统需要保持一致{{else}}Select the operating system type of the target host. Host operating systems of the same batch need to be consistent!{{end}}</div>
-					</div>
-				</div>
-				<div class="line_grid">
-					<div class="g_3"><span class="label">{{if eq .Lang "cn"}}部署到目标主机路径{{else}}Deploy to target host path{{end}} <span class="must">*</span></span></div>
-					<div class="g_9">
-						<input name="softdir" value="/opt/kube-install" class="simple_field" type="text" required />
-						<div class="field_notice">{{if eq .Lang "cn"}}默认无需修改。如果所安装的目标主机路径需要更换的话，可以通过这里进行修改。{{else}}No modification is required by default. If the installed target host path needs to be changed, you can modify it here.{{end}}</div>
-					</div>
-				</div>
                                 <div class="line_grid">
-                                        <div class="g_3"><span class="label">{{if eq .Lang "cn"}}选择开始安装的时间{{else}}Select when to start installation{{end}} </span></div>
+                                        <div class="g_3" style="text-align:center"><img src="static/img/Button/k8s.png" height="55" width="60"/></div>
                                         <div class="g_9">
-                                                <input type="text" id="installtime" name="installtime" class="simple_field" type="text" />
-                                                  <script>
-	                                                  lay('#version').html('-v'+ laydate.v);
-        	                                          laydate.render({
-                	                                  	elem: '#installtime'
-                        	                          	,type: 'datetime'
-                                                                ,format: 'yyyy-MM-dd HH:mm'
-                                	                  	{{if ne .Lang "cn"}},lang: 'en'{{end}}
-                                        	          });
-                                                  </script>
-                                                <div class="field_notice">{{if eq .Lang "cn"}}默认立即开始安装。如需定时安装，可以在这里设置计划开始执行的时间。(任务计划支持精确到分钟级别)<br>注意：请确保Kube-Install本地操作系统的当前时间与Web页面当前时间一致！{{else}}Install now by default. For scheduled installation, you can set the scheduled execution time here.(Support accuracy to minute level)<br>Notice: Please ensure that the current time of local OS is consistent with the current time of web page!{{end}}</div>
+                                                <label class="label"><input type="radio" class="simple_form" name="installtool" style="opacity: 0;" value="on" {{if eq .Installtool "on"}}checked{{end}}>{{if eq .Lang "cn"}}显示{{else}}Display{{end}}</label>
+												&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+												<label class="label"><input type="radio" class="simple_form" name="installtool" style="opacity: 0;" value="off" {{if ne .Installtool "on"}}checked{{end}}>{{if eq .Lang "cn"}}隐藏{{else}}Hide{{end}}</label>
+                                                <div class="field_notice">{{if eq .Lang "cn"}}你可以设置“一键部署K8S集群”工具是否显示在“工具面板”页面上{{else}}Set whether the tool of "Fast Installation of K8S" is displayed or hidden on the "Tool Panel"{{end}}</div>
                                         </div>
                                 </div>
-				<div class="line_grid">
-					<div class="g_10" style="text-align: center;">
-						<input type="hidden" name="way" value="newinstall"> 
-						<input type="submit" value="{{if eq .Lang "cn"}}确认安装{{else}}Submit{{end}}" class="submitIt simple_buttons" /> &nbsp;&nbsp;&nbsp;&nbsp;
-                                                <input type="reset" value="{{if eq .Lang "cn"}}重新填写{{else}}Reset{{end}}" class="submitIt simple_buttons" /> 
-					</div>
-				</div>
-			</form>
-    	</div>
+								<div class="line_grid">
+                                        <div class="g_3" style="text-align:center"><img src="static/img/Button/calendar.png" height="55" width="60"/></div>
+                                        <div class="g_9">
+                                                <label class="label"><input type="radio" class="simple_form" name="calendartool" style="opacity: 0;" value="on" {{if eq .Calendartool "on"}}checked{{end}}>{{if eq .Lang "cn"}}显示{{else}}Display{{end}}</label>
+												&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+												<label class="label"><input type="radio" class="simple_form" name="calendartool" style="opacity: 0;" value="off" {{if ne .Calendartool "on"}}checked{{end}}>{{if eq .Lang "cn"}}隐藏{{else}}Hide{{end}}</label>
+                                                <div class="field_notice">{{if eq .Lang "cn"}}你可以设置“查看部署计划日历”工具是否显示在“工具面板”页面上{{else}}Set whether the tool of "Install Schedule Calendar" is displayed or hidden on the "Tool Panel"{{end}}</div>
+                                        </div>
+                                </div>
+                                <div class="line_grid">
+                                        <div class="g_12"><span class="label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{if eq .Lang "cn"}}说明：请在上面设置你要显示或隐藏的工具，然后点击“确认设置”按钮生效。{{else}}Explain: Please set the tools you want to show or hide, and then click the “Submit” button to take effect.{{end}}</span></div>
+                                        <br><br><br>
+                                        <div class="g_10" style="text-align: center;">
+		                                <input type="hidden" name="label" value="{{.Label}}">
+                		                <input type="hidden" name="k8sver" value="{{.K8sver}}"/>
+                                                <input type="hidden" name="sshuser" value="{{.Sshuser}}" />
+		                                <input type="hidden" name="softdir" value="{{.Softdir}}">
+                		                <input type="hidden" name="ostype" value="{{.Ostype}}">
+                                                <input type="submit" value="{{if eq .Lang "cn"}}确认设置{{else}}Submit{{end}}" class="submitIt simple_buttons" /> &nbsp;&nbsp;&nbsp;&nbsp;
+                                                <input type="reset" value="{{if eq .Lang "cn"}}重新选择{{else}}Reset{{end}}" class="submitIt simple_buttons" />  
+                                        </div>
+					<br><br><br><br><br>
+                                </div>
+                        </form>
+        </div>
     </div>
 
     <div id="ssh_black" class="black_overlay">
@@ -186,6 +162,107 @@
                                 </div>
                         </form>
         </div>
+    </div>
+
+    <div id="k8s_black" class="black_overlay"></div>
+    <div id="k8s_content" class="white_content">
+                <div class="widget_header wwOptions">
+                        <h4 class="widget_header_title wwIcon i_16_k8s">{{if eq .Lang "cn"}}快速安装一个新Kubernetes集群{{else}}Fast installation of a new kubernetes cluster{{end}}</h4>
+	                <div style="text-align: right;"><img alt="{{if eq .Lang "cn"}}点击关闭{{else}}Close{{end}}" src="static/img/Button/close03.png" onclick = "document.getElementById('k8s_content').style.display='none';document.getElementById('k8s_black').style.display='none'"/></div>
+                </div>
+		<div class="widget_contents noPadding">
+			<form action="/install?tools=yes" enctype="multipart/form-data" method="post" >
+				<div class="line_grid">
+					<div class="g_3"><span class="label">{{if eq .Lang "cn"}}Kubernetes集群标示{{else}}Kubernetes cluster label{{end}} <span class="must">*</span></span></div>
+					<div class="g_9">
+						<input name="label" class="simple_field" type="text" required />
+						<div class="field_notice">{{if eq .Lang "cn"}}填写用于唯一识别这个Kubernetes集群的标示字段（Label长度必须小于32个字符）{{else}}Fill in the label field that uniquely identifies the kubernetes cluster (Length must be less than 32 strings){{end}}</div>
+					</div>
+				</div>
+                                <div class="line_grid">
+                                        <div class="g_3"><span class="label">{{if eq .Lang "cn"}}选择Kubernetes版本{{else}}Kubernetes version{{end}} <span class="must">*</span></span>
+                                        </div>
+                                        <div class="g_9">
+                                                <select name="k8sver" class="simple_form">
+                                                  <option value="1.23" >Kubernetes v1.23</option>
+                                                  <option value="1.22" >Kubernetes v1.22</option>
+                                                  <option value="1.21" >Kubernetes v1.21</option>
+                                                  <option value="1.20" >Kubernetes v1.20</option>
+                                                  <option value="1.19" >Kubernetes v1.19</option>
+                                                  <option value="1.18" >Kubernetes v1.18</option>
+                                                  <option value="1.17" >Kubernetes v1.17</option>
+                                                </select>
+                                                <div class="field_notice">{{if eq .Lang "cn"}}选择你要安装的Kubernetes软件版本{{else}}Select the version of kubernetes software you want to install.{{end}}</div>
+                                        </div>
+                                </div>
+				<div class="line_grid">
+					<div class="g_3"><span class="label">{{if eq .Lang "cn"}}Master IP地址{{else}}Master IP address{{end}} <span class="must">*</span></span></div>
+					<div class="g_9">
+						<input name="master" class="simple_field" type="text" required />
+						<div class="field_notice">{{if eq .Lang "cn"}}填写要部署的Kubernetes Master主机IP地址，多个IP请用英文逗号","隔开{{else}}Fill in the IP address of the kubernetes master to be deployed. Separate multiple IP addresses with English comma ","{{end}}</div>
+					</div>
+				</div>
+				<div class="line_grid">
+					<div class="g_3"><span class="label">{{if eq .Lang "cn"}}Node IP地址{{else}}Node IP address{{end}} <span class="must">*</span></span></div>
+					<div class="g_9">
+						<input name="node" class="simple_field" type="text" required />
+						<div class="field_notice">{{if eq .Lang "cn"}}填写要部署的Kubernetes Node主机IP地址，多个IP请用英文逗号","隔开{{else}}Fill in the IP address of the kubernetes node host to be deployed. Separate multiple IP addresses with English comma ","{{end}}</div>
+					</div>
+				</div>
+				<div class="line_grid">
+					<div class="g_3"><span class="label">{{if eq .Lang "cn"}}操作系统类型{{else}}Operating system type{{end}} <span class="must">*</span></span>
+					</div>
+					<div class="g_9">
+						<select name="ostype" id="ostype" class="simple_form">
+                                                  <option value="centos7" >CentOS Linux 7</option>
+                                                  <option value="centos8" >CentOS Linux 8</option>
+                                                  <option value="rhel7" >Red Hat Enterprise Linux 7</option>
+                                                  <option value="rhel8" >Red Hat Enterprise Linux 8</option>
+                                                  <option value="ubuntu20" >Ubuntu Server 20</option>
+						  <option value="suse15" >OpenSUSE 15</option>
+						</select>
+                                                <div class="field_notice">{{if eq .Lang "cn"}}选择目标主机的操作系统类型。相同批次的主机操作系统需要保持一致{{else}}Select the operating system type of the target host. Host operating systems of the same batch need to be consistent!{{end}}</div>
+					</div>
+				</div>
+                                <div id="autoupgradekernel" class="line_grid">
+                                        <div class="g_3"><span class="label">{{if eq .Lang "cn"}}自动升级OS内核{{else}}Automatically upgrade OS kernel{{end}} </span></div>
+                                        <div class="g_9">
+                                                <label class="label"><input type="radio" class="simple_form" name="upgradekernel" style="opacity: 0;" value="yes" >YES</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label class="label"><input type="radio" class="simple_form" name="upgradekernel" style="opacity: 0;" value="no" checked>NO</label>
+                                                <div class="field_notice">{{if eq .Lang "cn"}}由于低版本的centos7和redhat7可能缺少内核模块，这里仅支持centos7和rhel7操作系统内核的自动升级。其他操作系统不用做升级。{{else}}Because the lower versions of CentOS 7 and redhat 7 may lack kernel modules, only the kernel automatic upgrade of CentOS 7 and rhel7 operating systems is supported here, and other operating systems do not need to be upgraded. {{end}}</div>
+                                        </div>
+                                </div>
+				<div class="line_grid">
+					<div class="g_3"><span class="label">{{if eq .Lang "cn"}}部署到目标主机路径{{else}}Deploy to target host path{{end}} <span class="must">*</span></span></div>
+					<div class="g_9">
+						<input name="softdir" value="/opt/kube-install" class="simple_field" type="text" required />
+						<div class="field_notice">{{if eq .Lang "cn"}}默认无需修改。如果所安装的目标主机路径需要更换的话，可以通过这里进行修改。{{else}}No modification is required by default. If the installed target host path needs to be changed, you can modify it here.{{end}}</div>
+					</div>
+				</div>
+                                <div class="line_grid">
+                                        <div class="g_3"><span class="label">{{if eq .Lang "cn"}}选择开始安装的时间{{else}}Select when to start installation{{end}} </span></div>
+                                        <div class="g_9">
+                                                <input type="text" id="installtime" name="installtime" class="simple_field" type="text" />
+                                                  <script>
+	                                                  lay('#version').html('-v'+ laydate.v);
+        	                                          laydate.render({
+                	                                  	elem: '#installtime'
+                        	                          	,type: 'datetime'
+                                                                ,format: 'yyyy-MM-dd HH:mm'
+                                	                  	{{if ne .Lang "cn"}},lang: 'en'{{end}}
+                                        	          });
+                                                  </script>
+                                                <div class="field_notice">{{if eq .Lang "cn"}}默认立即开始安装。如需定时安装，可以在这里设置计划开始执行的时间。(任务计划支持精确到分钟级别)<br>注意：请确保Kube-Install本地操作系统的当前时间与Web页面当前时间一致！{{else}}Install now by default. For scheduled installation, you can set the scheduled execution time here.(Support accuracy to minute level)<br>Notice: Please ensure that the current time of local OS is consistent with the current time of web page!{{end}}</div>
+                                        </div>
+                                </div>
+				<div class="line_grid">
+					<div class="g_10" style="text-align: center;">
+						<input type="hidden" name="way" value="newinstall"> 
+						<input type="submit" value="{{if eq .Lang "cn"}}确认安装{{else}}Submit{{end}}" class="submitIt simple_buttons" /> &nbsp;&nbsp;&nbsp;&nbsp;
+                                                <input type="reset" value="{{if eq .Lang "cn"}}重新填写{{else}}Reset{{end}}" class="submitIt simple_buttons" /> 
+					</div>
+				</div>
+			</form>
+    	</div>
     </div>
 
         <header class="main_header">
@@ -291,7 +368,7 @@
 
 				<div class="g_6 contents_options">
 					<div class="simple_buttons">
-						<div class="bwIcon i_16_settings">{{if eq .Lang "cn"}}面板设置{{else}}Panel Settings{{end}}</div>
+						<div class="bwIcon i_16_settings" onclick="document.getElementById('panel_black').style.display='block';document.getElementById('panel_content').style.display='block'" >{{if eq .Lang "cn"}}面板设置{{else}}Panel Settings{{end}}</div>
 					</div>
 				</div>
 
@@ -303,15 +380,21 @@
 					</div>
 					<div class="widget_contents lPreview">
 						<br><br>
-						<a href="##" onclick="document.getElementById('ssh_black').style.display='block';document.getElementById('ssh_content').style.display='block'" class="label">
-							<img src="static/img/Button/sshkey.png" />{{if eq .Lang "cn"}}打通主机SSH通道{{else}}Open SSH Channel of Host{{end}}
-						</a>
-						<a href="##" onclick="document.getElementById('k8s_black').style.display='block';document.getElementById('k8s_content').style.display='block'" class="label">
-							<img src="static/img/Button/k8s.png" />{{if eq .Lang "cn"}}一键部署K8S集群{{else}}Fast Installation of K8S{{end}}
-						</a>
-						<a href="/calendarscheduler?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" class="label">
-							<img src="static/img/Button/calendar.png" />{{if eq .Lang "cn"}}查看部署计划日历{{else}}Install Schedule Calendar{{end}}
-						</a>
+						{{ if eq .Sshtool "on" }}
+							<a href="##" onclick="document.getElementById('ssh_black').style.display='block';document.getElementById('ssh_content').style.display='block'" class="label">
+								<img src="static/img/Button/sshkey.png" />{{if eq .Lang "cn"}}打通主机SSH通道{{else}}Open SSH Channel of Host{{end}}
+							</a>
+						{{end}}
+						{{ if eq .Installtool "on" }}
+							<a href="##" onclick="document.getElementById('k8s_black').style.display='block';document.getElementById('k8s_content').style.display='block'" class="label">
+								<img src="static/img/Button/k8s.png" />{{if eq .Lang "cn"}}一键部署K8S集群{{else}}Fast Installation of K8S{{end}}
+							</a>
+						{{end}}
+						{{ if eq .Calendartool "on" }}
+							<a href="/calendarscheduler?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" class="label">
+								<img src="static/img/Button/calendar.png" />{{if eq .Lang "cn"}}查看部署计划日历{{else}}Install Schedule Calendar{{end}}
+							</a>
+						{{end}}
 						<br><br><br><br><br>
 					</div>
 

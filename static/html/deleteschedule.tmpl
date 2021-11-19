@@ -64,21 +64,35 @@
                                         <div class="g_3"><span class="label">{{if eq .Lang "cn"}}Kubernetes集群标示{{else}}Kubernetes cluster label{{end}} </span></div>
                                         <div class="g_9">
                                                 <input name="label" value="{{.Label}}" class="readonly_field" type="text" required readonly />
-						<div class="field_notice">{{if eq .Lang "cn"}}禁止修改。这是唯一识别这个Kubernetes集群的标示字段{{else}}Modification is prohibited at this time.This is the label field that uniquely identifies the kubernetes cluster{{end}}</div>
+						<div class="field_notice">{{if eq .Lang "cn"}}唯一识别这个Kubernetes集群的标示{{else}}This is the label that uniquely identifies the kubernetes cluster.{{end}}</div>
+                                        </div>
+                                </div>
+                                <div class="line_grid">
+                                        <div class="g_3"><span class="label">{{if eq .Lang "cn"}}Master IP地址{{else}}Master IP address{{end}} </span></div>
+                                        <div class="g_9">
+                                                <input name="master" value="{{.Master}}" class="readonly_field" type="text" required readonly />
+                                                <div class="field_notice">{{if eq .Lang "cn"}}计划安装的Kubernetes Master主机IP地址{{else}}IP address of kubernetes master host to be installed.{{end}}</div>
+                                        </div>
+                                </div>
+                                <div class="line_grid">
+                                        <div class="g_3"><span class="label">{{if eq .Lang "cn"}}Node IP地址{{else}}Node IP address{{end}} </span></div>
+                                        <div class="g_9">
+                                                <input name="node" value="{{.Node}}" class="readonly_field" type="text" required readonly />
+                                                <div class="field_notice">{{if eq .Lang "cn"}}计划安装的Kubernetes Node主机IP地址{{else}}IP address of kubernetes node host to be installed.{{end}}</div>
                                         </div>
                                 </div>
                                 <div class="line_grid">
                                         <div class="g_3"><span class="label">{{if eq .Lang "cn"}}计划安装的时间{{else}}Scheduled installation time{{end}} </span></div>
                                         <div class="g_9">
                                                 <input name="instime" value="{{.Instime}}" class="readonly_field" type="text" required readonly/>
-						<div class="field_notice">{{if eq .Lang "cn"}}禁止修改。这是计划安装的开始时间。{{else}}Modification is prohibited at this time.This is the start time of the installation.{{end}}</div>
+						<div class="field_notice">{{if eq .Lang "cn"}}计划安装的开始时间。{{else}}This is the start time of the installation.{{end}}</div>
                                         </div>
                                 </div>
                                 <div class="line_grid">
                                         <div class="g_3"><span class="label">{{if eq .Lang "cn"}}任务状态{{else}}Schedule Status{{end}} </span></div>
                                         <div class="g_9">
                                                 <input name="scheduler" {{if eq .Lang "cn"}}value="已启用"{{else}}value="Enable"{{end}} class="readonly_field" type="text" required readonly/>
-						<div class="field_notice">{{if eq .Lang "cn"}}禁止修改。这是计划任务状态情况。{{else}}Modification is prohibited at this time.This is the status of the schedule.{{end}}</div>
+						<div class="field_notice">{{if eq .Lang "cn"}}计划任务的当前状态。{{else}}This is the status of the schedule.{{end}}</div>
                                         </div>
                                 </div>
                                 <div class="line_grid">
@@ -197,7 +211,7 @@
                                 <!-- Separator -->
                                 <div class="g_12 separator"><span></span></div>
                                 <div class="g_12">
-					kubernetes cluster uninstall
+					Remove Installation Schedule
                                 </div>
 
 			</div>

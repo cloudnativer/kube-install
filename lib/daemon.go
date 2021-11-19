@@ -1,7 +1,8 @@
 package kilib
 
 import (
-	//    "fmt"
+//	    "fmt"
+
 	"html/template"
 	"io"
 	"net/http"
@@ -41,14 +42,15 @@ type ClusterList struct {
 }
 
 type ClusterAddForm struct {
-	Master      string `form:"master" binding:"required"`
-	Node        string `form:"node" binding:"required"`
-	Ostype      string `form:"ostype" binding:"required"`
-	K8sver      string `form:"k8sver" binding:"required"`
-	Label       string `form:"label" binding:"required"`
-	Softdir     string `form:"softdir"`
-	Installtime string `form:"installtime"`
-	Way         string `form:"way"`
+	Master             string `form:"master" binding:"required"`
+	Node               string `form:"node" binding:"required"`
+	Ostype             string `form:"ostype" binding:"required"`
+	K8sver             string `form:"k8sver" binding:"required"`
+	Label              string `form:"label" binding:"required"`
+	Softdir            string `form:"softdir"`
+	Installtime        string `form:"installtime"`
+	Way                string `form:"way"`
+        Upgradekernel  string `form:"upgradekernel"`
 }
 
 type ClusterDelForm struct {
@@ -104,11 +106,12 @@ type NodeList struct {
 }
 
 type NodeAddForm struct {
-	Node    string `form:"addnode" binding:"required"`
-	Label   string `form:"label" binding:"required"`
-	K8sver  string `form:"k8sver" binding:"required"`
-	Softdir string `form:"softdir" binding:"required"`
-	Ostype  string `form:"ostype" binding:"required"`
+	Node               string `form:"addnode" binding:"required"`
+	Label              string `form:"label" binding:"required"`
+	K8sver             string `form:"k8sver" binding:"required"`
+	Softdir            string `form:"softdir" binding:"required"`
+	Ostype             string `form:"ostype" binding:"required"`
+        Upgradekernel  string `form:"upgradekernel"`
 }
 
 type NodeDelForm struct {
@@ -127,6 +130,12 @@ type SelectList struct {
 	Softdir  string `json:"softdir"`
 	Ostype   string `json:"ostype"`
 	Status   string `json:"status"`
+}
+
+type ToolSwitchForm struct {
+	Sshtool      string `form:"sshtool" binding:"required"`
+	Installtool  string `form:"installtool" binding:"required"`
+	Calendartool string `form:"calendartool" binding:"required"`
 }
 
 type SshKeyForm struct {
@@ -613,6 +622,10 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 	router.GET("/tools", func(c *gin.Context) {
 		langFromWeb := c.Query("lang")
 		Lang := ChangeLang(langFromWeb, currentDir, logName, mode)
+		toolSwitch := GetToolSwitch(currentDir, logName, mode)
+		sshTool := toolSwitch[0]
+		installTool := toolSwitch[1]
+		calendarTool := toolSwitch[2]
 		label := c.DefaultQuery("label", "")
 		k8sVer := c.DefaultQuery("k8sver", "")
 		softDir := c.DefaultQuery("softdir", "/opt/kube-install")
@@ -620,6 +633,9 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 		c.HTML(http.StatusOK, "tools.tmpl", gin.H{
 			"Lang":          Lang,
 			"Label":         label,
+			"Sshtool":       sshTool,
+			"Installtool":   installTool,
+			"Calendartool":  calendarTool,
 			"K8sver":        k8sVer,
 			"Softdir":       softDir,
 			"Ostype":        osType,
@@ -725,7 +741,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 	// operation of install
 	router.POST("/install", func(c *gin.Context) {
 		var form ClusterAddForm
-		var master, node, osType, k8sVer, softDir, label, installTime, way string
+		var master, node, osType, k8sVer, softDir, label, installTime, way, upgradeKernel string
 		if c.ShouldBind(&form) == nil {
 			master = form.Master
 			node = form.Node
@@ -735,6 +751,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 			label = form.Label
 			installTime = form.Installtime
 			way = form.Way
+                        upgradeKernel  = form.Upgradekernel
 		} else {
 			master = c.Query("master")
 			node = c.Query("node")
@@ -744,10 +761,15 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 			label = c.DefaultQuery("label", "")
 			installTime = c.DefaultQuery("installtime", "")
 			way = c.DefaultQuery("way", "newinstall")
+                        upgradeKernel  = c.DefaultQuery("upgradekernel", "")
 		}
-		langFromWeb := c.Query("lang")
-		Lang := ChangeLang(langFromWeb, currentDir, logName, mode)
-		tools := c.Query("tools")
+                langFromWeb := c.Query("lang")
+                Lang := ChangeLang(langFromWeb, currentDir, logName, mode)
+                tools := c.Query("tools")
+                if !CheckLabel(label) {
+                        c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "install", "Result": "failure", "Info": "Installation failed! The \"label\" parameter length must be less than 32 strings, please check!", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+                        return
+                }
 		if osType == "unknow" {
 			c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "install", "Result": "failure", "Info": "Installation failed! Please set the operating system type correctly!", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 			return
@@ -778,7 +800,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 			stu, sch := GetClusterStatus(label, currentDir, logName, mode)
 			var installInfo string
 			if stu != "installing" && stu != "restarting" && stu != "uninstalling" && sch != "on" {
-				go InstallCore(mode, master, masterArray, node, nodeArray, softDir, currentDir, kissh, subProcessDir, currentUser, label, osTypeResult, osType, k8sVer, logName, Version, CompatibleK8S, CompatibleOS, installTime, way)
+				go InstallCore(mode, master, masterArray, node, nodeArray, softDir, currentDir, kissh, subProcessDir, currentUser, label, osTypeResult, osType, k8sVer, logName, Version, CompatibleK8S, CompatibleOS, installTime, way, upgradeKernel )
 				if installTime == "" {
 					if Lang == "cn" {
 						installInfo = "Kubernetes集群正在后台安装中 ... "
@@ -900,19 +922,21 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 	// operation of add node
 	router.POST("/addnode", func(c *gin.Context) {
 		var form NodeAddForm
-		var node, softDir, label, k8sVer, osType string
+		var node, softDir, label, k8sVer, osType, upgradeKernel  string
 		if c.ShouldBind(&form) == nil {
 			node = form.Node
 			softDir = form.Softdir
 			label = form.Label
 			k8sVer = form.K8sver
 			osType = form.Ostype
+                        upgradeKernel  = form.Upgradekernel
 		} else {
 			node = c.Query("node")
 			softDir = c.DefaultQuery("softdir", "/opt/kube-install")
 			label = c.DefaultQuery("label", "")
 			k8sVer = c.DefaultQuery("k8sver", "")
 			osType = c.DefaultQuery("ostype", "")
+                        upgradeKernel  = c.DefaultQuery("upgradekernel", "")
 		}
 		langFromWeb := c.Query("lang")
 		Lang := ChangeLang(langFromWeb, currentDir, logName, mode)
@@ -945,7 +969,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 				}
 			}
 		}
-		go AddNodeCore(mode, node, nodeArray, currentDir, kissh, subProcessDir, currentUser, label, softDir, osTypeResult, logName, CompatibleOS)
+		go AddNodeCore(mode, node, nodeArray, currentDir, kissh, subProcessDir, currentUser, label, softDir, osTypeResult, logName, CompatibleOS, upgradeKernel )
 		if Lang == "cn" {
 			c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "addnode", "Result": "success", "Info": "Kubernetes node正在后台添加中 ...", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 		} else {
@@ -1080,6 +1104,44 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 			}
 		}
 		c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "deleteschedule", "Result": scheduleResult, "Info": scheduleInfo, "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+	})
+
+	// Set tools switch
+	router.POST("/toolswitch", func(c *gin.Context) {
+		var form ToolSwitchForm
+		var sshTool, installTool, calendarTool string
+		tools := c.Query("tools")
+		label := c.DefaultQuery("label", "")
+		k8sVer := c.DefaultQuery("k8sver", "")
+		softDir := c.DefaultQuery("softdir", "/opt/kube-install")
+		osType := c.DefaultQuery("ostype", "")
+		langFromWeb := c.Query("lang")
+		Lang := ChangeLang(langFromWeb, currentDir, logName, mode)
+		if c.ShouldBind(&form) == nil {
+			sshTool = form.Sshtool
+			installTool = form.Installtool
+			calendarTool = form.Calendartool
+			err := SetToolSwitch(sshTool, installTool, calendarTool, currentDir, logName, mode)
+			if err != nil {
+				if Lang == "cn" {
+					c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "toolswitch", "Result": "failure", "Info": "工具面板设置操作失败！", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+				} else {
+					c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "toolswitch", "Result": "failure", "Info": "Failed to set the tool panel!", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+				}
+			} else {
+				if Lang == "cn" {
+					c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "toolswitch", "Result": "success", "Info": "工具面板设置操作成功！", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+				} else {
+					c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "toolswitch", "Result": "success", "Info": "Tool panel setting operation succeeded!", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+				}
+			}
+		} else {
+			if Lang == "cn" {
+				c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "toolswitch", "Result": "failure", "Info": "设置失败！请确保你设置了正确的选项。", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+			} else {
+				c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "toolswitch", "Result": "failure", "Info": "Setting failed! Please make sure you set the correct options.", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+			}
+		}
 	})
 
 	// Open the SSH key channel

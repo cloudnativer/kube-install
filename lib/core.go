@@ -103,9 +103,17 @@ func DeleteMasterCore(mode string, masterArray []string, currentDir string, kiss
 }
 
 // Add the core operation part of the node.
-func AddNodeCore(mode string, node string, nodeArray []string, currentDir string, kissh string, subProcessDir string, currentUser string, label string, softDir string, osTypeResult string, logName string, CompatibleOS string) {
+func AddNodeCore(mode string, node string, nodeArray []string, currentDir string, kissh string, subProcessDir string, currentUser string, label string, softDir string, osTypeResult string, logName string, CompatibleOS string, upgradeKernel  string) {
     opt := "addnode"
     logStr := LogStr(mode)
+    upgradeKernelStr := "\n    Automatically Upgrade OS Kernel: Not Support"
+    if osTypeResult == "centos7" || osTypeResult == "rhel7" {
+        if upgradeKernel == "yes"{
+            upgradeKernelStr = "\n    Automatically Upgrade OS Kernel: YES"
+        } else {
+            upgradeKernelStr = "\n    Automatically Upgrade OS Kernel: NO"
+        }
+    }
     CheckOS(CompatibleOS, osTypeResult, currentDir, logName, mode)
     CreateDir(currentDir+"/data/output"+subProcessDir, currentDir, logName, mode)
     for i := 0; i < len(nodeArray); i++ {
@@ -116,7 +124,7 @@ func AddNodeCore(mode string, node string, nodeArray []string, currentDir string
     }
     os.OpenFile(currentDir+"/data/logs"+subProcessDir+"/logs/addnode.log", os.O_RDWR|os.O_TRUNC|os.O_CREATE, 0766)
     ShellExecute("echo \"*************************************************************************************\n\n[Info] "+time.Now().String()+" Adding kubernetes node, please wait ... \n\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/addnode.log")
-    ShellExecute("echo \"    Kubernetes Cluster Label: "+label+"\n    Kubernetes Node: "+node+"\n    System User for Operation: "+currentUser+"\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/addnode.log")
+    ShellExecute("echo \"    Kubernetes Cluster Label: "+label+"\n    Kubernetes Node: "+node+ upgradeKernelStr +"\n    System User for Operation: "+currentUser+"\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/addnode.log")
     ShellExecute("sed -i '1d' "+currentDir+"/data/msg/msg.txt")
     ShellExecute("echo \"<div class='g_12'><div class='info iDialog'>[Info] "+time.Now().String()+" Adding kubernetes node to "+label+" cluster ... </div></div>\" >> "+currentDir+"/data/msg/msg.txt")
     if !AddnodeConfig(mode, nodeArray, currentDir, subProcessDir, logName) {
@@ -126,7 +134,7 @@ func AddNodeCore(mode string, node string, nodeArray []string, currentDir string
         ShellExecute("echo [Error] "+time.Now().String()+" \"The parameters you entered are incorrect, please check! \n\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/addnode.log")
         return
     }
-    AddnodeYML("",currentDir+"/data/output"+subProcessDir,currentDir,currentUser,osTypeResult,logName)
+    AddnodeYML("",currentDir+"/data/output"+subProcessDir,currentDir,currentUser,logName,upgradeKernel,osTypeResult)
     err_addnode := ExecuteOpt(kissh, currentDir, opt, opt, subProcessDir, "")
     if err_addnode != nil {
         for i := 0; i < len(nodeArray); i++ {
@@ -202,10 +210,18 @@ func DeleteNodeCore(mode string, nodeArray []string, currentDir string, kissh st
 }
 
 // Install the core operation part of the cluster.
-func InstallCore(mode string, master string, masterArray []string, node string, nodeArray []string, softDir string, currentDir string, kissh string, subProcessDir string, currentUser string, label string, osTypeResult string, osType string, k8sVer string, logName string, Version string, CompatibleK8S string, CompatibleOS string, installTime string, way string) {
+func InstallCore(mode string, master string, masterArray []string, node string, nodeArray []string, softDir string, currentDir string, kissh string, subProcessDir string, currentUser string, label string, osTypeResult string, osType string, k8sVer string, logName string, Version string, CompatibleK8S string, CompatibleOS string, installTime string, way string, upgradeKernel string) {
     opt := "install"
     layoutName := "install"
     logStr := LogStr(mode)
+    upgradeKernelStr := "\n    Automatically Upgrade OS Kernel: Not Support"
+    if osTypeResult == "centos7" || osTypeResult == "rhel7" {
+        if upgradeKernel == "yes"{
+            upgradeKernelStr = "\n    Automatically Upgrade OS Kernel: YES"
+        } else {
+            upgradeKernelStr = "\n    Automatically Upgrade OS Kernel: NO"
+        }
+    } 
     CheckOS(CompatibleOS, osTypeResult, currentDir, logName, mode)
     CheckK8sVersion(Version, CompatibleK8S, k8sVer, currentDir, logName, mode)
     CreateDir(currentDir+"/data/output"+subProcessDir, currentDir, logName, mode)
@@ -238,14 +254,14 @@ func InstallCore(mode string, master string, masterArray []string, node string, 
     InstallIpvsYaml(mode, currentDir, masterArray, subProcessDir, logName)
     var err_install error
     if len(masterArray) == 1{
-        OnemasterInstallYML(mode,currentDir+"/data/output"+subProcessDir,currentDir,currentUser,osTypeResult,logName)
+        OnemasterInstallYML(mode,currentDir+"/data/output"+subProcessDir,currentDir,currentUser,logName, upgradeKernel,osTypeResult)
         layoutName = "onemasterinstall"
     }else{
-        InstallYML(mode,currentDir+"/data/output"+subProcessDir, currentDir, currentUser, osTypeResult, logName)
+        InstallYML(mode,currentDir+"/data/output"+subProcessDir, currentDir, currentUser, logName, upgradeKernel,osTypeResult)
     }
     if installTime != "" {
         ShellExecute("echo \"*************************************************************************************\n\n[Info] "+time.Now().String()+" Start scheduled installation task, please wait ...  \n\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/install.log")
-        ShellExecute("echo \"    Kubernetes Cluster Label: "+label+"\n    Kubernetes Version: Kubernetes v"+k8sVer+"\n    Kubernetes Master: "+master+"\n    Kubernetes Node: "+node+"\n    Operating System Type: "+osType+"\n    System User for Installation: "+currentUser+"\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/install.log")
+        ShellExecute("echo \"    Kubernetes Cluster Label: "+label+"\n    Kubernetes Version: Kubernetes v"+k8sVer+"\n    Kubernetes Master: "+master+"\n    Kubernetes Node: "+node+"\n    Operating System Type: "+osType+ upgradeKernelStr +"\n    System User for Installation: "+currentUser+"\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/install.log")
         DatabaseUpdate(currentDir+"/data/output"+subProcessDir+"/softdirtemp.txt", softDir, currentDir, logName, mode)
         DatabaseUpdate(currentDir+"/data/output"+subProcessDir+"/ostypetemp.txt", osType, currentDir, logName, mode)
         DatabaseUpdate(currentDir+"/data/output"+subProcessDir+"/k8svertemp.txt", k8sVer, currentDir, logName, mode)
@@ -254,7 +270,7 @@ func InstallCore(mode string, master string, masterArray []string, node string, 
         return
     } else {
         ShellExecute("echo \"*************************************************************************************\n\n[Info] "+time.Now().String()+" Installing kubernetes cluster, please wait ... \n\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/install.log")
-        ShellExecute("echo \"    Kubernetes Cluster Label: "+label+"\n    Kubernetes Version: Kubernetes v"+k8sVer+"\n    Kubernetes Master: "+master+"\n    Kubernetes Node: "+node+"\n    Operating System Type: "+osType+"\n    System User for Installation: "+currentUser+"\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/install.log")
+        ShellExecute("echo \"    Kubernetes Cluster Label: "+label+"\n    Kubernetes Version: Kubernetes v"+k8sVer+"\n    Kubernetes Master: "+master+"\n    Kubernetes Node: "+node+"\n    Operating System Type: "+osType+ upgradeKernelStr +"\n    System User for Installation: "+currentUser+"\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/install.log")
         sch,_ := ReadFile(currentDir+"/data/output"+subProcessDir+"/scheduler.txt")
         if sch == "on" {
             ShellExecute("echo [Error] "+time.Now().String()+" \"Installation conflict! Background scheduled tasks exist and installation is in progress.\n\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/install.log")

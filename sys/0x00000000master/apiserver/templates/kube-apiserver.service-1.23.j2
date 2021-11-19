@@ -18,7 +18,7 @@ ExecStart=/usr/local/bin/kube-apiserver \
 --enable-bootstrap-token-auth \
 --token-auth-file=/etc/kubernetes/ssl/token.csv \
 --service-cluster-ip-range={{service_cidr}} \
---service-node-port-range=5000-55000 \
+--service-node-port-range=5000-32767 \
 --tls-cert-file=/etc/kubernetes/ssl/kubernetes.pem \
 --tls-private-key-file=/etc/kubernetes/ssl/kubernetes-key.pem \
 --service-account-key-file=/etc/kubernetes/ssl/sa.pub  \

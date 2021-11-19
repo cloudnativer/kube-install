@@ -1,5 +1,5 @@
 [Unit] 
-Description=The highly available multiple kubernetes cluster can be installed offline with one click.
+Description=The highly available multiple kubernetes cluster can be installed offline with one click. 
 Documentation=https://cloudnativer.github.io 
 After=sshd.service 
 Requires=sshd.service 

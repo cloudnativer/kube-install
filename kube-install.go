@@ -14,16 +14,7 @@ import (
 
 func main() {
 
-    var exec string
-    var master string
-    var node string
-    var k8sver string
-    var ostype string
-    var softdir string
-    var label string
-    var sship string
-    var sshpass string
-    var listen string
+    var exec,master,node,k8sver,ostype,softdir,label,sship,sshpass,listen,upgradekernel string
 
     initFlag := flag.Bool("init",false,"Initialize the local system environment.")
     iFlag := flag.Bool("i",false,"Initialize the local system environment.")
@@ -42,8 +33,9 @@ func main() {
     flag.StringVar(&node,"node","","The IP address of k8s node server filled in for the first installation")
     flag.StringVar(&ostype,"ostype","","Specifies the distribution operating system type: centos7 | centos8 | rhel7 | rhel8 | ubuntu20 | suse15")
     flag.StringVar(&k8sver,"k8sver","","Specifies the version of k8s software installed.(Default is \"kubernetes 1.22\")")
+    flag.StringVar(&upgradekernel,"upgradekernel","no","Because the lower versions of CentOS 7 and redhat 7 may lack kernel modules, only the kernel automatic upgrade of CentOS 7 and rhel7 operating systems is supported here, and other operating systems do not need to be upgraded. (Default is \"no\")")
     flag.StringVar(&softdir,"softdir","","Specifies the installation directory of kubernetes cluster.(Default is \"/exec/kube-install\")")
-    flag.StringVar(&label,"label",".default","In the case of deploying and operating multiple kubernetes clusters, it is necessary to specify a label to uniquely identify a kubernetes cluster.")
+    flag.StringVar(&label,"label",".default","In the case of deploying and operating multiple kubernetes clusters, it is necessary to specify a label to uniquely identify a kubernetes cluster. (Length must be less than 32 strings)")
     flag.StringVar(&sship,"sship","","The IP address of the target host through which the SSH channel is opened.(Use with \"sshcontrol\")")
     flag.StringVar(&sshpass,"sshpass","","The SSH password of the target host through which the SSH channel is opened.(Use with \"sshcontrol\")")
     flag.Parse()
@@ -58,8 +50,8 @@ func main() {
 
     // Set the version number and release date of Kube-Install.
     const (
-        Version string = "v0.7.2"
-        ReleaseDate string = "10/22/2021"
+        Version string = "v0.7.3"
+        ReleaseDate string = "12/8/2021"
         CompatibleK8S string = "1.17, 1.18, 1.19, 1.20, 1.21, 1.22, and 1.23"
         CompatibleOS string = "CentOS linux 7, CentOS linux 8, RHEL 7, RHEL 8, Ubuntu 20, and SUSE 15"
     )
@@ -72,6 +64,7 @@ func main() {
             fmt.Println("\nInitialization in progress, please wait...\n")
             kilib.CreateDir(currentDir+"/data/config", currentDir, logName, "")
             kilib.CreateFile(currentDir+"/data/config/language.txt", currentDir, logName, "")
+            kilib.CreateFile(currentDir+"/data/config/tools.txt", currentDir, logName, "")
             kilib.CreateDir(currentDir+"/data/output", currentDir, logName, "")
             kilib.CreateDir(currentDir+"/data/logs", currentDir, logName, "")
             kilib.CreateDir(currentDir+"/data/msg", currentDir, logName, "")
@@ -119,22 +112,24 @@ func main() {
         case *showk8sFlag , *sFlag :
             labelArray,err := kilib.GetAllDir(currentDir+"/data/output",currentDir,logName,"")
             kilib.CheckErr(err,currentDir,logName,"")
-            fmt.Println("---------------------------┬-----------┬---------------------┬-----------------------------------┬-------------------------------\n    Label Of K8S Cluster   |  Version  | Installation Status |      Resource File Directory      |    K8S-Master Information     \n---------------------------┼-----------┼---------------------┼-----------------------------------┼-------------------------------")
+            fmt.Println("---------------------------------┬-----------┬----------------┬-------------------------------------┬---------------------------------\n    Kubernetes Cluster Label     |  Version  | Install Status |     Install Resource Directory      |  Kubernetes Master Information  \n---------------------------------┼-----------┼----------------┼-------------------------------------┼---------------------------------")
             for _, i := range labelArray {
-                label1 := "                          | "
-                k8sver1 := "          | "
-                status1 := "                    | "
-                softDir1 := "                                  |"
-                label2 := string(i)
-                k8sver2 := "k8s "+kilib.GetClusterK8sVer(label2,currentDir,"")
-                status2,_ := kilib.GetClusterStatus(label2,currentDir,logName,"")
-                softDir2 := kilib.GetClusterSoftdir(label2,currentDir,"")
-                if len(softDir2) < len(softDir1) { softDir2 = softDir2 + softDir1[len(softDir2):len(softDir1)] }
-                master2 := kilib.GetClusterMaster(label2,currentDir,logName,"")
-                fmt.Printf(" " + label2 + label1[len(label2):len(label1)] + k8sver2 + k8sver1[len(k8sver2):len(k8sver1)] + status2 + status1[len(status2):len(status1)] + softDir2+" ")
-                fmt.Println(master2)
+                var label2,softDir2 string
+                labelInit := "                                | "
+                k8sverInit := "          | "
+                statusInit := "               | "
+                softDirInit := "                                    |"
+                label := string(i)
+                if len(label) < len(labelInit) { label2 = label + labelInit[len(label):len(labelInit)] } else { label2 = label + " | " }
+                k8sver := "k8s "+kilib.GetClusterK8sVer(label,currentDir,"")
+                status,_ := kilib.GetClusterStatus(label,currentDir,logName,"")
+                softDir := kilib.GetClusterSoftdir(label,currentDir,"")
+                if len(softDir) < len(softDirInit) { softDir2 = softDir + softDirInit[len(softDir):len(softDirInit)] } else { softDir2 = softDir + " |" }
+                master := kilib.GetClusterMaster(label,currentDir,logName,"")
+                fmt.Printf(" " + label2 + k8sver + k8sverInit[len(k8sver):len(k8sverInit)] + status + statusInit[len(status):len(statusInit)] + softDir2+" ")
+                fmt.Println(master)
             }
-            fmt.Println("---------------------------┴-----------┴---------------------┴-----------------------------------┴-------------------------------")
+            fmt.Println("---------------------------------┴-----------┴----------------┴-------------------------------------┴---------------------------------")
 
         // View software version details.
         case *versionFlag , *vFlag :
@@ -163,15 +158,18 @@ func main() {
                case exec == "install" :
                    kilib.CheckParam(exec,"master",master)
                    kilib.CheckParam(exec,"node",node)
+                   if !kilib.CheckLabel(label) {
+                       panic("\nThe \"-ostype\" parameter length must be less than 32 strings, please check! \n\n ")
+                   }
                    masterArray,nodeArray,softdir,subProcessDir,ostypeResult := kilib.ParameterConvert("", master, node, softdir, label, ostype)
                    kilib.DatabaseInit(currentDir,subProcessDir,logName,"")
-                   kilib.InstallCore("",master,masterArray,node,nodeArray,softdir,currentDir,kissh,subProcessDir,currentUser,label,ostypeResult,ostype,k8sver,logName,Version,CompatibleK8S,CompatibleOS,"","newinstall")
+                   kilib.InstallCore("",master,masterArray,node,nodeArray,softdir,currentDir,kissh,subProcessDir,currentUser,label,ostypeResult,ostype,k8sver,logName,Version,CompatibleK8S,CompatibleOS,"","newinstall",upgradekernel)
 
                //Execute addnode command
                case exec == "addnode" :
                    kilib.CheckParam(exec,"node",node)
                    _,nodeArray,_,subProcessDir,ostypeResult := kilib.ParameterConvert("", "", node, softdir, label, ostype)
-                   kilib.AddNodeCore("",node,nodeArray,currentDir,kissh,subProcessDir,currentUser,label,softdir,ostypeResult,logName,CompatibleOS)
+                   kilib.AddNodeCore("",node,nodeArray,currentDir,kissh,subProcessDir,currentUser,label,softdir,ostypeResult,logName,CompatibleOS,upgradekernel)
 
                //Execute delnode command
                case exec == "delnode" :

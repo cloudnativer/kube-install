@@ -57,9 +57,9 @@
             var timer = setInterval(function(){
                 if(i == -1){
                     clearInterval(timer);
-                    document.write("如果页面没有自动跳转，也可以<a href='{{ if eq .Tools "yes" }}tools?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}{{ else }}{{ if eq .Opt "install" }}clusterlist{{ end }}{{ if eq .Opt "uninstall" }}clusterlist{{ end }}{{ if eq .Opt "sshkey" }}clusterlist{{ end }}{{ if eq .Opt "delmaster" }}masteradmin{{ end }}{{ if eq .Opt "rebuildmaster" }}masteradmin{{ end }}{{ if eq .Opt "mastertty" }}masteradmin{{ end }}{{ if eq .Opt "nodetty" }}nodeadmin{{ end }}{{ if eq .Opt "addnode" }}nodeadmin{{ end }}{{ if eq .Opt "delnode" }}nodeadmin{{ end }}{{ if eq .Opt "deleteschedule" }}clusterlist{{ end }}{{ end }}?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}'>点击这里返回原页面！</a>");
+                    document.write("如果页面没有自动跳转，也可以<a href='{{ if eq .Tools "yes" }}tools{{ else }}{{ if eq .Opt "install" }}clusterlist{{ end }}{{ if eq .Opt "uninstall" }}clusterlist{{ end }}{{ if eq .Opt "sshkey" }}clusterlist{{ end }}{{ if eq .Opt "delmaster" }}masteradmin{{ end }}{{ if eq .Opt "rebuildmaster" }}masteradmin{{ end }}{{ if eq .Opt "mastertty" }}masteradmin{{ end }}{{ if eq .Opt "nodetty" }}nodeadmin{{ end }}{{ if eq .Opt "addnode" }}nodeadmin{{ end }}{{ if eq .Opt "delnode" }}nodeadmin{{ end }}{{ if eq .Opt "deleteschedule" }}clusterlist{{ end }}{{ end }}?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}'>点击这里返回原页面！</a>");
                 }else{
-                    out.innerHTML=i+" <a href='{{ if eq .Tools "yes" }}tools?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}{{ else }}{{ if eq .Opt "install" }}clusterlist{{ end }}{{ if eq .Opt "uninstall" }}clusterlist{{ end }}{{ if eq .Opt "sshkey" }}clusterlist{{ end }}{{ if eq .Opt "delmaster" }}masteradmin{{ end }}{{ if eq .Opt "rebuildmaster" }}masteradmin{{ end }}{{ if eq .Opt "mastertty" }}masteradmin{{ end }}{{ if eq .Opt "nodetty" }}nodeadmin{{ end }}{{ if eq .Opt "addnode" }}nodeadmin{{ end }}{{ if eq .Opt "delnode" }}nodeadmin{{ end }}{{ if eq .Opt "deleteschedule" }}clusterlist{{ end }}{{ end }}?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}'>{{if eq .Lang "cn"}}秒钟后自动跳转回原页面！{{else}}seconds, automatically jump back to the original page!{{end}}</a>";
+                    out.innerHTML=i+" <a href='{{ if eq .Tools "yes" }}tools{{ else }}{{ if eq .Opt "install" }}clusterlist{{ end }}{{ if eq .Opt "uninstall" }}clusterlist{{ end }}{{ if eq .Opt "sshkey" }}clusterlist{{ end }}{{ if eq .Opt "delmaster" }}masteradmin{{ end }}{{ if eq .Opt "rebuildmaster" }}masteradmin{{ end }}{{ if eq .Opt "mastertty" }}masteradmin{{ end }}{{ if eq .Opt "nodetty" }}nodeadmin{{ end }}{{ if eq .Opt "addnode" }}nodeadmin{{ end }}{{ if eq .Opt "delnode" }}nodeadmin{{ end }}{{ if eq .Opt "deleteschedule" }}clusterlist{{ end }}{{ end }}?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}'>{{if eq .Lang "cn"}}秒钟后自动跳转回原页面！{{else}}seconds, automatically jump back to the original page!{{end}}</a>";
                     --i;
                 }
             },1000);
@@ -70,7 +70,7 @@
     <div id="result_black" class="result_overlay"></div>
     <div id="result_content" class="result_content">
 	<div class="widget_header wwOptions">
-        	<h4 class="widget_header_title wwIcon i_16_tooltip">{{ if ne .Label "" }} {{ if eq .Label ".default" }} {{if eq .Lang "cn"}}默认{{else}}default{{end}} {{else}} {{.Label}} {{end}} {{end}}{{if eq .Lang "cn"}}集群的{{else}}Cluster{{end}} {{ .Opt }} {{if eq .Lang "cn"}}操作信息{{else}}Operation Information{{end}}</h4>
+        	<h4 class="widget_header_title wwIcon i_16_tooltip"> {{ .Opt }} {{if eq .Lang "cn"}}操作结果信息{{else}}Operation Result Information{{end}}</h4>
         </div>
         <div class="widget_contents label" style="text-align:center;">
                 <br><br><br><br>

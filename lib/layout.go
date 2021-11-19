@@ -6,10 +6,12 @@ import (
 
 
 // Generate orchestration for install.
-func InstallYML(mode string, softDir string, currentDir string, currentUser string, osType string, logName string) {
+func InstallYML(mode string, softDir string, currentDir string, currentUser string, logName string, upgradeKernel string, osTypeResult string) {
     var osCompatibilityLayout string
-    if (osType == "centos7") || (osType == "rhel7") {
-        osCompatibilityLayout = "- remote_user: root\n  hosts: node\n  gather_facts: no\n  roles:\n    - "+softDir+"/sys/0x0000000000base/kernel\n"
+    if upgradeKernel  == "yes" {
+        if osTypeResult == "centos7" || osTypeResult == "rhel7" {
+            osCompatibilityLayout = "- remote_user: root\n  hosts: node\n  gather_facts: no\n  roles:\n    - "+softDir+"/sys/0x0000000000base/kernel\n"
+        }
     }
     install_file, err := os.Create(softDir+"/k8scluster-install.yml")
     CheckErr(err,currentDir,logName,mode)
@@ -18,10 +20,12 @@ func InstallYML(mode string, softDir string, currentDir string, currentUser stri
 }
 
 // Generate orchestration for install one master.
-func OnemasterInstallYML(mode string, softDir string, currentDir string, currentUser string, osType string, logName string) {
+func OnemasterInstallYML(mode string, softDir string, currentDir string, currentUser string, logName string, upgradeKernel string, osTypeResult string) {
     var osCompatibilityLayout string
-    if (osType == "centos7") || (osType == "rhel7") {
-        osCompatibilityLayout = "- remote_user: root\n  hosts: node\n  gather_facts: no\n  roles:\n    - "+softDir+"/sys/0x0000000000base/kernel\n"
+    if upgradeKernel  == "yes" { 
+        if osTypeResult == "centos7" || osTypeResult == "rhel7" {
+            osCompatibilityLayout = "- remote_user: root\n  hosts: node\n  gather_facts: no\n  roles:\n    - "+softDir+"/sys/0x0000000000base/kernel\n"
+        }
     }
     onemasterinstall_file, err := os.Create(softDir+"/k8scluster-onemasterinstall.yml")
     CheckErr(err,currentDir,logName,mode)
@@ -30,10 +34,12 @@ func OnemasterInstallYML(mode string, softDir string, currentDir string, current
 }
 
 // Generate orchestration for add node.
-func AddnodeYML(mode string, softDir string, currentDir string, currentUser string, osType string, logName string) {
+func AddnodeYML(mode string, softDir string, currentDir string, currentUser string, logName string, upgradeKernel string, osTypeResult string) {
     var osCompatibilityLayout string
-    if (osType == "centos7") || (osType == "rhel7") {
-        osCompatibilityLayout = "- remote_user: root\n  hosts: node\n  gather_facts: no\n  roles:\n    - "+softDir+"/sys/0x0000000000base/kernel\n"
+    if upgradeKernel  == "yes" { 
+        if osTypeResult == "centos7" || osTypeResult == "rhel7" {
+            osCompatibilityLayout = "- remote_user: root\n  hosts: node\n  gather_facts: no\n  roles:\n    - "+softDir+"/sys/0x0000000000base/kernel\n"
+        }
     }
     addnode_file, err := os.Create(softDir+"/k8scluster-addnode.yml")
     CheckErr(err,currentDir,logName,mode)
