@@ -10,9 +10,7 @@
   template: 
     src: ../templates/kube-proxy.service.j2
     dest: /etc/systemd/system/kube-proxy.service
-- name: 4.Set service startup
-  shell: "systemctl enable kube-proxy"
-- name: 5.Start kube-proxy service
+- name: 4.Start kube-proxy service
   systemd:
     daemon_reload: true
     name: kube-proxy

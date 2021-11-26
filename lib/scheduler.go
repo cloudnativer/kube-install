@@ -145,8 +145,8 @@ func MinutePeriodSchedule(currentDir string, kissh string, logName string, mode 
             } else {
                 k8sNum = k8sNum - 1
             }
-            nodeArrayLocal,_ := GetAllDir(currentDir+"/data/output"+subProcessDir+"/nodes",currentDir,logName,mode)
-            k8sNum := len(nodeArrayLocal)
+            nodeMap := GetClusterNode(k8sArrayLocal[i], currentDir, logName, mode)
+            k8sNum := len(nodeMap)
             k8sNumMap [ k8sArrayLocal[i] ] = k8sNum  
         }
         DatabaseUpdate(currentDir+"/data/statistics/schedulelist.txt", scheduleList, currentDir, logName, mode)

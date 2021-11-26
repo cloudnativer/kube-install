@@ -45,6 +45,19 @@ func CheckOS(CompatibleOS string, osType string, currentDir string, logName stri
 	}
 }
 
+// Check whether the CNI Plugin is supported.
+func CheckCNI(cniPlugin string, currentDir string, logName string, mode string) {
+        logStr := LogStr(mode)
+        if !(cniPlugin == "flannel" || cniPlugin == "calico" || cniPlugin == "kuberouter" || cniPlugin == "weave" || cniPlugin == "cilium" || cniPlugin == "") {
+                if mode == "DAEMON" {
+                        ShellExecute("echo [Info] " + time.Now().String() + " \"The \"cniplugin\" parameter you entered is incorrect, please check! (Only \"flannel\", \"calico\", \"kuberouter\", \"weave\" and \"cilium\" are supported.) \n\"" + logStr + currentDir + "/data/logs/kubeinstalld/" + logName + ".log")
+                        return
+                } else {
+                        panic("Please make sure that the \"-cniplugin\" parameter you entered is correct, please check! (Only \"flannel\", \"calico\", \"kuberouter\", \"weave\" and \"cilium\" are supported.) \n")
+                }
+        }
+}
+
 // Check whether the kubernetes version is supported.
 func CheckK8sVersion(Version string, CompatibleK8S string, k8sVer string, currentDir string, logName string, mode string) {
 	logStr := LogStr(mode)

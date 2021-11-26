@@ -1,0 +1,21 @@
+- name: 1.Create cniplugin directory
+  file:
+    path: "{{k8s_install_home}}/cniplugin/{{item}}"
+    state: directory
+  with_items:
+    - flannel
+    - calico
+    - kuberouter
+    - weave
+    - cilium
+
+- name: 2.Create kube-router.yaml file
+  template:
+    src: "../templates/kube-router.yaml.j2"
+    dest: "{{k8s_install_home}}/cniplugin/kuberouter/kube-router.yaml"
+
+- name: 3.Deploy kube-router
+  shell: "/usr/sbin/kubectl --kubeconfig=/etc/kubernetes/ssl/kube-install.kubeconfig apply -f {{k8s_install_home}}/cniplugin/kuberouter/kube-router.yaml"
+
+
+

@@ -81,3 +81,22 @@ func GetNodeInfo(label string, nodeIP string, currentDir string, logName string,
 		return runStatus, nodeLabels, runcVer, osVer, kernelVer, cpu, memory, createTime
 	}
 }
+
+//Delete node of the kubernetes cluster
+func DeleteNode(label string, nodeIP string, currentDir string, logName string, mode string) (bool) {
+        _, _, _, subProcessDir, _ := ParameterConvert(mode, "", "", "", label, "")
+        kubecfg, err := ReadFile(currentDir + "/data/output" + subProcessDir + "/cert/ssl/kube-install.kubeconfig")
+        if kubecfg == "" || err != nil {
+                return false
+        } else {
+                todo := context.Background()
+                del_err := k8sClientSet(currentDir, subProcessDir, logName, mode).CoreV1().Nodes().Delete(todo, nodeIP, metav1.DeleteOptions{})
+                if del_err == nil {
+                    return true
+                } else {
+                    return false
+                }
+        }
+}
+
+

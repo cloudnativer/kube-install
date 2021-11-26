@@ -10,15 +10,13 @@
   file: 
     path: "{{k8s_install_home}}/kubernetes/kube-apiserver/log"
     state: directory
-- name: 4.Set service startup
-  shell: "systemctl enable kube-apiserver"
-- name: 5.Start kube-apiserver service
+- name: 4.Start kube-apiserver service
   systemd:
     daemon_reload: true
     name: kube-apiserver
     state: restarted
     enabled: true
-- name: 4.Set IPVS rules
+- name: 5.Set IPVS rules
   shell: "/usr/local/bin/ipvsinit.sh"
   ignore_errors: yes
 

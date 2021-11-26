@@ -1,8 +1,7 @@
 package kilib
 
 import (
-//	    "fmt"
-
+//	 "fmt"
 	"html/template"
 	"io"
 	"net/http"
@@ -50,7 +49,8 @@ type ClusterAddForm struct {
 	Softdir            string `form:"softdir"`
 	Installtime        string `form:"installtime"`
 	Way                string `form:"way"`
-        Upgradekernel  string `form:"upgradekernel"`
+        Upgradekernel      string `form:"upgradekernel"`
+        Cniplugin          string `form:"cniplugin"`
 }
 
 type ClusterDelForm struct {
@@ -123,13 +123,13 @@ type NodeDelForm struct {
 }
 
 type SelectList struct {
-	Label    string `json:"label"`
-	Labelnow string `json:"labelnow"`
-	Optnow   string `json:"optnow"`
-	K8sver   string `json:"k8sver"`
-	Softdir  string `json:"softdir"`
-	Ostype   string `json:"ostype"`
-	Status   string `json:"status"`
+	Label       string `json:"label"`
+	Labelnow    string `json:"labelnow"`
+	Optnow      string `json:"optnow"`
+	K8sver      string `json:"k8sver"`
+	Softdir     string `json:"softdir"`
+	Ostype      string `json:"ostype"`
+	Status      string `json:"status"`
 }
 
 type ToolSwitchForm struct {
@@ -282,6 +282,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 		mst, err := GetAllDir(currentDir+"/data/output"+subProcessDir+"/masters", currentDir, logName, mode)
 		CheckErr(err, currentDir, logName, mode)
 		k8sVer, _ := ReadFile(currentDir + "/data/output" + subProcessDir + "/k8sver.txt")
+                cniPlugin, _ := ReadFile(currentDir + "/data/output" + subProcessDir + "/cniplugin.txt")
 		osType, _ := ReadFile(currentDir + "/data/output" + subProcessDir + "/ostype.txt")
 		softDir, _ := ReadFile(currentDir + "/data/output" + subProcessDir + "/softdir.txt")
 		etcdEndpoints, _ := ReadFile(currentDir + "/data/output" + subProcessDir + "/etcdendpoints.txt")
@@ -305,6 +306,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 			"Lang":              Lang,
 			"Label":             label,
 			"K8sver":            k8sVer,
+                        "Cniplugin":         cniPlugin,
 			"Softdir":           softDir,
 			"Ostype":            osType,
 			"Status":            stu,
@@ -334,6 +336,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 		mst := ""
 		osType := ""
 		k8sVer := ""
+                cniPlugin := ""
 		softDir := "/opt/kube-install"
 		nd := ""
 		way := c.DefaultQuery("way", "newinstall")
@@ -344,6 +347,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 			mst = strings.Replace(mst[1:len(mst)-1], " ", ",", -1)
 			osType = c.DefaultQuery("ostype", "")
 			k8sVer = c.DefaultQuery("k8sver", "")
+                        cniPlugin = GetClusterCNI(label, currentDir, mode)
 			softDir = c.DefaultQuery("softdir", "/opt/kube-install")
 			nodemap := GetClusterNode(label, currentDir, logName, mode)
 			for node := range nodemap {
@@ -359,6 +363,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 			"Master":        mst,
 			"Ostype":        osType,
 			"K8sver":        k8sVer,
+                        "Cniplugin":     cniPlugin,
 			"Node":          nd,
 			"Softdir":       softDir,
 			"Sshuser":       currentUser,
@@ -414,6 +419,16 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 		Lang := ChangeLang(langFromWeb, currentDir, logName, mode)
 		label := c.DefaultQuery("label", "")
 		k8sVer := c.DefaultQuery("k8sver", "")
+                mst := c.DefaultQuery("master", "")
+                mst = strings.Replace(mst[1:len(mst)-1], " ", ",", -1)
+                nd := ""
+                nodemap := GetClusterNode(label, currentDir, logName, mode)
+                for node := range nodemap {
+                    nd = nd + "," + node
+                }
+                if nd != "" {
+                    nd = nd[1:len(nd)]
+                }
 		softDir := c.DefaultQuery("softdir", "/opt/kube-install")
 		osType := c.DefaultQuery("ostype", "")
 		scheduler := c.Query("scheduler")
@@ -423,6 +438,8 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 			"Lang":          Lang,
 			"Label":         label,
 			"K8sver":        k8sVer,
+                        "Master":        mst,
+                        "Node":          nd,
 			"Softdir":       softDir,
 			"Ostype":        osType,
 			"Sshuser":       currentUser,
@@ -741,7 +758,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 	// operation of install
 	router.POST("/install", func(c *gin.Context) {
 		var form ClusterAddForm
-		var master, node, osType, k8sVer, softDir, label, installTime, way, upgradeKernel string
+		var master, node, osType, k8sVer, softDir, label, installTime, way, upgradeKernel, cniPlugin string
 		if c.ShouldBind(&form) == nil {
 			master = form.Master
 			node = form.Node
@@ -752,6 +769,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 			installTime = form.Installtime
 			way = form.Way
                         upgradeKernel  = form.Upgradekernel
+                        cniPlugin = form.Cniplugin
 		} else {
 			master = c.Query("master")
 			node = c.Query("node")
@@ -762,6 +780,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 			installTime = c.DefaultQuery("installtime", "")
 			way = c.DefaultQuery("way", "newinstall")
                         upgradeKernel  = c.DefaultQuery("upgradekernel", "")
+                        cniPlugin = c.DefaultQuery("cniplugin", "")
 		}
                 langFromWeb := c.Query("lang")
                 Lang := ChangeLang(langFromWeb, currentDir, logName, mode)
@@ -800,7 +819,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 			stu, sch := GetClusterStatus(label, currentDir, logName, mode)
 			var installInfo string
 			if stu != "installing" && stu != "restarting" && stu != "uninstalling" && sch != "on" {
-				go InstallCore(mode, master, masterArray, node, nodeArray, softDir, currentDir, kissh, subProcessDir, currentUser, label, osTypeResult, osType, k8sVer, logName, Version, CompatibleK8S, CompatibleOS, installTime, way, upgradeKernel )
+				go InstallCore(mode, master, masterArray, node, nodeArray, softDir, currentDir, kissh, subProcessDir, currentUser, label, osTypeResult, osType, k8sVer, logName, Version, CompatibleK8S, CompatibleOS, installTime, way, upgradeKernel, cniPlugin)
 				if installTime == "" {
 					if Lang == "cn" {
 						installInfo = "Kubernetes集群正在后台安装中 ... "

@@ -1,0 +1,13 @@
+#!/bin/bash
+
+
+oldname=`ETCDCTL_API=3 etcdctl --cacert="/etc/kubernetes/ssl/k8s-root-ca.pem" --key="/etc/kubernetes/ssl/kubernetes-key.pem" --cert="/etc/kubernetes/ssl/kubernetes.pem" --endpoints="{{etcd_endpoints}}" member list | grep {{ip}} | cut -d "," -f 1`
+
+ETCDCTL_API=3 etcdctl --cacert="/etc/kubernetes/ssl/k8s-root-ca.pem" --key="/etc/kubernetes/ssl/kubernetes-key.pem" --cert="/etc/kubernetes/ssl/kubernetes.pem" --endpoints="{{etcd_endpoints}}" member remove $oldname
+
+ETCDCTL_API=3 etcdctl --cacert="/etc/kubernetes/ssl/k8s-root-ca.pem" --key="/etc/kubernetes/ssl/kubernetes-key.pem" --cert="/etc/kubernetes/ssl/kubernetes.pem" --endpoints="{{etcd_endpoints}}" member add {{ip}} --peer-urls=https://{{ip}}:2380
+
+exit 0
+
+
+

@@ -119,7 +119,7 @@
 					<div class="g_3"><span class="label">{{if eq .Lang "cn"}}Kubernetes集群标示{{else}}Kubernetes cluster label{{end}} <span class="must">*</span></span></div>
 					<div class="g_9">
 						<input name="label" class="simple_field" type="text" required />
-						<div class="field_notice">{{if eq .Lang "cn"}}填写用于唯一识别这个Kubernetes集群的标示字段（Label长度必须小于32个字符）{{else}}Fill in the label field that uniquely identifies the kubernetes cluster (Length must be less than 32 strings){{end}}</div>
+						<div class="field_notice">{{if eq .Lang "cn"}}填写用于唯一识别这个Kubernetes集群的标示字段。（集群标示字段长度必须小于32个字符）{{else}}Fill in the label field that uniquely identifies the kubernetes cluster (Length must be less than 32 strings){{end}}</div>
 					</div>
 				</div>
                                 <div class="line_grid">
@@ -135,21 +135,35 @@
                                                   <option value="1.18" >Kubernetes v1.18</option>
                                                   <option value="1.17" >Kubernetes v1.17</option>
                                                 </select>
-                                                <div class="field_notice">{{if eq .Lang "cn"}}选择你要安装的Kubernetes软件版本{{else}}Select the version of kubernetes software you want to install.{{end}}</div>
+                                                <div class="field_notice">{{if eq .Lang "cn"}}选择你要安装的Kubernetes软件版本。{{else}}Select the version of kubernetes software you want to install.{{end}}</div>
+                                        </div>
+                                </div>
+                                <div class="line_grid">
+                                        <div class="g_3"><span class="label">{{if eq .Lang "cn"}}选择CNI插件类型{{else}}Type of CNI Plug-in{{end}} <span class="must">*</span></span>
+                                        </div>
+                                        <div class="g_9">
+                                                <select name="cniplugin" class="simple_form">
+                                                  <option value="flannel" >Flannel</option>
+                                                  <option value="calico" >Calico</option>
+                                                  <option value="kuberouter" >Kube-router</option>
+                                                  <option value="weave" >Weave</option>
+                                                  <option value="cilium" >Cilium</option>
+                                                </select>
+                                                <div class="field_notice">{{if eq .Lang "cn"}}选择你要安装部署的CNI插件类型。（如果需要安装“Cilium”，请将Linux内核升级到4.9或以上版本）{{else}}Select the type of CNI Plug-in you want to install.(In addition, if you need to install "Cilium", please upgrade the Linux kernel to version 4.9 or above.){{end}}</div>
                                         </div>
                                 </div>
 				<div class="line_grid">
 					<div class="g_3"><span class="label">{{if eq .Lang "cn"}}Master IP地址{{else}}Master IP address{{end}} <span class="must">*</span></span></div>
 					<div class="g_9">
 						<input name="master" class="simple_field" type="text" required />
-						<div class="field_notice">{{if eq .Lang "cn"}}填写要部署的Kubernetes Master主机IP地址，多个IP请用英文逗号","隔开{{else}}Fill in the IP address of the kubernetes master to be deployed. Separate multiple IP addresses with English comma ","{{end}}</div>
+						<div class="field_notice">{{if eq .Lang "cn"}}填写要部署的Kubernetes Master主机IP地址，多个IP请用英文逗号","隔开。{{else}}Fill in the IP address of the kubernetes master to be deployed. Separate multiple IP addresses with English comma ","{{end}}</div>
 					</div>
 				</div>
 				<div class="line_grid">
 					<div class="g_3"><span class="label">{{if eq .Lang "cn"}}Node IP地址{{else}}Node IP address{{end}} <span class="must">*</span></span></div>
 					<div class="g_9">
 						<input name="node" class="simple_field" type="text" required />
-						<div class="field_notice">{{if eq .Lang "cn"}}填写要部署的Kubernetes Node主机IP地址，多个IP请用英文逗号","隔开{{else}}Fill in the IP address of the kubernetes node host to be deployed. Separate multiple IP addresses with English comma ","{{end}}</div>
+						<div class="field_notice">{{if eq .Lang "cn"}}填写要部署的Kubernetes Node主机IP地址，多个IP请用英文逗号","隔开。{{else}}Fill in the IP address of the kubernetes node host to be deployed. Separate multiple IP addresses with English comma ","{{end}}</div>
 					</div>
 				</div>
 				<div class="line_grid">
@@ -164,14 +178,14 @@
                                                   <option value="ubuntu20" >Ubuntu Server 20</option>
                                                   <option value="suse15" >OpenSUSE 15</option>
 						</select>
-                                                <div class="field_notice">{{if eq .Lang "cn"}}选择目标主机的操作系统类型。相同批次的主机操作系统需要保持一致{{else}}Select the operating system type of the target host. Host operating systems of the same batch need to be consistent!{{end}}</div>
+                                                <div class="field_notice">{{if eq .Lang "cn"}}选择目标主机的操作系统类型，相同批次的主机操作系统需要保持一致。{{else}}Select the operating system type of the target host. Host operating systems of the same batch need to be consistent!{{end}}</div>
 					</div>
 				</div>
                                 <div id="autoupgradekernel" class="line_grid">
                                         <div class="g_3"><span class="label">{{if eq .Lang "cn"}}自动升级OS内核{{else}}Automatically upgrade OS kernel{{end}} </span></div>
                                         <div class="g_9">
                                                 <label class="label"><input type="radio" class="simple_form" name="upgradekernel" style="opacity: 0;" value="yes" >YES</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label class="label"><input type="radio" class="simple_form" name="upgradekernel" style="opacity: 0;" value="no" checked>NO</label>
-                                                <div class="field_notice">{{if eq .Lang "cn"}}由于低版本的centos7和redhat7可能缺少内核模块，这里仅支持centos7和rhel7操作系统内核的自动升级。其他操作系统不用做升级。{{else}}Because the lower versions of CentOS 7 and redhat 7 may lack kernel modules, only the kernel automatic upgrade of CentOS 7 and rhel7 operating systems is supported here, and other operating systems do not need to be upgraded. {{end}}</div>
+                                                <div class="field_notice">{{if eq .Lang "cn"}}由于低版本的centos7和redhat7可能缺少内核模块，这里仅支持centos7和rhel7操作系统内核的自动升级到4.19。其他操作系统不用做升级。{{else}}Because the lower versions of CentOS 7 and redhat 7 may lack kernel modules, only the kernel of CentOS 7 and rhel7 operating systems can be automatically upgraded to 4.19, and other operating systems do not need to be upgraded. {{end}}</div>
                                         </div>
                                 </div>
 				<div class="line_grid">
@@ -340,7 +354,7 @@
                                                                         <td align="center">{{ $v.K8v }}</td>
 									<td>{{ $v.Master }}</td>
 									<td align="center">
-								{{ if eq $v.Status "installing" }} <img src="static/img/Icons/Load/load-4.gif" style="vertical-align: middle;"/><br><span style="display: inline-block;">{{if eq .Lang "cn"}}安装中{{else}}Installing{{end}}</span><br><meter value="{{$v.Progressbar}}" min="0" low="8" high="16" max="25" align="left"></meter>{{end}}
+								{{ if eq $v.Status "installing" }} <img src="static/img/Icons/Load/load-4.gif" style="vertical-align: middle;"/><br><span style="display: inline-block;">{{if eq .Lang "cn"}}安装中{{else}}Installing{{end}}</span><br><meter value="{{$v.Progressbar}}" min="0" low="9" high="19" max="29" align="left"></meter>{{end}}
                                                                 {{ if eq $v.Status "restarting" }} <img src="static/img/Icons/Load/load-12.gif" style="vertical-align: middle;"/><br><span style="display: inline-block;">{{if eq .Lang "cn"}}重启中{{else}}Restarting{{end}}</span>{{end}}
 								{{ if eq $v.Status "uninstalling" }} <img src="static/img/Icons/Load/load-2.gif" style="vertical-align: middle;"/><br><span style="display: inline-block;">{{if eq .Lang "cn"}}卸载中{{else}}Uninstalling{{end}}</span><br><meter value="{{$v.Progressbar}}" min="0" low="1" high="3" max="5" align="left"></meter>{{end}}
 								{{ if eq $v.Status "ok" }} <img src="static/img/Icons/32/i_32_ok.png" style="vertical-align: middle;"/><br><span style="display: inline-block;">{{if eq .Lang "cn"}}正常{{else}}OK{{end}}</span>{{end}}
@@ -360,7 +374,7 @@
 	                                                                        {{ if ne $v.Status "installing" }}{{ if ne $v.Status "uninstalling" }}{{ if ne $v.Status "restarting" }} <a href="clusteradd?label={{ $v.K8t }}&master={{ $v.Master }}&softdir={{ $v.Sdr }}&ostype={{ $v.Ost }}&k8sver={{ $v.K8v }}&status={{ $v.Status }}&way=reinstall&tools=no" style="background:#5182B6; background-color:#5182B6; color:#ffffff;">&nbsp;&nbsp;{{if eq .Lang "cn"}}重装K8S集群{{else}}Reinstall{{end}}&nbsp;&nbsp;</a> {{end}}{{end}}{{end}} 
 	                                                                        {{ if ne $v.Status "installing" }}{{ if ne $v.Status "uninstalling" }}{{ if ne $v.Status "restarting" }} <a href="clusterdel?label={{ $v.K8t }}&master={{ $v.Master }}&softdir={{ $v.Sdr }}&k8sver={{ $v.K8v }}&tools=no" style="background:#5182B6; background-color:#5182B6; color:#ffffff;">&nbsp;&nbsp;{{if eq .Lang "cn"}}卸载K8S集群{{else}}Uninstall{{end}}&nbsp;&nbsp;</a> {{end}}{{end}}{{end}} 
 	                                                                    {{end}}
-                                                                      {{ if eq $v.Status "ok" }}|{{end}} <a href="logs?label={{ $v.K8t }}&opt=install" target="_blank" style="background:#DAA520; background-color:#DAA520; color:#ffffff;">&nbsp;&nbsp;{{if eq $v.Lang "cn"}}安装日志{{else}}Install Log{{end}}&nbsp;&nbsp;</a> <a href="logs?label={{ $v.K8t }}&opt=uninstall" target="_blank" style="background:#DAA520; background-color:#DAA520; color:#ffffff;">&nbsp;&nbsp;{{if eq $v.Lang "cn"}}卸载日志{{else}}Uninstall Log{{end}}&nbsp;&nbsp;</a>
+                                                                      {{ if eq $v.Status "ok" }}|{{end}} {{ if eq $v.Status "unknow" }}|{{end}} <a href="logs?label={{ $v.K8t }}&opt=install" target="_blank" style="background:#DAA520; background-color:#DAA520; color:#ffffff;">&nbsp;&nbsp;{{if eq $v.Lang "cn"}}安装日志{{else}}Install Log{{end}}&nbsp;&nbsp;</a> <a href="logs?label={{ $v.K8t }}&opt=uninstall" target="_blank" style="background:#DAA520; background-color:#DAA520; color:#ffffff;">&nbsp;&nbsp;{{if eq $v.Lang "cn"}}卸载日志{{else}}Uninstall Log{{end}}&nbsp;&nbsp;</a>
                                                                         </td>
 								</tr>
 							      {{ end }}

@@ -6,11 +6,10 @@
   file: 
     path: "{{k8s_install_home}}/kubernetes/kube-scheduler/"
     state: directory
-- name: 3.Set service startup
-  shell: "systemctl enable kube-scheduler"
-- name: 4.Start kube-scheduler service
+- name: 3.Start kube-scheduler service
   systemd:
     daemon_reload: true
     name: kube-scheduler
     state: restarted
     enabled: true
+

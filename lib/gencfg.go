@@ -56,12 +56,7 @@ func GeneralConfig(mode string, masterArray []string, nodeArray []string, curren
         ipvsinit_shell = ipvsinit_shell+" && ipvsadm -a -t 10.254.0.3:6443 -r "+masterArray[i]+":6443 -m"
     }
     DatabaseUpdate(currentDir+"/data/output"+subProcessDir+"/etcdendpoints.txt", etcd_endpoints, currentDir, logName, mode)
-    inventory_file.WriteString("ostype=\""+ostype+"\"\nk8sver=\""+k8sVer+"\"\nmaster_iplist=\""+master_iplist+"\"\netcd_initial=\""+etcd_initial+"\"\netcd_endpoints=\""+etcd_endpoints+"\"\ningress_upstream=\""+ingress_upstream+"\"\nipvsinit_shell = \""+ipvsinit_shell+"\"\nmaster1_ip = \""+masterArray[0]+"\"\nmaster_vip = \""+master_vip+"\"\nmaster_vport=\"6443\"\n")
-    if k8sVer == "1.18" {
-        inventory_file.WriteString("k8sdashboardversion=\"v1.10.1\"\n")
-    } else {
-        inventory_file.WriteString("k8sdashboardversion=\"v2.2.0\"\n")
-    }
+    inventory_file.WriteString("ostype=\""+ostype+"\"\nk8sver=\""+k8sVer+"\"\nmaster_iplist=\""+master_iplist+"\"\netcd_initial=\""+etcd_initial+"\"\netcd_endpoints=\""+etcd_endpoints+"\"\ningress_upstream=\""+ingress_upstream+"\"\nipvsinit_shell = \""+ipvsinit_shell+"\"\nmaster1_ip = \""+masterArray[0]+"\"\nmaster_vip = \""+master_vip+"\"\nmaster_vport=\"6443\"\nk8sdashboardversion=\"v2.2.0\"\n")
     // Addons IP Configuration
     addonsIp1,addonsIp2,addonsIp3 := CreateAddonsNode(nodeArray)
     inventory_file.WriteString("\n### addons_ip configuration ###\naddons_ip1=\""+addonsIp1+"\"\naddons_ip2=\""+addonsIp2+"\"\naddons_ip3=\""+addonsIp3+"\"\n")

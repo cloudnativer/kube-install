@@ -1,32 +1,42 @@
-- name: 1.Decompress etcd software package
+- name: 1.Cleaning up garbage files left in history
+  file:
+    path: "{{k8s_install_home}}/etcd"
+    state: absent
+  ignore_errors: yes
+
+- name: 2.Decompress etcd software package
   unarchive:
     src: "{{kipath}}/pkg/etcd-v3.3.26.tar.gz"
     dest: /usr/local/bin/
     mode: 0755
-- name: 2.Create {{k8s_install_home}}/etcd data directory
+- name: 3.Create {{k8s_install_home}}/etcd data directory
   file: 
     path: "{{k8s_install_home}}/etcd"
     state: directory
-- name: 3.Create etcd cert directory
+- name: 4.Create etcd cert directory
   file: 
     path: /etc/kubernetes/ssl/
     state: directory
-- name: 4.Create etcd service file
-  template:
-    src: ../templates/etcd.service.j2 
-    dest: /etc/systemd/system/etcd.service
 - name: 5.Distribution etcd cert file
   copy: 
     src: "{{kipath}}/data/output{{sub_process_dir}}/cert/"
     dest: /etc/kubernetes/
-- name: 6.Set service startup
-  shell: "systemctl enable etcd"
-- name: 7.Start etcd service
+
+- name: 6.Check and replace etcd member status
+  template:
+    src: "../templates/etcdmember.sh.j2"
+    dest: "{{k8s_install_home}}/temp/etcdmember.sh"
+    mode: 0755
+- shell: "{{k8s_install_home}}/temp/etcdmember.sh"
+  ignore_errors: yes
+- name: 7.Create etcd service file
+  template:
+    src: ../templates/etcd.service.j2
+    dest: /etc/systemd/system/etcd.service
+- name: 8.Start etcd service
   systemd:
     daemon_reload: true
     name: etcd
     state: restarted
     enabled: true
-- name: 8.Creating network config in etcd storage
-  shell: etcdctl --endpoints={{etcd_endpoints}} --ca-file=/etc/kubernetes/ssl/k8s-root-ca.pem --cert-file=/etc/kubernetes/ssl/kubernetes.pem --key-file=/etc/kubernetes/ssl/kubernetes-key.pem set /kubernetes/network/config '{"Network":"{{pod_cidr}}", "SubnetLen":24, "Backend":{"Type":"vxlan"}}'
 

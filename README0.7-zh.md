@@ -112,7 +112,13 @@
 # ./kube-install -exec install -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -k8sver "1.22" -ostype "centos7" -label "192168001011"
 ```
 
-注意：kube-install软件支持`rhel7`, `rhel8`, `centos7`, `centos8`, `ubuntu20`, `suse15`等版本的操作系统，在做安装部署操作的时候，请确保`-ostype`参数设置正确。<br>
+注意：
+
+* kube-install软件支持`rhel7`, `rhel8`, `centos7`, `centos8`, `ubuntu20`, `suse15`等版本的操作系统，在做安装部署操作的时候，请确保`-ostype`参数设置正确。由于低版本的centos7和redhat7可能缺少内核模块，`kube-install`对centos7和rhel7操作系统内核的提供了自动升级到4.19的功能，你可以选择`-upgradekernel`参数使用此功能，也可能自己手工优化操作系统内核。
+* 请选择好你需要安装的CNI插件，目前`kube-install`支持Flannel、Calico、Kube-router、Weave、Cilium等CNI插件类型。如果需要安装“Cilium”，请将Linux内核升级到4.9或以上版本。
+
+<br>
+
 另外，如果你需要自定义制定Kubernetes集群安装在目标主机上的目录路径的话，可以带上`-softdir`参数来设置。
 
 <br>

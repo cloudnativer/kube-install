@@ -57,7 +57,13 @@ kube-install -exec sshcontrol -sship "192.168.1.11,192.168.1.12,192.168.1.13,192
 
 ![kube-dashboard](images/webinstall003.png)
 
-注意选择好你的操作系统环境和你需要安装的kubernetes版本。
+说明：
+
+* 请选择好你需要安装的Kubernetes版本，目前`kube-install`支持v1.17~1.23版本的Kubernetes安装部署，其他版本的Kubernete暂未进行验证。
+* 请选择好你需要安装的CNI插件，目前`kube-install`支持Flannel、Calico、Kube-router、Weave、Cilium等CNI插件类型。如果需要安装“Cilium”，请将Linux内核升级到4.9或以上版本。
+* 请选择好你的操作系统环境。由于低版本的centos7和redhat7可能缺少内核模块，`kube-install`对centos7和rhel7操作系统内核的提供了自动升级到4.19的功能，你可以选择使用此功能，也可能自己手工优化操作系统内核。
+
+<br>
 
 注意：如果不设置定时安装的话，默认为立即开始安装。你如果想进行定时安装，也可以在下方的选择定时安装的日期与时间。
 

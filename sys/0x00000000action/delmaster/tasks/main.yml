@@ -31,6 +31,10 @@
     path: /usr/local/bin/kube-controller-manager
     state: absent
   ignore_errors: yes
+- file:
+    path: "{{software_home}}/k8s/kubernetes/kube-controller-manager"
+    state: absent
+  ignore_errors: yes
 - name: 6.Delete kube-scheduler file
   file:
     path: /etc/systemd/system/kube-scheduler.service
@@ -38,6 +42,10 @@
   ignore_errors: yes
 - file:
     path: /usr/local/bin/kube-scheduler
+    state: absent
+  ignore_errors: yes
+- file:
+    path: "{{software_home}}/k8s/kubernetes/kube-scheduler"
     state: absent
   ignore_errors: yes
 - name: 7.Delete kube-apiserver file
@@ -53,6 +61,10 @@
     - kube-aggregator
     - kube-apiserver
   ignore_errors: yes
+- file:
+    path: "{{software_home}}/k8s/kubernetes/kube-apiserver"
+    state: absent
+  ignore_errors: yes
 - name: 8.Delete etcd file
   file:
     path: /etc/systemd/system/etcd.service 
@@ -64,6 +76,10 @@
   with_items:
     - etcd
     - etcdctl
+  ignore_errors: yes
+- file:
+    path: "{{software_home}}/k8s/etcd"
+    state: absent
   ignore_errors: yes
 - name: 9.Delete cfssl software file
   file:

@@ -54,11 +54,11 @@
         <script>
                 $(document).ready(function(){
 			{{ if eq .Ostype "centos7" }} $("#autoupgradekernel").show(); {{end}}
-                        {{ if eq .Ostype "centos8" }} $("#autoupgradekernel").show(); {{end}}
+                        {{ if eq .Ostype "centos8" }} $("#autoupgradekernel").hide(); {{end}}
                         {{ if eq .Ostype "rhel7" }} $("#autoupgradekernel").show(); {{end}}
-                        {{ if eq .Ostype "rhel8" }} $("#autoupgradekernel").show(); {{end}}
-                        {{ if eq .Ostype "ubuntu20" }} $("#autoupgradekernel").show(); {{end}}
-                        {{ if eq .Ostype "suse15" }} $("#autoupgradekernel").show(); {{end}}
+                        {{ if eq .Ostype "rhel8" }} $("#autoupgradekernel").hide(); {{end}}
+                        {{ if eq .Ostype "ubuntu20" }} $("#autoupgradekernel").hide(); {{end}}
+                        {{ if eq .Ostype "suse15" }} $("#autoupgradekernel").hide(); {{end}}
                         $('#ostype').change(function() {
                                 var val = $(this).children('option:selected').val();
                                 console.log("ostype:",val);
@@ -107,17 +107,31 @@
                                         </div>
                                 </div>
                                 <div class="line_grid">
+                                        <div class="g_3"><span class="label">{{if eq .Lang "cn"}}选择CNI插件类型{{else}}Type of CNI Plug-in{{end}} <span class="must">*</span></span>
+                                        </div>
+                                        <div class="g_9">
+                                                <select name="cniplugin" class="simple_form">
+                                                  <option value="flannel" {{ if eq .Cniplugin "flannel" }} selected="selected" {{end}}>Flannel</option>
+                                                  <option value="calico" {{ if eq .Cniplugin "calico" }} selected="selected" {{end}}>Calico</option>
+                                                  <option value="kuberouter" {{ if eq .Cniplugin "kuberouter" }} selected="selected" {{end}}>Kube-router</option>
+                                                  <option value="weave" {{ if eq .Cniplugin "weave" }} selected="selected" {{end}}>Weave</option>
+                                                  <option value="cilium" {{ if eq .Cniplugin "cilium" }} selected="selected" {{end}}>Cilium</option>
+                                                </select>
+                                                <div class="field_notice">{{if eq .Lang "cn"}}选择你要安装部署的CNI插件类型。（如果需要安装“Cilium”，请将Linux内核升级到4.9或以上版本）{{else}}Select the type of CNI Plug-in you want to install.(In addition, if you need to install "Cilium", please upgrade the Linux kernel to version 4.9 or above.){{end}}</div>
+                                        </div>
+                                </div>
+                                <div class="line_grid">
                                         <div class="g_3"><span class="label">{{if eq .Lang "cn"}}Master IP地址{{else}}Master IP address{{end}} <span class="must">*</span></span></div>
                                         <div class="g_9">
                                                 <input name="master" value="{{.Master}}" class="simple_field" type="text" required />
-                                                <div class="field_notice">{{if eq .Lang "cn"}}填写要部署的Kubernetes Master主机IP地址，多个IP请用英文逗号","隔开{{else}}Fill in the IP address of the kubernetes master to be deployed. Separate multiple IP addresses with English comma ","{{end}}</div>
+                                                <div class="field_notice">{{if eq .Lang "cn"}}填写要部署的Kubernetes Master主机IP地址，多个IP请用英文逗号","隔开。{{else}}Fill in the IP address of the kubernetes master to be deployed. Separate multiple IP addresses with English comma ","{{end}}</div>
                                         </div>
                                 </div>
                                 <div class="line_grid">
                                         <div class="g_3"><span class="label">{{if eq .Lang "cn"}}Node IP地址{{else}}Node IP address{{end}} <span class="must">*</span></span></div>
                                         <div class="g_9">
                                                 <input name="node" value="{{.Node}}" class="simple_field" type="text" required />
-                                                <div class="field_notice">{{if eq .Lang "cn"}}填写要部署的Kubernetes Node主机IP地址，多个IP请用英文逗号","隔开{{else}}Fill in the IP address of the kubernetes node host to be deployed. Separate multiple IP addresses with English comma ","{{end}}</div>
+                                                <div class="field_notice">{{if eq .Lang "cn"}}填写要部署的Kubernetes Node主机IP地址，多个IP请用英文逗号","隔开。{{else}}Fill in the IP address of the kubernetes node host to be deployed. Separate multiple IP addresses with English comma ","{{end}}</div>
                                         </div>
                                 </div>
                                 <div class="line_grid">
@@ -126,8 +140,8 @@
                                         <div class="g_9">
                                                 <select name="ostype" id="ostype" class="simple_form">
                                                   <option value="centos7" {{ if eq .Ostype "centos7" }} selected="selected" {{end}} >CentOS Linux 7</option>
-                                                  <option value="rhel7" {{ if eq .Ostype "rhel7" }} selected="selected" {{end}} >Red Hat Enterprise Linux 7</option>
                                                   <option value="centos8" {{ if eq .Ostype "centos8" }} selected="selected" {{end}} >CentOS Linux 8</option>
+                                                  <option value="rhel7" {{ if eq .Ostype "rhel7" }} selected="selected" {{end}} >Red Hat Enterprise Linux 7</option>
                                                   <option value="rhel8" {{ if eq .Ostype "rhel8" }} selected="selected" {{end}} >Red Hat Enterprise Linux 8</option>
                                                   <option value="ubuntu20" {{ if eq .Ostype "ubuntu20" }} selected="selected" {{end}} >Ubuntu Server 20</option>
                                                   <option value="suse15" {{ if eq .Ostype "suse15" }} selected="selected" {{end}} >OpenSUSE 15</option>
@@ -139,7 +153,7 @@
                                         <div class="g_3"><span class="label">{{if eq .Lang "cn"}}自动升级OS内核{{else}}Automatically upgrade OS kernel{{end}} </span></div>
                                         <div class="g_9">
                                                 <label class="label"><input type="radio" class="simple_form" name="upgradekernel" style="opacity: 0;" value="yes" >YES</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label class="label"><input type="radio" class="simple_form" name="upgradekernel" style="opacity: 0;" value="no" checked>NO</label>
-                                                <div class="field_notice">{{if eq .Lang "cn"}}由于低版本的centos7和redhat7可能缺少内核模块，这里仅支持centos7和rhel7操作系统内核的自动升级。其他操作系统不用做升级。{{else}}Because the lower versions of CentOS 7 and redhat 7 may lack kernel modules, only the kernel automatic upgrade of CentOS 7 and rhel7 operating systems is supported here, and other operating systems do not need to be upgraded. {{end}}</div>
+                                                <div class="field_notice">{{if eq .Lang "cn"}}由于低版本的centos7和redhat7可能缺少内核模块，这里仅支持centos7和rhel7操作系统内核的自动升级到4.19。其他操作系统不用做升级。{{else}}Because the lower versions of CentOS 7 and redhat 7 may lack kernel modules, only the kernel of CentOS 7 and rhel7 operating systems can be automatically upgraded to 4.19, and other operating systems do not need to be upgraded. {{end}}</div>
                                         </div>
                                 </div>
                                 <div class="line_grid">

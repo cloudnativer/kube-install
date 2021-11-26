@@ -1,8 +1,9 @@
-- name: 1.Cleaning up garbage files left in history
+- name: 1.Create temp directory
   file:
     path: "{{k8s_install_home}}/.temp/"
     state: directory
-- service:
+- name: 2.Cleaning up garbage files left in history
+  service:
     name: kubelet
     state: stopped
     enabled: false
@@ -17,11 +18,6 @@
     state: stopped
     enabled: false
   ignore_errors: yes
-- service:
-    name: flanneld
-    state: stopped
-    enabled: false
-  ignore_errors: yes
 - file:
     path: /etc/systemd/system/kubelet.service
     state: absent
@@ -31,7 +27,11 @@
     state: absent
   ignore_errors: yes
 - file:
-    path: /etc/systemd/system/flanneld.service
+    path: /opt/cni/bin
+    state: absent
+  ignore_errors: yes
+- file:
+    path: /etc/cni/net.d
     state: absent
   ignore_errors: yes
 - copy:
@@ -42,11 +42,29 @@
 - shell: "{{k8s_install_home}}/.temp/uninstall-docker.sh"
   ignore_errors: yes
 
-- name: 2.Create docker config dir
+- name: 3.Create CNI plug-in directory
+  file:
+    path: /etc/cni/net.d
+    state: directory
+- file:
+    path: /opt/cni/bin
+    state: directory
+- name: 4.Decompress CNI plug-in package
+  unarchive:
+    src: "{{kipath}}/pkg/cni-plugins.tar.gz"
+    dest: /opt/cni/bin/
+    mode: 0755
+- unarchive:
+    src: "{{kipath}}/pkg/calicoctl.tgz"
+    dest: /usr/local/bin/
+    mode: 0755
+  ignore_errors: yes
+
+- name: 5.Create docker config dir
   file:
     path: "/etc/docker/"
     state: directory
-- name: 3.Decompress docker software package
+- name: 6.Decompress docker software package
   unarchive:
     src: "{{kipath}}/pkg/docker.tar.gz"
     dest: /usr/bin/
@@ -54,9 +72,81 @@
 - template:
     src: ../templates/daemon.json.j2
     dest: "/etc/docker/daemon.json"
-- name: 4.Create docker service
+- name: 7.Create docker service
   template:
     src: ../templates/docker.service
     dest: /etc/systemd/system/docker.service
+
+- name: 8.Create ipvsinit service
+  copy:
+    src: ../templates/ipvsinit.service
+    dest: /etc/systemd/system/ipvsinit.service
+- name: 9.Create ipvsinit shell
+  template:
+    src: ../templates/ipvsinit.sh.j2
+    dest: /usr/local/bin/ipvsinit.sh
+    mode: 0755
+- name: 10.Enable ipvsinit service
+  systemd:
+    daemon-reload: true
+    name: ipvsinit
+    enabled: true
+
+- name: 11.Start docker service
+  systemd:
+    daemon-reload: true
+    name: docker
+    state: restarted
+    enabled: true
+- name: 12.Decompress docker images package
+  unarchive:
+    src: "{{kipath}}/pkg/image_files.tar.gz"
+    dest: "{{k8s_install_home}}"
+    mode: 0744
+- name: 13.Load docker images
+  shell: "docker load < {{k8s_install_home}}/image_files/{{item}}"
+  with_items:
+    - "metrics-server-amd64.tar"
+    - "heapster-amd64.tar"
+    - "pause-amd64.tar"
+    - "traefik.tar"
+    - "alpine.tar"
+    - "kubernetes-dashboard-{{k8sdashboardversion}}-amd64.tar"
+    - "coredns.tar"
+    - "registry.tar"
+    - "calico-cni.tar"
+    - "calico-kube-controllers.tar"
+    - "calico-node.tar"
+    - "calico-pod2daemon-flexvol.tar"
+    - "flannel-cni-plugin.tar"
+    - "flannel.tar"
+    - "kube-router.tar"
+    - "weave-kube.tar"
+    - "weave-npc.tar"
+    - "cilium.tar"
+    - "cilium-operator-generic.tar"
+- name: 14.Set docker images tag and create pushsysimages shell 
+  shell: "echo '#!/bin/bash' > {{k8s_install_home}}/image_files/pushsysimages.sh && chmod 755 {{k8s_install_home}}/image_files/pushsysimages.sh"
+- shell: "docker tag cloudnativer/{{item}} {{addons_ip3}}:5000/{{item}} && echo 'docker push {{addons_ip3}}:5000/{{item}}' >> {{k8s_install_home}}/image_files/pushsysimages.sh"
+  with_items:
+    - "metrics-server-amd64:v0.3.6"
+    - "heapster-amd64:v1.5.4"
+    - "pause-amd64:3.1"
+    - "traefik:v2.0.7"
+    - "alpine:3.6"
+    - "kubernetes-dashboard-amd64:{{k8sdashboardversion}}"
+    - "coredns:1.3.1"
+    - "registry:v2.7.1"
+    - "calico-node:v3.19.3"
+    - "calico-pod2daemon-flexvol:v3.19.3"
+    - "calico-cni:v3.19.3"
+    - "calico-kube-controllers:v3.19.3"
+    - "flannel-cni-plugin:v1.0.0"
+    - "flannel:v0.15.1"
+    - "kube-router:v1.3.2"
+    - "weave-kube:2.8.1"
+    - "weave-npc:2.8.1"
+    - "cilium:v1.9.0"
+    - "cilium-operator-generic:v1.9.0"
 
 

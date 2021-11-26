@@ -6,8 +6,7 @@ Wants=network-online.target
 
 [Service]
 Type=notify
-EnvironmentFile=/run/flannel/docker
-ExecStart=/usr/bin/dockerd $DOCKER_NETWORK_OPTIONS
+ExecStart=/usr/bin/dockerd
 ExecReload=/bin/kill -s HUP $MAINPID
 LimitNOFILE=infinity
 LimitNPROC=infinity

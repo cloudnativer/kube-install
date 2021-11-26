@@ -29,11 +29,10 @@
   template:
     src: "../templates/kubelet.service-{{k8sver}}.j2"
     dest: /etc/systemd/system/kubelet.service
-- name: 7.Set service startup
-  shell: "systemctl enable kubelet"
-- name: 8.Start kubelet service
+- name: 7.Start kubelet service
   systemd:
     daemon_reload: true
     name: kubelet
     state: restarted
     enabled: true
+

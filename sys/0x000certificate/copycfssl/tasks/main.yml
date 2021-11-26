@@ -1,4 +1,4 @@
-- name: 16.Create k8s cert directory
+- name: 1.Create k8s cert directory
   file:
     path: "/etc/kubernetes/ssl/"
     state: directory

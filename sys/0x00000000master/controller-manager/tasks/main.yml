@@ -6,11 +6,10 @@
   file: 
     path: "{{k8s_install_home}}/kubernetes/kube-controller-manager"
     state: directory
-- name: 3.Set service startup
-  shell: "systemctl enable kube-controller-manager"
-- name: 4.Start kube-controller-manager service
+- name: 3.Start kube-controller-manager service
   systemd:
     daemon_reload: true
     name: kube-controller-manager
     state: restarted
     enabled: true
+

@@ -1,0 +1,97 @@
+- name: 1.Umount kubelet disk partition
+  shell: "for diskPartition in `mount | grep kubelet | awk '{print $3}'` ; do umount $diskPartition ; done"
+  ignore_errors: yes
+- name: 2.Delete {{software_home}} dir
+  file:
+    path: "{{software_home}}/loginkey.txt"
+    state: absent
+  ignore_errors: yes
+- file:
+    path: "{{software_home}}/dockerregistry"
+    state: absent
+  ignore_errors: yes
+- file:
+    path: "{{software_home}}/k8s/kubernetes/kubelet"
+    state: absent
+  ignore_errors: yes
+- file:
+    path: "{{software_home}}/k8s/kubernetes/kube-proxy"
+    state: absent
+  ignore_errors: yes
+- file:
+    path: "{{software_home}}/k8s/kubernetes/kube-apiserver"
+    state: absent
+  ignore_errors: yes
+- file:
+    path: "{{software_home}}/k8s/kubernetes/kube-controller-manager"
+    state: absent
+  ignore_errors: yes
+- file:
+    path: "{{software_home}}/k8s/kubernetes/kube-scheduler"
+    state: absent
+  ignore_errors: yes
+- file:
+    path: "{{software_home}}/k8s/etcd"
+    state: absent
+  ignore_errors: yes
+- file:
+    path: "{{software_home}}"
+    state: absent
+  ignore_errors: yes
+- file:
+    path: "/opt/containerd"
+    state: absent
+  ignore_errors: yes
+- name: 3.Delete cert file
+  file:
+    path: /etc/kubernetes
+    state: absent
+  ignore_errors: yes
+- name: 4.Stop TTY service
+  service:
+    name: kube-install-ttyd
+    state: stopped
+    enabled: false
+  ignore_errors: yes
+- file:
+    path: /usr/local/bin/ttyd
+    state: absent
+  ignore_errors: yes
+- name: 5.Delete sysctl configuration
+  file:
+    path: /etc/sysctl.d/kubernetes.conf
+    state: absent
+  ignore_errors: yes
+- name: 6.Delete modules configuration
+  file:
+    path: /etc/sysconfig/modules/ipvs.modules
+    state: absent
+  ignore_errors: yes
+- name: 7.Delete CNI file
+  file:
+    path: /opt/cni
+    state: absent
+  ignore_errors: yes
+- file:
+    path: /etc/cni
+    state: absent
+  ignore_errors: yes
+- name: 8.Delete kubernetes bin file
+  file:
+    path: /usr/sbin/kubectl
+    state: absent
+  ignore_errors: yes
+- file:
+    path: /usr/local/bin/{{item}}
+    state: absent
+  with_items:
+    - kubeadm
+    - kubectl
+    - kubectl-convert
+    - kubelet
+    - kube-proxy
+    - mounter
+    - ipvsinit.sh
+    - resolvinit.sh
+  ignore_errors: yes
+

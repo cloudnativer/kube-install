@@ -115,7 +115,12 @@ Please operate in the root user environment. Execute on the kube-install host se
 # ./kube-install -exec install -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -k8sver "1.22" -ostype "centos7" -label "192168001011"
 ```
 
-Notice: Please make sure that the `-ostype` flag you entered is correct, only support `rhel7`, `rhel8`, `centos7`, `centos8`, `ubuntu20`, `suse15` these types of "ostype".<br>
+Notice: 
+* Please make sure that the `-ostype` flag you entered is correct, only support `rhel7`, `rhel8`, `centos7`, `centos8`, `ubuntu20`, `suse15` these types of "ostype". Since the lower versions of CentOS 7 and RedHat 7 may lack kernel modules, 'Kube install' provides the function of automatically upgrading the operating system kernels of CentOS 7 and rhel7 to 4.19. You can choose to use this function by `-upgradekernel` or manually optimize the operating system kernel yourself.
+* Please select the CNI plug-ins you need to install. At present, 'Kube install' supports CNI plug-ins such as `Flannel`, `Calico`, `Kube-router`, `weave` and `Cilium`. If you need to install "cilium", please upgrade the Linux kernel to version 4.9 or above.
+
+<br>
+
 In addition, if you need to specify the directory path to the Kubernetes cluster installation, you can set it using the `-softdir` parameter.
 
 <br>

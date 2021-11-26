@@ -28,6 +28,7 @@ COMMAND:
   uninstall        Uninstall kubernetes cluster.
 
 OBJECT:
+  cniplugin        Specifies the CNI plug-in type: "flannel | calico | kuberouter | weave | cilium".(Default is "flannel")
   k8sver           Specifies the version of k8s software installed.(Default is "1.22")
   label            In the case of deploying and operating multiple kubernetes clusters, it is necessary to specify a label to uniquely identify a kubernetes cluster.(Length must be less than 32 strings)
   listen           Set the IP and port on which the daemon service listens.(Default is "0.0.0.0:9080")

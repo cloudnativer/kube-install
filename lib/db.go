@@ -24,6 +24,8 @@ func DatabaseInit(currentDir string, subProcessDir string, logName string, mode 
 	CreateFile(currentDir+"/data/output"+subProcessDir+"/ostypetemp.txt", currentDir, logName, mode)
 	CreateFile(currentDir+"/data/output"+subProcessDir+"/k8sver.txt", currentDir, logName, mode)
 	CreateFile(currentDir+"/data/output"+subProcessDir+"/k8svertemp.txt", currentDir, logName, mode)
+        CreateFile(currentDir+"/data/output"+subProcessDir+"/cniplugin.txt", currentDir, logName, mode)
+        CreateFile(currentDir+"/data/output"+subProcessDir+"/cniplugintemp.txt", currentDir, logName, mode)
 	CreateFile(currentDir+"/data/output"+subProcessDir+"/k8shealth.txt", currentDir, logName, mode)
 	CreateFile(currentDir+"/data/output"+subProcessDir+"/etcdendpoints.txt", currentDir, logName, mode)
 	CreateFile(currentDir+"/data/output"+subProcessDir+"/installtime.txt", currentDir, logName, mode)
@@ -151,6 +153,17 @@ func GetClusterAddons(label string, currentDir string, mode string) (string, str
 	}
 }
 
+// Query the CNI plug-in of kubernetes cluster installation.
+func GetClusterCNI(label string, currentDir string, mode string) string {
+        _, _, _, subProcessDir, _ := ParameterConvert(mode, "", "", "", label, "")
+        cniplugin, err := ReadFile(currentDir + "/data/output" + subProcessDir + "/cniplugin.txt")
+        if err != nil {
+                return ""
+        } else {
+                return cniplugin
+        }
+}
+
 // Query the directory information of cluster installation.
 func GetClusterSoftdir(label string, currentDir string, mode string) string {
 	_, _, _, subProcessDir, _ := ParameterConvert(mode, "", "", "", label, "")
@@ -214,4 +227,6 @@ func GetClusterK8sVer(label string, currentDir string, mode string) string {
 		return k8sver
 	}
 }
+
+
 
