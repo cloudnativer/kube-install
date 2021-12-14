@@ -40,12 +40,12 @@ Notice: kube-install supports CentOS 7, CentOS 8, SUSE 15, RHEL 7 and RHEL 8 ope
 
 You can download the `kube-install-*.tgz` package from https://github.com/cloudnativer/kube-install/releases. <br>
 
-For example, we have downloaded the `kube-install-allinone-v0.7.3.tgz` package.<br>
+For example, we have downloaded the `kube-install-allinone-v0.7.4.tgz` package.<br>
 
 ```
 # cd /root/
-# curl -O https://github.com/cloudnativer/kube-install/releases/download/v0.7.3/kube-install-allinone-v0.7.3.tgz
-# tar -zxvf kube-install-allinone-v0.7.3.tgz
+# curl -O https://github.com/cloudnativer/kube-install/releases/download/v0.7.4/kube-install-allinone-v0.7.4.tgz
+# tar -zxvf kube-install-allinone-v0.7.4.tgz
 # cd /root/kube-install/
 ```
 
