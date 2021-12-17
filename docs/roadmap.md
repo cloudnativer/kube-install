@@ -1,5 +1,5 @@
 
-# Next Version Feature Preview:
+# Version 0.8.0 Feature Preview:
 
 <br>
 
