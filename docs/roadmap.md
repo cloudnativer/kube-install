@@ -5,7 +5,7 @@
 
 We will add the following features in 0.8.0 version:
 
-* The web platform supports user name and password login.
+* The web platform supports username and password login.
 * Starting to support `kubernetes v1 24` .
 * Add the `-logs` tag to support viewing logs on the command line.
 * Add dashboard `metrics-scraper` to solve the problem of `kube-dashboard` monitoring chart.
