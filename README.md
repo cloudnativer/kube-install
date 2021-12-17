@@ -274,7 +274,7 @@ The build can be completed automatically by executing the `make` command. You ca
 
 <br>
 
-We will be in v0 The following features are added in version 8.0:
+We will add the following features in 0.8.0 version::
 * The web interface supports user name and password login.
 * Starting to support `kubernetes v1 24` .
 * Add the `-logs` tag to support viewing logs on the command line.
