@@ -12,6 +12,7 @@ We will add the following features in 0.8.0 version:
 * The `node` management page of the web platform is added to view the `pod` running list.
 * Set the deployment of `kube-dashboard` as an option, and users can choose not to deploy it.
 * `kubernetes v1.17` is deprecated. 
+* ...
 
 
 <br>
