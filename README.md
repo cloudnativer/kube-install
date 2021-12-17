@@ -270,7 +270,24 @@ The build can be completed automatically by executing the `make` command. You ca
 <br>
 
 
-# [8] How to Contribute
+# [8] Next version feature Preview:
+
+<br>
+
+We will be in v0 The following features are added in version 8.0:
+* The web interface supports user name and password login.
+* Starting to support `kubernetes v1 24` .
+* Add the `-logs` tag to support viewing logs on the command line.
+* Add dashboard `metrics-scraper` to solve the problem of `kube-dashboard` monitoring chart.
+* The `node` management page of the web interface is added to view the `pod` running list.
+* Set the deployment of `kube-dashboard` as an option, and users can choose not to deploy it.
+* `kubernetes v1.17` is deprecated. 
+
+
+<br>
+<br>
+
+# [9] How to Contribute
 
 If you have problems in use, <a href="https://github.com/cloudnativer/kube-install/issues">you can click here submit issues to us</a>, or fork it and submit PR.
 <br>
