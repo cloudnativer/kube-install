@@ -13,6 +13,9 @@ We will add the following features in 0.8.0 version:
 * Starting to support `kubernetes v1.24`.
 * Upgrade `kube-dashboard` to v2.4.0.
 * `kubernetes v1.17` is deprecated. 
+* Since `kubernetes v1.24` has forcibly deleted `dockershim`, we will use `containerd` as `runtime` by default.
+* `docker` is deprecated. 
+* Upgrade `pause` image to v3.5.
 * Upgrade `helm` to v3.7.2.
 * ...
 
