@@ -138,9 +138,9 @@
 
 說明：
 
-* 請選擇好你需要安裝的Kubernetes版本，現時`kube-install`支持v1. 17~1.24版本的Kubernetes安裝部署，其他版本的Kubernete暫未進行驗證。
-* 請選擇好你需要安裝的CNI挿件，現時`kube-install`支持Flannel、Calico、Kube-router、Weave、Cilium等CNI挿件類型。 如果需要安裝“Cilium”，請將Linux內核陞級到4.9或以上版本。
-* 請選擇好你的作業系統環境。 由於低版本的centos7和redhat7可能缺少內核模塊，`kube-install`對centos7和rhel7作業系統內核的提供了自動升級到4.19的功能，你可以選擇使用此功能，也可能自己手工優化作業系統內核。
+* 請選擇好你需要安裝的Kubernetes版本，現時kube-install支持v1.17~1.24版本的Kubernetes安裝部署，其他版本的Kubernete暫未進行驗證。
+* 請選擇好你需要安裝的CNI挿件，現時kube-install支持`Flannel`、`Calico`、`Kube-router`、`Weave`、`Cilium`等CNI挿件類型。 如果需要安裝`Cilium`，請將Linux內核陞級到4.9或以上版本。
+* 請選擇好你的作業系統環境。 由於低版本的`Centos 7`和`RHEL 7`可能缺少內核模塊，kube-install對`Centos 7`和`RHEL 7`作業系統內核的提供了自動升級到4.19的功能，你可以選擇使用此功能，也可能自己手工優化作業系統內核。
 
 <br>
 
