@@ -134,7 +134,7 @@
 
 在彈出的安裝表單視窗中填寫好安裝所需的參數資訊：
 
-![kube-dashboard](images/webinstall003.png)
+![kube-dashboard](docs/images/webinstall003.png)
 
 說明：
 
