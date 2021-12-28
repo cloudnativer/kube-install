@@ -130,7 +130,7 @@
 
 ポップアップの「インストールフォーム」ウィンドウに、インストールに必要なパラメータ情報を入力します。
 
-![kube-dashboard](images/webinstall003.png)
+![kube-dashboard](docs/images/webinstall003.png)
 
 説明:
 
