@@ -130,7 +130,7 @@ For the installation process using the web platform, <a href="docs/webinstall0.7
 <br>
 <br>
 
-# [4]  Install kubernetes cluster by CLI
+# [4]  Install kubernetes cluster by command line
 
 <br>
 You can also install the Kubernetes cluster by command line. 
