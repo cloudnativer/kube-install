@@ -130,6 +130,23 @@
 注意：在你開始給目標主機安裝kubernetes集羣之前，請先打通kube-install源安裝機本地到目標主機的SSH免密通道。
 你可以自己手工打通到目標主機的SSH通道，也可以點擊右上角的`Open SSH Channel of Host`按鈕來進行打通，<a href="docs/webssh0.7.md">點擊這裡可以查看更加詳細的檔案</a>。
 
+<br>
+
+在彈出的安裝表單視窗中填寫好安裝所需的參數資訊：
+
+![kube-dashboard](images/webinstall003.png)
+
+說明：
+
+* 請選擇好你需要安裝的Kubernetes版本，現時`kube-install`支持v1. 17~1.24版本的Kubernetes安裝部署，其他版本的Kubernete暫未進行驗證。
+* 請選擇好你需要安裝的CNI挿件，現時`kube-install`支持Flannel、Calico、Kube-router、Weave、Cilium等CNI挿件類型。 如果需要安裝“Cilium”，請將Linux內核陞級到4.9或以上版本。
+* 請選擇好你的作業系統環境。 由於低版本的centos7和redhat7可能缺少內核模塊，`kube-install`對centos7和rhel7作業系統內核的提供了自動升級到4.19的功能，你可以選擇使用此功能，也可能自己手工優化作業系統內核。
+
+<br>
+
+注意：如果不設定定時安裝的話，默認為立即開始安裝。 你如果想進行定時安裝，也可以在下方的選擇定時安裝的日期與時間。
+
+
 ![kube-dashboard](docs/images/webinstall002.jpg)
 
 你可以<a href="docs/webinstall0.7-zh.md">點擊這裡可以查看更多通過kube-install的Web管理平臺安裝部署的詳細資訊</a>。
