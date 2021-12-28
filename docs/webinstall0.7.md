@@ -11,7 +11,7 @@ First, you need to execute the 'kube-install -init' command to initialize the sy
 
 ```
 #
-# ./kube-install -daemon
+# systemctl start kube-install
 ```
 Now, you can open it with a web browser `http://kube-install_IP:9080`, view kube-nstall web platform.
 <br>
@@ -48,8 +48,8 @@ Fill in relevant installation parameters in the pop-up form:<br>
 
 explain:
 
-* Please select the version of kubernetes you need to install. At present, 'Kube install' supports the installation and deployment of kubernetes v1.17 ~ 1.23. Other versions of kubernetes have not been verified yet.
-* Please select the CNI plug-ins you need to install. At present, 'Kube install' supports CNI plug-ins such as flannel, calico, Kube router, weave and cilium. If you need to install "cilium", please upgrade the Linux kernel to version 4.9 or above.
+* Please select the version of kubernetes you need to install. At present, 'Kube install' supports the installation and deployment of kubernetes v1.17 to 1.24. Other versions of kubernetes have not been verified yet.
+* Please select the CNI plug-ins you need to install. At present, 'kube-install' supports CNI plug-ins such as flannel, calico, Kube router, weave and cilium. If you need to install "cilium", please upgrade the Linux kernel to version 4.9 or above.
 * Please select your operating system environment. Since the lower versions of CentOS 7 and RedHat 7 may lack kernel modules, 'Kube install' provides the function of automatically upgrading the operating system kernels of CentOS 7 and rhel7 to 4.19. You can choose to use this function or manually optimize the operating system kernel yourself.
 
 <br>
