@@ -125,7 +125,7 @@
 
 在弹出的安装表单窗口中填写好安装所需的参数信息：
 
-![kube-dashboard](images/webinstall003.png)
+![kube-dashboard](docs/images/webinstall003.png)
 
 说明：
 
