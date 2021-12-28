@@ -80,6 +80,8 @@
 ## 3.2 运行kube-install的Web管理服务
 
 然后，执行`systemctl start kube-install`命令来运行kube-install的Web管理平台服务。
+<br>
+使用用户名 `admin` 和默认密码 `CloudNativeR` 登录！（你可以后期通过web平台修改密码）
 
 ```
 # systemctl start kube-install.service
