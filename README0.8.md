@@ -60,9 +60,22 @@ Notice: If your network quality is poor and the download package is slow, you ca
 # [3] Install kubernetes cluster by web platform
 
 <br>
-You can also install the Kubernetes cluster using the kube-install web platform. 
-<br>
 
+If you have four servers,kubernetes master software is installed on the three servers (192.168.1.11, 192.168.1.12, 192.168.1.13), and kubernetes node software is installed on the four servers (192.168.1.11, 192.168.1.12, 192.168.1.13, 192.168.1.14). The operating system of the server is pure CentOS Linux or RHEL(Red Hat Enterprise Linux). It's like this:
+<table>
+<tr><td><b>IP Address</b></td><td><b>Role</b></td><td><b>OS Version</b></td><td><b>Root Password</b></td></tr>
+<tr><td>192.168.1.11</td><td>k8s-master,k8s-node,kube-install</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
+<tr><td>192.168.1.12</td><td>k8s-master,k8s-node</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
+<tr><td>192.168.1.13</td><td>k8s-master,k8s-node</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
+<tr><td>192.168.1.14</td><td>k8s-node</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
+</table>
+You expect the architecture after installation to be as follows:
+
+![kube-install-arch](docs/images/kube-install-arch-1.jpg)
+
+<br>
+Notice: We use 192.168.1.11 as the kube-install host. In fact, you can use any host as kube-install host or any host outside the kubernetes cluster!
+<br>
 
 ## 3.1 Initialize system environment
 
@@ -117,24 +130,10 @@ For the installation process using the web platform, <a href="docs/webinstall0.7
 <br>
 <br>
 
-# [4]  Install kubernetes cluster by CLI
+# [4]  Install kubernetes cluster by command line
 
 <br>
-
-If you have four servers,kubernetes master software is installed on the three servers (192.168.1.11, 192.168.1.12, 192.168.1.13), and kubernetes node software is installed on the four servers (192.168.1.11, 192.168.1.12, 192.168.1.13, 192.168.1.14). The operating system of the server is pure CentOS Linux or RHEL(Red Hat Enterprise Linux). It's like this:
-<table>
-<tr><td><b>IP Address</b></td><td><b>Role</b></td><td><b>OS Version</b></td><td><b>Root Password</b></td></tr>
-<tr><td>192.168.1.11</td><td>k8s-master,k8s-node,kube-install</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
-<tr><td>192.168.1.12</td><td>k8s-master,k8s-node</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
-<tr><td>192.168.1.13</td><td>k8s-master,k8s-node</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
-<tr><td>192.168.1.14</td><td>k8s-node</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
-</table>
-You expect the architecture after installation to be as follows:
-
-![kube-install-arch](docs/images/kube-install-arch-1.jpg)
-
-<br>
-Notice: We use 192.168.1.11 as the kube-install host. In fact, you can use any host as kube-install host or any host outside the kubernetes cluster!
+You can also install the Kubernetes cluster by command line. 
 <br>
 
 ## 4.1 Initialize system environment
