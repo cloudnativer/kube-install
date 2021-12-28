@@ -82,6 +82,8 @@ pes of "ostype".<br>
 ## 3.2 Run kube-install web service
 
 First run the web management service with the `systemctl start kube-install` command, and then open `http://your_kube-install_host_IP:9080` with a web browser.
+<br>
+Login with the user name `admin` and the default password `CloudNativeR`. You can change the password later through the web platform.
 
 ```
 # systemctl start kube-install.service
