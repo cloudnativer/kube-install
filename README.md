@@ -127,7 +127,7 @@ Notice: Before starting the installation, please open the SSH password free chan
 
 Fill in relevant installation parameters in the pop-up form:<br>
 
-![kube-dashboard](images/webinstall003.png)
+![kube-dashboard](docs/images/webinstall003.png)
 
 explain:
 
