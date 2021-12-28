@@ -59,9 +59,23 @@
 # [3] Webプラットフォームでkubernetesクラスタをインストールする
 
 <br>
-kube-installのウェブ管理プラットフォームを通じて、kubernetesクラスタをインストールすることもできます。kube-installのWeb管理プラットフォームは、SSHオープン、タイミングセットアップ、Node拡張、Master修復、クラスタアンインストールなどの強力な機能を備えており、Web管理プラットフォームでより良いインストール体験ができます。
-<br>
+  
+4台のサーバーがある場合、K8s-masterは3台のサーバー（192.168.1.11、192.168.1.12、192.168.1.13）にインストールされ、K8s-nodeは4台のサーバ（192.168.1.11、192.168.1.12、192.168.1.13、192.168.1.14）にインストールされます。サーバのオペレーティングシステムは、純粋なCentOS LinuxまたはRHEL（RedHat Enterprise Linux）であり、具体的には以下の表に示す。
+<table>
+<tr><td><b>IPアドレス</b></td><td><b>インストールが必要なコンポーネント</b></td><td><b>OSバージョン</b></td><td><b>rootパスワード</b></td></tr>
+<tr><td>192.168.1.11</td><td>k8s-master,k8s-node,kube-install</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
+<tr><td>192.168.1.12</td><td>k8s-master,k8s-node</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
+<tr><td>192.168.1.13</td><td>k8s-master,k8s-node</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
+<tr><td>192.168.1.14</td><td>k8s-node</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
+</table>
+設置後の配置構造は下図のようになります。
 
+![kube-install-arch](docs/images/kube-install-arch-1.jpg)
+
+<br>
+注意：ここでは192.168.1.11をkube-installソースインストール機として使用します。実際には、任意のホスト（kubernetes クラスタ以外のホストを含む）をkube-installソースインストール機として使用することができます。
+<br>
+  
 ## 3.1 システム環境を初期化
 
 <br>
@@ -79,9 +93,7 @@ kube-installのウェブ管理プラットフォームを通じて、kubernetes�
 
 ## 3.2 kube-installのWeb管理サービスを実行します
 
-その後、Webインターフェースの右上の`Install Kubernetes`ボタンをクリックして、Kubernetesクラスタのインストールを開始します。
-<br>
-ユーザー名 `admin` とデフォルトパスワード `CloudNativeR` でログイン! (後でwebプラットフォームでパスワードを変更できます)
+その後、Webインターフェースの右上の`Install Kubernetes`ボタンをクリックして、Kubernetesクラスタのインストールを開始します。kube-installのWeb管理プラットフォームはSSHオン、タイミングインストール配置、Node拡張、Master修復、クラスタアンインストールなどの強力な機能を備えており、Web管理プラットフォームでより良いインストール体験を得ることができます。
 
 ```
 # cd /root/kube-install/
@@ -101,7 +113,7 @@ kube-installのウェブ管理プラットフォームを通じて、kubernetes�
 
 ```
 
-この時点で、Webブラウザを使って開くことができます `http://kube-installソースインストール機のIP:9080` は、kube-installのWeb管理プラットフォームにアクセスしました。
+この時点で、Webブラウザを使って開くことができます `http://kube-installソースインストール機のIP:9080` は、kube-installのWeb管理プラットフォームにアクセスしました。 ユーザー名 `admin` とデフォルトパスワード `CloudNativeR` でログイン! (後でwebプラットフォームでパスワードを変更できます)
 <br>
 
 注意：kube-installのWeb管理プラットフォームサービスはデフォルトで `TCP 9080`を傍受します。この傍受アドレスを修正したいなら `/etc/systemd/system/kube-install.service` ファイルの `kube-install -daemon -listen ip:port` パラメータを修正して設定することができます。<a href="docs/systemd0.7.md">ここをクリックして詳細文書を見ることができます</a>。<br>
@@ -126,21 +138,7 @@ kube-installのウェブ管理プラットフォームを通じて、kubernetes�
 # [4] 速やかにKubernetesクラスタをインストールする
 
 <br>
-
-4台のサーバーがある場合、K8s-masterは3台のサーバー（192.168.1.11、192.168.1.12、192.168.1.13）にインストールされ、K8s-nodeは4台のサーバ（192.168.1.11、192.168.1.12、192.168.1.13、192.168.1.14）にインストールされます。サーバのオペレーティングシステムは、純粋なCentOS LinuxまたはRHEL（RedHat Enterprise Linux）であり、具体的には以下の表に示す。
-<table>
-<tr><td><b>IPアドレス</b></td><td><b>インストールが必要なコンポーネント</b></td><td><b>OSバージョン</b></td><td><b>rootパスワード</b></td></tr>
-<tr><td>192.168.1.11</td><td>k8s-master,k8s-node,kube-install</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
-<tr><td>192.168.1.12</td><td>k8s-master,k8s-node</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
-<tr><td>192.168.1.13</td><td>k8s-master,k8s-node</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
-<tr><td>192.168.1.14</td><td>k8s-node</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
-</table>
-設置後の配置構造は下図のようになります。
-
-![kube-install-arch](docs/images/kube-install-arch-1.jpg)
-
-<br>
-注意：ここでは192.168.1.11をkube-installソースインストール機として使用します。実際には、任意のホスト（kubernetes クラスタ以外のホストを含む）をkube-installソースインストール機として使用することができます。
+Webプラットフォームを使用してkubernetesクラスタをインストールできるほか、kube-installのコマンドラインでkubernetesクラスタをインストールすることもできます。kube-installのコマンドラインは使いやすいです。
 <br>
 
 ## 4.1 システム環境を初期化
