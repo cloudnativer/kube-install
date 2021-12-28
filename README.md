@@ -123,6 +123,22 @@ Second, Click the `Install Kubernetes` button in the upper right corner to start
 
 Notice: Before starting the installation, please open the SSH password free channel from localhost to the target host.You can use the `kube-install -exec sshcontrol` command to SSH through, or click the `Open SSH Channel of Host` button in the upper right corner to SSH through. Here is the process of SSH connection, <a href="docs/webssh0.7.md">click here to view more details</a> !<br>
 
+<br>
+
+Fill in relevant installation parameters in the pop-up form:<br>
+
+![kube-dashboard](images/webinstall003.png)
+
+explain:
+
+* Please select the version of kubernetes you need to install. At present, 'Kube install' supports the installation and deployment of kubernetes v1.17 to 1.24. Other versions of kubernetes have not been verified yet.
+* Please select the CNI plug-ins you need to install. At present, 'kube-install' supports CNI plug-ins such as flannel, calico, Kube router, weave and cilium. If you need to install "cilium", please upgrade the Linux kernel to version 4.9 or above.
+* Please select your operating system environment. Since the lower versions of CentOS 7 and RedHat 7 may lack kernel modules, 'Kube install' provides the function of automatically upgrading the operating system kernels of CentOS 7 and rhel7 to 4.19. You can choose to use this function or manually optimize the operating system kernel yourself.
+
+<br>
+
+Notice: The default is to start the installation immediately. You can also set an installation time for scheduled installation.
+
 ![kube-dashboard](docs/images/webinstall002.jpg)
 
 For the installation process using the web platform, <a href="docs/webinstall0.7.md">click here to view more details</a> !
