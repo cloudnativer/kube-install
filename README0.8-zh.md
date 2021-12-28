@@ -59,7 +59,20 @@
 # [3] 通过Web平台安装kubernetes集群
 
 <br>
-除了可以使用命令行安装kubernetes集群外，你还可以通过kube-install的Web管理平台来安装kubernetes集群。kube-install的Web管理平台具备SSH打通、定时安装部署、Node扩容、Master修复、集群卸载等强大的功能，你可以在Web管理平台上获得更好的安装体验。
+如果你有四台服务器，k8s-master安装在三台服务器（192.168.1.11、192.168.1.12、192.168.1.13）上，k8s-node安装在四台服务器（192.168.1.11、192.168.1.12、192.168.1.13、192.168.1.14）上。服务器的操作系统是纯净的CentOS Linux或RHEL（RedHat Enterprise Linux），具体如下表所示：
+<table>
+<tr><td><b>IP地址</b></td><td><b>需要安装的组件</b></td><td><b>操作系统版本</b></td><td><b>root密码</b></td></tr>
+<tr><td>192.168.1.11</td><td>k8s-master,k8s-node,kube-install</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
+<tr><td>192.168.1.12</td><td>k8s-master,k8s-node</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
+<tr><td>192.168.1.13</td><td>k8s-master,k8s-node</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
+<tr><td>192.168.1.14</td><td>k8s-node</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
+</table>
+安装后的部署架构如下图所示：
+
+![kube-install-arch](docs/images/kube-install-arch-1.jpg)
+
+<br>
+注意：这里使用192.168.1.11作为kube-install源安装机。事实上，您可以将任何主机(包括kubernetes集群之外的任何主机)用来作为kube-install源安装机！
 <br>
 
 ## 3.1 初始化系统环境
@@ -79,9 +92,7 @@
 
 ## 3.2 运行kube-install的Web管理服务
 
-然后，执行`systemctl start kube-install`命令来运行kube-install的Web管理平台服务。
-<br>
-使用用户名 `admin` 和默认密码 `CloudNativeR` 登录！（你可以后期通过web平台修改密码）
+然后，执行`systemctl start kube-install`命令来运行kube-install的Web管理平台服务。kube-install的Web管理平台具备SSH打通、定时安装部署、Node扩容、Master修复、集群卸载等强大的功能，你可以在Web管理平台上获得更好的安装体验。
 
 ```
 # systemctl start kube-install.service
@@ -98,8 +109,9 @@
 
 ```
 
-此时，你就可以使用网页浏览器打开`http://kube-install源安装机IP:9080`，访问kube-install的Web管理平台了。
+此时，你就可以使用网页浏览器打开`http://kube-install源安装机IP:9080`，访问kube-install的Web管理平台了。使用用户名 `admin` 和默认密码 `CloudNativeR` 登录！（你可以后期通过web平台修改密码）
 <br>
+
 注意：kube-install的Web管理平台服务默认监听`TCP 9080`。如果你想修改这个监听地址的话，可以通过修改`/etc/systemd/system/kube-install.service`文件中的`kube-install -daemon -listen ip:port`参数来进行设置，<a href="docs/systemd0.7.md">点击这里可以查看详细文档</a>！<br>
 
 ## 3.3 快速安装部署kubernetes集群
@@ -121,21 +133,7 @@
 # [4] 通过命令行快速安装kubernetes集群
 
 <br>
-
-如果你有四台服务器，k8s-master安装在三台服务器（192.168.1.11、192.168.1.12、192.168.1.13）上，k8s-node安装在四台服务器（192.168.1.11、192.168.1.12、192.168.1.13、192.168.1.14）上。服务器的操作系统是纯净的CentOS Linux或RHEL（RedHat Enterprise Linux），具体如下表所示：
-<table>
-<tr><td><b>IP地址</b></td><td><b>需要安装的组件</b></td><td><b>操作系统版本</b></td><td><b>root密码</b></td></tr>
-<tr><td>192.168.1.11</td><td>k8s-master,k8s-node,kube-install</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
-<tr><td>192.168.1.12</td><td>k8s-master,k8s-node</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
-<tr><td>192.168.1.13</td><td>k8s-master,k8s-node</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
-<tr><td>192.168.1.14</td><td>k8s-node</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
-</table>
-安装后的部署架构如下图所示：
-
-![kube-install-arch](docs/images/kube-install-arch-1.jpg)
-
-<br>
-注意：这里使用192.168.1.11作为kube-install源安装机。事实上，您可以将任何主机(包括kubernetes集群之外的任何主机)用来作为kube-install源安装机！
+除了可以使用Web平台安装kubernetes集群外，你还可以通过kube-install的命令行来安装kubernetes集群，kube-install的命令行使用起来比较简单方便。
 <br>
 
 ## 4.1 初始化系统环境
