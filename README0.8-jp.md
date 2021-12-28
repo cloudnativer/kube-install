@@ -80,6 +80,8 @@ kube-installのウェブ管理プラットフォームを通じて、kubernetes�
 ## 3.2 kube-installのWeb管理サービスを実行します
 
 その後、Webインターフェースの右上の`Install Kubernetes`ボタンをクリックして、Kubernetesクラスタのインストールを開始します。
+<br>
+ユーザー名 `admin` とデフォルトパスワード `CloudNativeR` でログイン! (後でwebプラットフォームでパスワードを変更できます)
 
 ```
 # cd /root/kube-install/
