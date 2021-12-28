@@ -77,7 +77,7 @@
                           <tr><td>{{if eq .Lang "cn"}}Runtime版本：{{else}}Runtime Version:{{end}}</td><td>{{ .Runc }}</td></tr>
                           <tr><td>{{if eq .Lang "cn"}}Node标签：{{else}}Node Labels:{{end}}</td><td>{{.Nodelabels}}</td></tr>
                           <tr><td>{{if eq .Lang "cn"}}操作系统版本：{{else}}OS Version:{{end}}</td><td>{{ .Osver }} &nbsp;&nbsp; ({{if eq .Lang "cn"}}内核: {{else}}kernel: {{end}}{{ .Kernelver }})</td></tr>
-                          <tr><td>{{if eq .Lang "cn"}}CPU大小：{{else}}CPU Size:{{end}}</td><td>{{ .Cpu }}{{if eq .Lang "cn"}}核{{else}}C{{end}}</td></tr>
+                          <tr><td>{{if eq .Lang "cn"}}CPU大小：{{else}}CPU Size:{{end}}</td><td>{{ .Cpu }}{{if eq .Lang "cn"}}核{{else}}Core(s){{end}}</td></tr>
                           <tr><td>{{if eq .Lang "cn"}}内存容量：{{else}}Memory Size:{{end}}</td><td>{{ .Memory }}</td></tr>
                         </tbody></table>
                 </div>
@@ -96,7 +96,7 @@
                                         <li class="big_button">
                                                 <div class="out_border">
                                                         <div class="button_wrapper">
-                                                                <div class="in_border" onclick="document.getElementById('log_black').style.display='block';document.getElementById('log_content').style.display='block'">
+                                                                <div class="in_border" >
                                                                         <a {{if eq .Lang "cn"}} href="/clusterinfo?label={{.Label}}&lang=en" {{else}} href="/clusterinfo?label={{.Label}}&lang=cn" {{end}} title="{{if eq .Lang "cn"}}切换语言{{else}}Switch Language{{end}}" class="the_button">
                                                                                 {{if eq .Lang "cn"}}
                                                                                         <span class="i_32_en"></span>

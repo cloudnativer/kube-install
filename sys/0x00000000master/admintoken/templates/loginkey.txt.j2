@@ -2,7 +2,9 @@
 [1] Container image center address: {{addons_ip3}}:5000
      usage method：
          docker pull {{addons_ip3}}:5000/Your-image-name:Version
+         ctr -n=k8s.io image pull {{addons_ip3}}:5000/Your-image-name:Version
          docker push {{addons_ip3}}:5000/Your-image-name:Version
+         ctr -n=k8s.io image push {{addons_ip3}}:5000/Your-image-name:Version
 
 
 ---------------------------------------------------------------

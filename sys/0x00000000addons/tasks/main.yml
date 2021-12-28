@@ -14,6 +14,7 @@
     - temp
 
 
+
 ### 1.Deploy coredns
 - name: 1.1 Create coredns.yaml file
   template:
@@ -24,10 +25,10 @@
 
 ### 2.Deploy dashboard
 ### 2.部署dashboard
-- name: 2.0 Clean up the dashboard-admin left by historical installation
+- name: 2.0 Clean up the kube-dashboard-admin left by historical installation
   shell: "/usr/sbin/kubectl --kubeconfig=/etc/kubernetes/ssl/kube-install.kubeconfig delete serviceaccounts dashboard-admin -n kube-system"
   ignore_errors: yes
-- name: 2.1 Copy dashboard.yaml file
+- name: 2.1 Copy kube-dashboard file
   template:
     src: "../templates/2.dashboard/{{item}}.j2"
     dest: "{{k8s_install_home}}/addons/dashboard/{{item}}"
@@ -40,22 +41,23 @@
   with_items:
     - kubernetes-dashboard-admin-rbac.yaml
     - kubernetes-dashboard-rbac-minimal.yaml
+- copy:
+    src: "../templates/2.dashboard/{{k8sdashboardshell}}.sh"
+    dest: "{{k8s_install_home}}/temp/{{k8sdashboardshell}}.sh"
+    mode: 0755
 - name: 2.2 Deploy dashboard
-  shell: "/usr/sbin/kubectl --kubeconfig=/etc/kubernetes/ssl/kube-install.kubeconfig apply -f {{k8s_install_home}}/addons/dashboard/"
-- name: 2.3 Show ADMIN_SECRET
-  shell: "/usr/sbin/kubectl --kubeconfig=/etc/kubernetes/ssl/kube-install.kubeconfig get secrets -n kube-system | grep dashboard-admin | awk '{print $1}'"
-  register: admin_secret
-- name: 2.4 Create DASHBOARD_LOGIN_TOKEN
-  shell: "/usr/sbin/kubectl --kubeconfig=/etc/kubernetes/ssl/kube-install.kubeconfig describe secret -n kube-system {{admin_secret.stdout}} | grep -E '^token' | awk '{print $2}'"
-  register: dashboard_login_token
-- name: 2.5 Create dashboard_login_token files
-  shell: "echo \"{{dashboard_login_token.stdout}}\" > /etc/kubernetes/dashboard_login_token.txt"
-- name: 2.6 Fetch dashboard_login_token file from remote master
+  shell: "{{k8sdashboardcmd}} {{k8s_install_home}}/addons/dashboard/"
+- name: 2.3 Get dashboard token
+  shell: "{{k8s_install_home}}/temp/{{k8sdashboardshell}}.sh"
+  ignore_errors: yes
+- name: 2.4 Fetch dashboard_login_token file from remote master
   fetch:
     src: "/etc/kubernetes/dashboard_login_token.txt"
     dest: "{{kipath}}/data/output{{sub_process_dir}}/cert/"
     mode: 0755
     flat: yes
+  ignore_errors: yes
+
 
 ### 6.Deploy registry
 - name: 6.1 Create docker-registry.yaml file
@@ -70,16 +72,6 @@
   template:
     src: "../templates/3.metrics-server/metrics-server-deployment.yaml.j2"
     dest: "{{k8s_install_home}}/addons/metrics-server/metrics-server-deployment.yaml"
-- copy:
-    src: "../templates/3.metrics-server/{{item}}"
-    dest: "{{k8s_install_home}}/addons/metrics-server/{{item}}"
-  with_items:
-    - aggregated-metrics-reader.yaml
-    - auth-delegator.yaml
-    - auth-reader.yaml
-    - metrics-apiservice.yaml
-    - metrics-server-service.yaml
-    - resource-reader.yaml
 - name: 3.2 Deploy metrics-server
   shell: "/usr/sbin/kubectl --kubeconfig=/etc/kubernetes/ssl/kube-install.kubeconfig apply -f {{k8s_install_home}}/addons/metrics-server/"
   ignore_errors: yes

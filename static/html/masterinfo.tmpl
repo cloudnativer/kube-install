@@ -71,7 +71,7 @@
                           <tr><td>{{if eq .Lang "cn"}}部署目录：{{else}}Installation Dir:{{end}}</td><td>{{ .Softdir }}</td></tr>
                           <tr><td width="100">{{if eq .Lang "cn"}}归属集群：{{else}}Belonging Cluster:{{end}}</td><td>{{ if eq .Label ".default" }} {{if eq .Lang "cn"}}默>认{{else}}default{{end}}集群 {{else}} {{.Label}} {{end}}</td></tr>
                           <tr><td>{{if eq .Lang "cn"}}K8S组件版本：{{else}}Component Version:{{end}}</td><td>kube-apiserver {{.K8sver}}<br>kube-controller-manager {{.K8sver}}<br>kube-scheduler {{.K8sver}}</td></tr>
-                          <tr><td>{{if eq .Lang "cn"}}ETCD版本：{{else}}ETCD Version:{{end}}</td><td>etcd 3.3.26</td></tr>
+                          <tr><td>{{if eq .Lang "cn"}}ETCD版本：{{else}}ETCD Version:{{end}}</td><td>etcd 3.3.27</td></tr>
                           <tr><td>{{if eq .Lang "cn"}}操作系统版本：{{else}}OS Version:{{end}}</td><td>{{ .Ostype }}</td></tr>
                         </tbody></table>
                 </div>
@@ -90,7 +90,7 @@
                                         <li class="big_button">
                                                 <div class="out_border">
                                                         <div class="button_wrapper">
-                                                                <div class="in_border" onclick="document.getElementById('log_black').style.display='block';document.getElementById('log_content').style.display='block'">
+                                                                <div class="in_border">
                                                                         <a {{if eq .Lang "cn"}} href="/clusterinfo?label={{.Label}}&lang=en" {{else}} href="/clusterinfo?label={{.Label}}&lang=cn" {{end}} title="{{if eq .Lang "cn"}}切换语言{{else}}Switch Language{{end}}" class="the_button">
                                                                                 {{if eq .Lang "cn"}}
                                                                                         <span class="i_32_en"></span>

@@ -1,0 +1,175 @@
+- name: 1.Cleaning up garbage files left in history.
+  service:
+    name: kubelet
+    state: stopped
+    enabled: false
+  ignore_errors: yes
+- service:
+    name: kube-proxy
+    state: stopped
+    enabled: false
+  ignore_errors: yes
+- service:
+    name: containerd
+    state: stopped
+    enabled: false
+  ignore_errors: yes
+- shell: "for diskPartition in `mount | grep kubelet | awk '{print $3}'` ; do umount $diskPartition ; done"
+  ignore_errors: yes
+- file:
+    path: /opt/cni/bin
+    state: absent
+  ignore_errors: yes
+- file:
+    path: /etc/cni/net.d
+    state: absent
+  ignore_errors: yes
+- file:
+    path: /usr/local/bin/{{item}}
+    state: absent
+  with_items:
+    - containerd
+    - containerd-shim
+    - containerd-shim-runc-v1
+    - containerd-shim-runc-v2
+    - crictl
+    - ctr
+    - runc
+  ignore_errors: yes
+- file:
+    path: /etc/systemd/system/kube-proxy.service
+    state: absent
+  ignore_errors: yes
+- file:
+    path: "{{software_home}}/k8s/kubernetes/kube-proxy"
+    state: absent
+  ignore_errors: yes
+- file:
+    path: /etc/systemd/system/kubelet.service
+    state: absent
+  ignore_errors: yes
+- file:
+    path: "{{software_home}}/k8s/kubernetes/kubelet"
+    state: absent
+  ignore_errors: yes
+- file:
+    path: /etc/systemd/system/containerd.service
+    state: absent
+  ignore_errors: yes
+
+- name: 2.Create CNI plug-in directory
+  file:
+    path: "{{k8s_install_home}}/.temp/"
+    state: directory
+- file:
+    path: /etc/cni/net.d
+    state: directory
+- file:
+    path: /opt/cni/bin
+    state: directory
+- name: 3.Decompress CNI plug-in package
+  unarchive:
+    src: "{{kipath}}/pkg/cni-plugins.tar.gz"
+    dest: /opt/cni/bin/
+    mode: 0755
+- unarchive:
+    src: "{{kipath}}/pkg/calicoctl.tar.gz"
+    dest: /usr/local/bin/
+    mode: 0755
+  ignore_errors: yes
+
+- name: 4.Create runtime config dir
+  file:
+    path: "/etc/containerd/"
+    state: directory
+- name: 5.Decompress runtime software package
+  unarchive:
+    src: "{{kipath}}/pkg/containerd.tar.gz"
+    dest: /usr/local/bin/
+    mode: 0755
+- template:
+    src: ../templates/config.toml.j2
+    dest: "/etc/containerd/config.toml"
+- copy:
+    src: ../templates/crictl.yaml
+    dest: "/etc/crictl.yaml"
+- name: 6.Create containerd service
+  template:
+    src: ../templates/containerd.service
+    dest: /etc/systemd/system/containerd.service
+
+- name: 7.Create ipvsinit service
+  copy:
+    src: ../templates/ipvsinit.service
+    dest: /etc/systemd/system/ipvsinit.service
+- name: 8.Create ipvsinit shell
+  template:
+    src: ../templates/ipvsinit.sh.j2
+    dest: /usr/local/bin/ipvsinit.sh
+    mode: 0755
+- name: 9.Enable ipvsinit service
+  systemd:
+    daemon-reload: true
+    name: ipvsinit
+    enabled: true
+
+- name: 10.Start runtime service
+  systemd:
+    daemon-reload: true
+    name: containerd
+    state: restarted
+    enabled: true
+- name: 11.Decompress runtime images package
+  unarchive:
+    src: "{{kipath}}/pkg/image_files.tar.gz"
+    dest: "{{k8s_install_home}}"
+    mode: 0744
+- name: 12.Load runtime images
+  shell: "/usr/local/bin/ctr -n=k8s.io image import {{k8s_install_home}}/image_files/{{item}}"
+  with_items:
+    - "metrics-server-amd64.tar"
+    - "metrics-scraper.tar"
+    - "heapster-amd64.tar"
+    - "pause-amd64.tar"
+    - "traefik.tar"
+    - "alpine.tar"
+    - "kubernetes-dashboard-{{k8sdashboardversion}}-amd64.tar"
+    - "coredns.tar"
+    - "registry.tar"
+    - "calico-cni.tar"
+    - "calico-kube-controllers.tar"
+    - "calico-node.tar"
+    - "calico-pod2daemon-flexvol.tar"
+    - "flannel-cni-plugin.tar"
+    - "flannel.tar"
+    - "kube-router.tar"
+    - "weave-kube.tar"
+    - "weave-npc.tar"
+    - "cilium.tar"
+    - "cilium-operator-generic.tar"
+- name: 13.Set runtime images tag and create pushsysimages shell 
+  shell: "echo '#!/bin/bash' > {{k8s_install_home}}/image_files/pushsysimages.sh && chmod 755 {{k8s_install_home}}/image_files/pushsysimages.sh"
+- shell: "/usr/local/bin/ctr -n=k8s.io images tag docker.io/cloudnativer/{{item}} {{addons_ip3}}:5000/{{item}} && echo '/usr/local/bin/ctr -n=k8s.io images push {{addons_ip3}}:5000/{{item}}' >> {{k8s_install_home}}/image_files/pushsysimages.sh"
+  with_items:
+    - "metrics-server-amd64:v0.5.0"
+    - "metrics-scraper:v1.0.7"
+    - "heapster-amd64:v1.5.4"
+    - "pause-amd64:3.5"
+    - "traefik:v2.0.7"
+    - "alpine:3.6"
+    - "kubernetes-dashboard-amd64:{{k8sdashboardversion}}"
+    - "coredns:1.3.1"
+    - "registry:v2.7.1"
+    - "calico-node:v3.19.3"
+    - "calico-pod2daemon-flexvol:v3.19.3"
+    - "calico-cni:v3.19.3"
+    - "calico-kube-controllers:v3.19.3"
+    - "flannel-cni-plugin:v1.0.0"
+    - "flannel:v0.15.1"
+    - "kube-router:v1.3.2"
+    - "weave-kube:2.8.1"
+    - "weave-npc:2.8.1"
+    - "cilium:v1.9.0"
+    - "cilium-operator-generic:v1.9.0"
+
+

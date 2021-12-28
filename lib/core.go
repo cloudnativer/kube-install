@@ -103,7 +103,7 @@ func DeleteMasterCore(mode string, masterArray []string, currentDir string, kiss
 }
 
 // Add the core operation part of the node.
-func AddNodeCore(mode string, node string, nodeArray []string, currentDir string, kissh string, subProcessDir string, currentUser string, label string, softDir string, osTypeResult string, logName string, CompatibleOS string, upgradeKernel  string) {
+func AddNodeCore(mode string, node string, nodeArray []string, currentDir string, kissh string, subProcessDir string, currentUser string, label string, softDir string, osTypeResult string, k8sVer string, logName string, CompatibleOS string, upgradeKernel  string) {
     opt := "addnode"
     logStr := LogStr(mode)
     upgradeKernelStr := "\n    Automatically Upgrade OS Kernel: Not Support"
@@ -128,7 +128,7 @@ func AddNodeCore(mode string, node string, nodeArray []string, currentDir string
         ShellExecute("echo [Error] "+time.Now().String()+" \"The parameters you entered are incorrect, please check! \n\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/addnode.log")
         return
     }
-    AddnodeYML("",currentDir+"/data/output"+subProcessDir,currentDir,currentUser,logName,upgradeKernel,osTypeResult)
+    AddnodeYML("",currentDir+"/data/output"+subProcessDir,currentDir,currentUser,logName,upgradeKernel,osTypeResult,k8sVer)
     InstallGenfile(osTypeResult, mode, currentDir, subProcessDir, logName)
     InstallPreShell(osTypeResult, mode, currentDir, subProcessDir, logName)
     for i := 0; i < len(nodeArray); i++ {
@@ -217,7 +217,7 @@ func DeleteNodeCore(mode string, nodeArray []string, currentDir string, kissh st
 }
 
 // Install the core operation part of the cluster.
-func InstallCore(mode string, master string, masterArray []string, node string, nodeArray []string, softDir string, currentDir string, kissh string, subProcessDir string, currentUser string, label string, osTypeResult string, osType string, k8sVer string, logName string, Version string, CompatibleK8S string, CompatibleOS string, installTime string, way string, upgradeKernel string, cniPlugin string) {
+func InstallCore(mode string, master string, masterArray []string, node string, nodeArray []string, softDir string, currentDir string, kissh string, subProcessDir string, currentUser string, label string, osTypeResult string, osType string, k8sVer string, logName string, Version string, CompatibleK8S string, CompatibleOS string, installTime string, way string, upgradeKernel string, kubeDashboard string, cniPlugin string) {
     opt := "install"
     layoutName := "install"
     logStr := LogStr(mode)
@@ -242,8 +242,8 @@ func InstallCore(mode string, master string, masterArray []string, node string, 
         DatabaseUpdate(currentDir+"/data/output"+subProcessDir+"/status.txt", "unknow", currentDir, logName, mode)
     }
     os.OpenFile(currentDir+"/data/logs"+subProcessDir+"/logs/install.log", os.O_RDWR|os.O_TRUNC|os.O_CREATE, 0766)
-    GeneralConfig(mode, masterArray, nodeArray, currentDir, softDir, subProcessDir, osTypeResult, k8sVer, logName)
-    if !InstallConfig(mode,masterArray, nodeArray, currentDir, subProcessDir, logName) {
+    GeneralConfig(mode, masterArray, nodeArray, currentDir, softDir, subProcessDir, osTypeResult, k8sVer, kubeDashboard, logName)
+    if !InstallConfig(mode, masterArray, nodeArray, currentDir, subProcessDir, logName) {
         ShellExecute("echo [Error] "+time.Now().String()+" \"The parameters you entered are incorrect, please check! \n\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/install.log")
         if way == "newinstall" { os.RemoveAll(currentDir+"/data/output"+subProcessDir) }
         return
@@ -253,10 +253,10 @@ func InstallCore(mode string, master string, masterArray []string, node string, 
     InstallIpvsYaml(mode, currentDir, masterArray, subProcessDir, logName)
     var err_install error
     if len(masterArray) == 1{
-        OnemasterInstallYML(mode,currentDir+"/data/output"+subProcessDir,currentDir,currentUser,logName, upgradeKernel,osTypeResult,cniPlugin)
+        OnemasterInstallYML(mode,currentDir+"/data/output"+subProcessDir,currentDir,currentUser,logName,upgradeKernel,osTypeResult,k8sVer,cniPlugin)
         layoutName = "onemasterinstall"
     }else{
-        InstallYML(mode,currentDir+"/data/output"+subProcessDir, currentDir, currentUser, logName, upgradeKernel,osTypeResult,cniPlugin)
+        InstallYML(mode,currentDir+"/data/output"+subProcessDir, currentDir, currentUser, logName,upgradeKernel,osTypeResult,k8sVer,cniPlugin)
     }
     for i := 0; i < len(masterArray); i++ {
         CreateDir(currentDir+"/data/output"+subProcessDir+"/masters/"+masterArray[i], currentDir, logName, mode)
@@ -369,7 +369,7 @@ func UninstallCore(mode string, master string, masterArray []string, node string
     ShellExecute("echo \"    Kubernetes Cluster Label: "+label+"\n    Kubernetes Master: "+master+"\n    Kubernetes Node: "+node+"\n    System User for Uninstallation: "+currentUser+"\n\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/uninstall.log")
     ShellExecute("sed -i '1d' "+currentDir+"/data/msg/msg.txt")
     ShellExecute("echo \"<div class='g_12'><div class='info iDialog'>[Info] "+time.Now().String()+" Uninstalling kubernetes cluster of "+label+" cluster ... </div></div>\" >> "+currentDir+"/data/msg/msg.txt")
-    GeneralConfig(mode, masterArray, nodeArray, currentDir, softDir, subProcessDir, osTypeResult, "", logName)
+    GeneralConfig(mode, masterArray, nodeArray, currentDir, softDir, subProcessDir, osTypeResult, "", "", logName)
     if !InstallConfig(mode,masterArray, nodeArray, currentDir, subProcessDir, logName) {
         ShellExecute("echo [Error] "+time.Now().String()+"The parameters you entered are incorrect, please check! \" \n\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/uninstall.log")
         return

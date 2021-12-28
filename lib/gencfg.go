@@ -24,7 +24,7 @@ func CreateAddonsNode(nodeArray []string) (string,string,string){
 }
 
 // Generate basic general configuration information.
-func GeneralConfig(mode string, masterArray []string, nodeArray []string, currentDir string, softDir string, subProcessDir string, ostype string, k8sVer string, logName string) {
+func GeneralConfig(mode string, masterArray []string, nodeArray []string, currentDir string, softDir string, subProcessDir string, ostype string, k8sVer string, kubeDashboard string, logName string) {
     inventory_file, err := os.Create(currentDir+"/data/output"+subProcessDir+"/general.inventory")
     CheckErr(err,currentDir,logName,mode)
     defer inventory_file.Close()
@@ -55,8 +55,15 @@ func GeneralConfig(mode string, masterArray []string, nodeArray []string, curren
         etcd_endpoints = etcd_endpoints+"https://"+masterArray[i]+":2379"
         ipvsinit_shell = ipvsinit_shell+" && ipvsadm -a -t 10.254.0.3:6443 -r "+masterArray[i]+":6443 -m"
     }
+    // Create kubeDashboard Configuration
+    kubeDashboardShell := "dashboardtoken"
+    kubeDashboardCMD := "\"/usr/sbin/kubectl --kubeconfig=/etc/kubernetes/ssl/kube-install.kubeconfig apply -f\""
+    if kubeDashboard == "no" {
+        kubeDashboardShell = "dashboardnot"
+        kubeDashboardCMD = "\"ls\""
+    }
     DatabaseUpdate(currentDir+"/data/output"+subProcessDir+"/etcdendpoints.txt", etcd_endpoints, currentDir, logName, mode)
-    inventory_file.WriteString("ostype=\""+ostype+"\"\nk8sver=\""+k8sVer+"\"\nmaster_iplist=\""+master_iplist+"\"\netcd_initial=\""+etcd_initial+"\"\netcd_endpoints=\""+etcd_endpoints+"\"\ningress_upstream=\""+ingress_upstream+"\"\nipvsinit_shell = \""+ipvsinit_shell+"\"\nmaster1_ip = \""+masterArray[0]+"\"\nmaster_vip = \""+master_vip+"\"\nmaster_vport=\"6443\"\nk8sdashboardversion=\"v2.2.0\"\n")
+    inventory_file.WriteString("ostype=\""+ostype+"\"\nk8sver=\""+k8sVer+"\"\nmaster_iplist=\""+master_iplist+"\"\netcd_initial=\""+etcd_initial+"\"\netcd_endpoints=\""+etcd_endpoints+"\"\ningress_upstream=\""+ingress_upstream+"\"\nipvsinit_shell = \""+ipvsinit_shell+"\"\nmaster1_ip = \""+masterArray[0]+"\"\nmaster_vip = \""+master_vip+"\"\nmaster_vport=\"6443\"\nk8sdashboardversion=\"v2.4.0\"\nk8sdashboardcmd="+kubeDashboardCMD+"\nk8sdashboardshell="+kubeDashboardShell+"\n")
     // Addons IP Configuration
     addonsIp1,addonsIp2,addonsIp3 := CreateAddonsNode(nodeArray)
     inventory_file.WriteString("\n### addons_ip configuration ###\naddons_ip1=\""+addonsIp1+"\"\naddons_ip2=\""+addonsIp2+"\"\naddons_ip3=\""+addonsIp3+"\"\n")

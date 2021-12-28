@@ -1,7 +1,8 @@
 package kilib
 
 import (
-//	 "fmt"
+	//"fmt"
+        "time"
 	"html/template"
 	"io"
 	"net/http"
@@ -9,12 +10,20 @@ import (
 	"strconv"
 	"strings"
 
+        "github.com/gin-contrib/sessions"
+        "github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
 )
 
 type LoginForm struct {
-	User     string `form:"user" binding:"required"`
-	Password string `form:"password" binding:"required"`
+	Username     string `form:"username" binding:"required"`
+	Password     string `form:"password" binding:"required"`
+}
+
+type passwordForm struct {
+        Password         string `form:"password" binding:"required"`
+        Newpassword1     string `form:"newpassword1" binding:"required"`
+        Newpassword2     string `form:"newpassword2" binding:"required"`
 }
 
 type Version struct {
@@ -50,6 +59,7 @@ type ClusterAddForm struct {
 	Installtime        string `form:"installtime"`
 	Way                string `form:"way"`
         Upgradekernel      string `form:"upgradekernel"`
+        K8sdashboard      string `form:"k8sdashboard"`
         Cniplugin          string `form:"cniplugin"`
 }
 
@@ -136,6 +146,7 @@ type ToolSwitchForm struct {
 	Sshtool      string `form:"sshtool" binding:"required"`
 	Installtool  string `form:"installtool" binding:"required"`
 	Calendartool string `form:"calendartool" binding:"required"`
+        Usertool     string `form:"usertool" binding:"required"`
 }
 
 type SshKeyForm struct {
@@ -155,6 +166,12 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 	router := gin.Default()
 	router.LoadHTMLGlob(currentDir + "/static/html/*")
 	router.StaticFS("/static", http.Dir(currentDir+"/static/staticfs"))
+        store := cookie.NewStore([]byte("ju65yjhi72jjsjdc721gsfc62"))
+        store.Options(sessions.Options{
+            MaxAge: int(30 * time.Minute), //30min
+            Path:   "/",
+        })
+        router.Use(sessions.Sessions("0x000000cnrki", store))
 
 	// Background regular inspection statistics of various states
 	go MinutePeriodSchedule(currentDir, kissh, logName, mode)
@@ -165,6 +182,10 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 
 	// home page
 	router.GET("/", func(c *gin.Context) {
+                //get and check session
+                session := sessions.Default(c)
+                checkSession(session, c)
+                //get index information
 		langFromWeb := c.Query("lang")
 		Lang := ChangeLang(langFromWeb, currentDir, logName, mode)
 		var k8slist []K8sList
@@ -218,22 +239,20 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 		})
 	})
 
-	// login page
-	router.POST("/login", func(c *gin.Context) {
-		var form LoginForm
-		// in this case proper binding will be automatically selected
-		if c.ShouldBind(&form) == nil {
-			if form.User == "admin" && form.Password == "cloudnativer" {
-				c.JSON(401, gin.H{"status": "logged in"})
-				c.HTML(http.StatusOK, "login.tmpl", gin.H{"info": "you are logged in. \n  http://192.168.122.22:8080/test1  \n  http://192.168.122.22:8080/test2  \n"})
-			} else {
-				c.JSON(401, gin.H{"status": "unauthorized"})
-				c.HTML(http.StatusOK, "login.tmpl", gin.H{"info": "unauthorized!!!"})
-			}
-		}
-	})
+        // login page
+        router.GET("/login", func(c *gin.Context) {
+                session := sessions.Default(c)
+                session.Get("admin")
+                langFromWeb := c.Query("lang")
+                Lang := ChangeLang(langFromWeb, currentDir, logName, mode)
+                c.HTML(http.StatusOK, "login.tmpl", gin.H{"Lang": Lang})
+        })
 
 	router.GET("/clusterlist", func(c *gin.Context) {
+                //get and check session
+                session := sessions.Default(c)
+                checkSession(session, c)
+                //get cluster list information
 		var clusterlist []ClusterList
 		langFromWeb := c.Query("lang")
 		Lang := ChangeLang(langFromWeb, currentDir, logName, mode)
@@ -274,6 +293,10 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 
 	// cluster info page
 	router.GET("/clusterinfo", func(c *gin.Context) {
+                //get and check session
+                session := sessions.Default(c)
+                checkSession(session, c)
+                //get cluster information
 		langFromWeb := c.Query("lang")
 		Lang := ChangeLang(langFromWeb, currentDir, logName, mode)
 		label := c.DefaultQuery("label", "")
@@ -296,10 +319,10 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 		}
 		var registryUsage, k8sDashboardUsage string
 		if Lang == "cn" {
-			registryUsage = "使用命令行访问，方法如下: <br>&nbsp;&nbsp; docker pull " + registryIp + ":5000/镜像名称:镜像Tag<br>&nbsp;&nbsp; docker push " + registryIp + ":5000/镜像名称:镜像Tag\n"
+			registryUsage = "&nbsp;&nbsp;&nbsp;&nbsp; [root@localhost ~]# docker pull " + registryIp + ":5000/镜像名称:镜像Tag<br>&nbsp;&nbsp;&nbsp;&nbsp; [root@localhost ~]# docker push " + registryIp + ":5000/镜像名称:镜像Tag<br>&nbsp;&nbsp;&nbsp;&nbsp; [root@localhost ~]# ctr -n=k8s.io images pull " + registryIp + ":5000/镜像名称:镜像Tag<br>&nbsp;&nbsp;&nbsp;&nbsp; [root@localhost ~]# ctr -n=k8s.io images push " + registryIp + ":5000/镜像名称:镜像Tag\n"
 			k8sDashboardUsage = "使用浏览器访问，登录令牌如下: <br> " + k8sdashboardtoken
 		} else {
-			registryUsage = "Use the command line access as follows: <br>&nbsp;&nbsp; docker pull " + registryIp + ":5000/Your_image_name:Image_Tag<br>&nbsp;&nbsp; docker push " + registryIp + ":5000/Your_image_name:Image_Tag\n"
+			registryUsage = "&nbsp;&nbsp;&nbsp;&nbsp; [root@localhost ~]# docker pull " + registryIp + ":5000/Your_image_name:Image_Tag<br>&nbsp;&nbsp;&nbsp;&nbsp; [root@localhost ~]# docker push " + registryIp + ":5000/Your_image_name:Image_Tag<br>&nbsp;&nbsp;&nbsp;&nbsp; [root@localhost ~]# ctr -n=k8s.io images pull " + registryIp + ":5000/Your_image_name:Image_Tag<br>&nbsp;&nbsp;&nbsp;&nbsp; [root@localhost ~]# ctr -n=k8s.io images push " + registryIp + ":5000/Your_image_name:Image_Tag\n"
 			k8sDashboardUsage = "Use a browser to access. The login token is as follows: <br> " + k8sdashboardtoken
 		}
 		c.HTML(http.StatusOK, "clusterinfo.tmpl", gin.H{
@@ -330,6 +353,10 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 
 	// page of add cluster
 	router.GET("/clusteradd", func(c *gin.Context) {
+                //get and check session
+                session := sessions.Default(c)
+                checkSession(session, c)
+                //get cluster information
 		langFromWeb := c.Query("lang")
 		Lang := ChangeLang(langFromWeb, currentDir, logName, mode)
 		label := ""
@@ -379,6 +406,10 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 
 	// page of delete cluster
 	router.GET("/clusterdel", func(c *gin.Context) {
+                //get and check session
+                session := sessions.Default(c)
+                checkSession(session, c)
+                //get cluster information
 		langFromWeb := c.Query("lang")
 		Lang := ChangeLang(langFromWeb, currentDir, logName, mode)
 		label := c.DefaultQuery("label", "")
@@ -415,6 +446,10 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 
 	// page of delete schedule
 	router.GET("/deleteschedule", func(c *gin.Context) {
+                //get and check session
+                session := sessions.Default(c)
+                checkSession(session, c)
+                //get schedule information
 		langFromWeb := c.Query("lang")
 		Lang := ChangeLang(langFromWeb, currentDir, logName, mode)
 		label := c.DefaultQuery("label", "")
@@ -456,6 +491,10 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 
 	// master page
 	router.GET("/masteradmin", func(c *gin.Context) {
+                //get and check session
+                session := sessions.Default(c)
+                checkSession(session, c)
+                //get master list information
 		var masterlist []MasterList
 		var selectlist []SelectList
 		var osType string
@@ -504,6 +543,10 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 
 	// page of master info
 	router.GET("/masterinfo", func(c *gin.Context) {
+                //get and check session
+                session := sessions.Default(c)
+                checkSession(session, c)
+                //get master information
 		langFromWeb := c.Query("lang")
 		Lang := ChangeLang(langFromWeb, currentDir, logName, mode)
 		label := c.DefaultQuery("label", "")
@@ -531,6 +574,10 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 
 	// node page
 	router.GET("/nodeadmin", func(c *gin.Context) {
+                //get and check session
+                session := sessions.Default(c)
+                checkSession(session, c)
+                //get node list information
 		var nodelist []NodeList
 		var selectlist []SelectList
 		var status, osType string
@@ -581,6 +628,10 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 
 	// page of node info
 	router.GET("/nodeinfo", func(c *gin.Context) {
+                //get and check session
+                session := sessions.Default(c)
+                checkSession(session, c)
+                //get node information
 		langFromWeb := c.Query("lang")
 		Lang := ChangeLang(langFromWeb, currentDir, logName, mode)
 		label := c.DefaultQuery("label", "")
@@ -617,6 +668,10 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 
 	// page of add node
 	router.GET("/nodeadd", func(c *gin.Context) {
+                //get and check session
+                session := sessions.Default(c)
+                checkSession(session, c)
+                //get node information
 		langFromWeb := c.Query("lang")
 		Lang := ChangeLang(langFromWeb, currentDir, logName, mode)
 		label := c.DefaultQuery("label", "")
@@ -637,12 +692,17 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 
 	// tools page
 	router.GET("/tools", func(c *gin.Context) {
+                //get and check session
+                session := sessions.Default(c)
+                checkSession(session, c)
+                //get tools list information
 		langFromWeb := c.Query("lang")
 		Lang := ChangeLang(langFromWeb, currentDir, logName, mode)
 		toolSwitch := GetToolSwitch(currentDir, logName, mode)
 		sshTool := toolSwitch[0]
 		installTool := toolSwitch[1]
 		calendarTool := toolSwitch[2]
+                userTool := toolSwitch[3]
 		label := c.DefaultQuery("label", "")
 		k8sVer := c.DefaultQuery("k8sver", "")
 		softDir := c.DefaultQuery("softdir", "/opt/kube-install")
@@ -653,6 +713,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 			"Sshtool":       sshTool,
 			"Installtool":   installTool,
 			"Calendartool":  calendarTool,
+                        "Usertool":      userTool,
 			"K8sver":        k8sVer,
 			"Softdir":       softDir,
 			"Ostype":        osType,
@@ -666,6 +727,10 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 
 	// page of calendar scheduler
 	router.GET("/calendarscheduler", func(c *gin.Context) {
+                //get and check session
+                session := sessions.Default(c)
+                checkSession(session, c)
+                //get calendar information
 		langFromWeb := c.Query("lang")
 		Lang := ChangeLang(langFromWeb, currentDir, logName, mode)
 		label := c.DefaultQuery("label", "")
@@ -688,8 +753,40 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 		})
 	})
 
+        // page of user info
+        router.GET("/userinfo", func(c *gin.Context) {
+                //get and check session
+                session := sessions.Default(c)
+                checkSession(session, c)
+                //get user information
+                langFromWeb := c.Query("lang")
+                Lang := ChangeLang(langFromWeb, currentDir, logName, mode)
+                label := c.DefaultQuery("label", "")
+                k8sVer := c.DefaultQuery("k8sver", "")
+                softDir := c.DefaultQuery("softdir", "/opt/kube-install")
+                osType := c.DefaultQuery("ostype", "")
+                backUrl := c.DefaultQuery("backurl", "tools")
+                c.HTML(http.StatusOK, "userinfo.tmpl", gin.H{
+                        "Lang":          Lang,
+                        "Label":         label,
+                        "K8sver":        k8sVer,
+                        "Softdir":       softDir,
+                        "Ostype":        osType,
+                        "Backurl":        backUrl,
+                        "Sshuser":       currentUser,
+                        "Version":       Version,
+                        "Releasedate":   ReleaseDate,
+                        "Compatiblek8s": CompatibleK8S,
+                        "Compatibleos":  CompatibleOS,
+                })
+        })
+
 	// logs page
 	router.GET("/logs", func(c *gin.Context) {
+                //get and check session
+                session := sessions.Default(c)
+                checkSession(session, c)
+                //get logs information
 		var selectlist []SelectList
 		var clog string
 		var err error
@@ -755,10 +852,67 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 	   Kube-Install Operation Process
 	**********************************************************************/
 
+        // operation of login
+        router.POST("/loginset", func(c *gin.Context) {
+                var form LoginForm
+                var username,password,errorInfo string
+                langFromWeb := c.Query("lang")
+                Lang := ChangeLang(langFromWeb, currentDir, logName, mode)
+                if c.ShouldBind(&form) == nil {
+                        username = form.Username
+                        password = form.Password
+                } else {
+                        username = c.DefaultQuery("username", "")
+                        password = c.DefaultQuery("password", "")
+                }
+                // in this case proper binding will be automatically selected
+                if c.ShouldBind(&form) == nil {
+                        pwdByte, err := ReadFile(currentDir+"/data/.key/admin")
+                        if err != nil {
+                            errorInfo = "System error! Please use the 'kube-install -init' command to reinitialize your system."
+                            c.HTML(http.StatusOK, "loginset.tmpl", gin.H{"Errorinfo": errorInfo, "Lang": Lang})
+                            return
+                        }
+                        key, _ := DePwdCode(pwdByte)
+                        if username == "admin" && password == string(key) {
+                                    session := sessions.Default(c)
+                                    session.Set(username, password)
+                                    session.Save()
+                                    c.Redirect(http.StatusMovedPermanently, "/")
+                        } else {
+                                if Lang == "cn" {
+                                    errorInfo = "你输入的用户名或密码错误，"
+                                } else {
+                                    errorInfo = "The username or password you entered is incorrect."
+                                }
+                                c.HTML(http.StatusOK, "loginset.tmpl", gin.H{"Errorinfo": errorInfo, "Lang": Lang})
+                                return
+                        }
+                } else {
+                        if Lang == "cn" {
+                            errorInfo = "用户名或密码不能为空，"
+                        } else {
+                            errorInfo = "User name or password cannot be empty."
+                        }
+                        c.HTML(http.StatusOK, "loginset.tmpl", gin.H{"Errorinfo": errorInfo, "Lang": Lang})
+                        return
+                }
+        })
+
+        // operation of logout
+        router.GET("/logoutset", func(c *gin.Context) {
+            var username string
+            username = c.DefaultQuery("username", "admin")
+            session := sessions.Default(c)
+            session.Delete(username)
+            session.Clear()
+            c.Redirect(http.StatusMovedPermanently, "/login")
+        })
+
 	// operation of install
 	router.POST("/install", func(c *gin.Context) {
 		var form ClusterAddForm
-		var master, node, osType, k8sVer, softDir, label, installTime, way, upgradeKernel, cniPlugin string
+		var master, node, osType, k8sVer, softDir, label, installTime, way, upgradeKernel, k8sDashboard, cniPlugin string
 		if c.ShouldBind(&form) == nil {
 			master = form.Master
 			node = form.Node
@@ -769,6 +923,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 			installTime = form.Installtime
 			way = form.Way
                         upgradeKernel  = form.Upgradekernel
+                        k8sDashboard = form.K8sdashboard
                         cniPlugin = form.Cniplugin
 		} else {
 			master = c.Query("master")
@@ -780,6 +935,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 			installTime = c.DefaultQuery("installtime", "")
 			way = c.DefaultQuery("way", "newinstall")
                         upgradeKernel  = c.DefaultQuery("upgradekernel", "")
+                        k8sDashboard  = c.DefaultQuery("k8sdashboard", "")
                         cniPlugin = c.DefaultQuery("cniplugin", "")
 		}
                 langFromWeb := c.Query("lang")
@@ -819,7 +975,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 			stu, sch := GetClusterStatus(label, currentDir, logName, mode)
 			var installInfo string
 			if stu != "installing" && stu != "restarting" && stu != "uninstalling" && sch != "on" {
-				go InstallCore(mode, master, masterArray, node, nodeArray, softDir, currentDir, kissh, subProcessDir, currentUser, label, osTypeResult, osType, k8sVer, logName, Version, CompatibleK8S, CompatibleOS, installTime, way, upgradeKernel, cniPlugin)
+				go InstallCore(mode, master, masterArray, node, nodeArray, softDir, currentDir, kissh, subProcessDir, currentUser, label, osTypeResult, osType, k8sVer, logName, Version, CompatibleK8S, CompatibleOS, installTime, way, upgradeKernel, k8sDashboard, cniPlugin)
 				if installTime == "" {
 					if Lang == "cn" {
 						installInfo = "Kubernetes集群正在后台安装中 ... "
@@ -988,7 +1144,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 				}
 			}
 		}
-		go AddNodeCore(mode, node, nodeArray, currentDir, kissh, subProcessDir, currentUser, label, softDir, osTypeResult, logName, CompatibleOS, upgradeKernel )
+		go AddNodeCore(mode, node, nodeArray, currentDir, kissh, subProcessDir, currentUser, label, softDir, osTypeResult, k8sVer, logName, CompatibleOS, upgradeKernel )
 		if Lang == "cn" {
 			c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "addnode", "Result": "success", "Info": "Kubernetes node正在后台添加中 ...", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 		} else {
@@ -1125,43 +1281,100 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 		c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "deleteschedule", "Result": scheduleResult, "Info": scheduleInfo, "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 	})
 
-	// Set tools switch
-	router.POST("/toolswitch", func(c *gin.Context) {
-		var form ToolSwitchForm
-		var sshTool, installTool, calendarTool string
-		tools := c.Query("tools")
-		label := c.DefaultQuery("label", "")
-		k8sVer := c.DefaultQuery("k8sver", "")
-		softDir := c.DefaultQuery("softdir", "/opt/kube-install")
-		osType := c.DefaultQuery("ostype", "")
-		langFromWeb := c.Query("lang")
-		Lang := ChangeLang(langFromWeb, currentDir, logName, mode)
-		if c.ShouldBind(&form) == nil {
-			sshTool = form.Sshtool
-			installTool = form.Installtool
-			calendarTool = form.Calendartool
-			err := SetToolSwitch(sshTool, installTool, calendarTool, currentDir, logName, mode)
-			if err != nil {
-				if Lang == "cn" {
-					c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "toolswitch", "Result": "failure", "Info": "工具面板设置操作失败！", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
-				} else {
-					c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "toolswitch", "Result": "failure", "Info": "Failed to set the tool panel!", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
-				}
-			} else {
-				if Lang == "cn" {
-					c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "toolswitch", "Result": "success", "Info": "工具面板设置操作成功！", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
-				} else {
-					c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "toolswitch", "Result": "success", "Info": "Tool panel setting operation succeeded!", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
-				}
-			}
-		} else {
-			if Lang == "cn" {
-				c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "toolswitch", "Result": "failure", "Info": "设置失败！请确保你设置了正确的选项。", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
-			} else {
-				c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "toolswitch", "Result": "failure", "Info": "Setting failed! Please make sure you set the correct options.", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
-			}
-		}
+        // operation of change password
+        router.POST("/changepw", func(c *gin.Context) {
+                var form passwordForm
+                var oldPassword,newPassword1,newPassword2,changeResult,changeInfo string
+                label := c.DefaultQuery("label", "")
+                k8sVer := c.DefaultQuery("k8sver", "")
+                softDir := c.DefaultQuery("softdir", "/opt/kube-install")
+                osType := c.DefaultQuery("ostype", "")
+                langFromWeb := c.Query("lang")
+                Lang := ChangeLang(langFromWeb, currentDir, logName, mode)
+                if c.ShouldBind(&form) == nil {
+                        pwdByte, err := ReadFile(currentDir+"/data/.key/admin")
+                        if err != nil {
+                            changeResult = "failure"
+                            changeInfo = "System error! Please use the 'kube-install -init' command to reinitialize your system."
+                            c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "updateuserinfo", "Result": changeResult, "Info": changeInfo, "Softdir": softDir, "Ostype": osType, "Tools": "yes", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+                            return
+                        }
+                        currentPassword, _ := DePwdCode(pwdByte)
+                        oldPassword = form.Password
+                        newPassword1 = form.Newpassword1
+                        newPassword2 = form.Newpassword2
+                        if oldPassword == string(currentPassword) && newPassword1 == newPassword2 {
+                                key, _ := EnPwdCode([]byte(newPassword1))
+                                err := DatabaseUpdate(currentDir+"/data/.key/admin", string(key), currentDir, logName, mode)
+                                if err != nil {
+                                        changeResult = "failure"
+                                        changeInfo = "System error! Please use the 'kube-install -init' command to reinitialize your system."
+                                } else {
+                                        changeResult = "success"
+                                        if Lang == "cn" {
+                                                changeInfo = "用户信息更新成功！"
+                                        } else {
+                                                changeInfo = "User information updated successfully!"
+                                        }
+                                }
+                        } else {
+                                changeResult = "failure"
+                                if Lang == "cn" {
+                                        changeInfo = "用户信息更新失败，密码不匹配！"
+                                } else {
+                                        changeInfo = "User information updated failed. Passwords do not match!"
+                                }
+                        }
+                } else {
+                        changeResult = "failure"
+                        if Lang == "cn" {
+                                changeInfo = "用户信息更新失败，密码不能为空！"
+                        } else {
+                                changeInfo = "User information updated failed. Password cannot be empty!"
+                        }
+                }
+                c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "updateuserinfo", "Result": changeResult, "Info": changeInfo, "Softdir": softDir, "Ostype": osType, "Tools": "yes", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+                return
 	})
+
+        // Set tools switch
+        router.POST("/toolswitch", func(c *gin.Context) {
+                var form ToolSwitchForm
+                var sshTool, installTool, calendarTool, userTool string
+                tools := c.Query("tools")
+                label := c.DefaultQuery("label", "")
+                k8sVer := c.DefaultQuery("k8sver", "")
+                softDir := c.DefaultQuery("softdir", "/opt/kube-install")
+                osType := c.DefaultQuery("ostype", "")
+                langFromWeb := c.Query("lang")
+                Lang := ChangeLang(langFromWeb, currentDir, logName, mode)
+                if c.ShouldBind(&form) == nil {
+                        sshTool = form.Sshtool
+                        installTool = form.Installtool
+                        calendarTool = form.Calendartool
+                        userTool = form.Usertool
+                        err := SetToolSwitch(sshTool, installTool, calendarTool, userTool, currentDir, logName, mode)
+                        if err != nil {
+                                if Lang == "cn" {
+                                        c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "toolswitch", "Result": "failure", "Info": "工具面板设置操作失败！", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+                                } else {
+                                        c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "toolswitch", "Result": "failure", "Info": "Failed to set the tool panel!", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+                                }
+                        } else {
+                                if Lang == "cn" {
+                                        c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "toolswitch", "Result": "success", "Info": "工具面板设置操作成功！", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+                                } else {
+                                        c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "toolswitch", "Result": "success", "Info": "Tool panel setting operation succeeded!", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+                                }
+                        }
+                } else {
+                        if Lang == "cn" {
+                                c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "toolswitch", "Result": "failure", "Info": "设置失败！请确保你设置了正确的选项。", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+                        } else {
+                                c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "toolswitch", "Result": "failure", "Info": "Setting failed! Please make sure you set the correct options.", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+                        }
+                }
+        })
 
 	// Open the SSH key channel
 	router.POST("/sshkey", func(c *gin.Context) {
@@ -1181,7 +1394,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 			for i := 0; i < len(ipArray); i++ {
 				if !CheckIP(ipArray[i]) {
 					if Lang == "cn" {
-						c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "sshkey", "Result": "failure", "Info": "目标主机SSH打通失败！您输入的IP地址格式有误，请检查！", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+						c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "sshkey", "Result": "failure", "Info": "目标主机SSH打通失败！你输入的IP地址格式有误，请检查！", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 					} else {
 						c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "sshkey", "Result": "failure", "Info": "Failed to connect SSH channel, the IP address format you entered is incorrect, please check!", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 					}

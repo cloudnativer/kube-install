@@ -52,29 +52,33 @@
 </head>
 <body>
 	<div class="wrapper contents_wrapper">
-		
 		<div class="login">
+                        <div>
+                            <img src="static/img/kubeinstall_logo.png" alt="{{if eq .Lang "cn"}}Kube-Install(二进制方式部署K8S集群){{else}}Kube-Install(installation of K8S in binary mode){{end}}">
+                        </div>
+                        <br>
 			<div class="widget_header">
-				<h4 class="widget_header_title wwIcon i_16_login">Login</h4>
+				<h4 class="widget_header_title wwIcon i_16_login">{{if eq .Lang "cn"}}输入账号信息{{ else }}Enter Account Information{{ end }}</h4>
 			</div>
 			<div class="widget_contents lgNoPadding">
-				<form action="/">
+				<form action="/loginset?tools=no" enctype="multipart/form-data" method="post" >
 				<div class="line_grid">
-					<div class="g_2 g_2M"><span class="label">Username</span></div>
-					<div class="g_10 g_10M">
-						<input class="simple_field tooltip" title="Your Username" type="text" placeholder="Username"></div>
+					<div class="g_3 g_3M"><span class="label">{{if eq .Lang "cn"}}账户：{{ else }}Username{{ end }}</span></div>
+					<div class="g_9 g_9M">
+						<input name="username" id="username" class="simple_field tooltip" title="Your Username" type="text" placeholder="Your Username"></div>
 					<div class="clear"></div>
 				</div>
 				<div class="line_grid">
-					<div class="g_2 g_2M"><span class="label">Password</span></div>
-					<div class="g_10 g_10M">
-						<input class="simple_field tooltip" title="Your Password" type="password" value="password">
+					<div class="g_3 g_3M"><span class="label">{{if eq .Lang "cn"}}密码：{{ else }}Password{{ end }}</span></div>
+					<div class="g_9 g_9M">
+						<input name="password" id="password" class="simple_field tooltip" title="Your Password" type="password" placeholder="Your Password">
 					</div>
 					<div class="clear"></div>
 				</div>
 				<div class="line_grid">
-					<div class="g_6"><input class="submitIt simple_buttons" value="Log In" type="submit">
+					<div style="text-align:center;"> <input class="submitIt simple_buttons" value="{{if eq .Lang "cn"}}登录{{ else }}Login{{ end }}" type="submit"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input class="submitIt simple_buttons" value="{{if eq .Lang "cn"}}重填{{ else }}Reset{{ end }}" type="reset">
 					</div>
+                                        <br>
 					<div class="clear"></div>
 				</div>
 				</form>
@@ -82,7 +86,6 @@
 		</div>
 
 	</div>
-    <div style="display:none"><script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script></div>
 	<footer>
 		<div class="wrapper">
 			<span class="copyright">

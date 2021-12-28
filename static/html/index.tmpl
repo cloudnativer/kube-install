@@ -121,7 +121,24 @@
                                         <li class="big_button">
                                                 <div class="out_border">
                                                         <div class="button_wrapper">
-                                                                <div class="in_border" onclick="document.getElementById('log_black').style.display='block';document.getElementById('log_content').style.display='block'">
+                                                            <div class="dropdown in_border">
+                                                                <div class="dropdown-content">
+                                                                    {{if eq .Lang "cn"}}
+                                                                        <a href="/userinfo?username=admin&label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&tool=yes&backurl=&lang={{.Lang}}">账户管理</a>
+                                                                        <a href="/logoutset?username=admin&label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&tool=yes&backurl=&lang={{.Lang}}">退出登录</a>
+                                                                    {{else}}
+                                                                        <a href="/userinfo?username=admin&label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&tool=yes&backurl=&lang={{.Lang}}">User Info</a>
+                                                                        <a href="/logoutset?username=admin&label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&tool=yes&backurl=&lang={{.Lang}}">Log out</a>
+                                                                    {{end}}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                        </li>
+                                        <li class="big_button">
+                                                <div class="out_border">
+                                                        <div class="button_wrapper">
+                                                                <div class="in_border">
                                                                         <a {{if eq .Lang "cn"}} href="/?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&lang=en" {{else}} href="/?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&lang=cn" {{end}} title="{{if eq .Lang "cn"}}切换语言{{else}}Switch Language{{end}}" class="the_button">
 										{{if eq .Lang "cn"}}
 											<span class="i_32_en"></span>

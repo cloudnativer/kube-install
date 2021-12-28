@@ -14,12 +14,14 @@ import (
 
 func main() {
 
-    var exec,master,node,k8sver,ostype,softdir,label,sship,sshpass,listen,upgradekernel,cniplugin string
+    var exec,master,node,k8sver,ostype,softdir,label,sship,sshpass,listen,upgradekernel,k8sdashboard,cniplugin string
 
     initFlag := flag.Bool("init",false,"Initialize the local system environment.")
     iFlag := flag.Bool("i",false,"Initialize the local system environment.")
     daemonFlag := flag.Bool("daemon",false,"Run as a daemon service. (enable this switch to use the web console for management)")
     dFlag := flag.Bool("d",false,"Run as a daemon service. (enable this switch to use the web console for management)")
+    logsFlag := flag.Bool("logs",false,"View Installation, uninstall, master and node management log information.")
+    lFlag := flag.Bool("l",false,"View Installation, uninstall, master and node management log information.")
     showk8sFlag := flag.Bool("showk8s",false,"Display all deployed kubernetes cluster information.")
     sFlag := flag.Bool("s",false,"Display all deployed kubernetes cluster information.")
     versionFlag := flag.Bool("version",false,"Display software version information of kube-install.")
@@ -34,6 +36,7 @@ func main() {
     flag.StringVar(&ostype,"ostype","","Specifies the distribution operating system type: \"centos7 | centos8 | rhel7 | rhel8 | ubuntu20 | suse15\".")
     flag.StringVar(&k8sver,"k8sver","","Specifies the version of k8s software installed.(default is \"kubernetes 1.22\")")
     flag.StringVar(&upgradekernel,"upgradekernel","no","Because the lower versions of CentOS 7 and redhat 7 may lack kernel modules, only the kernel automatic upgrade of CentOS 7 and rhel7 operating systems is supported here, and other operating systems do not need to be upgraded.")
+    flag.StringVar(&k8sdashboard,"k8sdashboard","yes","Automatically deploy kube-dashboard to kubernetes cluster.")
     flag.StringVar(&cniplugin,"cniplugin","flannel","Specifies the CNI plug-in type: \"flannel | calico | kuberouter | weave | cilium\".")
     flag.StringVar(&softdir,"softdir","","Specifies the installation directory of kubernetes cluster.(default is \"/opt/kube-install\")")
     flag.StringVar(&label,"label",".default","In the case of deploying and operating multiple kubernetes clusters, it is necessary to specify a label to uniquely identify a kubernetes cluster. (length must be less than 32 strings)")
@@ -51,9 +54,9 @@ func main() {
 
     // Set the version number and release date of Kube-Install.
     const (
-        Version string = "v0.7.3"
-        ReleaseDate string = "11/26/2021"
-        CompatibleK8S string = "1.17, 1.18, 1.19, 1.20, 1.21, 1.22, and 1.23"
+        Version string = "v0.8.0-beta"
+        ReleaseDate string = "28/12/2021"
+        CompatibleK8S string = "1.18, 1.19, 1.20, 1.21, 1.22, 1.23, and 1.24"
         CompatibleOS string = "CentOS linux 7, CentOS linux 8, RHEL 7, RHEL 8, Ubuntu 20, and SUSE 15"
     )
 
@@ -68,6 +71,8 @@ func main() {
             kilib.CreateFile(currentDir+"/data/config/tools.txt", currentDir, logName, "")
             kilib.CreateDir(currentDir+"/data/output", currentDir, logName, "")
             kilib.CreateDir(currentDir+"/data/logs", currentDir, logName, "")
+            kilib.CreateDir(currentDir+"/data/.key", currentDir, logName, "")
+            kilib.CreateFile(currentDir+"/data/.key/admin", currentDir, logName, "")
             kilib.CreateDir(currentDir+"/data/msg", currentDir, logName, "")
             kilib.CreateDir(currentDir+"/data/statistics", currentDir, logName, "")
             kilib.CreateFile(currentDir+"/data/msg/msg.txt", currentDir, logName, "")
@@ -83,17 +88,21 @@ func main() {
             kilib.CreateFile(currentDir+"/data/statistics/labellist.txt", currentDir, logName, "")
             kilib.CreateFile(currentDir+"/data/statistics/nodenumlist.txt", currentDir, logName, "")
             kilib.CreateFile(currentDir+"/data/statistics/schedulelist.txt", currentDir, logName, "")
+            key, _ := kilib.EnPwdCode([]byte("CloudNativeR"))
+            kilib.DatabaseUpdate(currentDir+"/data/.key/admin", string(key), currentDir, logName, "")
             kilib.DatabaseUpdate(currentDir+"/data/msg/msg.txt", " \n \n \n \n \n \n \n", currentDir, logName, "")
             _,_,_,_,ostype := kilib.ParameterConvert("", "", "", "", "", ostype)
             err_ops := kilib.SshOpsInit(currentDir, ostype, "")
             if err_ops != nil {
-                panic("[Error] "+time.Now().String()+" Initialization failed, the basic dependency package is missing!\n")
+                fmt.Println("[Error] "+time.Now().String()+" Initialization failed, the basic dependency package is missing!\n")
+                return
             } else {
                 fmt.Println("Notice: If you are prompted to enter the password below, please enter the root password again! ")
                 var ipArray = []string{"127.0.0.1"}
                 err_host := kilib.SshKey(ipArray, "", currentDir)
                 if err_host != nil {
-                    panic("[Error] "+time.Now().String()+" Initialization failed ! There is a problem with the local SSH key. \n        (Please try again with root user)\n")
+                    fmt.Println("[Error] "+time.Now().String()+" Initialization failed ! There is a problem with the local SSH key. \n        (Please try again with root user)\n")
+                    return
                 } else {
                     kilib.CreateSystemdService("", currentDir, logName)
                     fmt.Println("\n\nInitialization completed!\n")
@@ -132,9 +141,13 @@ func main() {
             }
             fmt.Println("---------------------------------┴-----------┴----------------┴-------------------------------------┴---------------------------------")
 
+        // View log information
+        case *logsFlag , *lFlag :
+            kilib.ShowLogs(exec, label, currentDir)
+
         // View software version details.
         case *versionFlag , *vFlag :
-            kilib.ShowVersion(Version,ReleaseDate,CompatibleK8S,CompatibleOS)
+            kilib.ShowVersion(Version, ReleaseDate, CompatibleK8S, CompatibleOS)
 
         // Help information of Kube-Install
         case *helpFlag , *hFlag :
@@ -160,17 +173,18 @@ func main() {
                    kilib.CheckParam(exec,"master",master)
                    kilib.CheckParam(exec,"node",node)
                    if !kilib.CheckLabel(label) {
-                       panic("\nThe \"-ostype\" parameter length must be less than 32 strings, please check! \n\n ")
+                       fmt.Println("\nThe \"-ostype\" parameter length must be less than 32 strings, please check! \n\n ")
+                       return
                    }
                    masterArray,nodeArray,softdir,subProcessDir,ostypeResult := kilib.ParameterConvert("", master, node, softdir, label, ostype)
                    kilib.DatabaseInit(currentDir,subProcessDir,logName,"")
-                   kilib.InstallCore("",master,masterArray,node,nodeArray,softdir,currentDir,kissh,subProcessDir,currentUser,label,ostypeResult,ostype,k8sver,logName,Version,CompatibleK8S,CompatibleOS,"","newinstall",upgradekernel,cniplugin)
+                   kilib.InstallCore("",master,masterArray,node,nodeArray,softdir,currentDir,kissh,subProcessDir,currentUser,label,ostypeResult,ostype,k8sver,logName,Version,CompatibleK8S,CompatibleOS,"","newinstall",upgradekernel,k8sdashboard,cniplugin)
 
                //Execute addnode command
                case exec == "addnode" :
                    kilib.CheckParam(exec,"node",node)
                    _,nodeArray,_,subProcessDir,ostypeResult := kilib.ParameterConvert("", "", node, softdir, label, ostype)
-                   kilib.AddNodeCore("",node,nodeArray,currentDir,kissh,subProcessDir,currentUser,label,softdir,ostypeResult,logName,CompatibleOS,upgradekernel)
+                   kilib.AddNodeCore("",node,nodeArray,currentDir,kissh,subProcessDir,currentUser,label,softdir,ostypeResult,k8sver,logName,CompatibleOS,upgradekernel)
 
                //Execute delnode command
                case exec == "delnode" :

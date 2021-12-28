@@ -1,0 +1,22 @@
+#!/bin/bash
+
+
+# Set ipvsadm rule
+{{ipvsinit_shell}}
+
+
+# Set user environment variables.
+echo "alias docker='/usr/local/bin/crictl'" >> /etc/profile
+echo "alias 'docker-tag'='/usr/local/bin/ctr -n=k8s.io images tag'" >> /etc/profile
+echo "alias 'docker-load'='/usr/local/bin/ctr -n=k8s.io images import'" >> /etc/profile
+echo "alias 'docker-save'='/usr/local/bin/ctr -n=k8s.io images export --platform=linux/amd64'" >> /etc/profile
+echo "alias docker='/usr/local/bin/crictl'" >> ~/.bashrc
+echo "alias 'docker-tag'='/usr/local/bin/ctr -n=k8s.io images tag'" >> ~/.bashrc
+echo "alias 'docker-load'='/usr/local/bin/ctr -n=k8s.io images import'" >> ~/.bashrc
+echo "alias 'docker-save'='/usr/local/bin/ctr -n=k8s.io images export --platform=linux/amd64'" >> ~/.bashrc
+
+
+
+exit 0
+
+

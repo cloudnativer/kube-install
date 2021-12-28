@@ -1,0 +1,256 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>{{if eq .Lang "cn"}}Kube-Install(二进制方式部署K8S集群){{else}}Kube-Install(installation of K8S in binary mode){{end}}</title>
+	<!--[if lt IE 9]>
+		<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<script src="static/js/Flot/excanvas.js"></script>
+	<![endif]-->
+        <!-- The Favicon Ico -->
+        <link rel="icon" href="/static/img/favicon.ico" type="image/x-icon" />
+        <!-- The Fonts -->
+        <link rel="stylesheet" href="static/css/fonts.css" />
+        <!-- The Main CSS File -->
+        <link rel="stylesheet" href="static/css/style.css" />
+        <!--FullCalendar CSS-->
+        <link href='static/css/fullcalendar.min.css' rel='stylesheet' />
+        <link href='static/css/fullcalendar.print.min.css' rel='stylesheet' media='print' />
+	<!-- jQuery -->
+	<script src="static/js/jQuery/jquery-1.7.2.min.js"></script>
+        <script src='static/js/jQuery/jquery-1.9.1.js'></script>
+	<!-- Flot -->
+	<script src="static/js/Flot/jquery.flot.js"></script>
+	<script src="static/js/Flot/jquery.flot.resize.js"></script>
+	<script src="static/js/Flot/jquery.flot.pie.js"></script>
+	<!-- DataTables -->
+	<script src="static/js/DataTables/jquery.dataTables.min.js"></script>
+	<!-- ColResizable -->
+	<script src="static/js/ColResizable/colResizable-1.3.js"></script>
+	<!-- jQuryUI -->
+	<script src="static/js/jQueryUI/jquery-ui-1.8.21.min.js"></script>
+        <script src='static/js/jQueryUI/jquery-ui-1.10.2.js'></script>
+        <!-- Moment -->
+        <script src='static/js/Moment/moment.min.js'></script>
+	<!-- Uniform -->
+	<script src="static/js/Uniform/jquery.uniform.js"></script>
+	<!-- Tipsy -->
+	<script src="static/js/Tipsy/jquery.tipsy.js"></script>
+	<!-- Elastic -->
+	<script src="static/js/Elastic/jquery.elastic.js"></script>
+	<!-- ColorPicker -->
+	<script src="static/js/ColorPicker/colorpicker.js"></script>
+	<!-- SuperTextarea -->
+	<script src="static/js/SuperTextarea/jquery.supertextarea.min.js"></script>
+	<!-- UISpinner -->
+	<script src="static/js/UISpinner/ui.spinner.js"></script>
+	<!-- MaskedInput -->
+	<script src="static/js/MaskedInput/jquery.maskedinput-1.3.js"></script>
+	<!-- ClEditor -->
+	<script src="static/js/ClEditor/jquery.cleditor.js"></script>
+	<!-- Full Calendar -->
+	<script src="static/js/FullCalendar/fullcalendar.js"></script>
+        <script src='static/js/FullCalendar/fullcalendar-3.2.0.min.js'></script>
+        {{if eq .Lang "cn"}}<script src='static/js/FullCalendar/locale-zh-cn-3.2.0.js'></script>{{end}}
+	<!-- Color Box -->
+	<script src="static/js/ColorBox/jquery.colorbox.js"></script>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
+<body>
+    <div id="cal_black" class="result_overlay"></div>
+    <div id="cal_content" class="result_content">
+        <div class="widget_header wwOptions">
+                <h4 class="widget_header_title wwIcon i_16_login">{{if eq .Lang "cn"}}管理系统账户信息{{else}}Management system account information{{end}}</h4>
+                <div style="text-align: right;"><a href="/{{.Backurl}}?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" ><img alt="{{if eq .Lang "cn"}}点击关闭{{else}}Close{{end}}" src="static/img/Button/close03.png" /></a></div>
+        </div>
+                <div class="widget_contents noPadding">
+                        <form action="/changepw?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" enctype="multipart/form-data" method="post" >
+                                <div class="line_grid">
+                                        <div class="g_3"><span class="label">{{if eq .Lang "cn"}}当前账户名{{else}}Current Username{{end}} </span></div>
+                                        <div class="g_9">
+                                                <input name="username" value="admin" class="readonly_field" type="text" required readonly />
+                                                <div class="field_notice">{{if eq .Lang "cn"}}当前账户名称。{{else}}This is the current username.{{end}}</div>
+                                        </div>
+                                </div>
+                                <div class="line_grid">
+                                        <div class="g_3"><span class="label">{{if eq .Lang "cn"}}当前账户权限{{else}}User Permissions{{end}} </span></div>
+                                        <div class="g_9">
+                                                <input name="role" value="Administrator Privileges" class="readonly_field" type="text" required readonly />
+                                                <div class="field_notice">{{if eq .Lang "cn"}}当前账户所拥有的权限。{{else}}The permissions of the current user.{{end}}</div>
+                                        </div>
+                                </div>
+                                <div class="line_grid">
+                                        <div class="g_3"><span class="label">{{if eq .Lang "cn"}}当前账户密码{{else}}Current password{{end}} </span></div>
+                                        <div class="g_9">
+                                                <input name="password" class="simple_field" type="password" required />
+                                                <div class="field_notice">{{if eq .Lang "cn"}}输入当前账户的密码。{{else}}Enter the password for the current user.{{end}}</div>
+                                        </div>
+                                </div>
+                                <div class="line_grid">
+                                        <div class="g_3"><span class="label">{{if eq .Lang "cn"}}修改新密码{{else}}Change new password{{end}} </span></div>
+                                        <div class="g_9">
+                                                <input name="newpassword1" class="simple_field" type="password" required />
+                                                <div class="field_notice">{{if eq .Lang "cn"}}如果你要修改当前账户密码，请在此输入新密码。{{else}}If you want to change the current user password, please enter the new password here.{{end}}</div>
+                                        </div>
+                                </div>
+                                <div class="line_grid">
+                                        <div class="g_3"><span class="label">{{if eq .Lang "cn"}}新密码确认{{else}}Retype new password{{end}} </span></div>
+                                        <div class="g_9">
+                                                <input name="newpassword2" class="simple_field" type="password" required />
+                                                <div class="field_notice">{{if eq .Lang "cn"}}请再次输入一遍上面的新密码。{{else}}Please enter the new password above again.{{end}}</div>
+                                        </div>
+                                </div>
+                                <div class="line_grid">
+                                        <div class="g_9" style="text-align: center;"><br>
+                                                <input type="hidden" name="label" value="{{.Label}}">
+                                                <input type="hidden" name="k8sver" value="{{.K8sver}}"/>
+                                                <input type="hidden" name="softdir" value="{{.Softdir}}">
+                                                <input type="hidden" name="ostype" value="{{.Ostype}}">
+                                                <input type="submit" value="{{if eq .Lang "cn"}}更新信息{{else}}Submit{{end}}" class="submitIt simple_buttons" /> &nbsp;&nbsp;&nbsp;&nbsp;
+                                                <input type="reset" value="{{if eq .Lang "cn"}}重新填写{{else}}Reset{{end}}" class="submitIt simple_buttons" />
+                                                <br><br>
+                                        </div>
+                                </div>
+                        </form>
+                </div>
+    </div>
+
+        <header class="main_header">
+                <div class="wrapper">
+                        <div class="logo">
+                                <a href="#" Title="kubeinstall Home">
+                                        <img src="static/img/kubeinstall_logo.png" alt="kubeinstall_logo">
+                                </a>
+                        </div>
+                        <nav class="top_buttons">
+                                <ul>
+                                        <li class="big_button">
+                                                <div class="out_border">
+                                                        <div class="button_wrapper">
+                                                            <div class="dropdown in_border">
+                                                                <div class="dropdown-content">
+                                                                    <a href="#">账户管理</a>
+                                                                    <a href="/logoutset?username=admin">退出登录</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                        </li>
+                                        <li class="big_button">
+                                                <div class="out_border">
+                                                        <div class="button_wrapper">
+                                                                <div class="in_border" >
+                                                                        <a {{if eq .Lang "cn"}} href="/optresult?lang=en" {{else}} href="/optresult?lang=cn" {{end}} title="{{if eq .Lang "cn"}}切换语言{{else}}Switch Language{{end}}" class="the_button">
+                                                                                {{if eq .Lang "cn"}}
+                                                                                        <span class="i_32_en"></span>
+                                                                                {{else}}
+                                                                                        <span class="i_32_cn"></span>
+                                                                                {{end}}
+                                                                        </a>
+                                                                </div>
+                                                        </div>
+                                                </div>
+                                        </li>
+                                        <li class="big_button">
+                                                <div class="out_border">
+                                                        <div class="button_wrapper">
+                                                                <div class="in_border">
+                                                                        <a href="##" title="{{if eq .Lang "cn"}}版本信息{{else}}Version Information{{end}}" class="the_button bdC"><span class="i_32_info"></span></a>
+                                                                </div>
+                                                        </div>
+                                                </div>
+                                        </li>
+                                </ul>
+                        </nav>
+                </div>
+        </header>
+
+        <div class="wrapper small_menu">
+                <ul class="menu_small_buttons">
+                        <li><a title="{{if eq .Lang "cn"}}信息概览{{else}}Information Overview{{end}}" class="i_22_dashboard" href="/?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}"></a></li>
+                        <li><a title="{{if eq .Lang "cn"}}管理Kubernetes集群{{else}}Managing Kubernetes Clusters{{end}}" class="i_22_cluster" href="clusterlist?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}"></a></li>
+                        <li><a title="{{if eq .Lang "cn"}}管理Kubernetes Master{{else}}Managing Kubernetes Master{{end}}" class="i_22_master" href="masteradmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}"></a></li>
+                        <li><a title="{{if eq .Lang "cn"}}管理Kubernetes Node{{else}}Managing Kubernetes Nodes{{end}}" class="i_22_node" href="nodeadmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}"></a></li>
+                        <li><a title="{{if eq .Lang "cn"}}常用工具{{else}}Common Tools{{end}}" class="i_22_tools smActive" href="tools?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}"></a></li>
+                        <li><a title="{{if eq .Lang "cn"}}查看各类日志{{else}}View all kinds of logs{{end}}" class="i_22_logs" href="logs?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}"></a></li>
+                </ul>
+        </div>
+
+        <div class="wrapper contents_wrapper">
+
+                <aside class="sidebar">
+                        <ul class="tab_nav">
+                                <li class="i_32_dashboard">
+                                        <a href="/?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" title="{{if eq .Lang "cn"}}基本信息{{else}}Basic information{{end}}">
+                                                <span class="tab_label">Dashboard</span>
+                                                <span class="tab_info">{{if eq .Lang "cn"}}信息概览{{else}}Overview{{end}}</span>
+                                        </a>
+                                </li>
+                                <li class="i_32_cluster">
+                                        <a href="clusterlist?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" title="{{if eq .Lang "cn"}}管理Kubernetes集群{{else}}Managing Kubernetes Clusters{{end}}">
+                                                <span class="tab_label">Cluster</span>
+                                                <span class="tab_info">{{if eq .Lang "cn"}}集群管理{{else}}Management{{end}}</span>
+                                        </a>
+                                </li>
+                                <li class="i_32_master">
+                                        <a href="masteradmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" title="{{if eq .Lang "cn"}}管理Kubernetes Master{{else}}Managing Kubernetes Master{{end}}">
+                                                <span class="tab_label">Master</span>
+                                                <span class="tab_info">{{if eq .Lang "cn"}}Master管理{{else}}Rebuild/Del{{end}}</span>
+                                        </a>
+                                </li>
+                                <li class="i_32_node">
+                                        <a href="nodeadmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" title="{{if eq .Lang "cn"}}管理Kubernetes Node{{else}}Managing Kubernetes Nodes{{end}}">
+                                                <span class="tab_label">Node</span>
+                                                <span class="tab_info">{{if eq .Lang "cn"}}Node管理{{else}}Add/Del/Op{{end}}</span>
+                                        </a>
+                                </li>
+                                <li class="active_tab i_32_tools">
+                                        <a href="tools?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" title="{{if eq .Lang "cn"}}实用小工具{{else}}Some Utilities Tools{{end}}">
+                                                <span class="tab_label">Tools</span>
+                                                <span class="tab_info">{{if eq .Lang "cn"}}常用工具{{else}}Utilities Tools{{end}}</span>
+                                        </a>
+                                </li>
+                                <li class="i_32_logs">
+                                        <a href="logs?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" title="{{if eq .Lang "cn"}}查看各类日志{{else}}View All Kinds of Logs{{end}}">
+                                                <span class="tab_label">Logs</span>
+                                                <span class="tab_info">{{if eq .Lang "cn"}}操作日志{{else}}View Logs{{end}}</span>
+                                        </a>
+                                </li>
+                        </ul>
+                </aside>
+
+		<div class="contents">
+			<div class="grid_wrapper">
+
+                                <div class="g_6 contents_header">
+                                        <h3 class="i_16_tools tab_label">{{if eq .Lang "cn"}}常用工具{{else}}Common Tools{{end}}</h3>
+                                        <div><span class="label">{{if eq .Lang "cn"}}各类实用的小工具{{else}}All kinds of utilities tools{{end}}</span></div>
+                                </div>
+
+                                <div class="g_6 contents_options">
+                                        <div class="simple_buttons">
+                                                <div class="bwIcon i_16_settings">{{if eq .Lang "cn"}}面板设置{{else}}Panel Settings{{end}}</div>
+                                        </div>
+                                </div>
+
+                                <!-- Separator -->
+                                <div class="g_12 separator"><span></span></div>
+                                <div class="g_12">
+					<div>User Info.</div>
+                                </div>
+
+			</div>
+		</div>
+
+	
+	<footer>
+		<div class="wrapper">
+			<span class="copyright">
+				Kube-Install Version {{.Version}} &nbsp; | &nbsp; Powered By <a target="_blank" href="https://cloudnativer.github.io">CloudNativer</a>
+			</span>
+		</div>
+	</footer>
+</body>
+</html>

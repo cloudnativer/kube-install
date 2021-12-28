@@ -1,11 +1,17 @@
 package kilib
 
 import (
-	//    "fmt"
-	"net"
-	"os"
-	"time"
+	//"fmt"
+        "net"
+        "net/http"
+        "os"
+        "time"
+
+        ses "github.com/gin-contrib/sessions"
+        "github.com/gin-gonic/gin"
 )
+
+
 
 // Check and handle common errors.
 func CheckErr(err error, currentDir string, logName string, mode string) {
@@ -94,8 +100,15 @@ func CheckLabel(label string) bool {
 // Check whether the parameters are input normally.
 func CheckParam(option string, paramName string, param string) {
 	if param == "" {
-		panic("When performing " + option + " operation, you must enter " + paramName + " parameter, please check!")
+		panic("When performing " + option + " operation, you must enter \"-" + paramName + "\" parameter, please check!")
 	}
+}
+
+// Check whether the session exists.
+func checkSession(s ses.Session, c *gin.Context) {
+        if s.Get("admin") == nil {
+                c.Redirect(http.StatusMovedPermanently, "/login")
+        }
 }
 
 // Check whether the file exists.

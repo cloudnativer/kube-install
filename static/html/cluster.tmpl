@@ -127,13 +127,13 @@
                                         </div>
                                         <div class="g_9">
                                                 <select name="k8sver" class="simple_form">
+                                                  <option value="1.24" >Kubernetes v1.24</option>
                                                   <option value="1.23" >Kubernetes v1.23</option>
                                                   <option value="1.22" >Kubernetes v1.22</option>
                                                   <option value="1.21" >Kubernetes v1.21</option>
                                                   <option value="1.20" >Kubernetes v1.20</option>
                                                   <option value="1.19" >Kubernetes v1.19</option>
                                                   <option value="1.18" >Kubernetes v1.18</option>
-                                                  <option value="1.17" >Kubernetes v1.17</option>
                                                 </select>
                                                 <div class="field_notice">{{if eq .Lang "cn"}}选择你要安装的Kubernetes软件版本。{{else}}Select the version of kubernetes software you want to install.{{end}}</div>
                                         </div>
@@ -150,6 +150,13 @@
                                                   <option value="cilium" >Cilium</option>
                                                 </select>
                                                 <div class="field_notice">{{if eq .Lang "cn"}}选择你要安装部署的CNI插件类型。（如果需要安装“Cilium”，请将Linux内核升级到4.9或以上版本）{{else}}Select the type of CNI Plug-in you want to install.(In addition, if you need to install "Cilium", please upgrade the Linux kernel to version 4.9 or above.){{end}}</div>
+                                        </div>
+                                </div>
+                                <div class="line_grid">
+                                        <div class="g_3"><span class="label">{{if eq .Lang "cn"}}安装kube-dashboard{{else}}Install kube-dashboard{{end}} </span></div>
+                                        <div class="g_9">
+                                                <label class="label"><input type="radio" class="simple_form" name="k8sdashboard" style="opacity: 0;" value="yes" checked>YES</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label class="label"><input type="radio" class="simple_form" name="k8sdashboard" style="opacity: 0;" value="no">NO</label>
+                                                <div class="field_notice">{{if eq .Lang "cn"}}默认会自动安装上官方的kube-dashboard管理控制台，如果你不需要也可以选择不安装。{{else}}The kube-dashboard will be installed automatically by default. If you don't need it, you can choose not to install it.{{end}}</div>
                                         </div>
                                 </div>
 				<div class="line_grid">
@@ -234,7 +241,24 @@
                                         <li class="big_button">
                                                 <div class="out_border">
                                                         <div class="button_wrapper">
-                                                                <div class="in_border" onclick="document.getElementById('log_black').style.display='block';document.getElementById('log_content').style.display='block'">
+                                                            <div class="dropdown in_border">
+                                                                <div class="dropdown-content">
+                                                                    {{if eq .Lang "cn"}}
+                                                                        <a href="/userinfo?username=admin&label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&tool=yes&backurl=clusterlist&lang={{.Lang}}">账户管理</a>
+                                                                        <a href="/logoutset?username=admin&label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&tool=yes&backurl=clusterlist&lang={{.Lang}}">退出登录</a>
+                                                                    {{else}}
+                                                                        <a href="/userinfo?username=admin&label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&tool=yes&backurl=clusterlist&lang={{.Lang}}">User Info</a>
+                                                                        <a href="/logoutset?username=admin&label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&tool=yes&backurl=clusterlist&lang={{.Lang}}">Log out</a>
+                                                                    {{end}}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                        </li>
+                                        <li class="big_button">
+                                                <div class="out_border">
+                                                        <div class="button_wrapper">
+                                                                <div class="in_border" >
                                                                         <a {{if eq .Lang "cn"}} href="/clusterlist?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&lang=en" {{else}} href="/clusterlist?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&lang=cn" {{end}} title="{{if eq .Lang "cn"}}切换语言{{else}}Switch Language{{end}}" class="the_button">
                                                                                 {{if eq .Lang "cn"}}
                                                                                         <span class="i_32_en"></span>
@@ -350,7 +374,7 @@
 							    {{ range $v := .Clusterlist}}
 							      {{ if ne $v.Status "notinstall" }}
 							        <tr>
-									<td align="center">{{ if eq $v.K8t ".default" }} {{if eq .Lang "cn"}}默认{{else}}default{{end}}集群 {{else}} {{$v.K8t}} {{end}}</td>
+									<td align="center">{{ if eq $v.K8t ".default" }} {{if eq .Lang "cn"}}默认集群{{else}}Default-Label{{end}} {{else}} {{$v.K8t}} {{end}}</td>
                                                                         <td align="center">{{ $v.K8v }}</td>
 									<td>{{ $v.Master }}</td>
 									<td align="center">

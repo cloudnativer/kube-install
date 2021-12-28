@@ -1,0 +1,107 @@
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] Loaded HTML Templates (20): 
+	- node.tmpl
+	- userinfo.tmpl
+	- clusterdel.tmpl
+	- clusterinfo.tmpl
+	- master.tmpl
+	- 403.html
+	- 404.html
+	- loginset.tmpl
+	- deleteschedule.tmpl
+	- index.tmpl
+	- login.tmpl
+	- masterinfo.tmpl
+	- optresult.tmpl
+	- calendarscheduler.tmpl
+	- cluster.tmpl
+	- clusteradd.tmpl
+	- tools.tmpl
+	- 
+	- logs.tmpl
+	- nodeinfo.tmpl
+
+[GIN-debug] GET    /static/*filepath         --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (3 handlers)
+[GIN-debug] HEAD   /static/*filepath         --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (3 handlers)
+[GIN-debug] GET    /                         --> kube-install/lib.DaemonRun.func1 (4 handlers)
+[GIN-debug] GET    /login                    --> kube-install/lib.DaemonRun.func2 (4 handlers)
+[GIN-debug] GET    /clusterlist              --> kube-install/lib.DaemonRun.func3 (4 handlers)
+[GIN-debug] GET    /clusterinfo              --> kube-install/lib.DaemonRun.func4 (4 handlers)
+[GIN-debug] GET    /clusteradd               --> kube-install/lib.DaemonRun.func5 (4 handlers)
+[GIN-debug] GET    /clusterdel               --> kube-install/lib.DaemonRun.func6 (4 handlers)
+[GIN-debug] GET    /deleteschedule           --> kube-install/lib.DaemonRun.func7 (4 handlers)
+[GIN-debug] GET    /masteradmin              --> kube-install/lib.DaemonRun.func8 (4 handlers)
+[GIN-debug] GET    /masterinfo               --> kube-install/lib.DaemonRun.func9 (4 handlers)
+[GIN-debug] GET    /nodeadmin                --> kube-install/lib.DaemonRun.func10 (4 handlers)
+[GIN-debug] GET    /nodeinfo                 --> kube-install/lib.DaemonRun.func11 (4 handlers)
+[GIN-debug] GET    /nodeadd                  --> kube-install/lib.DaemonRun.func12 (4 handlers)
+[GIN-debug] GET    /tools                    --> kube-install/lib.DaemonRun.func13 (4 handlers)
+[GIN-debug] GET    /calendarscheduler        --> kube-install/lib.DaemonRun.func14 (4 handlers)
+[GIN-debug] GET    /userinfo                 --> kube-install/lib.DaemonRun.func15 (4 handlers)
+[GIN-debug] GET    /logs                     --> kube-install/lib.DaemonRun.func16 (4 handlers)
+[GIN-debug] POST   /loginset                 --> kube-install/lib.DaemonRun.func17 (4 handlers)
+[GIN-debug] GET    /logoutset                --> kube-install/lib.DaemonRun.func18 (4 handlers)
+[GIN-debug] POST   /install                  --> kube-install/lib.DaemonRun.func19 (4 handlers)
+[GIN-debug] POST   /rebuildmaster            --> kube-install/lib.DaemonRun.func20 (4 handlers)
+[GIN-debug] POST   /delmaster                --> kube-install/lib.DaemonRun.func21 (4 handlers)
+[GIN-debug] POST   /addnode                  --> kube-install/lib.DaemonRun.func22 (4 handlers)
+[GIN-debug] POST   /delnode                  --> kube-install/lib.DaemonRun.func23 (4 handlers)
+[GIN-debug] POST   /uninstall                --> kube-install/lib.DaemonRun.func24 (4 handlers)
+[GIN-debug] POST   /deleteinstallschedule    --> kube-install/lib.DaemonRun.func25 (4 handlers)
+[GIN-debug] POST   /changepw                 --> kube-install/lib.DaemonRun.func26 (4 handlers)
+[GIN-debug] POST   /toolswitch               --> kube-install/lib.DaemonRun.func27 (4 handlers)
+[GIN-debug] POST   /sshkey                   --> kube-install/lib.DaemonRun.func28 (4 handlers)
+[GIN-debug] GET    /tty                      --> kube-install/lib.DaemonRun.func29 (4 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on 0.0.0.0:9080
+[GIN] 2021/12/28 - 15:00:16 | 200 |    19.82914ms |    192.168.56.1 | GET      "/"
+[GIN] 2021/12/28 - 15:00:18 | 200 |   16.406786ms |    192.168.56.1 | GET      "/clusterlist?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/12/28 - 15:00:19 | 200 |   21.274896ms |    192.168.56.1 | GET      "/masteradmin?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/12/28 - 15:00:20 | 200 |   14.163884ms |    192.168.56.1 | GET      "/nodeadmin?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/12/28 - 15:00:20 | 200 |   22.230425ms |    192.168.56.1 | GET      "/tools?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/12/28 - 15:00:20 | 200 |   13.589479ms |    192.168.56.1 | GET      "/logs?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/12/28 - 15:00:21 | 200 |   28.722688ms |    192.168.56.1 | GET      "/?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/12/28 - 15:00:49 | 200 |   13.495694ms |    192.168.56.1 | GET      "/?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/12/28 - 15:00:50 | 200 |   23.108054ms |    192.168.56.1 | GET      "/clusterlist?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/12/28 - 15:00:50 | 200 |   16.222129ms |    192.168.56.1 | GET      "/masteradmin?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/12/28 - 15:00:51 | 200 |   21.980718ms |    192.168.56.1 | GET      "/nodeadmin?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/12/28 - 15:00:51 | 200 |   21.721109ms |    192.168.56.1 | GET      "/tools?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/12/28 - 15:00:51 | 200 |   28.666044ms |    192.168.56.1 | GET      "/logs?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/12/28 - 15:00:54 | 200 |   15.723312ms |    192.168.56.1 | GET      "/logs?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver=&lang=cn"
+[GIN] 2021/12/28 - 15:00:55 | 200 |   17.379103ms |    192.168.56.1 | GET      "/logs?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver=&lang=en"
+[GIN] 2021/12/28 - 15:00:56 | 301 |      95.793µs |    192.168.56.1 | GET      "/logoutset?username=admin&label=&softdir=%2fopt%2fkube-install&ostype=&k8sver=&tool=yes&backurl=logs&lang=en"
+[GIN] 2021/12/28 - 15:00:56 | 200 |   17.785639ms |    192.168.56.1 | GET      "/login"
+[GIN] 2021/12/28 - 15:00:59 | 200 |    17.63078ms |    192.168.56.1 | POST     "/loginset?tools=no"
+[GIN] 2021/12/28 - 15:01:00 | 200 |   14.387559ms |    192.168.56.1 | GET      "/login"
+[GIN] 2021/12/28 - 15:01:04 | 200 |   15.806445ms |    192.168.56.1 | POST     "/loginset?tools=no"
+[GIN] 2021/12/28 - 15:01:06 | 200 |    13.08426ms |    192.168.56.1 | GET      "/login"
+[GIN] 2021/12/28 - 15:01:12 | 301 |     224.521µs |    192.168.56.1 | POST     "/loginset?tools=no"
+[GIN] 2021/12/28 - 15:01:12 | 200 |   21.477925ms |    192.168.56.1 | GET      "/"
+[GIN] 2021/12/28 - 15:01:16 | 200 |   14.636173ms |    192.168.56.1 | GET      "/login"
+[GIN] 2021/12/28 - 15:01:28 | 301 |     251.823µs |    192.168.56.1 | POST     "/loginset?tools=no"
+[GIN] 2021/12/28 - 15:01:28 | 200 |   15.044984ms |    192.168.56.1 | GET      "/"
+[GIN] 2021/12/28 - 15:01:32 | 200 |   16.222059ms |    192.168.56.1 | GET      "/clusterlist?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/12/28 - 15:01:32 | 200 |   14.248605ms |    192.168.56.1 | GET      "/?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/12/28 - 15:01:34 | 200 |   18.669754ms |    192.168.56.1 | GET      "/clusterlist?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/12/28 - 15:01:35 | 200 |   14.773914ms |    192.168.56.1 | GET      "/logs?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/12/28 - 15:01:36 | 200 |   14.634703ms |    192.168.56.1 | GET      "/tools?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/12/28 - 15:01:38 | 200 |    17.04878ms |    192.168.56.1 | GET      "/nodeadmin?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/12/28 - 15:01:38 | 200 |   25.063524ms |    192.168.56.1 | GET      "/tools?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/12/28 - 15:01:45 | 200 |   16.108747ms |    192.168.56.1 | GET      "/nodeadmin?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/12/28 - 15:01:47 | 200 |   14.091881ms |    192.168.56.1 | GET      "/masteradmin?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/12/28 - 15:01:48 | 200 |   20.582902ms |    192.168.56.1 | GET      "/nodeadmin?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/12/28 - 15:01:49 | 200 |   24.946028ms |    192.168.56.1 | GET      "/masteradmin?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/12/28 - 15:01:50 | 200 |   28.235629ms |    192.168.56.1 | GET      "/clusterlist?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/12/28 - 15:01:51 | 200 |   15.944366ms |    192.168.56.1 | GET      "/?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/12/28 - 15:02:01 | 200 |   14.210393ms |    192.168.56.1 | GET      "/userinfo?username=admin&label=&softdir=%2fopt%2fkube-install&ostype=&k8sver=&tool=yes&backurl=&lang=en"
+[GIN] 2021/12/28 - 15:02:03 | 200 |   30.949259ms |    192.168.56.1 | GET      "/?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/12/28 - 15:02:04 | 200 |   17.075378ms |    192.168.56.1 | GET      "/clusterlist?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/12/28 - 15:02:04 | 200 |   13.663688ms |    192.168.56.1 | GET      "/masteradmin?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/12/28 - 15:02:05 | 200 |   19.380286ms |    192.168.56.1 | GET      "/clusterlist?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="
+[GIN] 2021/12/28 - 15:02:05 | 200 |   17.471053ms |    192.168.56.1 | GET      "/?label=&softdir=%2fopt%2fkube-install&ostype=&k8sver="

@@ -9,19 +9,13 @@
     - weave
     - cilium
 
-- name: 2.Make docker options
-  template:
-    src: "../templates/mk-docker-opts.sh"
-    dest: "/opt/cni/bin/mk-docker-opts.sh"
-    mode: 0755
-
-- name: 3.Create flannel.yaml file
+- name: 2.Create flannel.yaml file
   template:
     src: "../templates/flannel.yaml.j2"
     dest: "{{k8s_install_home}}/cniplugin/flannel/flannel.yaml"
     mode: 0755
 
-- name: 4.Deploy flannel
+- name: 3.Deploy flannel
   shell: "/usr/sbin/kubectl --kubeconfig=/etc/kubernetes/ssl/kube-install.kubeconfig apply -f {{k8s_install_home}}/cniplugin/flannel/flannel.yaml"
 
 

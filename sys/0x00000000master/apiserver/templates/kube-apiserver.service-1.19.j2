@@ -6,7 +6,7 @@ After=network.target
 [Service]
 WorkingDirectory={{k8s_install_home}}/kubernetes/kube-apiserver
 ExecStart=/usr/local/bin/kube-apiserver \
---admission-control=NamespaceLifecycle,LimitRanger,ServiceAccount,DefaultStorageClass,ResourceQuota,NodeRestriction \
+--admission-control=NamespaceLifecycle,LimitRanger,ServiceAccount,DefaultStorageClass,ResourceQuota,NodeRestriction,MutatingAdmissionWebhook,ValidatingAdmissionWebhook \
 --feature-gates=ExpandInUsePersistentVolumes=true \
 --advertise-address={{ip}} \
 --bind-address=0.0.0.0 \

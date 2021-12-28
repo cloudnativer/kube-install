@@ -1,8 +1,6 @@
 [Unit]
 Description=Kubernetes Kubelet
 Documentation=https://github.com/GoogleCloudPlatform/kubernetes
-After=docker.service
-Requires=docker.service
 
 [Service]
 WorkingDirectory={{k8s_install_home}}/kubernetes/kubelet
@@ -17,7 +15,7 @@ ExecStart=/usr/local/bin/kubelet \
   --kubeconfig=/etc/kubernetes/ssl/kubelet.kubeconfig \
   --config=/etc/kubernetes/kubelet.config.json \
   --hostname-override={{ip}} \
-  --pod-infra-container-image={{addons_ip3}}:5000/pause-amd64:3.1 \
+  --pod-infra-container-image={{addons_ip3}}:5000/pause-amd64:3.5 \
   --alsologtostderr=true \
   --logtostderr=false \
   --root-dir={{k8s_install_home}}/kubernetes/kubelet \

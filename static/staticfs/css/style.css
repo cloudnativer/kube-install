@@ -33,7 +33,11 @@
 	/* Forms */
 	/* Message */
 	/* Pages */
-	/* Change Pattern -- For Demonstration only */
+	/* Change Pattern */
+        /* pop up window   */
+        /* drop down button */
+        /* cli font */
+
 
 /* ========================================================================== */
 
@@ -664,7 +668,7 @@
 
 	.out_border {
 		width: 86px;
-		height: 86px;
+                height: 86px;
 		background: #dadada; /* Old browsers */
 		background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2RhZGFkYSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmOGY4ZjgiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
 		background: -moz-linear-gradient(top,  #dadada 0%, #f8f8f8 100%); /* FF3.6+ */
@@ -2392,11 +2396,11 @@
 
 	.login {
 		margin: 0 auto;
-		width: 280px;
+		width: 310px;
 		margin-top: 120px;
 	}
 
-/* Change Pattern -- For Demonstration only */
+/* Change Pattern */
 
 	.changePattern {
 		width: 28px;
@@ -2444,7 +2448,7 @@
 		background: url("/static/img/Patterns/pattern6.png") no-repeat 0 0;
 	}
 
-/* Pop up window   */
+/* pop up window   */
     .black_overlay{
         display:none;
         opacity:0.5;
@@ -2510,14 +2514,45 @@
         overflow: auto;
     }
 
+/* drop down button */
 
-/* cli font   */
+.dropdown {
+        background: url("/static/img/Icons/32/i_32_user.png") transparent;
+}
+
+.dropdown-content {
+        display: none;
+        font-family: Oswald;
+        color: #666666;
+        font-size: 14px;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 100px;
+        box-shadow: 0px 5px 16px 0px rgba(0,0,0,0.2);
+}
+
+.dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+        display: block;
+}
+
+
+
+/* cli font */
 
     .cli_font {
-    	font-size: 14px;
-        word-break: break-all;
-    	color: #00ff00;
-        background-color: #000000;
+            font-size: 14px;
+            word-break: break-all;
+      	    color: #00ff00;
+            background-color: #000000;
     }
 
 

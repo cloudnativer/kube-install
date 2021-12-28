@@ -8,13 +8,14 @@ import (
 // Displays the detailed help information of the kube-install.
 func ShowHelp(){
     fmt.Println(`Usage of kube-install: 
-kube-install [OPTION] { [COMMAND] OBJECT [ARGS]... } 
+kube-install [ OPTION ] { COMMAND [ OBJECT ] ARGS ... } 
 
 OPTIONS:
   d, daemon        Run as a daemon service.(Enable this switch to use the web console for management)
   e, exec          Deploy and uninstall kubernetes cluster.(Use with "init | sshcontrol | install | addnode | delnode | delmaster | rebuildmaster | uninstall")
   h, help          Display usage help information of kube-install.
   i, init          Initialize the local system environment.
+  l, logs          View Installation, uninstall, master and node management log information.
   s, showk8s       Display all installed kubernetes cluster information.
   v, version       Display software version information of kube-install.
 
@@ -29,6 +30,7 @@ COMMAND:
 
 OBJECT:
   cniplugin        Specifies the CNI plug-in type: "flannel | calico | kuberouter | weave | cilium".(Default is "flannel")
+  k8sdashboard     Automatically deploy kube-dashboard to kubernetes cluster. (default "yes")
   k8sver           Specifies the version of k8s software installed.(Default is "1.22")
   label            In the case of deploying and operating multiple kubernetes clusters, it is necessary to specify a label to uniquely identify a kubernetes cluster.(Length must be less than 32 strings)
   listen           Set the IP and port on which the daemon service listens.(Default is "0.0.0.0:9080")

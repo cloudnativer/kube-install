@@ -10,37 +10,42 @@
     state: stopped
     enabled: false
   ignore_errors: yes
-- name: 3.Stop docker service
+- name: 3.Stop runtime service
   service:
-    name: docker
+    name: containerd
     state: stopped
     enabled: false
   ignore_errors: yes
-- name: 4.Uninstall docker software
-  copy: 
-    src: ../templates/uninstall-docker.sh
-    dest: "/tmp/.kubeinstalltemp{{sub_process_dir}}/temp/uninstall-docker.sh"
-    mode: 0755
-  ignore_errors: yes
-- shell: "/tmp/.kubeinstalltemp{{sub_process_dir}}/temp/uninstall-docker.sh"
-  ignore_errors: yes
-- name: 5.Umount kubelet disk partition
+- name: 4.Umount kubelet disk partition
   shell: "for diskPartition in `mount | grep kubelet | awk '{print $3}'` ; do umount $diskPartition ; done"
   ignore_errors: yes
-- name: 6.Delete CNI bin file
+- name: 5.Delete bin file
   file:
     path: /opt/cni
-    state: absent
-  ignore_errors: yes
-- file:
-    path: /usr/local/bin/calicoctl
     state: absent
   ignore_errors: yes
 - file:
     path: /etc/cni
     state: absent
   ignore_errors: yes
-- name: 7.Delete kube-proxy service file
+- file:
+    path: /usr/local/bin/{{item}}
+    state: absent
+  with_items:
+    - calicoctl
+    - containerd
+    - containerd-shim
+    - containerd-shim-runc-v1
+    - containerd-shim-runc-v2
+    - crictl
+    - ctr
+    - runc
+    - kubelet
+    - kube-proxy
+    - ipvsinit.sh
+    - resolvinit.sh
+  ignore_errors: yes
+- name: 6.Delete kube-proxy service file
   file:
     path: /etc/systemd/system/kube-proxy.service
     state: absent
@@ -49,13 +54,18 @@
     path: "{{software_home}}/k8s/kubernetes/kube-proxy"
     state: absent
   ignore_errors: yes
-- name: 8.Delete kubelet service file
+- name: 7.Delete kubelet service file
   file:
     path: /etc/systemd/system/kubelet.service
     state: absent
   ignore_errors: yes
 - file:
     path: "{{software_home}}/k8s/kubernetes/kubelet"
+    state: absent
+  ignore_errors: yes
+- name: 8.Delete runtime service file
+  file:
+    path: /etc/systemd/system/containerd.service
     state: absent
   ignore_errors: yes
 

@@ -1,8 +1,4 @@
-- name: 1.Create temp directory
-  file:
-    path: "{{k8s_install_home}}/.temp/"
-    state: directory
-- name: 2.Cleaning up garbage files left in history
+- name: 1.Cleaning up garbage files left in history.
   service:
     name: kubelet
     state: stopped
@@ -14,57 +10,79 @@
     enabled: false
   ignore_errors: yes
 - service:
-    name: docker
+    name: containerd
     state: stopped
     enabled: false
   ignore_errors: yes
+- shell: "for diskPartition in `mount | grep kubelet | awk '{print $3}'` ; do umount $diskPartition ; done"
+  ignore_errors: yes
 - file:
-    path: /etc/systemd/system/kubelet.service
+    path: /opt/cni/bin
     state: absent
+  ignore_errors: yes
+- file:
+    path: /etc/cni/net.d
+    state: absent
+  ignore_errors: yes
+- file:
+    path: /usr/local/bin/{{item}}
+    state: absent
+  with_items:
+    - containerd
+    - containerd-shim
+    - containerd-shim-runc-v1
+    - containerd-shim-runc-v2
+    - crictl
+    - ctr
+    - runc
   ignore_errors: yes
 - file:
     path: /etc/systemd/system/kube-proxy.service
     state: absent
   ignore_errors: yes
 - file:
-    path: /opt/cni/bin
+    path: "{{software_home}}/k8s/kubernetes/kube-proxy"
     state: absent
   ignore_errors: yes
 - file:
-    path: /etc/cni/net.d
+    path: /etc/systemd/system/kubelet.service
     state: absent
   ignore_errors: yes
-- copy:
-    src: ../../../0x00000000action/delnode/templates/uninstall-docker.sh
-    dest: "{{k8s_install_home}}/.temp/uninstall-docker.sh"
-    mode: 0755
+- file:
+    path: "{{software_home}}/k8s/kubernetes/kubelet"
+    state: absent
   ignore_errors: yes
-- shell: "{{k8s_install_home}}/.temp/uninstall-docker.sh"
+- file:
+    path: /etc/systemd/system/containerd.service
+    state: absent
   ignore_errors: yes
 
-- name: 3.Create CNI plug-in directory
+- name: 2.Create CNI plug-in directory
   file:
+    path: "{{k8s_install_home}}/.temp/"
+    state: directory
+- file:
     path: /etc/cni/net.d
     state: directory
 - file:
     path: /opt/cni/bin
     state: directory
-- name: 4.Decompress CNI plug-in package
+- name: 3.Decompress CNI plug-in package
   unarchive:
     src: "{{kipath}}/pkg/cni-plugins.tar.gz"
     dest: /opt/cni/bin/
     mode: 0755
 - unarchive:
-    src: "{{kipath}}/pkg/calicoctl.tgz"
+    src: "{{kipath}}/pkg/calicoctl.tar.gz"
     dest: /usr/local/bin/
     mode: 0755
   ignore_errors: yes
 
-- name: 5.Create docker config dir
+- name: 4.Create docker config dir
   file:
     path: "/etc/docker/"
     state: directory
-- name: 6.Decompress docker software package
+- name: 5.Decompress docker software package
   unarchive:
     src: "{{kipath}}/pkg/docker.tar.gz"
     dest: /usr/bin/
@@ -72,41 +90,42 @@
 - template:
     src: ../templates/daemon.json.j2
     dest: "/etc/docker/daemon.json"
-- name: 7.Create docker service
+- name: 6.Create docker service
   template:
     src: ../templates/docker.service
     dest: /etc/systemd/system/docker.service
 
-- name: 8.Create ipvsinit service
+- name: 7.Create ipvsinit service
   copy:
     src: ../templates/ipvsinit.service
     dest: /etc/systemd/system/ipvsinit.service
-- name: 9.Create ipvsinit shell
+- name: 8.Create ipvsinit shell
   template:
     src: ../templates/ipvsinit.sh.j2
     dest: /usr/local/bin/ipvsinit.sh
     mode: 0755
-- name: 10.Enable ipvsinit service
+- name: 9.Enable ipvsinit service
   systemd:
     daemon-reload: true
     name: ipvsinit
     enabled: true
 
-- name: 11.Start docker service
+- name: 10.Start docker service
   systemd:
     daemon-reload: true
     name: docker
     state: restarted
     enabled: true
-- name: 12.Decompress docker images package
+- name: 11.Decompress docker images package
   unarchive:
     src: "{{kipath}}/pkg/image_files.tar.gz"
     dest: "{{k8s_install_home}}"
     mode: 0744
-- name: 13.Load docker images
+- name: 12.Load docker images
   shell: "docker load < {{k8s_install_home}}/image_files/{{item}}"
   with_items:
     - "metrics-server-amd64.tar"
+    - "metrics-scraper.tar"
     - "heapster-amd64.tar"
     - "pause-amd64.tar"
     - "traefik.tar"
@@ -125,13 +144,14 @@
     - "weave-npc.tar"
     - "cilium.tar"
     - "cilium-operator-generic.tar"
-- name: 14.Set docker images tag and create pushsysimages shell 
+- name: 13.Set docker images tag and create pushsysimages shell 
   shell: "echo '#!/bin/bash' > {{k8s_install_home}}/image_files/pushsysimages.sh && chmod 755 {{k8s_install_home}}/image_files/pushsysimages.sh"
 - shell: "docker tag cloudnativer/{{item}} {{addons_ip3}}:5000/{{item}} && echo 'docker push {{addons_ip3}}:5000/{{item}}' >> {{k8s_install_home}}/image_files/pushsysimages.sh"
   with_items:
-    - "metrics-server-amd64:v0.3.6"
+    - "metrics-server-amd64:v0.5.0"
+    - "metrics-scraper:v1.0.7"
     - "heapster-amd64:v1.5.4"
-    - "pause-amd64:3.1"
+    - "pause-amd64:3.5"
     - "traefik:v2.0.7"
     - "alpine:3.6"
     - "kubernetes-dashboard-amd64:{{k8sdashboardversion}}"
@@ -148,5 +168,6 @@
     - "weave-npc:2.8.1"
     - "cilium:v1.9.0"
     - "cilium-operator-generic:v1.9.0"
+
 
 

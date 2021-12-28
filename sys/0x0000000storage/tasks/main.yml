@@ -6,7 +6,7 @@
 
 - name: 2.Decompress etcd software package
   unarchive:
-    src: "{{kipath}}/pkg/etcd-v3.3.26.tar.gz"
+    src: "{{kipath}}/pkg/etcd.tar.gz"
     dest: /usr/local/bin/
     mode: 0755
 - name: 3.Create {{k8s_install_home}}/etcd data directory
