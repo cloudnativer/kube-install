@@ -10,9 +10,23 @@
 First, you need to execute the 'kube-install -init' command to initialize the system environment (you can skip if you have already initialized earlier), and then execute the 'systemctl start kube-install' command to run the web management platform service of kube-install.
 
 ```
+# cd /root/kube-install/
+# ./kube-install -init -ostype "centos7"
 #
-# systemctl start kube-install
+# systemctl start kube-install.service
+#
+# systemctl status kube-install.service
+  ● kube-install.service - kube-install One click fast installation of highly available kubernetes cluster.
+     Loaded: loaded (/etc/systemd/system/kube-install.service; disabled; vendor preset: disabled)
+     Active: active (running) since Fri 2021-08-20 14:30:55 CST; 21min ago
+       Docs: https://cloudnativer.github.io/
+   Main PID: 2768 (kube-install)
+     CGroup: /system.slice/kube-install.service
+             └─2768 /go/src/kube-install/kube-install -daemon
+   ...
+
 ```
+
 Now, you can open it with a web browser `http://kube-install_IP:9080`, view kube-nstall web platform.
 <br>
 Notice: kube-install web platform service listens to `TCP 9080` by default. If you want to modify the listening address, you can set it by modifying the `kube-install -daemon -listen IP:port` parameter in the `/etc/systemd/system/kube-install.service` file.
