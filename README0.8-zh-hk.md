@@ -61,7 +61,20 @@
 
 <br>
 
-你也可以通過kube-install的Web管理平臺來安裝kubernetes集羣。kube-install的Web管理平臺具備SSH打通、定時安裝部署、Node擴容、Master修復、集羣卸載等强大的功能，你可以在Web管理平臺上獲得更好的安裝體驗。
+如果你有四臺服務器，k8s-master安裝在三臺服務器（192.168.1.11、192.168.1.12、192.168.1.13）上，k8s-node安裝在四臺服務器（192.168.1.11、192.168.1.12、192.168.1.13、192.168.1.14）上。服務器的作業系統是純淨的CentOS Linux或RHEL（RedHat Enterprise Linux），具體如下表所示：
+<table>
+<tr><td><b>IP地址</b></td><td><b>需要安裝的組件</b></td><td><b>作業系統版本</b></td><td><b>root密碼</b></td></tr>
+<tr><td>192.168.1.11</td><td>k8s-master,k8s-node,kube-install</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
+<tr><td>192.168.1.12</td><td>k8s-master,k8s-node</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
+<tr><td>192.168.1.13</td><td>k8s-master,k8s-node</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
+<tr><td>192.168.1.14</td><td>k8s-node</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
+</table>
+安裝後的部署架構如下圖所示：
+
+![kube-install-arch](docs/images/kube-install-arch-1.jpg)
+
+<br>
+注意：這裡使用192.168.1.11作為kube-install源安裝機。事實上，您可以將任何主機（包括kubernetes集羣之外的任何主機）用來作為kube-install源安裝機！
 <br>
 
 ## 3.1 初始化系統環境
@@ -80,9 +93,7 @@
 
 ## 3.2 運行kube-install的Web管理服務
 
-然後，執行`systemctl start kube-install`命令來運行kube-install的Web管理平臺服務。
-<br>
-使用用戶名 `admin` 和默認密碼 `CloudNativeR` 登入！（你可以後期通過web平臺修改密碼）
+然後，執行`systemctl start kube-install`命令來運行kube-install的Web管理平臺服務。kube-install的Web管理平臺具備SSH打通、定時安裝部署、Node擴容、Master修復、集羣卸載等强大的功能，你可以在Web管理平臺上獲得更好的安裝體驗。
 
 ```
 # cd /root/kube-install/
@@ -102,7 +113,7 @@
 
 ```
 
-此時，你就可以使用網頁瀏覽器打開`http://kube-install源安裝機IP:9080`，訪問kube-install的Web管理平臺了。
+此時，你就可以使用網頁瀏覽器打開`http://kube-install源安裝機IP:9080`，訪問kube-install的Web管理平臺了。 使用用戶名 `admin` 和默認密碼 `CloudNativeR` 登入！（你可以後期通過web平臺修改密碼）
 
 <br>
 
@@ -129,21 +140,7 @@
 # [4] 通過命令列快速安裝kubernetes集羣
 
 <br>
-
-如果你有四臺服務器，k8s-master安裝在三臺服務器（192.168.1.11、192.168.1.12、192.168.1.13）上，k8s-node安裝在四臺服務器（192.168.1.11、192.168.1.12、192.168.1.13、192.168.1.14）上。服務器的作業系統是純淨的CentOS Linux或RHEL（RedHat Enterprise Linux），具體如下表所示：
-<table>
-<tr><td><b>IP地址</b></td><td><b>需要安裝的組件</b></td><td><b>作業系統版本</b></td><td><b>root密碼</b></td></tr>
-<tr><td>192.168.1.11</td><td>k8s-master,k8s-node,kube-install</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
-<tr><td>192.168.1.12</td><td>k8s-master,k8s-node</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
-<tr><td>192.168.1.13</td><td>k8s-master,k8s-node</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
-<tr><td>192.168.1.14</td><td>k8s-node</td><td>CentOS Linux release 7 or Red Hat Enterprise Linux(RHEL) 7</td><td>cloudnativer</td></tr>
-</table>
-安裝後的部署架構如下圖所示：
-
-![kube-install-arch](docs/images/kube-install-arch-1.jpg)
-
-<br>
-注意：這裡使用192.168.1.11作為kube-install源安裝機。事實上，您可以將任何主機（包括kubernetes集羣之外的任何主機）用來作為kube-install源安裝機！
+除了可以使用Web平臺安裝kubernetes集羣外，你還可以通過kube-install的命令列來安裝kubernetes集羣，kube-install的命令列使用起來比較簡單方便。
 <br>
 
 ## 4.1 初始化系統環境
