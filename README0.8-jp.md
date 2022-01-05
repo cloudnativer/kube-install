@@ -87,7 +87,7 @@
 # ./kube-install -init -ostype "centos7"
 ```
 
-注意：kube-installソフトウェアは`rhel7`，rhel8`，`centos7`，`centos8`，`ubuntu20`，`suse15`などのバージョンのオペレーティングシステムをサポートします。初期
+注意：kube-installソフトウェアは`rhel7`，`rhel8`，`centos7`，`centos8`，`ubuntu20`，`suse15`などのバージョンのオペレーティングシステムをサポートします。初期
 化操作をする時、`-ostype`パラメータの設定が正しいことを確認してください。
 <br>
 
