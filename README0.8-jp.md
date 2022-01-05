@@ -166,7 +166,7 @@ Webプラットフォームを使用してkubernetesクラスタをインスト�
 # ./kube-install -init -ostype "centos7"
 ```
 
-注意：kube-installソフトウェアは`rhel7`，rhel8`，`centos7`，`centos8`，`ubuntu20`，`suse15`などのバージョンのオペレーティングシステムをサポートします。初期化操作をする時、`-ostype`パラメータの設定が正しいことを確認してください。
+注意：kube-installソフトウェアは`rhel7`，`rhel8`，`centos7`，`centos8`，`ubuntu20`，`suse15`などのバージョンのオペレーティングシステムをサポートします。初期化操作をする時、`-ostype`パラメータの設定が正しいことを確認してください。
 <br>
 
 ## 4.2 ターゲットホストへのSSHチャネル
@@ -196,7 +196,7 @@ kube-installソースのインストール機でrootユーザーを使って下�
 
 注意：
 
-* kube-installソフトウェアは`rhel 7`，rhel 8`，`centos7`，`centos8`，`ubuntu20`，`suse15`などのバージョンのオペレーティングシステムをサポートしています。セットアップ操作をする時、`-ostype`パラメータの設定が正しいことを確認してください。低いバージョンの`centos 7`と`redhat 7`はカーネルモジュールが不足する可能性があるので、`kube-install`は`centos 7`と`rhel 7`オペレーティングシステムのカーネルに対して自動的に4.19にアップグレードする機能を提供しています。この機能を使って、`-upgradekernel`パラメータを選択することができます。
+* kube-installソフトウェアは`rhel 7`，`rhel 8`，`centos7`，`centos8`，`ubuntu20`，`suse15`などのバージョンのオペレーティングシステムをサポートしています。セットアップ操作をする時、`-ostype`パラメータの設定が正しいことを確認してください。低いバージョンの`centos 7`と`redhat 7`はカーネルモジュールが不足する可能性があるので、`kube-install`は`centos 7`と`rhel 7`オペレーティングシステムのカーネルに対して自動的に4.19にアップグレードする機能を提供しています。この機能を使って、`-upgradekernel`パラメータを選択することができます。
 * あなたがインストールしたいCNIプラグインを選択してください。現在は、`kube-innstall`が`Flannel`、`Calico`、`Kube-router`、`Weave`、`Cilium`などのCNIプラグインタイプをサポートしています。`Clium`をインストールする必要があれば、Linuxカーネルを4.9以上にアップグレードしてください。
 
 <br>
@@ -252,7 +252,7 @@ Kube-installソースホストにrootユーザを使用して以下のコマン�
 # kube-install -exec addnode -node "192.168.1.15,192.168.1.16" -k8sver "1.22" -ostype "centos7" -label "192168001011"
 ```
 
-注意：kube-installソフトウェアは`rhel7`，rhel8`，`centos7`，`centos8`，`ubuntu20`，`suse15`などのバージョンのオペレーティングシステムをサポートします。初期化操作をする時、`-ostype`パラメータの設定が正しいことを確認してください。<br>
+注意：kube-installソフトウェアは`rhel7`，`rhel8`，`centos7`，`centos8`，`ubuntu20`，`suse15`などのバージョンのオペレーティングシステムをサポートします。初期化操作をする時、`-ostype`パラメータの設定が正しいことを確認してください。<br>
 また、Kubernetesクラスタを目的ホストにインストールするディレクトリパスをカスタマイズする必要があれば `-softdir` パラメータを持って設定することができます。
 
 <br>
@@ -261,7 +261,7 @@ Kube-installソースホストにrootユーザを使用して以下のコマン�
 
 ![kube-install-arch](docs/images/kube-install-arch-2.jpg)
 
-`kube-install -exec addnode`コマンドを使用してk8s-nodeノードの拡張を行うほか、あなたも同様にkube-installのWeb管理プラットフォームを使用してk8s-nodeノードの拡張を行うことができます。Add Nodeボタンをクリックしてフォームを記入すれば、k8s-nodeの拡張が完了します。<a href="docs/webinstall0.7.md">ここをクリックしてkube-installのWeb管理プラットフォームを使ってk8s-nodeノードを拡張する方法を確認できます</a>。
+`kube-install -exec addnode`コマンドを使用してk8s-nodeノードの拡張を行うほか、あなたも同様にkube-installのWeb管理プラットフォームを使用してk8s-nodeノードの拡張を行うことができます。`Add Node`ボタンをクリックしてフォームを記入すれば、k8s-nodeの拡張が完了します。<a href="docs/webinstall0.7.md">ここをクリックしてkube-installのWeb管理プラットフォームを使ってk8s-nodeノードを拡張する方法を確認できます</a>。
 
 ![kube-dashboard](docs/images/webnodeadd001.jpg)
 
@@ -276,6 +276,7 @@ Kube-installソースホストにrootユーザを使用して以下のコマン�
 # [6] kube-install命令行の助け
 
 <br>
+  
 あなたは`kube-install -help`コマンドを実行して、kube-installの使用支援文書を確認してもいいです。<a href="docs/parameters0.7.md">ここをクリックして、より詳細なコマンドラインヘルプドキュメントを確認してもいいです</a>。
 
 <br>
@@ -285,6 +286,7 @@ Kube-installソースホストにrootユーザを使用して以下のコマン�
 # [7] IssuesとPRを提出してください
 
 使用中に問題があったら、<a href="https://github.com/cloudnativer/kube-install/issues">https://github.com/cloudnativer/kube-install/issues</a>Issuesを提出してもいいです。Forkソースコードを修正してBUGを修復してみて、PRを提出してください。
+  
 <br>
 
 ```
