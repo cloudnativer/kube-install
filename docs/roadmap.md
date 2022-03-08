@@ -15,6 +15,7 @@ We will add the following features in 0.8.0 version:
 * Set the deployment of `kube-dashboard` as an option, and users can choose not to deploy it.
 * Solve the problem of `secret` "harbor-secret" not found.
 * Support non-standard `SSH` port for installation.
+* Fix DOS security vulnerability of `go-yaml`.
 * Upgrade `kube-dashboard` to v2.4.0.
 * Upgrade `pause` image to v3.5.
 * Upgrade `helm` to v3.7.2.
