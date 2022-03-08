@@ -13,7 +13,7 @@ We will add the following features in 0.8.0 version:
 * `kubernetes v1.17` is deprecated, it will not be integrated by default. If you want to use `kubernetes v1.17`, you can use the `kube-install v0.7.*`.
 * Add dashboard `metrics-scraper` to solve the problem of `kube-dashboard` monitoring chart.
 * Set the deployment of `kube-dashboard` as an option, and users can choose not to deploy it.
-* Solve the problem of  secret "harbor-secret" not found.
+* Solve the problem of  secret `harbor-secret` not found.
 * Support non-standard `SSH` port for installation.
 * Upgrade `kube-dashboard` to v2.4.0.
 * Upgrade `pause` image to v3.5.
