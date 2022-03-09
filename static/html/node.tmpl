@@ -108,10 +108,10 @@
         </script>
         <script language="javascript">
                 function delnodelog(){
-                    window.open("logs?label={{ .Label }}&opt=delnode",'_blank');
+                    window.open("logs?opt=delnode&label={{ .Label }}",'_blank');
                 }
                 function addnodelog(){
-                    window.open("logs?label={{ .Label }}&opt=addnode",'_blank');
+                    window.open("logs?opt=addnode&label={{ .Label }}",'_blank');
                 }
         </script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
@@ -131,7 +131,7 @@
 	                <div style="text-align: right;"><img alt="{{if eq .Lang "cn"}}点击关闭{{else}}Close{{end}}" src="static/img/Button/close03.png" onclick = "document.getElementById('node_content').style.display='none';document.getElementById('node_black').style.display='none'"/></div>
                 </div>
 		<div class="widget_contents noPadding">
-                        <form action="/addnode?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" id="nodeadd" name="nodeadd" method="post" enctype="multipart/form-data" target="_self" >
+                        <form action="/addnode?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}" id="nodeadd" name="nodeadd" method="post" enctype="multipart/form-data" target="_self" >
                                 <div class="line_grid">
                                         <div class="g_3"><span class="label">{{if eq .Lang "cn"}}Kubernetes集群标示{{else}}Kubernetes cluster label{{end}}</span></div>
                                         <div class="g_9">
@@ -146,7 +146,13 @@
 						<div class="field_notice">{{if eq .Lang "cn"}}填写要部署的Kubernetes Node主机IP地址，多个IP请用英文逗号","隔开{{else}}Fill in the IP address of the kubernetes node host to be deployed. Separate multiple IP addresses with English comma ","{{end}}</div>
 					</div>
 				</div>
-
+                                <div class="line_grid">
+                                        <div class="g_3"><span class="label">{{if eq .Lang "cn"}}主机的SSH端口号{{else}}SSH Port of the host{{end}}</span></div>
+                                        <div class="g_9">
+                                                <input name="sshport" class="readonly_field" type="text" value="{{.Sshport}}" required readonly/>
+                                                <div class="field_notice">{{if eq .Lang "cn"}}这是Kubernetes Node主机的SSH端口号，在你第一次安装初始化的时候已经确定，此处禁止修改。为方便后期统一运维，相同集群默认使用同一个端口。{{else}}The SSH port of kubernetes node host. It has been determined when you first install and initialize. Modification is prohibited here. In order to facilitate unified operation and maintenance in the later stage, the same cluster uses the same SSH port by default.{{end}}</div>
+                                        </div>
+                                </div>
                                 <div class="line_grid">
                                         <div class="g_3"><span class="label">{{if eq .Lang "cn"}}操作系统类型{{else}}Operating system type{{end}} <span class="must">*</span></span>
                                         </div>
@@ -213,11 +219,11 @@
                                                             <div class="dropdown in_border">
                                                                 <div class="dropdown-content">
                                                                     {{if eq .Lang "cn"}}
-                                                                        <a href="/userinfo?username=admin&label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&tool=yes&backurl=nodeadmin&lang={{.Lang}}">账户管理</a>
-                                                                        <a href="/logoutset?username=admin&label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&tool=yes&backurl=nodeadmin&lang={{.Lang}}">退出登录</a>
+                                                                        <a href="/userinfo?username=admin&label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}&tool=yes&backurl=nodeadmin&lang={{.Lang}}">账户管理</a>
+                                                                        <a href="/logoutset?username=admin&label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}&tool=yes&backurl=nodeadmin&lang={{.Lang}}">退出登录</a>
                                                                     {{else}}
-                                                                        <a href="/userinfo?username=admin&label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&tool=yes&backurl=nodeadmin&lang={{.Lang}}">User Info</a>
-                                                                        <a href="/logoutset?username=admin&label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&tool=yes&backurl=nodeadmin&lang={{.Lang}}">Log out</a>
+                                                                        <a href="/userinfo?username=admin&label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}&tool=yes&backurl=nodeadmin&lang={{.Lang}}">User Info</a>
+                                                                        <a href="/logoutset?username=admin&label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}&tool=yes&backurl=nodeadmin&lang={{.Lang}}">Log out</a>
                                                                     {{end}}
                                                                 </div>
                                                             </div>
@@ -228,7 +234,7 @@
                                                 <div class="out_border">
                                                         <div class="button_wrapper">
                                                                 <div class="in_border" >
-                                                                        <a {{if eq .Lang "cn"}} href="/nodeadmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&lang=en" {{else}} href="/nodeadmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&lang=cn" {{end}} title="{{if eq .Lang "cn"}}切换语言{{else}}Switch Language{{end}}" class="the_button">
+                                                                        <a {{if eq .Lang "cn"}} href="/nodeadmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}&lang=en" {{else}} href="/nodeadmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}&lang=cn" {{end}} title="{{if eq .Lang "cn"}}切换语言{{else}}Switch Language{{end}}" class="the_button">
                                                                                 {{if eq .Lang "cn"}}
                                                                                         <span class="i_32_en"></span>
                                                                                 {{else}}
@@ -256,12 +262,12 @@
 
         <div class="wrapper small_menu">
                 <ul class="menu_small_buttons">
-                        <li><a title="{{if eq .Lang "cn"}}信息概览{{else}}Information Overview{{end}}" class="i_22_dashboard" href="/?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}"></a></li>
-                        <li><a title="{{if eq .Lang "cn"}}管理Kubernetes集群{{else}}Managing Kubernetes Clusters{{end}}" class="i_22_cluster" href="clusterlist?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}"></a></li>
-                        <li><a title="{{if eq .Lang "cn"}}管理Kubernetes Master{{else}}Managing Kubernetes Master{{end}}" class="i_22_master" href="masteradmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}"></a></li>
-                        <li><a title="{{if eq .Lang "cn"}}管理Kubernetes Node{{else}}Managing Kubernetes Nodes{{end}}" class="i_22_node smActive" href="nodeadmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}"></a></li>
-                        <li><a title="{{if eq .Lang "cn"}}常用工具{{else}}Common Tools{{end}}" class="i_22_tools" href="tools?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}"></a></li>
-                        <li><a title="{{if eq .Lang "cn"}}查看各类日志{{else}}View all kinds of logs{{end}}" class="i_22_logs" href="logs?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}"></a></li>
+                        <li><a title="{{if eq .Lang "cn"}}信息概览{{else}}Information Overview{{end}}" class="i_22_dashboard" href="/?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}"></a></li>
+                        <li><a title="{{if eq .Lang "cn"}}管理Kubernetes集群{{else}}Managing Kubernetes Clusters{{end}}" class="i_22_cluster" href="clusterlist?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}"></a></li>
+                        <li><a title="{{if eq .Lang "cn"}}管理Kubernetes Master{{else}}Managing Kubernetes Master{{end}}" class="i_22_master" href="masteradmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}"></a></li>
+                        <li><a title="{{if eq .Lang "cn"}}管理Kubernetes Node{{else}}Managing Kubernetes Nodes{{end}}" class="i_22_node smActive" href="nodeadmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}"></a></li>
+                        <li><a title="{{if eq .Lang "cn"}}常用工具{{else}}Common Tools{{end}}" class="i_22_tools" href="tools?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}"></a></li>
+                        <li><a title="{{if eq .Lang "cn"}}查看各类日志{{else}}View all kinds of logs{{end}}" class="i_22_logs" href="logs?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}"></a></li>
                 </ul>
         </div>
 
@@ -270,37 +276,37 @@
                 <aside class="sidebar">
                         <ul class="tab_nav">
                                 <li class="i_32_dashboard">
-                                        <a href="/?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" title="{{if eq .Lang "cn"}}基本信息{{else}}Basic information{{end}}">
+                                        <a href="/?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}" title="{{if eq .Lang "cn"}}基本信息{{else}}Basic information{{end}}">
                                                 <span class="tab_label">Dashboard</span>
                                                 <span class="tab_info">{{if eq .Lang "cn"}}信息概览{{else}}Overview{{end}}</span>
                                         </a>
                                 </li>
                                 <li class="i_32_cluster">
-                                        <a href="clusterlist?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" title="{{if eq .Lang "cn"}}管理Kubernetes集群{{else}}Managing Kubernetes Clusters{{end}}">
+                                        <a href="clusterlist?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}" title="{{if eq .Lang "cn"}}管理Kubernetes集群{{else}}Managing Kubernetes Clusters{{end}}">
                                                 <span class="tab_label">Cluster</span>
                                                 <span class="tab_info">{{if eq .Lang "cn"}}集群管理{{else}}Management{{end}}</span>
                                         </a>
                                 </li>
                                 <li class="i_32_master">
-                                        <a href="masteradmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" title="{{if eq .Lang "cn"}}管理Kubernetes Master{{else}}Managing Kubernetes Master{{end}}">
+                                        <a href="masteradmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}" title="{{if eq .Lang "cn"}}管理Kubernetes Master{{else}}Managing Kubernetes Master{{end}}">
                                                 <span class="tab_label">Master</span>
                                                 <span class="tab_info">{{if eq .Lang "cn"}}Master管理{{else}}Rebuild/Del{{end}}</span>
                                         </a>
                                 </li>
                                 <li class="active_tab i_32_node">
-                                        <a href="nodeadmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" title="{{if eq .Lang "cn"}}管理Kubernetes Node{{else}}Managing Kubernetes Nodes{{end}}">
+                                        <a href="nodeadmin?label={{.Label}}&k8sver={{.K8sver}}&softdir={{.Softdir}}&ostype={{.Ostype}}&sshport={{.Sshport}}" title="{{if eq .Lang "cn"}}管理Kubernetes Node{{else}}Managing Kubernetes Nodes{{end}}">
                                                 <span class="tab_label">Node</span>
                                                 <span class="tab_info">{{if eq .Lang "cn"}}Node管理{{else}}Add/Del/Op{{end}}</span>
                                         </a>
                                 </li>
                                 <li class="i_32_tools">
-                                        <a href="tools?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" title="{{if eq .Lang "cn"}}实用小工具{{else}}Some Utilities Tools{{end}}">
+                                        <a href="tools?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}" title="{{if eq .Lang "cn"}}实用小工具{{else}}Some Utilities Tools{{end}}">
                                                 <span class="tab_label">Tools</span>
                                                 <span class="tab_info">{{if eq .Lang "cn"}}常用工具{{else}}Utilities Tools{{end}}</span>
                                         </a>
                                 </li>
                                 <li class="i_32_logs">
-                                        <a href="logs?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" title="{{if eq .Lang "cn"}}查看各类日志{{else}}View All Kinds of Logs{{end}}">
+                                        <a href="logs?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}" title="{{if eq .Lang "cn"}}查看各类日志{{else}}View All Kinds of Logs{{end}}">
                                                 <span class="tab_label">Logs</span>
                                                 <span class="tab_info">{{if eq .Lang "cn"}}操作日志{{else}}View Logs{{end}}</span>
                                         </a>
@@ -323,7 +329,7 @@
                                                                 <option value="none" selected disabled hidden>{{if eq .Lang "cn"}}切换Kubernetes集群{{else}}Switch Kubernetes{{end}}</option>
                                                                 {{ range $v := .Selectlist}}
                                                                     {{ if ne $v.Status "notinstall" }}
-                                                                        <option value="nodeadmin?label={{$v.Label}}&k8sver={{$v.K8sver}}&softdir={{$v.Softdir}}&ostype={{$v.Ostype}}" {{ if eq $v.Label $v.Labelnow }} selected="selected" {{end}} >{{ $v.Label }}</option>
+                                                                        <option value="nodeadmin?label={{$v.Label}}&k8sver={{$v.K8sver}}&softdir={{$v.Softdir}}&ostype={{$v.Ostype}}&sshport={{$v.Sshport}}" {{ if eq $v.Label $v.Labelnow }} selected="selected" {{end}} >{{ $v.Label }}</option>
                                                                     {{ end }}
                                                                 {{ end }}
                                                         </select>
@@ -337,7 +343,7 @@
                                 <div class="g_2">
                                         <button onclick = "document.getElementById('node_content').style.display='block';document.getElementById('node_black').style.display='block'" class="submitIt simple_buttons">{{if eq .Lang "cn"}}添加Node{{else}}Add Node{{end}}</button>
                                 </div>
-                                <form action="/delnode?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" id="nodeadmin" name="nodeadmin" method="post" enctype="multipart/form-data" target="_self">
+                                <form action="/delnode?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}" id="nodeadmin" name="nodeadmin" method="post" enctype="multipart/form-data" target="_self">
 				<div class="g_2">
 					<input {{ if ne .Label "" }} type="submit" {{else}} type="button" {{end}} value="{{if eq .Lang "cn"}}销毁Node{{else}}Delete Node{{end}}" class="submitIt simple_buttons" />
 				</div>
@@ -378,7 +384,7 @@
                                                                                 <td align="center">
                                                                         {{ if eq .TTYstatus "enable" }} <img src="static/img/Icons/32/i_32_ttyenable.png" style="vertical-align: middle;"/> <span style="display: inline-block;">{{if eq .Lang "cn"}}已启用{{else}}Enable{{end}}</span> {{else}} <img src="static/img/Icons/32/i_32_ttydisable.png" style="vertical-align: middle;"/> <span style="display: inline-block;">{{if eq .Lang "cn"}}已禁用{{else}}Disable{{end}}</span>{{end}}
                                                                                 </td>
-                                                                                <td align="center">{{ if eq .Nodestatus "ok" }}<a href="nodeinfo?label={{ .Label }}&nodeip={{ .Node }}&softdir={{ .Softdir }}&k8sver={{ .K8sver }}&nodestatus={{ .Nodestatus }}&ostype={{ .Ostype }}" style="background:#2E8B57; background-color:#2E8B57; color:#ffffff;">&nbsp;&nbsp;{{if eq .Lang "cn"}}查看详细{{else}}View Details{{end}}&nbsp;&nbsp;</a> {{ if ne .TTYstatus "enable" }}|{{end}}{{end}} {{ if eq .TTYstatus "enable" }}<a href="http://{{ .Node }}:7681" target="_blank" style="background:#2E8B57; background-color:#2E8B57; color:#ffffff;">&nbsp;&nbsp;{{if eq .Lang "cn"}}登录终端{{else}}Web Terminal{{end}}&nbsp;&nbsp;</a> |{{end}} {{ if eq .TTYstatus "enable" }} <a onclick="document.getElementById('progress_content').style.display='block';document.getElementById('node_black').style.display='block';window.open('tty?ttyip={{ .Node }}&ttyoption=disable&opt=nodetty&label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}','_self');" href="##" style="background:#5182B6; background-color:#5182B6; color:#ffffff;">&nbsp;&nbsp;{{if eq .Lang "cn"}}禁用终端{{else}}Disable Terminal{{end}}&nbsp;&nbsp;</a> {{else}} <a onclick="document.getElementById('progress_content').style.display='block';document.getElementById('node_black').style.display='block';window.open('tty?ttyip={{ .Node }}&ttyoption=enable&opt=nodetty&label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}','_self');" href="##" style="background:#5182B6; background-color:#5182B6; color:#ffffff;">&nbsp;&nbsp;{{if eq .Lang "cn"}}启用终端{{else}}Enable Terminal{{end}}&nbsp;&nbsp;</a> {{end}} </td>
+                                                                                <td align="center">{{ if eq .Nodestatus "ok" }}<a href="nodeinfo?label={{ .Label }}&nodeip={{ .Node }}&softdir={{ .Softdir }}&k8sver={{ .K8sver }}&sshport={{.Sshport}}&nodestatus={{ .Nodestatus }}&ostype={{ .Ostype }}" style="background:#2E8B57; background-color:#2E8B57; color:#ffffff;">&nbsp;&nbsp;{{if eq .Lang "cn"}}查看详细{{else}}View Details{{end}}&nbsp;&nbsp;</a> {{ if ne .TTYstatus "enable" }}|{{end}}{{end}} {{ if eq .TTYstatus "enable" }}<a href="http://{{ .Node }}:7681" target="_blank" style="background:#2E8B57; background-color:#2E8B57; color:#ffffff;">&nbsp;&nbsp;{{if eq .Lang "cn"}}登录终端{{else}}Web Terminal{{end}}&nbsp;&nbsp;</a> |{{end}} {{ if eq .TTYstatus "enable" }} <a onclick="document.getElementById('progress_content').style.display='block';document.getElementById('node_black').style.display='block';window.open('tty?ttyip={{ .Node }}&ttyoption=disable&opt=nodetty&label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}','_self');" href="##" style="background:#5182B6; background-color:#5182B6; color:#ffffff;">&nbsp;&nbsp;{{if eq .Lang "cn"}}禁用终端{{else}}Disable Terminal{{end}}&nbsp;&nbsp;</a> {{else}} <a onclick="document.getElementById('progress_content').style.display='block';document.getElementById('node_black').style.display='block';window.open('tty?ttyip={{ .Node }}&ttyoption=enable&opt=nodetty&label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}','_self');" href="##" style="background:#5182B6; background-color:#5182B6; color:#ffffff;">&nbsp;&nbsp;{{if eq .Lang "cn"}}启用终端{{else}}Enable Terminal{{end}}&nbsp;&nbsp;</a> {{end}} </td>
 
 									</tr>
 								{{end}}{{end}}
@@ -390,6 +396,7 @@
 				<input type="hidden" name="k8sver" value="{{.K8sver}}"/>
 				<input type="hidden" name="softdir" value="{{.Softdir}}">
 				<input type="hidden" name="ostype" value="{{.Ostype}}">
+                                <input type="hidden" name="sshport" value="{{.Sshport}}">
 				</form>
 
 			</div>

@@ -125,7 +125,7 @@
 ![kube-dashboard](docs/images/webinstall001.jpg)
 
 注意：ターゲットホストにkubernetesクラスタをインストールする前に、ターゲットホストのSSH免密チャンネルにkube-installソースインストールマシンをローカルにオンしてください。
-あなたは自分で手で目標ホストのSSHチャンネルを打てばいいです。右上の `Open SSH Channel of Host` ボタンをクリックして打開してもいいです。<a href="docs/webssh0.7.md">ここをクリックしてもっと詳しい文書を確認できます</a>。
+あなたは自分で手で目標ホストのSSHチャンネルを打てばいいです。右上の `Open SSH Channel of Host` ボタンをクリックして打開してもいいです。<a href="docs/webssh0.8.md">ここをクリックしてもっと詳しい文書を確認できます</a>。
 <br>
 
 ポップアップの「インストールフォーム」ウィンドウに、インストールに必要なパラメータ情報を入力します。
@@ -180,7 +180,7 @@ Webプラットフォームを使用してkubernetesクラスタをインスト�
 # ./kube-install -exec sshcontrol -sship "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -sshpass "cloudnativer"
 ```
 
-あなたもkube-installのWeb管理プラットフォームを通じてターゲットホストのSSHチャネルにアクセスできます。<a href="docs/webssh0.7.md">ここをクリックして、Web管理プラットフォームを使ってSSHチャネルを打開する方法を確認してください</a>。<br>
+あなたもkube-installのWeb管理プラットフォームを通じてターゲットホストのSSHチャネルにアクセスできます。<a href="docs/webssh0.8.md">ここをクリックして、Web管理プラットフォームを使ってSSHチャネルを打開する方法を確認してください</a>。<br>
 
 <br>
 
@@ -277,7 +277,7 @@ Kube-installソースホストにrootユーザを使用して以下のコマン�
 
 <br>
   
-あなたは`kube-install -help`コマンドを実行して、kube-installの使用支援文書を確認してもいいです。<a href="docs/parameters0.7.md">ここをクリックして、より詳細なコマンドラインヘルプドキュメントを確認してもいいです</a>。
+あなたは`kube-install -help`コマンドを実行して、kube-installの使用支援文書を確認してもいいです。<a href="docs/parameters0.8.md">ここをクリックして、より詳細なコマンドラインヘルプドキュメントを確認してもいいです</a>。
 
 <br>
 <br>

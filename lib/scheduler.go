@@ -63,6 +63,7 @@ func MinutePeriodSchedule(currentDir string, kissh string, logName string, mode 
             _,_,_,subProcessDir,_ := ParameterConvert(mode, "", "", "", k8sArrayLocal[i], "")
 	    masterArray,_ := GetAllDir(currentDir+"/data/output"+subProcessDir+"/masters",currentDir,logName,mode)
 	    nodeArray,_ := GetAllDir(currentDir+"/data/output"+subProcessDir+"/nodes",currentDir,logName,mode)
+            sshPort,_ := ReadFile(currentDir+"/data/output"+subProcessDir+"/sshport.txt")
             scheduler,_ := ReadFile(currentDir+"/data/output"+subProcessDir+"/scheduler.txt")
             instime,_ := ReadFile(currentDir+"/data/output"+subProcessDir+"/installtime.txt")
             stu,err_stu := ReadFile(currentDir+"/data/output"+subProcessDir+"/status.txt")
@@ -82,7 +83,7 @@ func MinutePeriodSchedule(currentDir string, kissh string, logName string, mode 
                     if len(masterArray) == 1{
                         layoutName = "onemasterinstall"
                     }
-                    go InstallScheduler(k8sArrayLocal[i], masterArray, nodeArray, kissh, currentDir, "install", layoutName, subProcessDir, logName, mode)
+                    go InstallScheduler(k8sArrayLocal[i], masterArray, nodeArray, kissh, currentDir, "install", layoutName, subProcessDir, sshPort, logName, mode)
                 }
             } else {
                 //Refresh progress bar time 

@@ -121,7 +121,7 @@ Second, Click the `Install Kubernetes` button in the upper right corner to start
 
 ![kube-dashboard](docs/images/webinstall001.jpg)
 
-Notice: Before starting the installation, please open the SSH password free channel from localhost to the target host.You can use the `kube-install -exec sshcontrol` command to SSH through, or click the `Open SSH Channel of Host` button in the upper right corner to SSH through. Here is the process of SSH connection, <a href="docs/webssh0.7.md">click here to view more details</a> !<br>
+Notice: Before starting the installation, please open the SSH password free channel from localhost to the target host.You can use the `kube-install -exec sshcontrol` command to SSH through, or click the `Open SSH Channel of Host` button in the upper right corner to SSH through. Here is the process of SSH connection, <a href="docs/webssh0.8.md">click here to view more details</a> !<br>
 
 <br>
 
@@ -178,7 +178,7 @@ You can open the SSH password free channel by manually, or using the `kube-insta
 # ./kube-install -exec sshcontrol -sship "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -sshpass "cloudnativer"
 ```
 
-Or click the `Open SSH Channel of Host` button in the web platform to SSH through. Here is the process of SSH connection, <a href="docs/webssh0.7.md">click here to view more details</a> !<br>
+Or click the `Open SSH Channel of Host` button in the web platform to SSH through. Here is the process of SSH connection, <a href="docs/webssh0.8.md">click here to view more details</a> !<br>
 
 <br>
 
@@ -275,7 +275,7 @@ Notice: you can <a href="docs/operation0.7.md">click here to view more operation
 
 <br>
 
-You can execute `kube-install -help` command to view the command line help document of kube-install, or <a href="docs/parameters0.7.md">click here to view more command line help documents</a>.<br>
+You can execute `kube-install -help` command to view the command line help document of kube-install, or <a href="docs/parameters0.8.md">click here to view more command line help documents</a>.<br>
 
 <br>
 <br>

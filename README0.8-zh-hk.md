@@ -128,7 +128,7 @@
 ![kube-dashboard](docs/images/webinstall001.jpg)
 
 注意：在你開始給目標主機安裝kubernetes集羣之前，請先打通kube-install源安裝機本地到目標主機的SSH免密通道。
-你可以自己手工打通到目標主機的SSH通道，也可以點擊右上角的`Open SSH Channel of Host`按鈕來進行打通，<a href="docs/webssh0.7.md">點擊這裡可以查看更加詳細的檔案</a>。
+你可以自己手工打通到目標主機的SSH通道，也可以點擊右上角的`Open SSH Channel of Host`按鈕來進行打通，<a href="docs/webssh0.8.md">點擊這裡可以查看更加詳細的檔案</a>。
 
 <br>
 
@@ -185,7 +185,7 @@
 # ./kube-install -exec sshcontrol -sship "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -sshpass "cloudnativer"
 ```
 
-你也可以通過kube-install的Web管理平臺來打通到目標主機的SSH通道，<a href=“docs/webssh0.7.md”>點擊這裡查看使用Web管理平臺打通SSH通道的方法</a>！<br>
+你也可以通過kube-install的Web管理平臺來打通到目標主機的SSH通道，<a href=“docs/webssh0.8.md”>點擊這裡查看使用Web管理平臺打通SSH通道的方法</a>！<br>
 
 <br>
 
@@ -287,7 +287,7 @@ Kube-install不僅可以很方便的安裝單機和高可用的kubernetes集羣�
 
 <br>
 
-你可以執行`kube-install -help`命令查看kube-install的使用幫助檔案，<a href=“docs/parameters0.7.md”>你也可以點擊這裡查看更加詳細的命令列幫助文檔</a>。
+你可以執行`kube-install -help`命令查看kube-install的使用幫助檔案，<a href=“docs/parameters0.8.md”>你也可以點擊這裡查看更加詳細的命令列幫助文檔</a>。
 
 <br>
 <br>

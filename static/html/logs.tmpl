@@ -66,11 +66,11 @@
                                                             <div class="dropdown in_border">
                                                                 <div class="dropdown-content">
                                                                     {{if eq .Lang "cn"}}
-                                                                        <a href="/userinfo?username=admin&label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&tool=yes&backurl=logs&lang={{.Lang}}">账户管理</a>
-                                                                        <a href="/logoutset?username=admin&label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&tool=yes&backurl=logs&lang={{.Lang}}">退出登录</a>
+                                                                        <a href="/userinfo?username=admin&label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}&tool=yes&backurl=logs&lang={{.Lang}}">账户管理</a>
+                                                                        <a href="/logoutset?username=admin&label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}&tool=yes&backurl=logs&lang={{.Lang}}">退出登录</a>
                                                                     {{else}}
-                                                                        <a href="/userinfo?username=admin&label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&tool=yes&backurl=logs&lang={{.Lang}}">User Info</a>
-                                                                        <a href="/logoutset?username=admin&label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&tool=yes&backurl=logs&lang={{.Lang}}">Log out</a>
+                                                                        <a href="/userinfo?username=admin&label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}&tool=yes&backurl=logs&lang={{.Lang}}">User Info</a>
+                                                                        <a href="/logoutset?username=admin&label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}&tool=yes&backurl=logs&lang={{.Lang}}">Log out</a>
                                                                     {{end}}
                                                                 </div>
                                                             </div>
@@ -81,7 +81,7 @@
                                                 <div class="out_border">
                                                         <div class="button_wrapper">
                                                                 <div class="in_border" >
-                                                                        <a {{if eq .Lang "cn"}} href="/logs?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&lang=en" {{else}} href="/logs?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&lang=cn" {{end}} title="{{if eq .Lang "cn"}}切换语言{{else}}Switch Language{{end}}" class="the_button">
+                                                                        <a {{if eq .Lang "cn"}} href="/logs?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}&lang=en" {{else}} href="/logs?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}&lang=cn" {{end}} title="{{if eq .Lang "cn"}}切换语言{{else}}Switch Language{{end}}" class="the_button">
                                                                                 {{if eq .Lang "cn"}}
                                                                                         <span class="i_32_en"></span>
                                                                                 {{else}}
@@ -109,12 +109,12 @@
 
 	<div class="wrapper small_menu">
 		<ul class="menu_small_buttons">
-			<li><a title="{{if eq .Lang "cn"}}信息概览{{else}}Information Overview{{end}}" class="i_22_dashboard" href="/?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}"></a></li>
-			<li><a title="{{if eq .Lang "cn"}}管理Kubernetes集群{{else}}Managing Kubernetes Clusters{{end}}" class="i_22_cluster" href="clusterlist?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}"></a></li>
-			<li><a title="{{if eq .Lang "cn"}}管理Kubernetes Master{{else}}Managing Kubernetes Master{{end}}" class="i_22_master" href="masteradmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}"></a></li>
-			<li><a title="{{if eq .Lang "cn"}}管理Kubernetes Node{{else}}Managing Kubernetes Nodes{{end}}" class="i_22_node" href="nodeadmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}"></a></li>
-			<li><a title="{{if eq .Lang "cn"}}常用工具{{else}}Common Tools{{end}}" class="i_22_tools" href="tools?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}"></a></li>
-			<li><a title="{{if eq .Lang "cn"}}查看各类日志{{else}}View all kinds of logs{{end}}" class="i_22_logs smActive" href="logs?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}"></a></li>
+			<li><a title="{{if eq .Lang "cn"}}信息概览{{else}}Information Overview{{end}}" class="i_22_dashboard" href="/?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}"></a></li>
+			<li><a title="{{if eq .Lang "cn"}}管理Kubernetes集群{{else}}Managing Kubernetes Clusters{{end}}" class="i_22_cluster" href="clusterlist?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}"></a></li>
+			<li><a title="{{if eq .Lang "cn"}}管理Kubernetes Master{{else}}Managing Kubernetes Master{{end}}" class="i_22_master" href="masteradmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}"></a></li>
+			<li><a title="{{if eq .Lang "cn"}}管理Kubernetes Node{{else}}Managing Kubernetes Nodes{{end}}" class="i_22_node" href="nodeadmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}"></a></li>
+			<li><a title="{{if eq .Lang "cn"}}常用工具{{else}}Common Tools{{end}}" class="i_22_tools" href="tools?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}"></a></li>
+			<li><a title="{{if eq .Lang "cn"}}查看各类日志{{else}}View all kinds of logs{{end}}" class="i_22_logs smActive" href="logs?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}"></a></li>
 		</ul>
 	</div>
 
@@ -123,37 +123,37 @@
 		<aside class="sidebar">
 			<ul class="tab_nav">
 				<li class="i_32_dashboard">
-					<a href="/?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" title="{{if eq .Lang "cn"}}基本信息{{else}}Basic information{{end}}">
+					<a href="/?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}" title="{{if eq .Lang "cn"}}基本信息{{else}}Basic information{{end}}">
 						<span class="tab_label">Dashboard</span>
 						<span class="tab_info">{{if eq .Lang "cn"}}信息概览{{else}}Overview{{end}}</span>
 					</a>
 				</li>
 				<li class="i_32_cluster">
-					<a href="clusterlist?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" title="{{if eq .Lang "cn"}}管理Kubernetes集群{{else}}Managing Kubernetes Clusters{{end}}">
+					<a href="clusterlist?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}" title="{{if eq .Lang "cn"}}管理Kubernetes集群{{else}}Managing Kubernetes Clusters{{end}}">
 						<span class="tab_label">Cluster</span>
 						<span class="tab_info">{{if eq .Lang "cn"}}集群管理{{else}}Management{{end}}</span>
 					</a>
 				</li>
 				<li class="i_32_master">
-					<a href="masteradmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" title="{{if eq .Lang "cn"}}管理Kubernetes Master{{else}}Managing Kubernetes Master{{end}}">
+					<a href="masteradmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}" title="{{if eq .Lang "cn"}}管理Kubernetes Master{{else}}Managing Kubernetes Master{{end}}">
 						<span class="tab_label">Master</span>
 						<span class="tab_info">{{if eq .Lang "cn"}}Master管理{{else}}Rebuild/Del{{end}}</span>
 					</a>
 				</li>
 				<li class="i_32_node">
-					<a href="nodeadmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" title="{{if eq .Lang "cn"}}管理Kubernetes Node{{else}}Managing Kubernetes Nodes{{end}}">
+					<a href="nodeadmin?label={{.Label}}&k8sver={{.K8sver}}&softdir={{.Softdir}}&ostype={{.Ostype}}&sshport={{.Sshport}}" title="{{if eq .Lang "cn"}}管理Kubernetes Node{{else}}Managing Kubernetes Nodes{{end}}">
 						<span class="tab_label">Node</span>
 						<span class="tab_info">{{if eq .Lang "cn"}}Node管理{{else}}Add/Del/Op{{end}}</span>
 					</a>
 				</li>
 				<li class="i_32_tools">
-					<a href="tools?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" title="{{if eq .Lang "cn"}}实用小工具{{else}}Some Utilities Tools{{end}}">
+					<a href="tools?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}" title="{{if eq .Lang "cn"}}实用小工具{{else}}Some Utilities Tools{{end}}">
 						<span class="tab_label">Tools</span>
 						<span class="tab_info">{{if eq .Lang "cn"}}常用工具{{else}}Utilities Tools{{end}}</span>
 					</a>
 				</li>
 				<li class="active_tab i_32_logs">
-					<a href="logs?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" title="{{if eq .Lang "cn"}}查看各类日志{{else}}View All Kinds of Logs{{end}}">
+					<a href="logs?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}" title="{{if eq .Lang "cn"}}查看各类日志{{else}}View All Kinds of Logs{{end}}">
 						<span class="tab_label">Logs</span>
 						<span class="tab_info">{{if eq .Lang "cn"}}操作日志{{else}}View Logs{{end}}</span>
 					</a>
@@ -176,7 +176,7 @@
 								<option value="none" selected disabled hidden>{{if eq .Lang "cn"}}切换Kubernetes集群{{else}}Switch Kubernetes{{end}}</option>
 	                                                        {{ range $v := .Selectlist}}
         	                                                    {{ if ne $v.Status "notinstall" }}
-								 	<option value="logs?label={{$v.Label}}&opt={{$v.Optnow}}" {{ if eq $v.Label $v.Labelnow }} selected="selected" {{end}} >{{ $v.Label }}</option>
+								 	<option value="logs?opt={{$v.Optnow}}&label={{$v.Label}}" {{ if eq $v.Label $v.Labelnow }} selected="selected" {{end}} >{{ $v.Label }}</option>
                         	                                    {{ end }}
                                 	                        {{ end }}
 							</select>
@@ -186,12 +186,12 @@
 						<div class="bwIcon i_16_tabs">
 							<select name="logname" onchange="self.location.href=options[selectedIndex].value" class="switch_select">
 								<option value="none" selected disabled hidden>{{if eq .Lang "cn"}}选择操作日志类型{{else}}Select Log Type{{end}}</option>
-							  	<option value="logs?label={{.Label}}&opt=install" {{ if eq .Opt "install" }} selected="selected" {{end}} >{{if eq .Lang "cn"}}K8S集群安装日志{{else}}Log of K8S Install{{end}}</option>
-							  	<option value="logs?label={{.Label}}&opt=uninstall" {{ if eq .Opt "uninstall" }} selected="selected" {{end}} >{{if eq .Lang "cn"}}K8S集群卸载日志{{else}}Log of K8S Uninstall{{end}}</option>
-							  	<option value="logs?label={{.Label}}&opt=rebuildmaster" {{ if eq .Opt "rebuildmaster" }} selected="selected" {{end}} >{{if eq .Lang "cn"}}K8S Master修复日志{{else}}Log of Master Rebuild{{end}}</option>
-							  	<option value="logs?label={{.Label}}&opt=delmaster" {{ if eq .Opt "delmaster" }} selected="selected" {{end}} >{{if eq .Lang "cn"}}K8S Master删除日志{{else}}Log of Master Delete{{end}}</option>
-							  	<option value="logs?label={{.Label}}&opt=addnode" {{ if eq .Opt "addnode" }} selected="selected" {{end}} >{{if eq .Lang "cn"}}K8S Node添加日志{{else}}Log of Node Add{{end}}</option>
-							  	<option value="logs?label={{.Label}}&opt=delnode" {{ if eq .Opt "delnode" }} selected="selected" {{end}} >{{if eq .Lang "cn"}}K8S Node删除日志{{else}}Log of Node Delete{{end}}</option>
+							  	<option value="logs?opt=install&label={{.Label}}" {{ if eq .Opt "install" }} selected="selected" {{end}} >{{if eq .Lang "cn"}}K8S集群安装日志{{else}}Log of K8S Install{{end}}</option>
+							  	<option value="logs?opt=uninstall&label={{.Label}}" {{ if eq .Opt "uninstall" }} selected="selected" {{end}} >{{if eq .Lang "cn"}}K8S集群卸载日志{{else}}Log of K8S Uninstall{{end}}</option>
+							  	<option value="logs?opt=rebuildmaster&label={{.Label}}" {{ if eq .Opt "rebuildmaster" }} selected="selected" {{end}} >{{if eq .Lang "cn"}}K8S Master修复日志{{else}}Log of Master Rebuild{{end}}</option>
+							  	<option value="logs?opt=delmaster&label={{.Label}}" {{ if eq .Opt "delmaster" }} selected="selected" {{end}} >{{if eq .Lang "cn"}}K8S Master删除日志{{else}}Log of Master Delete{{end}}</option>
+							  	<option value="logs?opt=addnode&label={{.Label}}" {{ if eq .Opt "addnode" }} selected="selected" {{end}} >{{if eq .Lang "cn"}}K8S Node添加日志{{else}}Log of Node Add{{end}}</option>
+							  	<option value="logs?opt=delnode&label={{.Label}}" {{ if eq .Opt "delnode" }} selected="selected" {{end}} >{{if eq .Lang "cn"}}K8S Node删除日志{{else}}Log of Node Delete{{end}}</option>
                                                                 <option value="logs?opt=systemlog" {{ if eq .Opt "systemlog" }} selected="selected" {{end}} >{{if eq .Lang "cn"}}Kube-Install系统日志{{else}}Platform System Logs{{end}}</option>
 							</select>
 						</div>

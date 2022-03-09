@@ -24,13 +24,13 @@ func CreateAddonsNode(nodeArray []string) (string,string,string){
 }
 
 // Generate basic general configuration information.
-func GeneralConfig(mode string, masterArray []string, nodeArray []string, currentDir string, softDir string, subProcessDir string, ostype string, k8sVer string, kubeDashboard string, logName string) {
+func GeneralConfig(mode string, masterArray []string, nodeArray []string, currentDir string, softDir string, subProcessDir string, ostype string, k8sVer string, kubeDashboard string, logName string, sshPort string) {
     inventory_file, err := os.Create(currentDir+"/data/output"+subProcessDir+"/general.inventory")
     CheckErr(err,currentDir,logName,mode)
     defer inventory_file.Close()
 
     inventory_file.WriteString("###--------------------------------------General Configuration---------------------------------###\n")
-    inventory_file.WriteString("\n[kissh]\n127.0.0.1 ip=127.0.0.1\n\n[master1]\n"+masterArray[0]+" ip="+masterArray[0]+"\n\n[k8s:vars]\n"+"k8s_install_home=\""+softDir+"/k8s\"\n"+"k8s_addons_home=\""+currentDir+"/data/output"+subProcessDir+"/addons\"\nsoftware_home=\""+softDir+"\"\nkipath=\""+currentDir+"\"\nsub_process_dir=\""+subProcessDir+"\"\n")
+    inventory_file.WriteString("\n[kissh]\n127.0.0.1 ip=127.0.0.1 ansible_ssh_port="+sshPort+"\n\n[master1]\n"+masterArray[0]+" ip="+masterArray[0]+" ansible_ssh_port="+sshPort+"\n\n[k8s:vars]\n"+"k8s_install_home=\""+softDir+"/k8s\"\n"+"k8s_addons_home=\""+currentDir+"/data/output"+subProcessDir+"/addons\"\nsoftware_home=\""+softDir+"\"\nkipath=\""+currentDir+"\"\nsub_process_dir=\""+subProcessDir+"\"\n")
     if mode == "DAEMON" {
         inventory_file.WriteString("rebootime=\"1\"\nrebootxt=\"The operating system will automatically restart to take effect on the cluster configuration.\"")
     } else {
@@ -74,7 +74,7 @@ func GeneralConfig(mode string, masterArray []string, nodeArray []string, curren
 }
 
 // Generate install configuration information.
-func InstallConfig(mode string, masterArray []string, nodeArray []string, currentDir string, subProcessDir string, logName string) bool {
+func InstallConfig(mode string, masterArray []string, nodeArray []string, currentDir string, subProcessDir string, logName string, sshPort string) bool {
     _,err_cp := CopyFile(currentDir+"/data/output"+subProcessDir+"/general.inventory", currentDir+"/data/output"+subProcessDir+"/install.inventory")
     if err_cp != nil {
         CheckErr(err_cp,currentDir,logName,mode)
@@ -95,7 +95,7 @@ func InstallConfig(mode string, masterArray []string, nodeArray []string, curren
       if !CheckIP(masterArray[i]) {
           return false
       }
-      write.WriteString(masterArray[i]+" ip="+masterArray[i]+"\n")
+      write.WriteString(masterArray[i]+" ip="+masterArray[i]+" ansible_ssh_port="+sshPort+"\n")
     }
     write.WriteString("\n[etcd]\n")
     for i := 0; i < master_num; i++ {
@@ -109,7 +109,7 @@ func InstallConfig(mode string, masterArray []string, nodeArray []string, curren
       if !CheckIP(nodeArray[i]) {
           return false
       }
-      write.WriteString(nodeArray[i]+" ip="+nodeArray[i]+"\n")
+      write.WriteString(nodeArray[i]+" ip="+nodeArray[i]+" ansible_ssh_port="+sshPort+"\n")
     }
     write.WriteString("\n[k8s:children]\n"+"kissh\n"+"master1\n"+"master\n"+"etcd\n"+"node\n\n\n")
     write.Flush()
@@ -118,7 +118,7 @@ func InstallConfig(mode string, masterArray []string, nodeArray []string, curren
 }
 
 // Generate configuration information of add node.
-func AddnodeConfig(mode string, addNodeArray []string, currentDir string, subProcessDir string, logName string) bool {
+func AddnodeConfig(mode string, addNodeArray []string, currentDir string, subProcessDir string, logName string, sshPort string) bool {
     _,err_cp := CopyFile(currentDir+"/data/output"+subProcessDir+"/general.inventory", currentDir+"/data/output"+subProcessDir+"/addnode.inventory")
     if err_cp != nil {
         CheckErr(err_cp,currentDir,logName,mode)
@@ -138,7 +138,7 @@ func AddnodeConfig(mode string, addNodeArray []string, currentDir string, subPro
       if !CheckIP(addNodeArray[i]) {
           return false
       }
-      write.WriteString(addNodeArray[i]+" ip="+addNodeArray[i]+"\n")
+      write.WriteString(addNodeArray[i]+" ip="+addNodeArray[i]+" ansible_ssh_port="+sshPort+"\n")
     }
     write.WriteString("\n[k8s:children]\n"+"kissh\n"+"master1\n"+"addnode\n\n\n")
     write.Flush()
@@ -147,7 +147,7 @@ func AddnodeConfig(mode string, addNodeArray []string, currentDir string, subPro
 }
 
 // Generate configuration information of delete node.
-func DelnodeConfig(mode string, delNodeArray []string, currentDir string, subProcessDir string, logName string) bool {
+func DelnodeConfig(mode string, delNodeArray []string, currentDir string, subProcessDir string, logName string, sshPort string) bool {
     _,err_cp := CopyFile(currentDir+"/data/output"+subProcessDir+"/general.inventory", currentDir+"/data/output"+subProcessDir+"/delnode.inventory")
     if err_cp != nil {
         CheckErr(err_cp,currentDir,logName,mode)
@@ -167,7 +167,7 @@ func DelnodeConfig(mode string, delNodeArray []string, currentDir string, subPro
       if !CheckIP(delNodeArray[i]) {
           return false
       }
-      write.WriteString(delNodeArray[i]+" ip="+delNodeArray[i]+"\n")
+      write.WriteString(delNodeArray[i]+" ip="+delNodeArray[i]+" ansible_ssh_port="+sshPort+"\n")
     }
     write.WriteString("\n[k8s:children]\n"+"kissh\n"+"master1\n"+"delnode\n\n\n")
     write.Flush()
@@ -176,7 +176,7 @@ func DelnodeConfig(mode string, delNodeArray []string, currentDir string, subPro
 }
 
 // Generate configuration information of rebuild master.
-func RebuildmasterConfig(mode string, rebuildMasterArray []string, currentDir string, subProcessDir string, logName string) bool {
+func RebuildmasterConfig(mode string, rebuildMasterArray []string, currentDir string, subProcessDir string, logName string, sshPort string) bool {
     _,err_cp := CopyFile(currentDir+"/data/output"+subProcessDir+"/general.inventory", currentDir+"/data/output"+subProcessDir+"/rebuildmaster.inventory")
     if err_cp != nil {
         CheckErr(err_cp,currentDir,logName,mode)
@@ -197,7 +197,7 @@ func RebuildmasterConfig(mode string, rebuildMasterArray []string, currentDir st
       if !CheckIP(rebuildMasterArray[i]) {
           return false
       }
-      write.WriteString(rebuildMasterArray[i]+" ip="+rebuildMasterArray[i]+"\n")
+      write.WriteString(rebuildMasterArray[i]+" ip="+rebuildMasterArray[i]+" ansible_ssh_port="+sshPort+"\n")
     }
     write.WriteString("\n[etcd]\n")
     for i := 0; i < rebuildmaster_num; i++ {
@@ -210,7 +210,7 @@ func RebuildmasterConfig(mode string, rebuildMasterArray []string, currentDir st
 }
 
 // Generate configuration information of delete master.
-func DelmasterConfig(mode string, delMasterArray []string, currentDir string, subProcessDir string, logName string) bool {
+func DelmasterConfig(mode string, delMasterArray []string, currentDir string, subProcessDir string, logName string, sshPort string) bool {
     _,err_cp := CopyFile(currentDir+"/data/output"+subProcessDir+"/general.inventory", currentDir+"/data/output"+subProcessDir+"/delmaster.inventory")
     if err_cp != nil {
         CheckErr(err_cp,currentDir,logName,mode)
@@ -230,7 +230,7 @@ func DelmasterConfig(mode string, delMasterArray []string, currentDir string, su
       if !CheckIP(delMasterArray[i]) {
           return false
       }
-      write.WriteString(delMasterArray[i]+" ip="+delMasterArray[i]+"\n")
+      write.WriteString(delMasterArray[i]+" ip="+delMasterArray[i]+" ansible_ssh_port="+sshPort+"\n")
     }
     write.WriteString("\n[k8s:children]\n"+"kissh\n"+"master1\n"+"delmaster\n\n\n")
     write.Flush()
@@ -238,4 +238,6 @@ func DelmasterConfig(mode string, delMasterArray []string, currentDir string, su
     return true
 }
  
+
+
 

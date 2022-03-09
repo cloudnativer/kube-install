@@ -1,14 +1,23 @@
-package kilib
+<center><font size=5>Parameter introduction of kube-install</font></center><br>
+<br>
+<b>Introduction:</b><br>
+<br>
+The parameters about kube-install can be viewed using the `kube-install -help` or `kube-install -h` command. <br>
 
-import (
-    "fmt"
-)
+<table width=100%>
+<tr><td>
 
+ ```
+  # kube-install -help
+ ```
 
-// Displays the detailed help information of the kube-install.
-func ShowHelp(){
-    fmt.Println(`Usage of kube-install: 
-kube-install [ OPTION ] { COMMAND [ OBJECT ] ARGS ... } 
+</td></tr>
+<tr><td></td></tr>
+<tr><td>
+
+```
+Usage of kube-install: 
+kube-install [OPTION] { [COMMAND] OBJECT [ARGS]... } 
 
 OPTIONS:
   d, daemon        Run as a daemon service.(Enable this switch to use the web console for management)
@@ -43,9 +52,14 @@ OBJECT:
   sshport          The TCP Port of the target host through which the SSH channel is opened. (default "22")
   sshpass          The root password of the target host through which the SSH channel is opened.(Use with "sshcontrol")
 
---------------------------------------------------------------
+```
 
-EXAMPLES:
+</td></tr>
+<tr><td></td></tr>
+<tr><td>
+
+```
+For Example：
   Initialize the system environment:
     kube-install -init -ostype "rhel8" 
   Open the SSH channel from the local to the target host (You can also get through manually):
@@ -66,8 +80,13 @@ EXAMPLES:
     kube-install -daemon -listen "0.0.0.0:8888"
   Display software version information
     kube-install -version
-    `)
-}
 
+```
 
+</td></tr>
+<tr><td></td></tr>
+</table>
+<br>
+<br>
+<br>
 

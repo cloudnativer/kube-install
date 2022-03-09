@@ -4,7 +4,7 @@ import (
 	//   "fmt"
 	//    "os"
 	"io/ioutil"
-	//    "strings"
+	"strings"
 	//    "time"
 )
 
@@ -37,6 +37,38 @@ func DatabaseInit(currentDir string, subProcessDir string, logName string, mode 
 func DatabaseUpdate(key string, value string, currentDir string, logName string, mode string) error {
 	err := ioutil.WriteFile(key, []byte(value), 0666)
 	return err
+}
+
+
+//Query the cluster information in the database.
+func GetClusterInfo(label string, Lang string, currentDir string, logName string, mode string) (string,string,string,string,string,[]string,[]string,string,string,string,string,string,string,string) {
+        status, _ := GetClusterStatus(label, currentDir, logName, mode)
+        _, _, _, subProcessDir, _ := ParameterConvert(mode, "", "", "", label, "")
+        masterArray, err := GetAllDir(currentDir+"/data/output"+subProcessDir+"/masters", currentDir, logName, mode)
+        CheckErr(err, currentDir, logName, mode)
+        k8sVer, _ := ReadFile(currentDir + "/data/output" + subProcessDir + "/k8sver.txt")
+        cniPlugin, _ := ReadFile(currentDir + "/data/output" + subProcessDir + "/cniplugin.txt")
+        osType, _ := ReadFile(currentDir + "/data/output" + subProcessDir + "/ostype.txt")
+        softDir, _ := ReadFile(currentDir + "/data/output" + subProcessDir + "/softdir.txt")
+        sshPort, _ := ReadFile(currentDir + "/data/output" + subProcessDir + "/sshport.txt")
+        etcdEndpoints, _ := ReadFile(currentDir + "/data/output" + subProcessDir + "/etcdendpoints.txt")
+        nodeArray := ListNode(label, currentDir, logName, mode)
+        registryIp, k8sDashboardIp, k8sdashboardtoken := GetClusterAddons(label, currentDir, mode)
+        kubeCfg := GetClusterKubecfg(label, currentDir, mode)
+        if err != nil {
+                kubeCfg = ""
+        } else {
+                kubeCfg = strings.Replace(strings.Replace(kubeCfg, "\n", "<br>\n", -1), " ", "&nbsp;", -1)
+        }
+        var registryUsage, k8sDashboardUsage string
+        if Lang == "cn" {
+                registryUsage = "&nbsp;&nbsp;&nbsp;&nbsp; [root@localhost ~]# docker pull " + registryIp + ":5000/镜像名称:镜像Tag<br>&nbsp;&nbsp;&nbsp;&nbsp; [root@localhost ~]# docker push " + registryIp + ":5000/镜像名称:镜像Tag<br>&nbsp;&nbsp;&nbsp;&nbsp; [root@localhost ~]# ctr -n=k8s.io images pull " + registryIp + ":5000/镜像名称:镜像Tag<br>&nbsp;&nbsp;&nbsp;&nbsp; [root@localhost ~]# ctr -n=k8s.io images push " + registryIp + ":5000/镜像名称:镜像Tag\n"
+                k8sDashboardUsage = "使用浏览器访问，登录令牌如下: <br> " + k8sdashboardtoken
+        } else {
+                registryUsage = "&nbsp;&nbsp;&nbsp;&nbsp; [root@localhost ~]# docker pull " + registryIp + ":5000/Your_image_name:Image_Tag<br>&nbsp;&nbsp;&nbsp;&nbsp; [root@localhost ~]# docker push " + registryIp + ":5000/Your_image_name:Image_Tag<br>&nbsp;&nbsp;&nbsp;&nbsp; [root@localhost ~]# ctr-n=k8s.io images pull " + registryIp + ":5000/Your_image_name:Image_Tag<br>&nbsp;&nbsp;&nbsp;&nbsp; [root@localhost ~]# ctr -n=k8s.io images push " + registryIp + ":5000/Your_image_name:Image_Tag\n"
+                k8sDashboardUsage = "Use a browser to access. The login token is as follows: <br> " + k8sdashboardtoken
+        }
+        return k8sVer, cniPlugin, softDir, osType, status, masterArray, nodeArray, etcdEndpoints, registryIp, registryUsage, k8sDashboardIp, k8sDashboardUsage, kubeCfg, sshPort
 }
 
 // Query the master information in the cluster.

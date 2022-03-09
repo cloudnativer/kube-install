@@ -121,7 +121,7 @@
 ![kube-dashboard](docs/images/webinstall001.jpg)
 
 注意：在你开始给目标主机安装kubernetes集群之前，请先打通kube-install源安装机本地到目标主机的SSH免密通道。
-你可以自己手工打通到目标主机的SSH通道，也可以点击右上角的`Open SSH Channel of Host`按钮来进行打通，<a href="docs/webssh0.7.md">点击这里可以查看更加详细的文档</a>。
+你可以自己手工打通到目标主机的SSH通道，也可以点击右上角的`Open SSH Channel of Host`按钮来进行打通，<a href="docs/webssh0.8.md">点击这里可以查看更加详细的文档</a>。
 <br>
 
 在弹出的安装表单窗口中填写好安装所需的参数信息：
@@ -176,7 +176,7 @@
 # ./kube-install -exec sshcontrol -sship "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -sshpass "cloudnativer"
 ```
 
-你也可以通过kube-install的Web管理平台来打通到目标主机的SSH通道，<a href="docs/webssh0.7.md">点击这里查看使用Web管理平台打通SSH通道的方法</a>！<br>
+你也可以通过kube-install的Web管理平台来打通到目标主机的SSH通道，<a href="docs/webssh0.8.md">点击这里查看使用Web管理平台打通SSH通道的方法</a>！<br>
 
 <br>
 
@@ -274,7 +274,7 @@ Kube-install不仅可以很方便的安装单机和高可用的kubernetes集群�
 
 <br>
 
-你可以执行`kube-install -help`命令查看kube-install的使用帮助文档，<a href="docs/parameters0.7.md">你也可以点击这里查看更加详细的命令行帮助文档</a>。
+你可以执行`kube-install -help`命令查看kube-install的使用帮助文档，<a href="docs/parameters0.8.md">你也可以点击这里查看更加详细的命令行帮助文档</a>。
 
 <br>
 <br>

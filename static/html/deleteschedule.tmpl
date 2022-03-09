@@ -56,7 +56,7 @@
         <div class="g_12">
                 <div class="widget_header wwOptions">
                         <h4 class="widget_header_title wwIcon i_16_k8s">{{if eq .Lang "cn"}}取消安装任务计划{{else}}Remove Installation Schedule{{end}}</h4>
-	                <div style="text-align: right;"><img alt="{{if eq .Lang "cn"}}点击关闭{{else}}Close{{end}}" src="static/img/Button/close03.png" onclick="window.open('clusterlist?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}','_self');"/></div>
+	                <div style="text-align: right;"><img alt="{{if eq .Lang "cn"}}点击关闭{{else}}Close{{end}}" src="static/img/Button/close03.png" onclick="window.open('clusterlist?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}','_self');"/></div>
                 </div>
                 <div class="widget_contents noPadding">
                         <form action="/deleteinstallschedule?label={{ .Label }}&softdir={{ .softDir }}&ostype={{ .osType }}&k8sver={{ .k8sVer }}&tools=no" enctype="multipart/form-data" method="post" >
@@ -148,12 +148,12 @@
 
         <div class="wrapper small_menu">
                 <ul class="menu_small_buttons">
-                        <li><a title="{{if eq .Lang "cn"}}信息概览{{else}}Information Overview{{end}}" class="i_22_dashboard" href="/?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}"></a></li>
-                        <li><a title="{{if eq .Lang "cn"}}管理Kubernetes集群{{else}}Managing Kubernetes Clusters{{end}}" class="i_22_cluster {{ if ne .Tools "yes" }} {{ if eq .Opt "install" }} smActive {{ end }} {{ if eq .Opt "uninstall" }} smActive {{ end }} {{ if eq .Opt "sshkey" }} smActive {{ end }} {{ end }}" href="clusterlist?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}"></a></li>
-                        <li><a title="{{if eq .Lang "cn"}}管理Kubernetes Master{{else}}Managing Kubernetes Master{{end}}" class="i_22_master {{ if eq .Opt "delmaster" }} smActive {{ end }} {{ if eq .Opt "rebuildmaster" }} smActive {{ end }}" href="masteradmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}"></a></li>
-                        <li><a title="{{if eq .Lang "cn"}}管理Kubernetes Node{{else}}Managing Kubernetes Nodes{{end}}" class="i_22_node {{ if eq .Opt "addnode" }} smActive {{ end }} {{ if eq .Opt "delnode" }} smActive {{ end }}" href="nodeadmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}"></a></li>
-                        <li><a title="{{if eq .Lang "cn"}}常用工具{{else}}Common Tools{{end}}" class="i_22_tools {{ if eq .Tools "yes" }} smActive {{ end }}" href="tools?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}"></a></li>
-                        <li><a title="{{if eq .Lang "cn"}}查看各类日志{{else}}View all kinds of logs{{end}}" class="i_22_logs" href="logs?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}"></a></li>
+                        <li><a title="{{if eq .Lang "cn"}}信息概览{{else}}Information Overview{{end}}" class="i_22_dashboard" href="/?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}"></a></li>
+                        <li><a title="{{if eq .Lang "cn"}}管理Kubernetes集群{{else}}Managing Kubernetes Clusters{{end}}" class="i_22_cluster {{ if ne .Tools "yes" }} {{ if eq .Opt "install" }} smActive {{ end }} {{ if eq .Opt "uninstall" }} smActive {{ end }} {{ if eq .Opt "sshkey" }} smActive {{ end }} {{ end }}" href="clusterlist?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}"></a></li>
+                        <li><a title="{{if eq .Lang "cn"}}管理Kubernetes Master{{else}}Managing Kubernetes Master{{end}}" class="i_22_master {{ if eq .Opt "delmaster" }} smActive {{ end }} {{ if eq .Opt "rebuildmaster" }} smActive {{ end }}" href="masteradmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}"></a></li>
+                        <li><a title="{{if eq .Lang "cn"}}管理Kubernetes Node{{else}}Managing Kubernetes Nodes{{end}}" class="i_22_node {{ if eq .Opt "addnode" }} smActive {{ end }} {{ if eq .Opt "delnode" }} smActive {{ end }}" href="nodeadmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}"></a></li>
+                        <li><a title="{{if eq .Lang "cn"}}常用工具{{else}}Common Tools{{end}}" class="i_22_tools {{ if eq .Tools "yes" }} smActive {{ end }}" href="tools?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}"></a></li>
+                        <li><a title="{{if eq .Lang "cn"}}查看各类日志{{else}}View all kinds of logs{{end}}" class="i_22_logs" href="logs?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}"></a></li>
                 </ul>
         </div>
 
@@ -162,37 +162,37 @@
                 <aside class="sidebar">
                         <ul class="tab_nav">
                                 <li class="i_32_dashboard">
-                                        <a href="/?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" title="{{if eq .Lang "cn"}}基本信息{{else}}Basic information{{end}}">
+                                        <a href="/?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}" title="{{if eq .Lang "cn"}}基本信息{{else}}Basic information{{end}}">
                                                 <span class="tab_label">Dashboard</span>
                                                 <span class="tab_info">{{if eq .Lang "cn"}}信息概览{{else}}Overview{{end}}</span>
                                         </a>
                                 </li>
                                 <li class="{{ if ne .Tools "yes" }} {{ if eq .Opt "install" }} active_tab {{ end }} {{ if eq .Opt "uninstall" }} active_tab {{ end }} {{ if eq .Opt "sshkey" }} active_tab {{ end }} {{ end }} i_32_cluster">
-                                        <a href="clusterlist?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" title="{{if eq .Lang "cn"}}管理Kubernetes集群{{else}}Managing Kubernetes Clusters{{end}}">
+                                        <a href="clusterlist?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}" title="{{if eq .Lang "cn"}}管理Kubernetes集群{{else}}Managing Kubernetes Clusters{{end}}">
                                                 <span class="tab_label">Cluster</span>
                                                 <span class="tab_info">{{if eq .Lang "cn"}}集群管理{{else}}Management{{end}}</span>
                                         </a>
                                 </li>
                                 <li class="{{ if eq .Opt "delmaster" }} active_tab {{ end }} {{ if eq .Opt "rebuildmaster" }} active_tab {{ end }} i_32_master">
-                                        <a href="masteradmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" title="{{if eq .Lang "cn"}}管理Kubernetes Master{{else}}Managing Kubernetes Master{{end}}">
+                                        <a href="masteradmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}" title="{{if eq .Lang "cn"}}管理Kubernetes Master{{else}}Managing Kubernetes Master{{end}}">
                                                 <span class="tab_label">Master</span>
                                                 <span class="tab_info">{{if eq .Lang "cn"}}Master管理{{else}}Rebuild/Del{{end}}</span>
                                         </a>
                                 </li>
                                 <li class="{{ if eq .Opt "addnode" }} active_tab {{ end }} {{ if eq .Opt "delnode" }} active_tab {{ end }} i_32_node">
-                                        <a href="nodeadmin?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" title="{{if eq .Lang "cn"}}管理Kubernetes Node{{else}}Managing Kubernetes Nodes{{end}}">
+                                        <a href="nodeadmin?label={{.Label}}&k8sver={{.K8sver}}&softdir={{.Softdir}}&ostype={{.Ostype}}&sshport={{.Sshport}}" title="{{if eq .Lang "cn"}}管理Kubernetes Node{{else}}Managing Kubernetes Nodes{{end}}">
                                                 <span class="tab_label">Node</span>
                                                 <span class="tab_info">{{if eq .Lang "cn"}}Node管理{{else}}Add/Del/Op{{end}}</span>
                                         </a>
                                 </li>
                                 <li class="{{ if eq .Tools "yes" }} active_tab {{ end }} i_32_tools">
-                                        <a href="tools?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" title="{{if eq .Lang "cn"}}实用小工具{{else}}Some Utilities Tools{{end}}">
+                                        <a href="tools?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}" title="{{if eq .Lang "cn"}}实用小工具{{else}}Some Utilities Tools{{end}}">
                                                 <span class="tab_label">Tools</span>
                                                 <span class="tab_info">{{if eq .Lang "cn"}}常用工具{{else}}Utilities Tools{{end}}</span>
                                         </a>
                                 </li>
                                 <li class="i_32_logs">
-                                        <a href="logs?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}" title="{{if eq .Lang "cn"}}查看各类日志{{else}}View All Kinds of Logs{{end}}">
+                                        <a href="logs?label={{.Label}}&softdir={{.Softdir}}&ostype={{.Ostype}}&k8sver={{.K8sver}}&sshport={{.Sshport}}" title="{{if eq .Lang "cn"}}查看各类日志{{else}}View All Kinds of Logs{{end}}">
                                                 <span class="tab_label">Logs</span>
                                                 <span class="tab_info">{{if eq .Lang "cn"}}操作日志{{else}}View Logs{{end}}</span>
                                         </a>

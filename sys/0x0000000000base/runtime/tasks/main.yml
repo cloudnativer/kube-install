@@ -82,6 +82,9 @@
   file:
     path: "/etc/containerd/"
     state: directory
+- file:
+    path: "{{k8s_install_home}}/runtime/containerd"
+    state: directory
 - name: 5.Decompress runtime software package
   unarchive:
     src: "{{kipath}}/pkg/containerd.tar.gz"

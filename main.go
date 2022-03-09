@@ -14,7 +14,7 @@ import (
 
 func main() {
 
-    var exec,master,node,k8sver,ostype,softdir,label,sship,sshpass,listen,upgradekernel,k8sdashboard,cniplugin string
+    var exec,master,node,k8sver,ostype,softdir,label,sship,sshport,sshpass,listen,upgradekernel,k8sdashboard,cniplugin string
 
     initFlag := flag.Bool("init",false,"Initialize the local system environment.")
     iFlag := flag.Bool("i",false,"Initialize the local system environment.")
@@ -34,13 +34,14 @@ func main() {
     flag.StringVar(&master,"master","","The IP address of k8s master server filled in for the first installation")
     flag.StringVar(&node,"node","","The IP address of k8s node server filled in for the first installation")
     flag.StringVar(&ostype,"ostype","","Specifies the distribution operating system type: \"centos7 | centos8 | rhel7 | rhel8 | ubuntu20 | suse15\".")
-    flag.StringVar(&k8sver,"k8sver","","Specifies the version of k8s software installed.(default is \"kubernetes 1.22\")")
+    flag.StringVar(&k8sver,"k8sver","","Specifies the version of k8s software installed.(default is \"kubernetes 1.23\")")
     flag.StringVar(&upgradekernel,"upgradekernel","no","Because the lower versions of CentOS 7 and redhat 7 may lack kernel modules, only the kernel automatic upgrade of CentOS 7 and rhel7 operating systems is supported here, and other operating systems do not need to be upgraded.")
     flag.StringVar(&k8sdashboard,"k8sdashboard","yes","Automatically deploy kube-dashboard to kubernetes cluster.")
     flag.StringVar(&cniplugin,"cniplugin","flannel","Specifies the CNI plug-in type: \"flannel | calico | kuberouter | weave | cilium\".")
     flag.StringVar(&softdir,"softdir","","Specifies the installation directory of kubernetes cluster.(default is \"/opt/kube-install\")")
     flag.StringVar(&label,"label",".default","In the case of deploying and operating multiple kubernetes clusters, it is necessary to specify a label to uniquely identify a kubernetes cluster. (length must be less than 32 strings)")
     flag.StringVar(&sship,"sship","","The IP address of the target host through which the SSH channel is opened.(use with \"sshcontrol\")")
+    flag.StringVar(&sshport,"sshport","22","The TCP Port of the target host through which the SSH channel is opened.")
     flag.StringVar(&sshpass,"sshpass","","The SSH password of the target host through which the SSH channel is opened.(use with \"sshcontrol\")")
     flag.Parse()
 
@@ -54,8 +55,8 @@ func main() {
 
     // Set the version number and release date of Kube-Install.
     const (
-        Version string = "v0.8.0-beta"
-        ReleaseDate string = "28/12/2021"
+        Version string = "v0.8.0-beta2"
+        ReleaseDate string = "9/3/2022"
         CompatibleK8S string = "1.18, 1.19, 1.20, 1.21, 1.22, 1.23, and 1.24"
         CompatibleOS string = "CentOS linux 7, CentOS linux 8, RHEL 7, RHEL 8, Ubuntu 20, and SUSE 15"
     )
@@ -99,9 +100,9 @@ func main() {
             } else {
                 fmt.Println("Notice: If you are prompted to enter the password below, please enter the root password again! ")
                 var ipArray = []string{"127.0.0.1"}
-                err_host := kilib.SshKey(ipArray, "", currentDir)
+                err_host := kilib.SshKey(ipArray, sshport, "", currentDir)
                 if err_host != nil {
-                    fmt.Println("[Error] "+time.Now().String()+" Initialization failed ! There is a problem with the local SSH key. \n        (Please try again with root user)\n")
+                    fmt.Println("\n[Error] "+time.Now().String()+" Initialization failed ! There is a problem with the local SSH key. \n\nRecommendations:\n    If the SSH port of the host is not \"22\", use the \"-sshport\" to specify the correct port.\n    (Please try again with root user)\n\nInitialization failed!\n")
                     return
                 } else {
                     kilib.CreateSystemdService("", currentDir, logName)
@@ -161,11 +162,11 @@ func main() {
                    kilib.CheckParam(exec,"sshpass",sshpass)
                    fmt.Println("\nOpening SSH tunnel, please wait...\n")
                    ipArray := strings.Split(sship, ",")
-                   err := kilib.SshKey(ipArray, sshpass, currentDir)
+                   err := kilib.SshKey(ipArray, sshport, sshpass, currentDir)
                    if err != nil {
-                       fmt.Println("[Error] "+time.Now().String()+" Failed to open the SSH channel. Please use \"root\" user to manually open the SSH channel from the local host to the target host, or try to open the SSH channel again after executing the following command on the target host:\n  ----------------------------------------------------------------- \n   sudo sed -i \"/PermitRootLogin/d\" /etc/ssh/sshd_config \n   sudo sh -c \"echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config\" \n   sudo sed -i \"/StrictHostKeyChecking/s/^#//; /StrictHostKeyChecking/s/ask/no/\" /etc/ssh/ssh_config \n   sudo systemctl restart sshd \n  ----------------------------------------------------------------- \n\n\nFailed to open SSH tunnel!\n")
+                       fmt.Println("[Error] "+time.Now().String()+" Failed to open the SSH channel. Please use \"root\" user to manually open the SSH channel from the local host to the target host, or try to open the SSH channel again after executing the following command on the target host:\n\n  ----------------------------------------------------------------- \n   sudo sed -i \"/PermitRootLogin/d\" /etc/ssh/sshd_config \n   sudo sh -c \"echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config\" \n   sudo sed -i \"/StrictHostKeyChecking/s/^#//; /StrictHostKeyChecking/s/ask/no/\" /etc/ssh/ssh_config \n   sudo systemctl restart sshd \n  ----------------------------------------------------------------- \n\n   (If the SSH port of the host is not \"22\", use the \"-sshport\" to specify the correct port.)\n\nFailed to open SSH tunnel!\n")
                    } else {
-                       fmt.Println("[Info] "+time.Now().String()+" Successfully open the SSH channel from local host to the target host ("+sship+")！\n\n\nThe SSH tunnel is opened!\n")
+                       fmt.Println("[Info] "+time.Now().String()+" Successfully open the SSH channel from local host to the target host ("+sship+":"+sshport+")！\n\n\nThe SSH tunnel is opened!\n")
                    }
 
               //Execute install command
@@ -178,7 +179,7 @@ func main() {
                    }
                    masterArray,nodeArray,softdir,subProcessDir,ostypeResult := kilib.ParameterConvert("", master, node, softdir, label, ostype)
                    kilib.DatabaseInit(currentDir,subProcessDir,logName,"")
-                   kilib.InstallCore("",master,masterArray,node,nodeArray,softdir,currentDir,kissh,subProcessDir,currentUser,label,ostypeResult,ostype,k8sver,logName,Version,CompatibleK8S,CompatibleOS,"","newinstall",upgradekernel,k8sdashboard,cniplugin)
+                   kilib.InstallCore("",master,masterArray,node,nodeArray,softdir,currentDir,kissh,subProcessDir,currentUser,label,ostypeResult,ostype,k8sver,logName,Version,CompatibleK8S,CompatibleOS,"","newinstall",upgradekernel,k8sdashboard,cniplugin,sshport)
 
                //Execute addnode command
                case exec == "addnode" :
@@ -209,7 +210,7 @@ func main() {
                    kilib.CheckParam(exec,"master",master)
                    kilib.CheckParam(exec,"node",node)
                    masterArray,nodeArray,softdir,subProcessDir,ostype := kilib.ParameterConvert("", master, node, softdir, label, ostype)
-                   kilib.UninstallCore("",master,masterArray,node,nodeArray,softdir,currentDir,kissh,subProcessDir,currentUser,label,ostype,logName,CompatibleOS) 
+                   kilib.UninstallCore("",master,masterArray,node,nodeArray,softdir,currentDir,kissh,subProcessDir,currentUser,label,ostype,logName,CompatibleOS,sshport) 
            }
 
         default:

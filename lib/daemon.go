@@ -46,12 +46,14 @@ type ClusterList struct {
 	K8sdashboardip string   `json:"k8sdashboardip"`
 	Instime        string   `json:"instime"`
 	K8v            string   `form:"k8v"`
+        Sshport        string   `form:"sshport"`
 	Lang           string   `form:"lang"`
 }
 
 type ClusterAddForm struct {
 	Master             string `form:"master" binding:"required"`
 	Node               string `form:"node" binding:"required"`
+        Sshport            string `form:"sshport" binding:"required"`
 	Ostype             string `form:"ostype" binding:"required"`
 	K8sver             string `form:"k8sver" binding:"required"`
 	Label              string `form:"label" binding:"required"`
@@ -64,12 +66,13 @@ type ClusterAddForm struct {
 }
 
 type ClusterDelForm struct {
-	Master  string `form:"master" binding:"required"`
-	Node    string `form:"node" binding:"required"`
-	Label   string `form:"label" binding:"required"`
-	K8sver  string `form:"k8sver"`
-	Softdir string `form:"softdir"`
-	Ostype  string `form:"ostype"`
+	Master     string `form:"master" binding:"required"`
+	Node       string `form:"node" binding:"required"`
+        Sshport    string `form:"sshport" binding:"required"`
+	Label      string `form:"label" binding:"required"`
+	K8sver     string `form:"k8sver"`
+	Softdir    string `form:"softdir"`
+	Ostype     string `form:"ostype"`
 }
 
 type MasterList struct {
@@ -80,23 +83,26 @@ type MasterList struct {
 	TTYstatus    string `json:"ttystatus"`
 	Softdir      string `json:"softdir"`
 	Ostype       string `form:"ostype"`
+        Sshport      string `form:"sshport"`
 	Lang         string `json:"lang"`
 }
 
 type MasterrebuildForm struct {
-	Master  []string `form:"master" binding:"required"`
-	Label   string   `form:"label" binding:"required"`
-	K8sver  string   `form:"k8sver" binding:"required"`
-	Softdir string   `form:"softdir" binding:"required"`
-	Ostype  string   `form:"ostype" binding:"required"`
+	Master   []string `form:"master" binding:"required"`
+	Label    string   `form:"label" binding:"required"`
+	K8sver   string   `form:"k8sver" binding:"required"`
+	Softdir  string   `form:"softdir" binding:"required"`
+	Ostype   string   `form:"ostype" binding:"required"`
+        Sshport  string   `form:"sshport" binding:"required"`
 }
 
 type MasterDelForm struct {
-	Master  []string `form:"master" binding:"required"`
-	Label   string   `form:"label" binding:"required"`
-	K8sver  string   `form:"k8sver" binding:"required"`
-	Softdir string   `form:"softdir" binding:"required"`
-	Ostype  string   `form:"ostype" binding:"required"`
+	Master   []string `form:"master" binding:"required"`
+	Label    string   `form:"label" binding:"required"`
+	K8sver   string   `form:"k8sver" binding:"required"`
+	Softdir  string   `form:"softdir" binding:"required"`
+	Ostype   string   `form:"ostype" binding:"required"`
+        Sshport  string   `form:"sshport" binding:"required"`
 }
 
 type K8sList struct {
@@ -112,24 +118,27 @@ type NodeList struct {
 	Nodestatus string `json:"nodestatus"`
 	TTYstatus  string `json:"ttystatus"`
 	Softdir    string `json:"softdir"`
+        Sshport    string `json:"sshport"`
 	Lang       string `json:"lang"`
 }
 
 type NodeAddForm struct {
 	Node               string `form:"addnode" binding:"required"`
+        Sshport            string `form:"sshport" binding:"required"`
 	Label              string `form:"label" binding:"required"`
 	K8sver             string `form:"k8sver" binding:"required"`
 	Softdir            string `form:"softdir" binding:"required"`
 	Ostype             string `form:"ostype" binding:"required"`
-        Upgradekernel  string `form:"upgradekernel"`
+        Upgradekernel      string `form:"upgradekernel"`
 }
 
 type NodeDelForm struct {
-	Node    []string `form:"node" binding:"required"`
-	Label   string   `form:"label" binding:"required"`
-	K8sver  string   `form:"k8sver" binding:"required"`
-	Softdir string   `form:"softdir" binding:"required"`
-	Ostype  string   `form:"ostype" binding:"required"`
+	Node     []string `form:"node" binding:"required"`
+	Label    string   `form:"label" binding:"required"`
+	K8sver   string   `form:"k8sver" binding:"required"`
+	Softdir  string   `form:"softdir" binding:"required"`
+	Ostype   string   `form:"ostype" binding:"required"`
+        Sshport  string   `form:"sshport" binding:"required"`
 }
 
 type SelectList struct {
@@ -139,6 +148,7 @@ type SelectList struct {
 	K8sver      string `json:"k8sver"`
 	Softdir     string `json:"softdir"`
 	Ostype      string `json:"ostype"`
+        Sshport     string `json:"sshport"`
 	Status      string `json:"status"`
 }
 
@@ -151,11 +161,15 @@ type ToolSwitchForm struct {
 
 type SshKeyForm struct {
 	Sship   string `form:"sship" binding:"required"`
+        Sshport   string `form:"sshport" binding:"required"`
 	Sshpass string `form:"sshpass" binding:"required"`
 }
 
 // Run the web server program and schedule program.
 func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, CompatibleOS string, listenIPandPort string, currentDir string, currentUser string, kissh string, logName string, mode string) {
+
+        //set releaseMode
+        gin.SetMode(gin.ReleaseMode)
 
 	// Create kube-install daemon log file
 	CreateDir(currentDir+"/data/logs/kubeinstalld/", currentDir, logName, mode)
@@ -193,6 +207,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 		k8sVer := c.DefaultQuery("k8sver", "")
 		softDir := c.DefaultQuery("softdir", "/opt/kube-install")
 		osType := c.DefaultQuery("ostype", "")
+                sshPort := c.DefaultQuery("sshport", "22")
 		msg, _ := ReadFile(currentDir + "/data/msg/msg.txt")
 		k8sNum, _ := ReadFile(currentDir + "/data/statistics/k8snum.txt")
 		cpuInfoResult, _ := ReadFile(currentDir + "/data/statistics/cpuinfo.txt")
@@ -221,6 +236,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 			"K8sver":        k8sVer,
 			"Softdir":       softDir,
 			"Ostype":        osType,
+                        "Sshport":       sshPort,
 			"K8snum":        k8sNum,
 			"Syscpu":        cpuInfoResult,
 			"Sysmem":        memInfoResult,
@@ -260,6 +276,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 		k8sVer := c.DefaultQuery("k8sver", "")
 		softDir := c.DefaultQuery("softdir", "/opt/kube-install")
 		osType := c.DefaultQuery("ostype", "")
+                sshPort := c.DefaultQuery("sshport", "22")
 		labelArray, err := GetAllDir(currentDir+"/data/output", currentDir, logName, mode)
 		CheckErr(err, currentDir, logName, mode)
 		for _, i := range labelArray {
@@ -270,11 +287,15 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 			ost := GetClusterOstype(k8t, currentDir, mode)
 			_, k8sDashboardIp, _ := GetClusterAddons(k8t, currentDir, mode)
 			_, _, _, subProcessDir, _ := ParameterConvert(mode, "", "", "", k8t, "")
+                        spt, _ := ReadFile(currentDir+"/data/output"+subProcessDir+"/sshport.txt")
+                        if spt == "" {
+                        spt = "22"
+                        }
 			mst, err_mst := GetAllDir(currentDir+"/data/output"+subProcessDir+"/masters", currentDir, logName, mode)
 			CheckErr(err_mst, currentDir, logName, mode)
 			instime, _ := ReadFile(currentDir + "/data/output" + subProcessDir + "/installtime.txt")
 			progressBar, _ := ReadFile(currentDir + "/data/output" + subProcessDir + "/progressbar.txt")
-			clusterlist = append(clusterlist, ClusterList{label, k8sVer, softDir, osType, k8t, mst, stu, progressBar, sch, ost, sdr, k8sDashboardIp, instime, k8v, Lang})
+			clusterlist = append(clusterlist, ClusterList{label, k8sVer, softDir, osType, k8t, mst, stu, progressBar, sch, ost, sdr, k8sDashboardIp, instime, k8v, spt, Lang})
 		}
 		c.HTML(http.StatusOK, "cluster.tmpl", gin.H{
 			"Lang":          Lang,
@@ -282,6 +303,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 			"K8sver":        k8sVer,
 			"Softdir":       softDir,
 			"Ostype":        osType,
+                        "Sshport":       sshPort,
 			"Clusterlist":   clusterlist,
 			"Sshuser":       currentUser,
 			"Version":       Version,
@@ -300,31 +322,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 		langFromWeb := c.Query("lang")
 		Lang := ChangeLang(langFromWeb, currentDir, logName, mode)
 		label := c.DefaultQuery("label", "")
-		stu, _ := GetClusterStatus(label, currentDir, logName, mode)
-		_, _, _, subProcessDir, _ := ParameterConvert(mode, "", "", "", label, "")
-		mst, err := GetAllDir(currentDir+"/data/output"+subProcessDir+"/masters", currentDir, logName, mode)
-		CheckErr(err, currentDir, logName, mode)
-		k8sVer, _ := ReadFile(currentDir + "/data/output" + subProcessDir + "/k8sver.txt")
-                cniPlugin, _ := ReadFile(currentDir + "/data/output" + subProcessDir + "/cniplugin.txt")
-		osType, _ := ReadFile(currentDir + "/data/output" + subProcessDir + "/ostype.txt")
-		softDir, _ := ReadFile(currentDir + "/data/output" + subProcessDir + "/softdir.txt")
-		etcdEndpoints, _ := ReadFile(currentDir + "/data/output" + subProcessDir + "/etcdendpoints.txt")
-		nd := ListNode(label, currentDir, logName, mode)
-		registryIp, k8sDashboardIp, k8sdashboardtoken := GetClusterAddons(label, currentDir, mode)
-		kubeCfg := GetClusterKubecfg(label, currentDir, mode)
-		if err != nil {
-			kubeCfg = ""
-		} else {
-			kubeCfg = strings.Replace(strings.Replace(kubeCfg, "\n", "<br>\n", -1), " ", "&nbsp;", -1)
-		}
-		var registryUsage, k8sDashboardUsage string
-		if Lang == "cn" {
-			registryUsage = "&nbsp;&nbsp;&nbsp;&nbsp; [root@localhost ~]# docker pull " + registryIp + ":5000/镜像名称:镜像Tag<br>&nbsp;&nbsp;&nbsp;&nbsp; [root@localhost ~]# docker push " + registryIp + ":5000/镜像名称:镜像Tag<br>&nbsp;&nbsp;&nbsp;&nbsp; [root@localhost ~]# ctr -n=k8s.io images pull " + registryIp + ":5000/镜像名称:镜像Tag<br>&nbsp;&nbsp;&nbsp;&nbsp; [root@localhost ~]# ctr -n=k8s.io images push " + registryIp + ":5000/镜像名称:镜像Tag\n"
-			k8sDashboardUsage = "使用浏览器访问，登录令牌如下: <br> " + k8sdashboardtoken
-		} else {
-			registryUsage = "&nbsp;&nbsp;&nbsp;&nbsp; [root@localhost ~]# docker pull " + registryIp + ":5000/Your_image_name:Image_Tag<br>&nbsp;&nbsp;&nbsp;&nbsp; [root@localhost ~]# docker push " + registryIp + ":5000/Your_image_name:Image_Tag<br>&nbsp;&nbsp;&nbsp;&nbsp; [root@localhost ~]# ctr -n=k8s.io images pull " + registryIp + ":5000/Your_image_name:Image_Tag<br>&nbsp;&nbsp;&nbsp;&nbsp; [root@localhost ~]# ctr -n=k8s.io images push " + registryIp + ":5000/Your_image_name:Image_Tag\n"
-			k8sDashboardUsage = "Use a browser to access. The login token is as follows: <br> " + k8sdashboardtoken
-		}
+                k8sVer, cniPlugin, softDir, osType, status, master, node, etcdEndpoints, registryIp, registryUsage, k8sDashboardIp, k8sDashboardUsage, kubeCfg, sshPort := GetClusterInfo(label, Lang, currentDir, logName, mode)
 		c.HTML(http.StatusOK, "clusterinfo.tmpl", gin.H{
 			"Lang":              Lang,
 			"Label":             label,
@@ -332,9 +330,10 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
                         "Cniplugin":         cniPlugin,
 			"Softdir":           softDir,
 			"Ostype":            osType,
-			"Status":            stu,
-			"Master":            mst,
-			"Node":              nd,
+                        "Sshport":           sshPort,
+			"Status":            status,
+			"Master":            master,
+			"Node":              node,
 			"Etcdendpoints":     etcdEndpoints,
 			"Registryip":        registryIp,
 			"Registryusage":     template.HTML(registryUsage),
@@ -366,6 +365,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
                 cniPlugin := ""
 		softDir := "/opt/kube-install"
 		nd := ""
+                sshPort := ""
 		way := c.DefaultQuery("way", "newinstall")
 		tools := c.Query("tools")
 		if way == "reinstall" {
@@ -383,6 +383,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 			if nd != "" {
 				nd = nd[1:len(nd)]
 			}
+                        sshPort = c.DefaultQuery("sshport", "22")
 		}
 		c.HTML(http.StatusOK, "clusteradd.tmpl", gin.H{
 			"Lang":          Lang,
@@ -392,6 +393,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 			"K8sver":        k8sVer,
                         "Cniplugin":     cniPlugin,
 			"Node":          nd,
+                        "Sshport":       sshPort,
 			"Softdir":       softDir,
 			"Sshuser":       currentUser,
 			"Way":           way,
@@ -426,6 +428,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 		if nd != "" {
 			nd = nd[1:len(nd)]
 		}
+                sshPort := c.DefaultQuery("sshport", "22")
 		c.HTML(http.StatusOK, "clusterdel.tmpl", gin.H{
 			"Lang":          Lang,
 			"Label":         label,
@@ -434,6 +437,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 			"Node":          nd,
 			"Softdir":       softDir,
 			"Ostype":        osType,
+                        "Sshport":       sshPort,
 			"Sshuser":       currentUser,
 			"Tools":         tools,
 			"Opt":           "uninstall",
@@ -464,6 +468,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
                 if nd != "" {
                     nd = nd[1:len(nd)]
                 }
+                sshPort := c.DefaultQuery("sshport", "22")
 		softDir := c.DefaultQuery("softdir", "/opt/kube-install")
 		osType := c.DefaultQuery("ostype", "")
 		scheduler := c.Query("scheduler")
@@ -477,6 +482,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
                         "Node":          nd,
 			"Softdir":       softDir,
 			"Ostype":        osType,
+                        "Sshport":       sshPort,
 			"Sshuser":       currentUser,
 			"Scheduler":     scheduler,
 			"Instime":       instime,
@@ -504,13 +510,14 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 		k8sVer := c.DefaultQuery("k8sver", "")
 		stu := c.DefaultQuery("status", "unknow")
 		softDir := c.DefaultQuery("softdir", "/opt/kube-install")
+                sshPort := c.DefaultQuery("sshport", "22")
 		if labelNow != "" {
 			_, _, _, subProcessDir, _ := ParameterConvert(mode, "", "", "", labelNow, "")
 			osType, _ = ReadFile(currentDir + "/data/output" + subProcessDir + "/ostype.txt")
 			mastermap := GetClusterMaster(labelNow, currentDir, logName, mode)
 			for master := range mastermap {
 				ttyStu, _ := ReadFile(currentDir + "/data/output" + subProcessDir + "/masters/" + master + "/ttystatus.txt")
-				masterlist = append(masterlist, MasterList{labelNow, k8sVer, master, mastermap[master], ttyStu, softDir, osType, Lang})
+				masterlist = append(masterlist, MasterList{labelNow, k8sVer, master, mastermap[master], ttyStu, softDir, osType, sshPort, Lang})
 			}
 		} else {
 			osType = ""
@@ -523,7 +530,11 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 			_, _, _, subProcessDir, _ := ParameterConvert(mode, "", "", "", label, "")
 			k8v, _ = ReadFile(currentDir + "/data/output" + subProcessDir + "/k8sver.txt")
 			stus, _ := GetClusterStatus(label, currentDir, logName, mode)
-			selectlist = append(selectlist, SelectList{label, labelNow, "", k8v, softDir, osType, stus})
+                        spt, _ := ReadFile(currentDir+"/data/output"+subProcessDir+"/sshport.txt")
+                        if spt == "" {
+                            spt = "22"
+                        }
+			selectlist = append(selectlist, SelectList{label, labelNow, "", k8v, softDir, osType, spt, stus})
 		}
 		c.HTML(http.StatusOK, "master.tmpl", gin.H{
 			"Lang":          Lang,
@@ -532,6 +543,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 			"Status":        stu,
 			"Softdir":       softDir,
 			"Ostype":        osType,
+                        "Sshport":       sshPort,
 			"Selectlist":    selectlist,
 			"Masterlist":    masterlist,
 			"Version":       Version,
@@ -555,11 +567,13 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 		masterStatus := c.DefaultQuery("masterstatus", "")
 		softDir := c.DefaultQuery("softdir", "/opt/kube-install")
 		osType := c.DefaultQuery("ostype", "")
+                sshPort := c.DefaultQuery("sshport", "22")
 		c.HTML(http.StatusOK, "masterinfo.tmpl", gin.H{
 			"Lang":          Lang,
 			"Label":         label,
 			"K8sver":        k8sVer,
 			"Masterip":      masterIp,
+                        "Sshport":       sshPort,
 			"Masterstatus":  masterStatus,
 			"Ostype":        osType,
 			"Softdir":       softDir,
@@ -586,6 +600,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 		labelNow := c.DefaultQuery("label", "")
 		k8sVer := c.DefaultQuery("k8sver", "")
 		softDir := c.DefaultQuery("softdir", "/opt/kube-install")
+                sshPort := c.DefaultQuery("sshport", "22")
 		if labelNow != "" {
 			_, _, _, subProcessDir, _ := ParameterConvert(mode, "", "", "", labelNow, "")
 			status, _ = ReadFile(currentDir + "/data/output" + subProcessDir + "/status.txt")
@@ -593,7 +608,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 			nodemap := GetClusterNode(labelNow, currentDir, logName, mode)
 			for node := range nodemap {
 				ttyStu, _ := ReadFile(currentDir + "/data/output" + subProcessDir + "/nodes/" + node + "/ttystatus.txt")
-				nodelist = append(nodelist, NodeList{labelNow, k8sVer, osType, node, nodemap[node], ttyStu, softDir, Lang})
+				nodelist = append(nodelist, NodeList{labelNow, k8sVer, osType, node, nodemap[node], ttyStu, softDir, sshPort, Lang})
 			}
 		} else {
 			status = "unknow"
@@ -607,7 +622,11 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 			_, _, _, subProcessDir, _ := ParameterConvert(mode, "", "", "", label, "")
 			k8v, _ = ReadFile(currentDir + "/data/output" + subProcessDir + "/k8sver.txt")
 			stus, _ := GetClusterStatus(label, currentDir, logName, mode)
-			selectlist = append(selectlist, SelectList{label, labelNow, "", k8v, softDir, osType, stus})
+                        spt, _ := ReadFile(currentDir+"/data/output"+subProcessDir+"/sshport.txt")
+                        if spt == "" {
+                            spt = "22"
+                        }
+			selectlist = append(selectlist, SelectList{label, labelNow, "", k8v, softDir, osType, spt, stus})
 		}
 		c.HTML(http.StatusOK, "node.tmpl", gin.H{
 			"Lang":          Lang,
@@ -615,6 +634,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 			"K8sver":        k8sVer,
 			"Status":        status,
 			"Softdir":       softDir,
+                        "Sshport":       sshPort,
 			"Ostype":        osType,
 			"Selectlist":    selectlist,
 			"Nodelist":      nodelist,
@@ -637,6 +657,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 		label := c.DefaultQuery("label", "")
 		k8sVer := c.DefaultQuery("k8sver", "")
 		osType := c.DefaultQuery("ostype", "")
+                sshPort := c.DefaultQuery("sshport", "22")
 		nodeIp := c.DefaultQuery("nodeip", "127.0.0.1")
 		nodeStatus := c.DefaultQuery("nodestatus", "")
 		softDir := c.DefaultQuery("softdir", "/opt/kube-install")
@@ -652,6 +673,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 			"Ostype":        osType,
 			"Osver":         osVer,
 			"Softdir":       softDir,
+                        "Sshport":       sshPort,
 			"Runc":          runcVer,
 			"Kernelver":     kernelVer,
 			"Cpu":           cpu,
@@ -677,12 +699,14 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 		label := c.DefaultQuery("label", "")
 		softDir := c.DefaultQuery("softdir", "/opt/kube-install")
 		osType := c.DefaultQuery("ostype", "")
+                sshPort := c.DefaultQuery("sshport", "22")
 		c.HTML(http.StatusOK, "nodeadd.tmpl", gin.H{
 			"Lang":          Lang,
 			"Label":         label,
 			"Softdir":       softDir,
 			"Sshuser":       currentUser,
 			"Ostype":        osType,
+                        "Sshport":       sshPort,
 			"Version":       Version,
 			"Releasedate":   ReleaseDate,
 			"Compatiblek8s": CompatibleK8S,
@@ -707,6 +731,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 		k8sVer := c.DefaultQuery("k8sver", "")
 		softDir := c.DefaultQuery("softdir", "/opt/kube-install")
 		osType := c.DefaultQuery("ostype", "")
+                sshPort := c.DefaultQuery("sshport", "22")
 		c.HTML(http.StatusOK, "tools.tmpl", gin.H{
 			"Lang":          Lang,
 			"Label":         label,
@@ -717,6 +742,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 			"K8sver":        k8sVer,
 			"Softdir":       softDir,
 			"Ostype":        osType,
+                        "Sshport":       sshPort,
 			"Sshuser":       currentUser,
 			"Version":       Version,
 			"Releasedate":   ReleaseDate,
@@ -737,6 +763,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 		k8sVer := c.DefaultQuery("k8sver", "")
 		softDir := c.DefaultQuery("softdir", "/opt/kube-install")
 		osType := c.DefaultQuery("ostype", "")
+                sshPort := c.DefaultQuery("sshport", "22")
 		scheduleList, _ := ReadFile(currentDir + "/data/statistics/schedulelist.txt")
 		c.HTML(http.StatusOK, "calendarscheduler.tmpl", gin.H{
 			"Lang":          Lang,
@@ -744,6 +771,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 			"K8sver":        k8sVer,
 			"Softdir":       softDir,
 			"Ostype":        osType,
+                        "Sshport":       sshPort,
 			"Schedulelist":  template.JS(scheduleList),
 			"Sshuser":       currentUser,
 			"Version":       Version,
@@ -765,6 +793,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
                 k8sVer := c.DefaultQuery("k8sver", "")
                 softDir := c.DefaultQuery("softdir", "/opt/kube-install")
                 osType := c.DefaultQuery("ostype", "")
+                sshPort := c.DefaultQuery("sshport", "22")
                 backUrl := c.DefaultQuery("backurl", "tools")
                 c.HTML(http.StatusOK, "userinfo.tmpl", gin.H{
                         "Lang":          Lang,
@@ -772,7 +801,8 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
                         "K8sver":        k8sVer,
                         "Softdir":       softDir,
                         "Ostype":        osType,
-                        "Backurl":        backUrl,
+                        "Sshport":       sshPort,
+                        "Backurl":       backUrl,
                         "Sshuser":       currentUser,
                         "Version":       Version,
                         "Releasedate":   ReleaseDate,
@@ -796,13 +826,19 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 		k8sVer := c.DefaultQuery("k8sver", "")
 		softDir := c.DefaultQuery("softdir", "/opt/kube-install")
 		osType := c.DefaultQuery("ostype", "")
+                sshPort := c.DefaultQuery("sshport", "22")
 		opt := c.DefaultQuery("opt", "")
 		labelArray, err := GetAllDir(currentDir+"/data/output", currentDir, logName, mode)
 		CheckErr(err, currentDir, logName, mode)
 		for _, i := range labelArray {
 			label := string(i)
+                        _, _, _, subProcessDir, _ := ParameterConvert(mode, "", "", "", label, "")
 			stu, _ := GetClusterStatus(label, currentDir, logName, mode)
-			selectlist = append(selectlist, SelectList{label, labelNow, opt, "", "", "", stu})
+                        spt, _ := ReadFile(currentDir+"/data/output"+subProcessDir+"/sshport.txt")
+                        if spt == "" {
+                            spt = "22"
+                        }
+			selectlist = append(selectlist, SelectList{label, labelNow, opt, "", "", "", spt, stu})
 		}
 		if opt == "systemlog" {
 			clog, err = ReadFile(currentDir + "/data/logs/kubeinstalld/" + logName + ".log")
@@ -838,6 +874,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 			"K8sver":        k8sVer,
 			"Softdir":       softDir,
 			"Ostype":        osType,
+                        "Sshport":       sshPort,
 			"Opt":           opt,
 			"Selectlist":    selectlist,
 			"Clog":          template.HTML(clog),
@@ -903,19 +940,25 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
         router.GET("/logoutset", func(c *gin.Context) {
             var username string
             username = c.DefaultQuery("username", "admin")
+            //Clean cookie
+            c.SetCookie(username, "", -1,"/", "127.0.01", false, false)
+            //Clean session
             session := sessions.Default(c)
             session.Delete(username)
             session.Clear()
+            session.Save()
+            //Jump to the login page
             c.Redirect(http.StatusMovedPermanently, "/login")
         })
 
 	// operation of install
 	router.POST("/install", func(c *gin.Context) {
 		var form ClusterAddForm
-		var master, node, osType, k8sVer, softDir, label, installTime, way, upgradeKernel, k8sDashboard, cniPlugin string
+		var master, node, sshPort, osType, k8sVer, softDir, label, installTime, way, upgradeKernel, k8sDashboard, cniPlugin string
 		if c.ShouldBind(&form) == nil {
 			master = form.Master
 			node = form.Node
+                        sshPort = form.Sshport
 			osType = form.Ostype
 			k8sVer = form.K8sver
 			softDir = form.Softdir
@@ -928,6 +971,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 		} else {
 			master = c.Query("master")
 			node = c.Query("node")
+                        sshPort = c.Query("sshport")
 			osType = c.DefaultQuery("ostype", "")
 			k8sVer = c.DefaultQuery("k8ever", "")
 			softDir = c.DefaultQuery("softdir", "/opt/kube-install")
@@ -942,18 +986,18 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
                 Lang := ChangeLang(langFromWeb, currentDir, logName, mode)
                 tools := c.Query("tools")
                 if !CheckLabel(label) {
-                        c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "install", "Result": "failure", "Info": "Installation failed! The \"label\" parameter length must be less than 32 strings, please check!", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+                        c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "install", "Result": "failure", "Info": "Installation failed! The \"label\" parameter length must be less than 32 strings, please check!", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
                         return
                 }
 		if osType == "unknow" {
-			c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "install", "Result": "failure", "Info": "Installation failed! Please set the operating system type correctly!", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+			c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "install", "Result": "failure", "Info": "Installation failed! Please set the operating system type correctly!", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 			return
 		}
 		if way == "newinstall" {
 			labelArray, err := GetAllDir(currentDir+"/data/output", currentDir, logName, mode)
 			CheckErr(err, currentDir, logName, mode)
 			if StrInArray(label, labelArray) {
-				c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "install", "Result": "failure", "Info": "Installation failed! Label cannot be repeated!", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+				c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "install", "Result": "failure", "Info": "Installation failed! Label cannot be repeated!", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 				return
 			}
 		}
@@ -961,13 +1005,13 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 			masterArray, nodeArray, softDir, subProcessDir, osTypeResult := ParameterConvert(mode, master, node, softDir, label, osType)
 			for i := 0; i < len(masterArray); i++ {
 				if !CheckIP(masterArray[i]) {
-					c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "install", "Result": "failure", "Info": "Installation failed! The Master IP address format you entered is incorrect, please check!", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+					c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "install", "Result": "failure", "Info": "Installation failed! The Master IP address format you entered is incorrect, please check!", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 					return
 				}
 			}
 			for j := 0; j < len(nodeArray); j++ {
 				if !CheckIP(nodeArray[j]) {
-					c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "install", "Result": "failure", "Info": "Installation failed! The Node IP address format you entered is incorrect, please check!", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+					c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "install", "Result": "failure", "Info": "Installation failed! The Node IP address format you entered is incorrect, please check!", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 					return
 				}
 			}
@@ -975,7 +1019,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 			stu, sch := GetClusterStatus(label, currentDir, logName, mode)
 			var installInfo string
 			if stu != "installing" && stu != "restarting" && stu != "uninstalling" && sch != "on" {
-				go InstallCore(mode, master, masterArray, node, nodeArray, softDir, currentDir, kissh, subProcessDir, currentUser, label, osTypeResult, osType, k8sVer, logName, Version, CompatibleK8S, CompatibleOS, installTime, way, upgradeKernel, k8sDashboard, cniPlugin)
+				go InstallCore(mode, master, masterArray, node, nodeArray, softDir, currentDir, kissh, subProcessDir, currentUser, label, osTypeResult, osType, k8sVer, logName, Version, CompatibleK8S, CompatibleOS, installTime, way, upgradeKernel, k8sDashboard, cniPlugin, sshPort)
 				if installTime == "" {
 					if Lang == "cn" {
 						installInfo = "Kubernetes集群正在后台安装中 ... "
@@ -989,12 +1033,12 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 						installInfo = "The planning task has been generated. The system will install the kubernetest cluster at " + installTime + " !"
 					}
 				}
-				c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "install", "Result": "success", "Info": installInfo, "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+				c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "install", "Result": "success", "Info": installInfo, "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 			} else {
-				c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "install", "Result": "failure", "Info": "Installation failed! There are scheduled tasks in the background, or someone else is installing or uninstalling the current cluster!", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+				c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "install", "Result": "failure", "Info": "Installation failed! There are scheduled tasks in the background, or someone else is installing or uninstalling the current cluster!", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 			}
 		} else {
-			c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "install", "Result": "failure", "Info": "Installation failed! The parameter you entered is wrong!", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+			c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "install", "Result": "failure", "Info": "Installation failed! The parameter you entered is wrong!", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 		}
 	})
 
@@ -1002,49 +1046,51 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 	router.POST("/rebuildmaster", func(c *gin.Context) {
 		var form MasterrebuildForm
 		var masterArray []string
-		var softDir, label, k8sVer, osType string
+		var softDir,label,k8sVer,osType,sshPort string
 		if c.ShouldBind(&form) == nil {
 			masterArray = form.Master
 			softDir = form.Softdir
 			label = form.Label
 			k8sVer = form.K8sver
 			osType = form.Ostype
+                        sshPort = form.Sshport
 		} else {
 			masterArray = strings.Split(c.Query("master"), ",")
 			softDir = c.DefaultQuery("softdir", "/opt/kube-install")
 			label = c.DefaultQuery("label", "")
 			k8sVer = c.DefaultQuery("k8sver", "")
 			osType = c.DefaultQuery("ostype", "")
+                        sshPort = c.DefaultQuery("sshport", "22")
 		}
 		langFromWeb := c.Query("lang")
 		Lang := ChangeLang(langFromWeb, currentDir, logName, mode)
 		if osType == "unknow" {
-			c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "rebuildmaster", "Result": "failure", "Info": "Rebuild failed! Please operate correctly System type!", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+			c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "rebuildmaster", "Result": "failure", "Info": "Rebuild failed! Please operate correctly System type!", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 			return
 		}
 		_, _, _, subProcessDir, _ := ParameterConvert(mode, "", "", softDir, label, osType)
 		masterArraylen := len(masterArray)
 		if masterArraylen < 1 || masterArray[0] == "" {
-			c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "rebuildmaster", "Result": "failure", "Info": "Rebuild failed! The IP address of kubernetes master cannot be empty!", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+			c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "rebuildmaster", "Result": "failure", "Info": "Rebuild failed! The IP address of kubernetes master cannot be empty!", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 			return
 		} else {
 			for i := 0; i < masterArraylen; i++ {
 				if !CheckIP(masterArray[i]) {
-					c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "rebuildmaster", "Result": "failure", "Info": "Rebuild failed! The Master IP address format you entered is incorrect, please check!", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+					c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "rebuildmaster", "Result": "failure", "Info": "Rebuild failed! The Master IP address format you entered is incorrect, please check!", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 					return
 				}
 				stu, _ := ReadFile(currentDir + "/data/output" + subProcessDir + "/masters/" + masterArray[i] + "/status.txt")
 				if stu == "adding" || stu == "rebuilding" || stu == "deleting" {
-					c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "rebuildmaster", "Result": "failure", "Info": "Rebuild failed! K8s master is being deleted or repaired by others!", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+					c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "rebuildmaster", "Result": "failure", "Info": "Rebuild failed! K8s master is being deleted or repaired by others!", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 					return
 				}
 			}
 		}
 		go RebuildMasterCore(mode, masterArray, currentDir, kissh, subProcessDir, currentUser, label, softDir, logName)
 		if Lang == "cn" {
-			c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "rebuildmaster", "Result": "success", "Info": "Kubernetes master正在后台修复中 ...", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+			c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "rebuildmaster", "Result": "success", "Info": "Kubernetes master正在后台修复中 ...", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 		} else {
-			c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "rebuildmaster", "Result": "success", "Info": "Started repairing kubernetes master in the background ...", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+			c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "rebuildmaster", "Result": "success", "Info": "Started repairing kubernetes master in the background ...", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 		}
 	})
 
@@ -1052,58 +1098,61 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 	router.POST("/delmaster", func(c *gin.Context) {
 		var form MasterDelForm
 		var masterArray []string
-		var softDir, label, k8sVer, osType string
+		var softDir,label,k8sVer,osType,sshPort string
 		if c.ShouldBind(&form) == nil {
 			masterArray = form.Master
 			softDir = form.Softdir
 			label = form.Label
 			k8sVer = form.K8sver
 			osType = form.Ostype
+                        sshPort = form.Sshport
 		} else {
 			masterArray = strings.Split(c.Query("master"), ",")
 			softDir = c.DefaultQuery("softdir", "/opt/kube-install")
 			label = c.DefaultQuery("label", "")
 			k8sVer = c.DefaultQuery("k8sver", "")
 			osType = c.DefaultQuery("ostype", "")
+                        sshPort = c.DefaultQuery("sshport", "22")
 		}
 		langFromWeb := c.Query("lang")
 		Lang := ChangeLang(langFromWeb, currentDir, logName, mode)
 		_, _, _, subProcessDir, _ := ParameterConvert(mode, "", "", softDir, label, "")
 		masterArraylen := len(masterArray)
 		if masterArraylen < 1 || masterArray[0] == "" {
-			c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "delmaster", "Result": "failure", "Info": "Delete failed! The IP address of kubernetes master cannot be empty!", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+			c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "delmaster", "Result": "failure", "Info": "Delete failed! The IP address of kubernetes master cannot be empty!", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 			return
 		} else {
 			for i := 0; i < masterArraylen; i++ {
 				if !CheckIP(masterArray[i]) {
-					c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "rebuildmaster", "Result": "failure", "Info": "Delete failed! The Master IP address format you entered is incorrect, please check!", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+					c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "rebuildmaster", "Result": "failure", "Info": "Delete failed! The Master IP address format you entered is incorrect, please check!", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 					return
 				}
 				stu, _ := ReadFile(currentDir + "/data/output" + subProcessDir + "/masters/" + masterArray[i] + "/status.txt")
 				if stu == "adding" || stu == "rebuilding" || stu == "deleting" {
-					c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "rebuildmaster", "Result": "failure", "Info": "Delete failed! K8s master is being deleted or repaired by others!", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+					c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "rebuildmaster", "Result": "failure", "Info": "Delete failed! K8s master is being deleted or repaired by others!", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 					return
 				}
 			}
 		}
 		go DeleteMasterCore(mode, masterArray, currentDir, kissh, subProcessDir, currentUser, label, softDir, logName)
 		if Lang == "cn" {
-			c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "delmaster", "Result": "success", "Info": "Kubernetes master 正在后台销毁中 ...", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+			c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "delmaster", "Result": "success", "Info": "Kubernetes master 正在后台销毁中 ...", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 		} else {
-			c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "delmaster", "Result": "success", "Info": "Started deleting kubernetes master in the background ...", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+			c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "delmaster", "Result": "success", "Info": "Started deleting kubernetes master in the background ...", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 		}
 	})
 
 	// operation of add node
 	router.POST("/addnode", func(c *gin.Context) {
 		var form NodeAddForm
-		var node, softDir, label, k8sVer, osType, upgradeKernel  string
+		var node,softDir,label,k8sVer,osType,sshPort,upgradeKernel  string
 		if c.ShouldBind(&form) == nil {
 			node = form.Node
 			softDir = form.Softdir
 			label = form.Label
 			k8sVer = form.K8sver
 			osType = form.Ostype
+                        sshPort = form.Sshport
                         upgradeKernel  = form.Upgradekernel
 		} else {
 			node = c.Query("node")
@@ -1111,12 +1160,13 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 			label = c.DefaultQuery("label", "")
 			k8sVer = c.DefaultQuery("k8sver", "")
 			osType = c.DefaultQuery("ostype", "")
+                        sshPort = c.DefaultQuery("sshport", "22")
                         upgradeKernel  = c.DefaultQuery("upgradekernel", "")
 		}
 		langFromWeb := c.Query("lang")
 		Lang := ChangeLang(langFromWeb, currentDir, logName, mode)
 		if osType == "unknow" {
-			c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "addnode", "Result": "failure", "Info": "Failed to add! Please select the operating system type of kubernetes node correctly!", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+			c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "addnode", "Result": "failure", "Info": "Failed to add! Please select the operating system type of kubernetes node correctly!", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 			return
 		}
 		_, nodeArray, _, subProcessDir, osTypeResult := ParameterConvert(mode, "", node, softDir, label, osType)
@@ -1124,31 +1174,31 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 		nd := ListNode(label, currentDir, logName, mode)
 		for j := 0; j < len(nd); j++ {
 			if strings.Contains(node, nd[j]) {
-				c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "addnode", "Result": "failure", "Info": "Failed to add! kubernetes node already exists, cannot add repeatedly!", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+				c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "addnode", "Result": "failure", "Info": "Failed to add! kubernetes node already exists, cannot add repeatedly!", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 				return
 			}
 		}
 		if nodeArraylen < 1 || nodeArray[0] == "" {
-			c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "addnode", "Result": "failure", "Info": "Failed to add! The IP address of kubernetes node cannot be empty!", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+			c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "addnode", "Result": "failure", "Info": "Failed to add! The IP address of kubernetes node cannot be empty!", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 			return
 		} else {
 			for i := 0; i < nodeArraylen; i++ {
 				if !CheckIP(nodeArray[i]) {
-					c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "addnode", "Result": "failure", "Info": "Failed to add! The Node IP address format you entered is incorrect, please check!", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+					c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "addnode", "Result": "failure", "Info": "Failed to add! The Node IP address format you entered is incorrect, please check!", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 					return
 				}
 				stu, _ := ReadFile(currentDir + "/data/output" + subProcessDir + "/nodes/" + nodeArray[i] + "/status.txt")
 				if stu == "adding" || stu == "deleting" {
-					c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "addnode", "Result": "failure", "Info": "Failed to add! kubernetes node is being deleted or added by others!", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+					c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "addnode", "Result": "failure", "Info": "Failed to add! kubernetes node is being deleted or added by others!", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 					return
 				}
 			}
 		}
-		go AddNodeCore(mode, node, nodeArray, currentDir, kissh, subProcessDir, currentUser, label, softDir, osTypeResult, k8sVer, logName, CompatibleOS, upgradeKernel )
+		go AddNodeCore(mode, node, nodeArray, currentDir, kissh, subProcessDir, currentUser, label, softDir, osTypeResult, k8sVer, logName, CompatibleOS, upgradeKernel)
 		if Lang == "cn" {
-			c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "addnode", "Result": "success", "Info": "Kubernetes node正在后台添加中 ...", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+			c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "addnode", "Result": "success", "Info": "Kubernetes node正在后台添加中 ...", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 		} else {
-			c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "addnode", "Result": "success", "Info": "Started adding kubernetes node in the background ...", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+			c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "addnode", "Result": "success", "Info": "Started adding kubernetes node in the background ...", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 		}
 	})
 
@@ -1156,55 +1206,58 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 	router.POST("/delnode", func(c *gin.Context) {
 		var form NodeDelForm
 		var nodeArray []string
-		var softDir, label, k8sVer, osType string
+		var softDir,label,k8sVer,osType,sshPort string
 		if c.ShouldBind(&form) == nil {
 			nodeArray = form.Node
 			softDir = form.Softdir
 			label = form.Label
 			k8sVer = form.K8sver
 			osType = form.Ostype
+                        sshPort = form.Sshport
 		} else {
 			nodeArray = strings.Split(c.Query("node"), ",")
 			softDir = c.DefaultQuery("softdir", "/opt/kube-install")
 			label = c.DefaultQuery("label", "")
 			k8sVer = c.DefaultQuery("k8sver", "")
 			osType = c.DefaultQuery("ostype", "")
+                        sshPort = c.DefaultQuery("sshport", "22")
 		}
 		langFromWeb := c.Query("lang")
 		Lang := ChangeLang(langFromWeb, currentDir, logName, mode)
 		_, _, _, subProcessDir, _ := ParameterConvert(mode, "", "", softDir, label, "")
 		nodeArraylen := len(nodeArray)
 		if nodeArraylen < 1 || nodeArray[0] == "" {
-			c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "addnode", "Result": "failure", "Info": "Delete failed! The IP address of kubernetes node cannot be empty!", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+			c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "addnode", "Result": "failure", "Info": "Delete failed! The IP address of kubernetes node cannot be empty!", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 			return
 		} else {
 			for i := 0; i < nodeArraylen; i++ {
 				if !CheckIP(nodeArray[i]) {
-					c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "addnode", "Result": "failure", "Info": "Delete failed! The Node IP address format you entered is incorrect, please check!", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+					c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "addnode", "Result": "failure", "Info": "Delete failed! The Node IP address format you entered is incorrect, please check!", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 					return
 				}
 				stu, _ := ReadFile(currentDir + "/data/output" + subProcessDir + "/nodes/" + nodeArray[i] + "/status.txt")
 				if stu == "adding" || stu == "deleting" {
-					c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "addnode", "Result": "failure", "Info": "Delete failed! K8s node is being deleted or added by others!", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+					c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "addnode", "Result": "failure", "Info": "Delete failed! K8s node is being deleted or added by others!", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 					return
 				}
 			}
 		}
 		go DeleteNodeCore(mode, nodeArray, currentDir, kissh, subProcessDir, currentUser, label, softDir, logName)
 		if Lang == "cn" {
-			c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "delnode", "Result": "success", "Info": "Kubernetes node正在后台销毁中 ...", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+			c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "delnode", "Result": "success", "Info": "Kubernetes node正在后台销毁中 ...", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 		} else {
-			c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "delnode", "Result": "success", "Info": "Started deleting kubernetes node in the background ...", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+			c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "delnode", "Result": "success", "Info": "Started deleting kubernetes node in the background ...", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 		}
 	})
 
 	// operation of uninstall
 	router.POST("/uninstall", func(c *gin.Context) {
 		var form ClusterDelForm
-		var master, node, softDir, label, k8sVer, osType string
+		var master,node,softDir,label,k8sVer,osType,sshPort string
 		if c.ShouldBind(&form) == nil {
 			master = form.Master
 			node = form.Node
+                        sshPort = form.Sshport
 			softDir = form.Softdir
 			label = form.Label
 			k8sVer = form.K8sver
@@ -1212,6 +1265,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 		} else {
 			master = c.Query("master")
 			node = c.Query("node")
+                        sshPort = c.Query("sshport")
 			softDir = c.DefaultQuery("softdir", "/opt/kube-install")
 			label = c.DefaultQuery("label", "")
 			k8sVer = c.DefaultQuery("k8sver", "")
@@ -1223,29 +1277,29 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 			masterArray, nodeArray, softDir, subProcessDir, osTypeResult := ParameterConvert(mode, master, node, softDir, label, osType)
 			for i := 0; i < len(masterArray); i++ {
 				if !CheckIP(masterArray[i]) {
-					c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "uninstall", "Result": "failure", "Info": "Uninstall failed! The Master IP address format you entered is incorrect, please check!", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+					c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "uninstall", "Result": "failure", "Info": "Uninstall failed! The Master IP address format you entered is incorrect, please check!", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 					return
 				}
 			}
 			for j := 0; j < len(nodeArray); j++ {
 				if !CheckIP(nodeArray[j]) {
-					c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "uninstall", "Result": "failure", "Info": "Uninstall failed! The Node IP address format you entered is incorrect, please check!", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+					c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "uninstall", "Result": "failure", "Info": "Uninstall failed! The Node IP address format you entered is incorrect, please check!", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 					return
 				}
 			}
 			stu, sch := GetClusterStatus(label, currentDir, logName, mode)
 			if stu != "installing" && stu != "restarting" && stu != "uninstalling" && sch != "on" {
-				go UninstallCore(mode, master, masterArray, node, nodeArray, softDir, currentDir, kissh, subProcessDir, currentUser, label, osTypeResult, logName, CompatibleOS)
+				go UninstallCore(mode, master, masterArray, node, nodeArray, softDir, currentDir, kissh, subProcessDir, currentUser, label, osTypeResult, logName, CompatibleOS, sshPort)
 				if Lang == "cn" {
-					c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "uninstall", "Result": "success", "Info": "Kubernetes集群正在后台卸载中 ...", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+					c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "uninstall", "Result": "success", "Info": "Kubernetes集群正在后台卸载中 ...", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 				} else {
-					c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "uninstall", "Result": "success", "Info": "Started to uninstall kubernetes cluster in the background ...", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+					c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "uninstall", "Result": "success", "Info": "Started to uninstall kubernetes cluster in the background ...", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 				}
 			} else {
-				c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "uninstall", "Result": "failure", "Info": "Uninstall failed! There are scheduled tasks in the background, or someone else is installing or uninstalling the current cluster!", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+				c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "uninstall", "Result": "failure", "Info": "Uninstall failed! There are scheduled tasks in the background, or someone else is installing or uninstalling the current cluster!", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 			}
 		} else {
-			c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "uninstall", "Result": "failure", "Info": "Uninstall failed! The parameter you input is wrong, please check!", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+			c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "uninstall", "Result": "failure", "Info": "Uninstall failed! The parameter you input is wrong, please check!", "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 		}
 	})
 
@@ -1256,6 +1310,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 		k8sVer := c.DefaultQuery("k8sver", "")
 		softDir := c.DefaultQuery("softdir", "/opt/kube-install")
 		osType := c.DefaultQuery("ostype", "")
+                sshPort := c.DefaultQuery("sshport", "22")
 		langFromWeb := c.Query("lang")
 		Lang := ChangeLang(langFromWeb, currentDir, logName, mode)
 		_, _, _, subProcessDir, _ := ParameterConvert(mode, "", "", softDir, label, "")
@@ -1278,7 +1333,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 				scheduleInfo = "Failed: scheduled installation task deletion failed!"
 			}
 		}
-		c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "deleteschedule", "Result": scheduleResult, "Info": scheduleInfo, "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+		c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "deleteschedule", "Result": scheduleResult, "Info": scheduleInfo, "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 	})
 
         // operation of change password
@@ -1289,6 +1344,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
                 k8sVer := c.DefaultQuery("k8sver", "")
                 softDir := c.DefaultQuery("softdir", "/opt/kube-install")
                 osType := c.DefaultQuery("ostype", "")
+                sshPort := c.DefaultQuery("sshport", "22")
                 langFromWeb := c.Query("lang")
                 Lang := ChangeLang(langFromWeb, currentDir, logName, mode)
                 if c.ShouldBind(&form) == nil {
@@ -1296,7 +1352,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
                         if err != nil {
                             changeResult = "failure"
                             changeInfo = "System error! Please use the 'kube-install -init' command to reinitialize your system."
-                            c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "updateuserinfo", "Result": changeResult, "Info": changeInfo, "Softdir": softDir, "Ostype": osType, "Tools": "yes", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+                            c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "updateuserinfo", "Result": changeResult, "Info": changeInfo, "Softdir": softDir, "Ostype": osType, "Tools": "yes", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
                             return
                         }
                         currentPassword, _ := DePwdCode(pwdByte)
@@ -1333,19 +1389,20 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
                                 changeInfo = "User information updated failed. Password cannot be empty!"
                         }
                 }
-                c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "updateuserinfo", "Result": changeResult, "Info": changeInfo, "Softdir": softDir, "Ostype": osType, "Tools": "yes", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+                c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "updateuserinfo", "Result": changeResult, "Info": changeInfo, "Softdir": softDir, "Ostype": osType, "Tools": "yes", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
                 return
 	})
 
         // Set tools switch
         router.POST("/toolswitch", func(c *gin.Context) {
                 var form ToolSwitchForm
-                var sshTool, installTool, calendarTool, userTool string
+                var sshTool,installTool,calendarTool,userTool string
                 tools := c.Query("tools")
                 label := c.DefaultQuery("label", "")
                 k8sVer := c.DefaultQuery("k8sver", "")
                 softDir := c.DefaultQuery("softdir", "/opt/kube-install")
                 osType := c.DefaultQuery("ostype", "")
+                sshPort := c.DefaultQuery("sshport", "22")
                 langFromWeb := c.Query("lang")
                 Lang := ChangeLang(langFromWeb, currentDir, logName, mode)
                 if c.ShouldBind(&form) == nil {
@@ -1356,22 +1413,22 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
                         err := SetToolSwitch(sshTool, installTool, calendarTool, userTool, currentDir, logName, mode)
                         if err != nil {
                                 if Lang == "cn" {
-                                        c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "toolswitch", "Result": "failure", "Info": "工具面板设置操作失败！", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+                                        c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "toolswitch", "Result": "failure", "Info": "工具面板设置操作失败！", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
                                 } else {
-                                        c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "toolswitch", "Result": "failure", "Info": "Failed to set the tool panel!", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+                                        c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "toolswitch", "Result": "failure", "Info": "Failed to set the tool panel!", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
                                 }
                         } else {
                                 if Lang == "cn" {
-                                        c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "toolswitch", "Result": "success", "Info": "工具面板设置操作成功！", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+                                        c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "toolswitch", "Result": "success", "Info": "工具面板设置操作成功！", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
                                 } else {
-                                        c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "toolswitch", "Result": "success", "Info": "Tool panel setting operation succeeded!", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+                                        c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "toolswitch", "Result": "success", "Info": "Tool panel setting operation succeeded!", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
                                 }
                         }
                 } else {
                         if Lang == "cn" {
-                                c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "toolswitch", "Result": "failure", "Info": "设置失败！请确保你设置了正确的选项。", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+                                c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "toolswitch", "Result": "failure", "Info": "设置失败！请确保你设置了正确的选项。", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
                         } else {
-                                c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "toolswitch", "Result": "failure", "Info": "Setting failed! Please make sure you set the correct options.", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+                                c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "toolswitch", "Result": "failure", "Info": "Setting failed! Please make sure you set the correct options.", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
                         }
                 }
         })
@@ -1379,7 +1436,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 	// Open the SSH key channel
 	router.POST("/sshkey", func(c *gin.Context) {
 		var form SshKeyForm
-		var sshIp, sshPass string
+		var sshIp,sshPort,sshPass string
 		tools := c.Query("tools")
 		label := c.DefaultQuery("label", "")
 		k8sVer := c.DefaultQuery("k8sver", "")
@@ -1389,44 +1446,45 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 		Lang := ChangeLang(langFromWeb, currentDir, logName, mode)
 		if c.ShouldBind(&form) == nil {
 			sshIp = form.Sship
+			sshPort = form.Sshport
 			sshPass = form.Sshpass
 			ipArray := strings.Split(sshIp, ",")
 			for i := 0; i < len(ipArray); i++ {
 				if !CheckIP(ipArray[i]) {
 					if Lang == "cn" {
-						c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "sshkey", "Result": "failure", "Info": "目标主机SSH打通失败！你输入的IP地址格式有误，请检查！", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+						c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "sshkey", "Result": "failure", "Info": "目标主机SSH打通失败！你输入的IP地址格式有误，请检查！", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 					} else {
-						c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "sshkey", "Result": "failure", "Info": "Failed to connect SSH channel, the IP address format you entered is incorrect, please check!", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+						c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "sshkey", "Result": "failure", "Info": "Failed to connect SSH channel, the IP address format you entered is incorrect, please check!", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 					}
 					return
 				}
 			}
-			err := SshKey(ipArray, sshPass, currentDir)
+			err := SshKey(ipArray, sshPort, sshPass, currentDir)
 			if err != nil {
 				if Lang == "cn" {
-					c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "sshkey", "Result": "failure", "Info": template.HTML("目标主机SSH打通失败！请使用\"root\"用户手动打通从kube-install到目标主机的SSH通道，或者在目标主机上执行以下命令后再次尝试打通：<br> <div class='cli_font' style='text-shadow: 0 0px; text-align:left; font-family: Droid Sans; font-size: 13px;'><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[root@localhost ~]# &nbsp; sudo sed -i \"/PermitRootLogin/d\" /etc/ssh/sshd_config <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[root@localhost ~]# &nbsp; sudo sh -c \"echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config\" <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[root@localhost ~]# &nbsp; sudo sed -i \"/StrictHostKeyChecking/s/^#//; /StrictHostKeyChecking/s/ask/no/\" /etc/ssh/ssh_config <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[root@localhost ~]# &nbsp; sudo systemctl restart sshd <br><br> </div>"), "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+					c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "sshkey", "Result": "failure", "Info": template.HTML("目标主机SSH打通失败！请使用\"root\"用户手动打通从kube-install到目标主机的SSH通道，或者在目标主机上执行以下命令后再次尝试打通：<br> <div class='cli_font' style='text-shadow: 0 0px; text-align:left; font-family: Droid Sans; font-size: 13px;'><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[root@localhost ~]# &nbsp; sudo sed -i \"/PermitRootLogin/d\" /etc/ssh/sshd_config <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[root@localhost ~]# &nbsp; sudo sh -c \"echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config\" <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[root@localhost ~]# &nbsp; sudo sed -i \"/StrictHostKeyChecking/s/^#//; /StrictHostKeyChecking/s/ask/no/\" /etc/ssh/ssh_config <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[root@localhost ~]# &nbsp; sudo systemctl restart sshd <br><br> </div>"), "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 				} else {
-					c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "sshkey", "Result": "failure", "Info": template.HTML("Failed to connect SSH channel! Please use \"root\" user to manually open the SSH channel from the local host to the target host, or try to open the SSH channel again after executing the following command on the target host:<br> <div class='cli_font' style='text-shadow: 0 0px; text-align:left; font-family: Droid Sans; font-size: 13px;'><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[root@localhost ~]# &nbsp; sudo sed -i \"/PermitRootLogin/d\" /etc/ssh/sshd_config <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[root@localhost ~]# &nbsp; sudo sh -c \"echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config\" <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[root@localhost ~]# &nbsp; sudo sed -i \"/StrictHostKeyChecking/s/^#//; /StrictHostKeyChecking/s/ask/no/\" /etc/ssh/ssh_config <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[root@localhost ~]# &nbsp; sudo systemctl restart sshd <br><br> </div>"), "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+					c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "sshkey", "Result": "failure", "Info": template.HTML("Failed to connect SSH channel! Please use \"root\" user to manually open the SSH channel from the local host to the target host, or try to open the SSH channel again after executing the following command on the target host:<br> <div class='cli_font' style='text-shadow: 0 0px; text-align:left; font-family: Droid Sans; font-size: 13px;'><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[root@localhost ~]# &nbsp; sudo sed -i \"/PermitRootLogin/d\" /etc/ssh/sshd_config <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[root@localhost ~]# &nbsp; sudo sh -c \"echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config\" <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[root@localhost ~]# &nbsp; sudo sed -i \"/StrictHostKeyChecking/s/^#//; /StrictHostKeyChecking/s/ask/no/\" /etc/ssh/ssh_config <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[root@localhost ~]# &nbsp; sudo systemctl restart sshd <br><br> </div>"), "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 				}
 			} else {
 				if Lang == "cn" {
-					c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "sshkey", "Result": "success", "Info": "已成功打通到目标主机(" + sshIp + ")的SSH通道！", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+					c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "sshkey", "Result": "success", "Info": "已成功打通到目标主机(" + sshIp + ")的SSH通道！", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 				} else {
-					c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "sshkey", "Result": "success", "Info": "Successfully open the SSH channel from Kube-Install to the target host (" + sshIp + ")!", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+					c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "sshkey", "Result": "success", "Info": "Successfully open the SSH channel from Kube-Install to the target host (" + sshIp + ")!", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 				}
 			}
 		} else {
 			if Lang == "cn" {
-				c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "sshkey", "Result": "failure", "Info": "目标主机SSH打通失败！请使用“root”用户手动打通从Kube-Install到目标主机的SSH通道！", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+				c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "sshkey", "Result": "failure", "Info": "目标主机SSH打通失败！请使用“root”用户手动打通从Kube-Install到目标主机的SSH通道！", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 			} else {
-				c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": "sshkey", "Result": "failure", "Info": "Failed to open SSH channel, please open SSH channel to target host manually!", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+				c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": "sshkey", "Result": "failure", "Info": "Failed to open SSH channel, please open SSH channel to target host manually!", "Softdir": softDir, "Ostype": osType, "Tools": tools, "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 			}
 		}
 	})
 
 	// page of remote TTY
 	router.GET("/tty", func(c *gin.Context) {
-		var ttyResult, ttyInfo string
+		var ttyResult,ttyInfo string
 		ttyIP := c.DefaultQuery("ttyip", "")
 		ttyOption := c.DefaultQuery("ttyoption", "")
 		opt := c.DefaultQuery("opt", "")
@@ -1434,9 +1492,10 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 		label := c.DefaultQuery("label", "")
 		k8sVer := c.DefaultQuery("k8sver", "")
 		osType := c.DefaultQuery("ostype", "")
+                sshPort := c.DefaultQuery("sshport", "22")
 		langFromWeb := c.Query("lang")
 		Lang := ChangeLang(langFromWeb, currentDir, logName, mode)
-		err := SwitchTTY(label, currentDir, ttyIP, ttyOption, logName, mode)
+		err := SwitchTTY(label, currentDir, ttyIP, ttyOption, sshPort, logName, mode)
 		if err == nil {
 			ttyResult = "success"
 			if ttyOption == "enable" {
@@ -1460,7 +1519,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 				ttyInfo = "Operation failed! Please check the network and port occupation of " + ttyIP + " !"
 			}
 		}
-		c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Opt": opt, "Result": ttyResult, "Info": ttyInfo, "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
+		c.HTML(http.StatusOK, "optresult.tmpl", gin.H{"Label": label, "K8sver": k8sVer, "Sshport": sshPort, "Opt": opt, "Result": ttyResult, "Info": ttyInfo, "Softdir": softDir, "Ostype": osType, "Tools": "no", "Lang": Lang, "Version": Version, "Releasedate": ReleaseDate, "Compatiblek8s": CompatibleK8S, "Compatibleos": CompatibleOS})
 		return
 	})
 
