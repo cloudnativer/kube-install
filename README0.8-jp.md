@@ -282,7 +282,7 @@ Kube-installソースホストにrootユーザを使用して以下のコマン�
 <br>
 <br>
 
-#[7] kube-installクラスタアーキテクチャ
+# [7] kube-installクラスタアーキテクチャ
 
 <br>
 
