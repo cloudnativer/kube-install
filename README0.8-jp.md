@@ -282,8 +282,17 @@ Kube-installソースホストにrootユーザを使用して以下のコマン�
 <br>
 <br>
 
+#[7] kube-installクラスタアーキテクチャ
 
-# [7] IssuesとPRを提出してください
+<br>
+
+`./data/`ディレクトリは、`kube-install`インストールデプロイのすべてのステータス情報を格納するために使用され、すべてのkubernetesクラスタの構成などの情報が含まれます。`./data/`ディレクトリはファイルストレージの形式で共有され、一部の負荷等化ソフトウェアによってプライマリ・スタンバイ・スイッチングまたは負荷等化クラスタ効果を実現する。<a href="docs/architecture0.8.md">ここをクリックして、より詳細なアーキテクチャドキュメント</a>を表示できます。
+
+<br>
+<br>
+
+
+# [8] IssuesとPRを提出してください
 
 使用中に問題があったら、<a href="https://github.com/cloudnativer/kube-install/issues">https://github.com/cloudnativer/kube-install/issues</a>Issuesを提出してもいいです。Forkソースコードを修正してBUGを修復してみて、PRを提出してください。
   

@@ -281,7 +281,16 @@ You can execute `kube-install -help` command to view the command line help docum
 <br>
 
 
-# [7] How to build it
+# [7] kube-install cluster architecture
+
+<br>
+
+The `./data/` directory is used to store all status information of `kube-install`, including configuration information of all kubernetes clusters. You can share the `./data/` directory through file storage, so as to realize active and standby or load balancing cluster. you can <a href="docs/architecture0.8.md">click here to view more description documents</a> about `Active/standby` and `Load balancing` cluster architecture.
+
+<br>
+<br>
+
+# [8] How to build it
 
 <br>
 
@@ -291,7 +300,7 @@ The build can be completed automatically by executing the `make` command. You ca
 <br>
 
 
-# [8] How to Contribute
+# [9] How to Contribute
 
 If you have problems in use, <a href="https://github.com/cloudnativer/kube-install/issues">you can click here submit issues to us</a>, or fork it and submit PR.
 <br>

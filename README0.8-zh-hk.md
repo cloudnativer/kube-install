@@ -292,8 +292,16 @@ Kube-install不僅可以很方便的安裝單機和高可用的kubernetes集羣�
 <br>
 <br>
 
+# [7] kube-install集羣架構
 
-# [7] 歡迎提交Issues和PR
+<br>
+
+`./data/`目錄是用來存儲`kube-install`安裝部署的所有狀態資訊的，包括所有kubernetes集羣的配寘等資訊。 你可以將`./ data/`目錄通過檔存儲的形式共亯起來，再借助於一些負載均衡軟件實現主備切換或負載均衡集羣效果。 你可以<a href=“docs/architecture0.8.md”>點擊這裡查看更加詳細的架構檔案</a>。
+
+<br>
+<br>
+
+# [8] 歡迎提交Issues和PR
 
 如果你在使用過程中遇到問題，可以點擊<a href=“https://github.com/cloudnativer/kube-install/issues“>https://github.com/cloudnativer/kube-install/issues</a>向我們提交Issues，也可以Fork原始程式碼，然後嘗試修復BUG之後，向我們提交PR。<br>
 
