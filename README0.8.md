@@ -287,6 +287,8 @@ You can execute `kube-install -help` command to view the command line help docum
 
 The `./data/` directory is used to store all status information of `kube-install`, including configuration information of all kubernetes clusters. You can share the `./data/` directory through file storage, so as to realize active and standby or load balancing cluster. you can <a href="docs/architecture0.8.md">click here to view more description documents</a> about `Active/standby` and `Load balancing` cluster architecture.
 
+![architecture](docs/images/architecture1.jpg)
+
 <br>
 <br>
 
