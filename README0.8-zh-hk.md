@@ -298,6 +298,8 @@ Kube-install不僅可以很方便的安裝單機和高可用的kubernetes集羣�
 
 `./data/`目錄是用來存儲`kube-install`安裝部署的所有狀態資訊的，包括所有kubernetes集羣的配寘等資訊。 你可以將`./ data/`目錄通過檔存儲的形式共亯起來，再借助於一些負載均衡軟件實現主備切換或負載均衡集羣效果。 你可以<a href=“docs/architecture0.8.md”>點擊這裡查看更加詳細的架構檔案</a>。
 
+![architecture](docs/images/architecture1.jpg)
+
 <br>
 <br>
 
