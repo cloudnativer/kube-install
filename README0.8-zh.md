@@ -286,6 +286,8 @@ Kube-install不仅可以很方便的安装单机和高可用的kubernetes集群�
 `./data/`目录是用来存储`kube-install`安装部署的所有状态信息的，包括所有kubernetes集群的配置等信息。你可以将`./data/`目录通过文件存储的形式共享起来，再借助于一些负载均衡软件实现主备切换或负载均衡集群效果。你可以<a href="docs/architecture0.8.m
 d">点击这里查看更加详细的架构文档</a>。
 
+![architecture](docs/images/architecture1.jpg)
+
 <br>
 <br>
 
