@@ -14,8 +14,8 @@ We will add the following features in 0.8.0 version:
 * Add dashboard `metrics-scraper` to solve the problem of `kube-dashboard` monitoring chart.
 * Set the deployment of `kube-dashboard` as an option, and users can choose not to deploy it.
 * Solve the problem of `secret` "harbor-secret" not found.
-* Support modifying `kube-apiserver` default `6443` port.
-* Support non-standard `SSH` port for installation.
+* Support modifying `kube-apiserver` default `6443` port. https://github.com/cloudnativer/kube-install/issues/33
+* Support non-standard `SSH` port for installation. https://github.com/cloudnativer/kube-install/issues/29
 * Fix DOS security vulnerability of `go-yaml`.
 * Upgrade `kube-dashboard` to v2.4.0.
 * Upgrade `pause` image to v3.5.
