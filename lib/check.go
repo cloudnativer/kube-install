@@ -67,7 +67,7 @@ func CheckCNI(cniPlugin string, currentDir string, logName string, mode string) 
 // Check whether the kubernetes version is supported.
 func CheckK8sVersion(Version string, CompatibleK8S string, k8sVer string, currentDir string, logName string, mode string) {
 	logStr := LogStr(mode)
-	if k8sVer == "1.17" || k8sVer == "1.18" || k8sVer == "1.19" || k8sVer == "1.20" || k8sVer == "1.21" || k8sVer == "1.22" || k8sVer == "1.23" {
+	if k8sVer == "1.18" || k8sVer == "1.19" || k8sVer == "1.20" || k8sVer == "1.21" || k8sVer == "1.22" || k8sVer == "1.23" || k8sVer == "1.24" {
 		return
 	} else {
 		if mode == "DAEMON" {

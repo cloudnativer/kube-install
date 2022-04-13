@@ -16,18 +16,16 @@ func RebuildMasterCore(mode string, masterArray []string, currentDir string, kis
     ShellExecute("echo \"*************************************************************************************\n\n[Info] "+time.Now().String()+" Rebuilding kubernetes master, please wait ...\n\n    Kubernetes cluster label: "+label+"\n\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/rebuildmaster.log")
     ShellExecute("sed -i '1d' "+currentDir+"/data/msg/msg.txt")
     ShellExecute("echo \"<div class='g_12'><div class='info iDialog'>[Info] "+time.Now().String()+" Rebuilding kubernetes master of "+label+" cluster ...</div></div>\" >> "+currentDir+"/data/msg/msg.txt")
-    sshPort, _ := ReadFile(currentDir+"/data/output"+subProcessDir+"/sshport.txt")
-    if sshPort == "" {
-        sshPort = "22"
-    }
+    sshPort := GetSshPort(label, currentDir, mode)
     if !RebuildmasterConfig(mode, masterArray, currentDir, subProcessDir, logName, sshPort) {
         ShellExecute("echo [Error] "+time.Now().String()+" \"The parameters you entered are incorrect, please check! \n\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/rebuildmaster.log")
         return
     }
+    kubeApiPort := GetkubeApiPort(label, currentDir, mode)
     _, err := os.Stat(currentDir+"/data/output"+subProcessDir+"/sys/0x000certificate/copycfssl/templates/ipvsinit_ep.yaml")
     if err != nil || os.IsNotExist(err) {
         ShellExecute("cp -rf "+currentDir+"/sys "+currentDir+"/data/output"+subProcessDir+"/")
-        InstallIpvsYaml(mode, currentDir, masterArray, subProcessDir, logName)
+        InstallIpvsYaml(mode, currentDir, masterArray, kubeApiPort, subProcessDir, logName)
     }
     InstallGenfile("", mode, currentDir, subProcessDir, logName)
     RebuildmasterYML("",currentDir+"/data/output"+subProcessDir, currentDir, currentUser, logName)
@@ -48,7 +46,7 @@ func RebuildMasterCore(mode string, masterArray []string, currentDir string, kis
     } else {
         notokMaster := ""
         for i := 0; i < len(masterArray); i++ {
-            chkMasterStr := ShellOutput("curl -k -s --head 'https://"+masterArray[i]+":6443' | awk '/HTTP/ {print $2}' ")
+            chkMasterStr := ShellOutput("curl -k -s --head 'https://"+masterArray[i]+":"+kubeApiPort+"' | awk '/HTTP/ {print $2}' ")
             fmt.Println(chkMasterStr)
             if chkMasterStr == "401\n" {
                 DatabaseUpdate(currentDir+"/data/output"+subProcessDir+"/masters/"+masterArray[i]+"/status.txt", "ok", currentDir, logName, mode)
@@ -78,10 +76,7 @@ func DeleteMasterCore(mode string, masterArray []string, currentDir string, kiss
     ShellExecute("echo \"*************************************************************************************\n\n[Info] "+time.Now().String()+" Deleting kubernetes master, please wait ...\n\n    Kubernetes cluster label: "+label+"\n\n\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/delmaster.log")
     ShellExecute("sed -i '1d' "+currentDir+"/data/msg/msg.txt")
     ShellExecute("echo \"<div class='g_12'><div class='info iDialog'>[Info] "+time.Now().String()+" Deleting kubernetes master of "+label+" cluster ... </div></div>\" >> "+currentDir+"/data/msg/msg.txt")
-    sshPort, _ := ReadFile(currentDir+"/data/output"+subProcessDir+"/sshport.txt")
-    if sshPort == "" {
-        sshPort = "22"
-    }
+    sshPort := GetSshPort(label, currentDir, mode)
     if !DelmasterConfig(mode, masterArray, currentDir, subProcessDir, logName, sshPort) {
         ShellExecute("echo [Error] "+time.Now().String()+" \"The parameters you entered are incorrect, please check! \n\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/delmaster.log")
         return
@@ -124,10 +119,7 @@ func AddNodeCore(mode string, node string, nodeArray []string, currentDir string
     }
     CheckOS(CompatibleOS, osTypeResult, currentDir, logName, mode)
     CreateDir(currentDir+"/data/output"+subProcessDir, currentDir, logName, mode)
-    sshPort, _ := ReadFile(currentDir+"/data/output"+subProcessDir+"/sshport.txt")
-    if sshPort == "" {
-        sshPort = "22"
-    }
+    sshPort := GetSshPort(label, currentDir, mode)
     os.OpenFile(currentDir+"/data/logs"+subProcessDir+"/logs/addnode.log", os.O_RDWR|os.O_TRUNC|os.O_CREATE, 0766)
     ShellExecute("echo \"*************************************************************************************\n\n[Info] "+time.Now().String()+" Adding kubernetes node, please wait ... \n\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/addnode.log")
     ShellExecute("echo \"    Kubernetes Cluster Label: "+label+"\n    Kubernetes Node: "+node+"\n    SSH Operation Port: "+sshPort+"\n    Operating System Type: "+osTypeResult+ upgradeKernelStr +"\n    System User for Operation: "+currentUser+"\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/addnode.log")
@@ -189,10 +181,7 @@ func DeleteNodeCore(mode string, nodeArray []string, currentDir string, kissh st
     ShellExecute("echo \"*************************************************************************************\n\n[Info] "+time.Now().String()+" Deleting kubernetes node, please wait ... \n\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/delnode.log")
     ShellExecute("sed -i '1d' "+currentDir+"/data/msg/msg.txt")
     ShellExecute("echo \"<div class='g_12'><div class='info iDialog'>[Info] "+time.Now().String()+" Deleting kubernetes node of "+label+" cluster ... </div></div>\" >> "+currentDir+"/data/msg/msg.txt")
-    sshPort, _ := ReadFile(currentDir+"/data/output"+subProcessDir+"/sshport.txt")
-    if sshPort == "" {
-        sshPort = "22"
-    }
+    sshPort := GetSshPort(label, currentDir, mode)
     if !DelnodeConfig(mode, nodeArray, currentDir, subProcessDir, logName, sshPort) {
         ShellExecute("echo [Error] "+time.Now().String()+" \"The parameters you entered are incorrect, please check! \n\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/delnode.log")
         for i := 0; i < len(nodeArray); i++ {
@@ -233,7 +222,7 @@ func DeleteNodeCore(mode string, nodeArray []string, currentDir string, kissh st
 }
 
 // Install the core operation part of the cluster.
-func InstallCore(mode string, master string, masterArray []string, node string, nodeArray []string, softDir string, currentDir string, kissh string, subProcessDir string, currentUser string, label string, osTypeResult string, osType string, k8sVer string, logName string, Version string, CompatibleK8S string, CompatibleOS string, installTime string, way string, upgradeKernel string, kubeDashboard string, cniPlugin string, sshPort string) {
+func InstallCore(mode string, master string, masterArray []string, node string, nodeArray []string, softDir string, currentDir string, kissh string, subProcessDir string, currentUser string, label string, osTypeResult string, osType string, k8sVer string, logName string, Version string, CompatibleK8S string, CompatibleOS string, installTime string, way string, upgradeKernel string, kubeDashboard string, kubeApiPort string, cniPlugin string, sshPort string) {
     opt := "install"
     layoutName := "install"
     logStr := LogStr(mode)
@@ -254,11 +243,12 @@ func InstallCore(mode string, master string, masterArray []string, node string, 
         DatabaseUpdate(currentDir+"/data/output"+subProcessDir+"/softdir.txt", softDir, currentDir, logName, mode)
         DatabaseUpdate(currentDir+"/data/output"+subProcessDir+"/ostype.txt", osType, currentDir, logName, mode)
         DatabaseUpdate(currentDir+"/data/output"+subProcessDir+"/k8sver.txt", k8sVer, currentDir, logName, mode)
+        DatabaseUpdate(currentDir+"/data/output"+subProcessDir+"/k8sapiport.txt", kubeApiPort, currentDir, logName, mode)
         DatabaseUpdate(currentDir+"/data/output"+subProcessDir+"/cniplugin.txt", cniPlugin, currentDir, logName, mode)
         DatabaseUpdate(currentDir+"/data/output"+subProcessDir+"/status.txt", "unknow", currentDir, logName, mode)
     }
     os.OpenFile(currentDir+"/data/logs"+subProcessDir+"/logs/install.log", os.O_RDWR|os.O_TRUNC|os.O_CREATE, 0766)
-    GeneralConfig(mode, masterArray, nodeArray, currentDir, softDir, subProcessDir, osTypeResult, k8sVer, kubeDashboard, logName, sshPort)
+    GeneralConfig(mode, masterArray, nodeArray, currentDir, softDir, subProcessDir, osTypeResult, k8sVer, kubeDashboard, kubeApiPort, logName, sshPort)
     if !InstallConfig(mode, masterArray, nodeArray, currentDir, subProcessDir, logName, sshPort) {
         ShellExecute("echo [Error] "+time.Now().String()+" \"The parameters you entered are incorrect, please check! \n\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/install.log")
         if way == "newinstall" { os.RemoveAll(currentDir+"/data/output"+subProcessDir) }
@@ -266,7 +256,7 @@ func InstallCore(mode string, master string, masterArray []string, node string, 
     }
     ShellExecute("cp -rf "+currentDir+"/sys "+currentDir+"/data/output"+subProcessDir+"/")
     InstallGenfile(osTypeResult, mode, currentDir, subProcessDir, logName)
-    InstallIpvsYaml(mode, currentDir, masterArray, subProcessDir, logName)
+    InstallIpvsYaml(mode, currentDir, masterArray, kubeApiPort, subProcessDir, logName)
     var err_install error
     if len(masterArray) == 1{
         OnemasterInstallYML(mode,currentDir+"/data/output"+subProcessDir,currentDir,currentUser,logName,upgradeKernel,osTypeResult,k8sVer,cniPlugin)
@@ -314,6 +304,7 @@ func InstallCore(mode string, master string, masterArray []string, node string, 
                 DatabaseUpdate(currentDir+"/data/output"+subProcessDir+"/softdir.txt", softDir, currentDir, logName, mode)
                 DatabaseUpdate(currentDir+"/data/output"+subProcessDir+"/ostype.txt", osType, currentDir, logName, mode)
                 DatabaseUpdate(currentDir+"/data/output"+subProcessDir+"/k8sver.txt", k8sVer, currentDir, logName, mode)
+                DatabaseUpdate(currentDir+"/data/output"+subProcessDir+"/k8sapiport.txt", kubeApiPort, currentDir, logName, mode)
                 DatabaseUpdate(currentDir+"/data/output"+subProcessDir+"/cniplugin.txt", cniPlugin, currentDir, logName, mode)
             }
             for i := 0; i < len(masterArray); i++ {
@@ -387,7 +378,7 @@ func UninstallCore(mode string, master string, masterArray []string, node string
     ShellExecute("echo \"    Kubernetes Cluster Label: "+label+"\n    Kubernetes Master: "+master+"\n    Kubernetes Node: "+node+"\n    SSH Operation Port: "+sshPort+"\n    System User for Uninstallation: "+currentUser+"\n\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/uninstall.log")
     ShellExecute("sed -i '1d' "+currentDir+"/data/msg/msg.txt")
     ShellExecute("echo \"<div class='g_12'><div class='info iDialog'>[Info] "+time.Now().String()+" Uninstalling kubernetes cluster of "+label+" cluster ... </div></div>\" >> "+currentDir+"/data/msg/msg.txt")
-    GeneralConfig(mode, masterArray, nodeArray, currentDir, softDir, subProcessDir, osTypeResult, "", "", logName, sshPort)
+    GeneralConfig(mode, masterArray, nodeArray, currentDir, softDir, subProcessDir, osTypeResult, "", "", "", logName, sshPort)
     if !InstallConfig(mode,masterArray, nodeArray, currentDir, subProcessDir, logName, sshPort) {
         ShellExecute("echo [Error] "+time.Now().String()+"The parameters you entered are incorrect, please check! \" \n\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/uninstall.log")
         return
@@ -439,7 +430,6 @@ func UninstallCore(mode string, master string, masterArray []string, node string
             err_health := DetectK8sHealth(label, currentDir, logName, mode)
             if err_health != nil {
                 DatabaseUpdate(currentDir+"/data/output"+subProcessDir+"/status.txt", "notinstall", currentDir, logName, mode)
-                ShellExecute("echo [Info] "+time.Now().String()+" \"Kubernetes cluster uninstall completed! \n\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/uninstall.log")
                 ShellExecute("echo [Info] "+time.Now().String()+" \"Cleaning up temporary cache files ... \n\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/uninstall.log")
                 err_rm := os.RemoveAll("/tmp/.kubeinstalltemp"+subProcessDir)
                 err_gc := os.RemoveAll(currentDir+"/data/output"+subProcessDir)

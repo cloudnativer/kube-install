@@ -17,6 +17,7 @@ func DatabaseInit(currentDir string, subProcessDir string, logName string, mode 
 	CreateDir(currentDir+"/data/output"+subProcessDir+"/addons/addonsip", currentDir, logName, mode)
 	CreateFile(currentDir+"/data/output"+subProcessDir+"/addons/addonsip/registryip.txt", currentDir, logName, mode)
 	CreateFile(currentDir+"/data/output"+subProcessDir+"/addons/addonsip/k8sdashboardip.txt", currentDir, logName, mode)
+        CreateFile(currentDir+"/data/output"+subProcessDir+"/k8sapiport.txt", currentDir, logName, mode)
 	CreateFile(currentDir+"/data/output"+subProcessDir+"/status.txt", currentDir, logName, mode)
 	CreateFile(currentDir+"/data/output"+subProcessDir+"/softdir.txt", currentDir, logName, mode)
 	CreateFile(currentDir+"/data/output"+subProcessDir+"/softdirtemp.txt", currentDir, logName, mode)
@@ -258,6 +259,28 @@ func GetClusterK8sVer(label string, currentDir string, mode string) string {
 	} else {
 		return k8sver
 	}
+}
+
+// Query the port of kubernetes kube-apiserver.
+func GetkubeApiPort(label string, currentDir string, mode string) string {
+        _, _, _, subProcessDir, _ := ParameterConvert(mode, "", "", "", label, "")
+        kubeApiPort, err := ReadFile(currentDir+"/data/output"+subProcessDir+"/k8sapiport.txt")
+        if err != nil || kubeApiPort == "" {
+                return "6443"
+        } else {
+                return kubeApiPort
+        }
+}
+
+// Query the ssh port of cluster host.
+func GetSshPort(label string, currentDir string, mode string) string {
+        _, _, _, subProcessDir, _ := ParameterConvert(mode, "", "", "", label, "")
+        sshPort, err := ReadFile(currentDir+"/data/output"+subProcessDir+"/sshport.txt")
+        if err != nil || sshPort == "" {
+                return "22"
+        } else {
+                return sshPort
+        }
 }
 
 

@@ -21,16 +21,16 @@ func InstallGenfile(osType string, mode string, currentDir string, subProcessDir
 }
 
 // Adaptively update the IpvsYaml process file.
-func InstallIpvsYaml(mode string, currentDir string, masterArray []string, subProcessDir string, logName string) {
+func InstallIpvsYaml(mode string, currentDir string, masterArray []string, kubeApiPort string, subProcessDir string, logName string) {
     var ipvsinitYaml string
     master_num := len(masterArray)
     for i := 0; i < master_num; i++ {
         ipvsinitYaml = ipvsinitYaml+"  - ip: "+masterArray[i]+" \n"
     }
-    ipvsinitYamlFile, err := os.Create(currentDir+"/data/output"+subProcessDir+"/sys/0x000certificate/copycfssl/templates/ipvsinit_ep.yaml") 
+    ipvsinitYamlFile, err := os.Create(currentDir+"/data/output"+subProcessDir+"/sys/0x000certificate/copycfssl/templates/ipvsinit_ep.yaml.j2") 
     CheckErr(err,currentDir,logName,mode)
     defer ipvsinitYamlFile.Close()
-    ipvsinitYamlFile.WriteString("apiVersion: v1\nkind: Endpoints\nmetadata:\n  name: ipvsinit-lb\n  namespace: kube-system\n  labels:\n    k8sapp: ipvsinit-lb\nsubsets:\n- addresses:\n"+ipvsinitYaml+"  ports:\n  - name: k8s-api\n    port: 6443\n    protocol: TCP\n")
+    ipvsinitYamlFile.WriteString("apiVersion: v1\nkind: Endpoints\nmetadata:\n  name: ipvsinit-lb\n  namespace: kube-system\n  labels:\n    k8sapp: ipvsinit-lb\nsubsets:\n- addresses:\n"+ipvsinitYaml+"  ports:\n  - name: k8s-api\n    port: "+kubeApiPort+"\n    protocol: TCP\n")
 }
 
 // Adaptively update the preinstall shell.

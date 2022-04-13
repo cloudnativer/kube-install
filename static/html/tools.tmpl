@@ -210,7 +210,7 @@
                                                   <option value="1.19" >Kubernetes v1.19</option>
                                                   <option value="1.18" >Kubernetes v1.18</option>
                                                 </select>
-                                                <div class="field_notice">{{if eq .Lang "cn"}}选择你要安装的Kubernetes软件版本。{{else}}Select the version of kubernetes software you want to install.{{end}}</div>
+                                                <div class="field_notice">{{if eq .Lang "cn"}}选择你要安装的Kubernetes软件版本。<br>注意：Kubernetes 1.24以前的版本，使用"Docker"作为默认容器运行时；从Kubernetes 1.24版开始，将默认使用"Containerd"代替"Docker"作为容器运行时。{{else}}Select the version of kubernetes software you want to install. <br>Notice: Before kubernetes 1.24 uses "docker" as the default container runtime. Starting from kubernetes 1.24, "Containerd" will be used by default instead of "Docker" as the container runtime.{{end}}</div>
                                         </div>
                                 </div>
                                 <div class="line_grid">
@@ -225,6 +225,13 @@
                                                   <option value="cilium" >Cilium</option>
                                                 </select>
                                                 <div class="field_notice">{{if eq .Lang "cn"}}选择你要安装部署的CNI插件类型。（如果需要安装“Cilium”，请将Linux内核升级到4.9或以上版本）{{else}}Select the type of CNI Plug-in you want to install.(In addition, if you need to install "Cilium", please upgrade the Linux kernel to version 4.9 or above.){{end}}</div>
+                                        </div>
+                                </div>
+                                <div class="line_grid">
+                                        <div class="g_3"><span class="label">{{if eq .Lang "cn"}}Kube-apiserver端口号{{else}}Kube-apiserver port{{end}} <span class="must">*</span></span></div>
+                                        <div class="g_9">
+                                                <input name="k8sapiport" class="simple_field" type="text" value="6443" required />
+                                                <div class="field_notice">{{if eq .Lang "cn"}}填写Kube-Apiserver监听的安全端口号，默认为6443。{{else}}The security port of Kube-Apiserver, default is 6443.{{end}}</div>
                                         </div>
                                 </div>
                                 <div class="line_grid">

@@ -16,12 +16,16 @@
     - k8s-root-ca-csr.json
     - kube-proxy-csr.json
     - token.csv
+- template:
+    src: "../templates/{{item}}.j2"
+    dest: "/etc/kubernetes/{{item}}"
+  with_items:
+    - ipvsinit_svc.yaml
+    - ipvsinit_ep.yaml
 - copy:
     src: "../templates/{{item}}"
     dest: "/etc/kubernetes/{{item}}"
   with_items:
     - apiserver-to-kubelet.yaml
     - cert-renew-rbac.yaml
-    - ipvsinit_svc.yaml
-    - ipvsinit_ep.yaml
 

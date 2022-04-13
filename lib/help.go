@@ -30,6 +30,7 @@ COMMAND:
 
 OBJECT:
   cniplugin        Specifies the CNI plug-in type: "flannel | calico | kuberouter | weave | cilium".(Default "flannel")
+  k8sapiport       The TCP Port of the k8s kube-apiserver. (Default "6443")
   k8sdashboard     Automatically deploy kube-dashboard to kubernetes cluster. (default "yes")
   k8sver           Specifies the version of k8s software installed.(Default "1.23")
   label            In the case of deploying and operating multiple kubernetes clusters, it is necessary to specify a label to uniquely identify a kubernetes cluster.(Length must be less than 32 strings)

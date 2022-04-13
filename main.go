@@ -14,7 +14,7 @@ import (
 
 func main() {
 
-    var exec,master,node,k8sver,ostype,softdir,label,sship,sshport,sshpass,listen,upgradekernel,k8sdashboard,cniplugin string
+    var exec,master,node,k8sver,ostype,softdir,label,sship,sshport,sshpass,listen,upgradekernel,k8sdashboard,k8sapiport,cniplugin string
 
     initFlag := flag.Bool("init",false,"Initialize the local system environment.")
     iFlag := flag.Bool("i",false,"Initialize the local system environment.")
@@ -37,6 +37,7 @@ func main() {
     flag.StringVar(&k8sver,"k8sver","","Specifies the version of k8s software installed.(default is \"kubernetes 1.23\")")
     flag.StringVar(&upgradekernel,"upgradekernel","no","Because the lower versions of CentOS 7 and redhat 7 may lack kernel modules, only the kernel automatic upgrade of CentOS 7 and rhel7 operating systems is supported here, and other operating systems do not need to be upgraded.")
     flag.StringVar(&k8sdashboard,"k8sdashboard","yes","Automatically deploy kube-dashboard to kubernetes cluster.")
+    flag.StringVar(&k8sapiport,"k8sapiport","6443","The TCP Port of the k8s kube-apiserver.")
     flag.StringVar(&cniplugin,"cniplugin","flannel","Specifies the CNI plug-in type: \"flannel | calico | kuberouter | weave | cilium\".")
     flag.StringVar(&softdir,"softdir","","Specifies the installation directory of kubernetes cluster.(default is \"/opt/kube-install\")")
     flag.StringVar(&label,"label",".default","In the case of deploying and operating multiple kubernetes clusters, it is necessary to specify a label to uniquely identify a kubernetes cluster. (length must be less than 32 strings)")
@@ -56,7 +57,7 @@ func main() {
     // Set the version number and release date of Kube-Install.
     const (
         Version string = "v0.8.0-beta2"
-        ReleaseDate string = "9/3/2022"
+        ReleaseDate string = "4/13/2022"
         CompatibleK8S string = "1.18, 1.19, 1.20, 1.21, 1.22, 1.23, and 1.24"
         CompatibleOS string = "CentOS linux 7, CentOS linux 8, RHEL 7, RHEL 8, Ubuntu 20, and SUSE 15"
     )
@@ -179,7 +180,7 @@ func main() {
                    }
                    masterArray,nodeArray,softdir,subProcessDir,ostypeResult := kilib.ParameterConvert("", master, node, softdir, label, ostype)
                    kilib.DatabaseInit(currentDir,subProcessDir,logName,"")
-                   kilib.InstallCore("",master,masterArray,node,nodeArray,softdir,currentDir,kissh,subProcessDir,currentUser,label,ostypeResult,ostype,k8sver,logName,Version,CompatibleK8S,CompatibleOS,"","newinstall",upgradekernel,k8sdashboard,cniplugin,sshport)
+                   kilib.InstallCore("",master,masterArray,node,nodeArray,softdir,currentDir,kissh,subProcessDir,currentUser,label,ostypeResult,ostype,k8sver,logName,Version,CompatibleK8S,CompatibleOS,"","newinstall",upgradekernel,k8sdashboard,k8sapiport,cniplugin,sshport)
 
                //Execute addnode command
                case exec == "addnode" :

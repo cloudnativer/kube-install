@@ -61,7 +61,8 @@ type ClusterAddForm struct {
 	Installtime        string `form:"installtime"`
 	Way                string `form:"way"`
         Upgradekernel      string `form:"upgradekernel"`
-        K8sdashboard      string `form:"k8sdashboard"`
+        K8sdashboard       string `form:"k8sdashboard"`
+        K8sapiport         string `form:"k8sapiport" binding:"required"`
         Cniplugin          string `form:"cniplugin"`
 }
 
@@ -362,6 +363,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 		mst := ""
 		osType := ""
 		k8sVer := ""
+                kubeApiPort := ""
                 cniPlugin := ""
 		softDir := "/opt/kube-install"
 		nd := ""
@@ -374,6 +376,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 			mst = strings.Replace(mst[1:len(mst)-1], " ", ",", -1)
 			osType = c.DefaultQuery("ostype", "")
 			k8sVer = c.DefaultQuery("k8sver", "")
+                        kubeApiPort = GetkubeApiPort(label, currentDir, mode)
                         cniPlugin = GetClusterCNI(label, currentDir, mode)
 			softDir = c.DefaultQuery("softdir", "/opt/kube-install")
 			nodemap := GetClusterNode(label, currentDir, logName, mode)
@@ -391,6 +394,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 			"Master":        mst,
 			"Ostype":        osType,
 			"K8sver":        k8sVer,
+                        "K8sapiport":    kubeApiPort,
                         "Cniplugin":     cniPlugin,
 			"Node":          nd,
                         "Sshport":       sshPort,
@@ -954,7 +958,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 	// operation of install
 	router.POST("/install", func(c *gin.Context) {
 		var form ClusterAddForm
-		var master, node, sshPort, osType, k8sVer, softDir, label, installTime, way, upgradeKernel, k8sDashboard, cniPlugin string
+		var master, node, sshPort, osType, k8sVer, softDir, label, installTime, way, upgradeKernel, k8sDashboard, kubeApiPort, cniPlugin string
 		if c.ShouldBind(&form) == nil {
 			master = form.Master
 			node = form.Node
@@ -967,6 +971,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 			way = form.Way
                         upgradeKernel  = form.Upgradekernel
                         k8sDashboard = form.K8sdashboard
+                        kubeApiPort = form.K8sapiport
                         cniPlugin = form.Cniplugin
 		} else {
 			master = c.Query("master")
@@ -980,6 +985,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 			way = c.DefaultQuery("way", "newinstall")
                         upgradeKernel  = c.DefaultQuery("upgradekernel", "")
                         k8sDashboard  = c.DefaultQuery("k8sdashboard", "")
+                        kubeApiPort = c.DefaultQuery("k8sapiport", "6443")
                         cniPlugin = c.DefaultQuery("cniplugin", "")
 		}
                 langFromWeb := c.Query("lang")
@@ -1019,7 +1025,7 @@ func DaemonRun(Version string, ReleaseDate string, CompatibleK8S string, Compati
 			stu, sch := GetClusterStatus(label, currentDir, logName, mode)
 			var installInfo string
 			if stu != "installing" && stu != "restarting" && stu != "uninstalling" && sch != "on" {
-				go InstallCore(mode, master, masterArray, node, nodeArray, softDir, currentDir, kissh, subProcessDir, currentUser, label, osTypeResult, osType, k8sVer, logName, Version, CompatibleK8S, CompatibleOS, installTime, way, upgradeKernel, k8sDashboard, cniPlugin, sshPort)
+				go InstallCore(mode, master, masterArray, node, nodeArray, softDir, currentDir, kissh, subProcessDir, currentUser, label, osTypeResult, osType, k8sVer, logName, Version, CompatibleK8S, CompatibleOS, installTime, way, upgradeKernel, k8sDashboard, kubeApiPort, cniPlugin, sshPort)
 				if installTime == "" {
 					if Lang == "cn" {
 						installInfo = "Kubernetes集群正在后台安装中 ... "

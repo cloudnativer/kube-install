@@ -32,7 +32,7 @@
     - containerd-shim
     - containerd-shim-runc-v1
     - containerd-shim-runc-v2
-    - crictl
+    - nerdctl
     - ctr
     - runc
   ignore_errors: yes
@@ -93,9 +93,6 @@
 - template:
     src: ../templates/config.toml.j2
     dest: "/etc/containerd/config.toml"
-- copy:
-    src: ../templates/crictl.yaml
-    dest: "/etc/crictl.yaml"
 - name: 6.Create containerd service
   template:
     src: ../templates/containerd.service

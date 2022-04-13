@@ -11,9 +11,9 @@ spec:
   sessionAffinity: None
   ports:
   - name: k8s-api
-    port: 6443
+    port: {{k8sapiport}}
     protocol: TCP
-    targetPort: 6443
+    targetPort: {{k8sapiport}}
 
 
 

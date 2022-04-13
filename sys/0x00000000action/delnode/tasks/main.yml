@@ -37,7 +37,7 @@
     - containerd-shim
     - containerd-shim-runc-v1
     - containerd-shim-runc-v2
-    - crictl
+    - nerdctl
     - ctr
     - runc
     - kubelet

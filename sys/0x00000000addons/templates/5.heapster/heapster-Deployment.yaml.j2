@@ -22,7 +22,7 @@ spec:
         imagePullPolicy: IfNotPresent
         command:
         - /heapster
-        - --source=kubernetes:https://{{master_vip}}:{{master_vport}}?auth=
+        - --source=kubernetes:https://{{master_vip}}:{{k8sapiport}}?auth=
         resources:
           requests:
             cpu: 100m

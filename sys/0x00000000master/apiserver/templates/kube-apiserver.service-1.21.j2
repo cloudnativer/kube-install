@@ -10,7 +10,7 @@ ExecStart=/usr/local/bin/kube-apiserver \
 --feature-gates=ExpandInUsePersistentVolumes=true \
 --advertise-address={{ip}} \
 --bind-address=0.0.0.0 \
---secure-port=6443 \
+--secure-port={{k8sapiport}} \
 --insecure-port=0 \
 --kubelet-https=true \
 --enable-swagger-ui=false \

@@ -49,7 +49,7 @@ spec:
           # If not specified, Dashboard will attempt to auto discover the API server and connect
           # to it. Uncomment only if the default does not work.
           # - --apiserver-host=http://my-address:port
-          - --apiserver-host=https://{{master_vip}}:{{master_vport}}
+          - --apiserver-host=https://{{master_vip}}:{{k8sapiport}}
           - --kubeconfig=/etc/kubernetes/ssl/kube.kubeconfig
           - --token-ttl=66666
         volumeMounts:
