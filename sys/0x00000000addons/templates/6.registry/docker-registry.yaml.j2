@@ -17,11 +17,6 @@ spec:
     spec: 
       nodeSelector:
         registry: turnon
-      tolerations:
-      - key: "servertype"
-        operator: "Equal"
-        value: "buffer"
-        effect: "NoSchedule"
       containers: 
         - name: docker-registry
           image: {{addons_ip3}}:5000/registry:v2.7.1
