@@ -39,8 +39,9 @@
     src: "../templates/2.dashboard/{{item}}"
     dest: "{{k8s_install_home}}/addons/dashboard/{{item}}"
   with_items:
-    - kubernetes-dashboard-admin-rbac.yaml
+    - kubernetes-dashboard-rbac-admin.yaml
     - kubernetes-dashboard-rbac-minimal.yaml
+    - kubernetes-dashboard-secret.yaml
 - copy:
     src: "../templates/2.dashboard/{{k8sdashboardshell}}.sh"
     dest: "{{k8s_install_home}}/temp/{{k8sdashboardshell}}.sh"

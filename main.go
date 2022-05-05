@@ -56,8 +56,8 @@ func main() {
 
     // Set the version number and release date of Kube-Install.
     const (
-        Version string = "v0.8.0-beta2"
-        ReleaseDate string = "4/13/2022"
+        Version string = "v0.8.0"
+        ReleaseDate string = "5/5/2022"
         CompatibleK8S string = "1.18, 1.19, 1.20, 1.21, 1.22, 1.23, and 1.24"
         CompatibleOS string = "CentOS linux 7, CentOS linux 8, RHEL 7, RHEL 8, Ubuntu 20, and SUSE 15"
     )

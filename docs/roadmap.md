@@ -1,16 +1,3 @@
-# Version 0.8.1 Feature Preview:
-
-<br>
-
-We will add the following features in 0.8.1 version:
-
-* ...
-* ...
-
-
-<br>
-
-
 
 # Version 0.8.0 Feature Preview:
 
