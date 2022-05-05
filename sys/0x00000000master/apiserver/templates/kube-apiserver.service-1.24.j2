@@ -11,7 +11,6 @@ ExecStart=/usr/local/bin/kube-apiserver \
 --advertise-address={{ip}} \
 --bind-address=0.0.0.0 \
 --secure-port={{k8sapiport}} \
---enable-swagger-ui=false \
 --runtime-config=rbac.authorization.k8s.io/v1beta1 \
 --authorization-mode=Node,RBAC \
 --anonymous-auth=false \
