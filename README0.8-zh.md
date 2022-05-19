@@ -183,7 +183,7 @@
 ## 4.3 一键安装部署kubernetes集群
 
 <br>
-在kube-install源安装机上使用root用户执行下面这台命令即可：
+在kube-install源安装机上使用root用户执行下面这条命令即可：
 
 ```
 # cd /root/kube-install/
