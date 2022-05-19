@@ -187,7 +187,7 @@ Webプラットフォームを使用してkubernetesクラスタをインスト�
 ## 4.3 ワンタッチで配置kubernetesクラスタをインストールします。
 
 <br>
-kube-installソースのインストール機でrootユーザーを使って下記のコマンドを実行すればいいです。
+kube-installソースインストーラでrootユーザーを使用して次のコマンドを実行します。
 
 ```
 # cd /root/kube-install/
