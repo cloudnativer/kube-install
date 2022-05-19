@@ -54,7 +54,7 @@
 <br>
 <br>
 
-# [3] 通過命令列快速安裝kubernetes集羣
+# [3] 通過Web平臺安裝kubernetes集羣
 
 <br>
 
@@ -88,86 +88,7 @@
 
 <br>
 
-## 3.2 打通到目標主機的SSH通道
-
-<br>
-在你開始給目標主機安裝kubernetes集羣之前，請先打通kube-install源安裝機本地到目標主機的SSH免密通道。
-你可以自己手工打通到目標主機的SSH通道，也可以通過`kube-install -exec sshcontrol`命令來打通：<br>
-
-```
-# cd /root/kube-install/
-# ./kube-install -exec sshcontrol -sship "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -sshpass "cloudnativer"
-```
-
-你也可以通過kube-install的Web管理平臺來打通到目標主機的SSH通道，<a href=“docs/webssh0.7.md”>點擊這裡查看使用Web管理平臺打通SSH通道的方法</a>！<br>
-
-<br>
-
-## 3.3 一鍵安裝部署kubernetes集羣
-
-<br>
-在kube-install源安裝機上使用root用戶執行下麵這臺命令即可：
-
-```
-# cd /root/kube-install/
-# ./kube-install -exec install -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -k8sver "1.22" -ostype "centos7" -label "192168001011"
-```
-
-注意：
-
-* kube-install軟體支援`rhel7`，`rhel8`，`centos7`，`centos8`，`ubuntu20`，`suse15`等版本的作業系統，在做安裝部署操作的時候，請確保`-ostype`參數設置正確。 由於低版本的centos7和redhat7可能缺少內核模塊，`kube-install`對centos7和rhel7作業系統內核的提供了自動升級到4.19的功能，你可以選擇`-upgradekernel`參數使用此功能，也可能自己手工優化作業系統內核。
-* 請選擇好你需要安裝的CNI挿件，現時`kube-install`支持Flannel、Calico、Kube-router、Weave、Cilium等CNI挿件類型。 如果需要安裝“Cilium”，請將Linux內核陞級到4.9或以上版本。
-
-<br>
-
-另外，如果你需要自定義製定Kubernetes集羣安裝在目標主機上的目錄路徑的話，可以帶上`-softdir`參數來設定。
-
-<br>
-
-
-## 3.4 登入kubernetes dashboard介面
-
-<br>
-通過查看loginkey.txt檔案可以獲取kube-dashboard的登入地址和金鑰。<br>
-
-```
-# cat /opt/kube-install/loginkey.txt
-```
-
-
-![loginkey](docs/images/loginkey2.jpg)
-
-如下麵的截圖所示為kube-dashboard的登入地址和金鑰：
-
-![kube-dashboard](docs/images/kube-dashboard3.jpg)
-
-
-![kube-dashboard](docs/images/kube-dashboard4.jpg)
-
-<br>
-
-# [4] 通過Web平臺安裝kubernetes集羣
-
-<br>
-
-你也可以通過kube-install的Web管理平臺來安裝kubernetes集羣。kube-install的Web管理平臺具備SSH打通、定時安裝部署、Node擴容、Master修復、集羣卸載等强大的功能，你可以在Web管理平臺上獲得更好的安裝體驗。
-<br>
-
-## 4.1 初始化系統環境
-
-<br>
-首先你需要使用root用戶對kube-install源安裝機本地環境進行初始化操作，進入解壓後的軟件目錄執行`kube-install -init`命令：<br>
-
-```
-# cd /root/kube-install/
-# ./kube-install -init -ostype "centos7"
-```
-
-注意：kube-install軟體支援`rhel7`，`rhel8`，`centos7`，`centos8`，`ubuntu20`，`suse15`等版本的作業系統，在做初始化操作的時候，請確保`-ostype`參數設置正確。
-
-<br>
-
-## 4.2 運行kube-install的Web管理服務
+## 3.2 運行kube-install的Web管理服務
 
 然後，執行`systemctl start kube-install`命令來運行kube-install的Web管理平臺服務。
 
@@ -196,7 +117,7 @@
 注意：kube-install的Web管理平臺服務默認監聽`TCP 9080`。如果你想修改這個監聽地址的話，可以通過修改`/etc/systemd/system/kube-install.service`檔案中的`kube-install -daemon -listen ip:port`參數來進行設定，<a href=“docs/systemd0.7.md”>點擊這裡可以查看詳細檔案</a>！<br>
 
 
-## 4.3 在Web介面上安裝kubernetes
+## 3.3 在Web介面上安裝kubernetes
 
 
 然後，點擊Web介面右上角的的`Install Kubernetes`按鈕開始kubernetes集羣的安裝。
@@ -209,6 +130,90 @@
 ![kube-dashboard](docs/images/webinstall002.jpg)
 
 你可以<a href=“docs/webinstall0.7-zh.md”>點擊這裡可以查看更多通過kube-install的Web管理平臺安裝部署的詳細資訊</a>。
+<br>
+<br>
+<br>
+
+
+
+# [4] 通過命令列快速安裝kubernetes集羣
+
+<br>
+
+除了可以使用Web平臺安裝kubernetes集羣外，你還可以通過kube-install的命令列來安裝kubernetes集羣，kube-install的命令列使用起來比較簡單方便。
+
+<br>
+
+## 4.1 初始化系統環境
+
+<br>
+首先你需要使用root用戶對kube-install源安裝機本地環境進行初始化操作，進入解壓後的軟件目錄執行`kube-install -init`命令：<br>
+
+```
+# cd /root/kube-install/
+# ./kube-install -init -ostype "centos7"
+```
+
+注意：kube-install軟體支援`rhel7`，`rhel8`，`centos7`，`centos8`，`ubuntu20`，`suse15`等版本的作業系統，在做初始化操作的時候，請確保`-ostype`參數設置正確。
+
+<br>
+
+## 4.2 打通到目標主機的SSH通道
+
+<br>
+在你開始給目標主機安裝kubernetes集羣之前，請先打通kube-install源安裝機本地到目標主機的SSH免密通道。
+你可以自己手工打通到目標主機的SSH通道，也可以通過`kube-install -exec sshcontrol`命令來打通：<br>
+
+```
+# cd /root/kube-install/
+# ./kube-install -exec sshcontrol -sship "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -sshpass "cloudnativer"
+```
+
+你也可以通過kube-install的Web管理平臺來打通到目標主機的SSH通道，<a href=“docs/webssh0.7.md”>點擊這裡查看使用Web管理平臺打通SSH通道的方法</a>！<br>
+
+<br>
+
+## 4.3 一鍵安裝部署kubernetes集羣
+
+<br>
+在kube-install源安裝機上使用root用戶執行下麵這臺命令即可：
+
+```
+# cd /root/kube-install/
+# ./kube-install -exec install -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -k8sver "1.22" -ostype "centos7" -label "192168001011"
+```
+
+注意：
+
+* kube-install軟體支援`rhel7`，`rhel8`，`centos7`，`centos8`，`ubuntu20`，`suse15`等版本的作業系統，在做安裝部署操作的時候，請確保`-ostype`參數設置正確。 由於低版本的centos7和redhat7可能缺少內核模塊，`kube-install`對centos7和rhel7作業系統內核的提供了自動升級到4.19的功能，你可以選擇`-upgradekernel`參數使用此功能，也可能自己手工優化作業系統內核。
+* 請選擇好你需要安裝的CNI挿件，現時`kube-install`支持Flannel、Calico、Kube-router、Weave、Cilium等CNI挿件類型。 如果需要安裝“Cilium”，請將Linux內核陞級到4.9或以上版本。
+
+<br>
+
+另外，如果你需要自定義製定Kubernetes集羣安裝在目標主機上的目錄路徑的話，可以帶上`-softdir`參數來設定。
+
+<br>
+
+
+## 4.4 登入kubernetes dashboard介面
+
+<br>
+通過查看loginkey.txt檔案可以獲取kube-dashboard的登入地址和金鑰。<br>
+
+```
+# cat /opt/kube-install/loginkey.txt
+```
+
+
+![loginkey](docs/images/loginkey2.jpg)
+
+如下麵的截圖所示為kube-dashboard的登入地址和金鑰：
+
+![kube-dashboard](docs/images/kube-dashboard3.jpg)
+
+
+![kube-dashboard](docs/images/kube-dashboard4.jpg)
+
 <br>
 <br>
 <br>
