@@ -192,7 +192,7 @@
 ## 4.3 一鍵安裝部署kubernetes集羣
 
 <br>
-在kube-install源安裝機上使用root用戶執行下麵這臺命令即可：
+在kube-install源安装机上使用root用户执行下面这条命令即可：
 
 ```
 # cd /root/kube-install/
