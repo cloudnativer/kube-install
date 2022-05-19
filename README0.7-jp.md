@@ -72,85 +72,8 @@
 <br>
 注意：ここでは192.168.1.11をkube-installソースインストール機として使用します。実際には、任意のホスト（kubernetes クラスタ以外のホストを含む）をkube-installソースインストール機として使用することができます。
 <br>
-
+  
 ## 3.1 システム環境を初期化
-
-<br>
-まず、rootユーザーを使って、kube-installソースインストール機のローカル環境を初期化操作し、解凍後のソフトウェアディレクトリに入って `kube-install -init` コマンドを実行する必要があります：<br>
-
-```
-# cd /root/kube-install/
-# ./kube-install -init -ostype "centos7"
-```
-
-注意：kube-installソフトウェアは`rhel7`，rhel8`，`centos7`，`centos8`，`ubuntu20`，`suse15`などのバージョンのオペレーティングシステムをサポートします。初期化操作をする時、`-ostype`パラメータの設定が正しいことを確認してください。
-<br>
-
-## 3.2 ターゲットホストへのSSHチャネル
-
-<br>
-ターゲットホストにkubernetesクラスタをインストールする前に、クビ-innstallソースのインストール機を通じて、ターゲットホストのSSH非密チャンネルにローカルに接続してください。
-あなたは自分で手で目標ホストのSSH通路に通すことができます。また `kube-install -exec sshcontrol` コマンドで通してもいいです。<br>
-
-```
-# cd /root/kube-install/
-# ./kube-install -exec sshcontrol -sship "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -sshpass "cloudnativer"
-```
-
-あなたもkube-installのWeb管理プラットフォームを通じてターゲットホストのSSHチャネルにアクセスできます。<a href="docs/webssh0.7.md">ここをクリックして、Web管理プラットフォームを使ってSSHチャネルを打開する方法を確認してください</a>。<br>
-
-<br>
-
-## 3.3 ワンタッチで配置kubernetesクラスタをインストールします。
-
-<br>
-kube-installソースのインストール機でrootユーザーを使って下記のコマンドを実行すればいいです。
-
-```
-# cd /root/kube-install/
-# ./kube-install -exec install -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -k8sver "1.22" -ostype "centos7" -label "192168001011"
-```
-
-注意：
-
-* kube-installソフトウェアは`rhel 7`，rhel 8`，`centos7`，`centos8`，`ubuntu20`，`suse15`などのバージョンのオペレーティングシステムをサポートしています。セットアップ操作をする時、`-ostype`パラメータの設定が正しいことを確認してください。低いバージョンの`centos 7`と`redhat 7`はカーネルモジュールが不足する可能性があるので、`kube-install`は`centos 7`と`rhel 7`オペレーティングシステムのカーネルに対して自動的に4.19にアップグレードする機能を提供しています。この機能を使って、`-upgradekernel`パラメータを選択することができます。
-* あなたがインストールしたいCNIプラグインを選択してください。現在は、`kube-innstall`が`Flannel`、`Calico`、`Kube-router`、`Weave`、`Cilium`などのCNIプラグインタイプをサポートしています。`Clium`をインストールする必要があれば、Linuxカーネルを4.9以上にアップグレードしてください。
-
-<br>
-
-また、Kubernetesクラスタを目的ホストにインストールするディレクトリパスをカスタマイズする必要があれば `-softdir` パラメータを持って設定することができます。
-
-<br>
-
-
-## 3.4 Kubernetes dashboard画面に登録する
-
-<br>
-loginkey.txtファイルを確認することで、kube-dashboardの登録住所と鍵を取得することができます。<br>
-
-```
-# cat /opt/kube-install/loginkey.txt
-```
-
-
-![loginkey](docs/images/loginkey2.jpg)
-
-以下のスクリーンショットに示すように、kube-dashboardの登録アドレスと鍵：
-
-![kube-dashboard](docs/images/kube-dashboard3.jpg)
-
-
-![kube-dashboard](docs/images/kube-dashboard4.jpg)
-
-<br>
-
-# [4] Webプラットフォームでkubernetesクラスタをインストールする
-
-<br>
-kube-installのウェブ管理プラットフォームを通じて、kubernetesクラスタをインストールすることもできます。kube-installのWeb管理プラットフォームは、SSHオープン、タイミングセットアップ、Node拡張、Master修復、クラスタアンインストールなどの強力な機能を備えており、Web管理プラットフォームでより良いインストール体験ができます。
-<br>
-
-## 4.1 システム環境を初期化
 
 <br>
 まず、rootユーザーを使って、kube-installソースインストール機のローカル環境を初期化操作し、解凍後のソフトウェアディレクトリに入って `kube-install -init` コ>
@@ -165,7 +88,7 @@ kube-installのウェブ管理プラットフォームを通じて、kubernetes�
 化操作をする時、`-ostype`パラメータの設定が正しいことを確認してください。
 <br>
 
-## 4.2 kube-installのWeb管理サービスを実行します
+## 3.2 kube-installのWeb管理サービスを実行します
 
 その後、Webインターフェースの右上の`Install Kubernetes`ボタンをクリックして、Kubernetesクラスタのインストールを開始します。
 
@@ -192,7 +115,7 @@ kube-installのウェブ管理プラットフォームを通じて、kubernetes�
 
 注意：kube-installのWeb管理プラットフォームサービスはデフォルトで `TCP 9080`を傍受します。この傍受アドレスを修正したいなら `/etc/systemd/system/kube-install.service` ファイルの `kube-install -daemon -listen ip:port` パラメータを修正して設定することができます。<a href="docs/systemd0.7.md">ここをクリックして詳細文書を見ることができます</a>。<br>
 
-## 4.3 Web画面にKubernetesをインストールする
+## 3.3 Web画面にKubernetesをインストールする
 
 その後、Webインターフェースの右上の`Install Kubernetes`ボタンをクリックしてkubernetesクラスタのインストールを開始します。
 
@@ -204,6 +127,87 @@ kube-installのウェブ管理プラットフォームを通じて、kubernetes�
 ![kube-dashboard](docs/images/webinstall002.jpg)
 
 <a href="docs/webinstall0.7.md">ここをクリックして、より多くのkube-installのWeb管理プラットフォームを通じて配置の詳細を見ることができます</a>。
+<br>
+<br>
+<br>
+
+
+# [4] Webプラットフォームでkubernetesクラスタをインストールする
+
+<br>
+Webプラットフォームを使用してkubernetesクラスタをインストールできるほか、kube-installのコマンドラインでkubernetesクラスタをインストールすることもできます。kube-installのコマンドラインは使いやすいです。
+  
+<br>
+
+## 4.1 システム環境を初期化
+
+<br>
+まず、rootユーザーを使って、kube-installソースインストール機のローカル環境を初期化操作し、解凍後のソフトウェアディレクトリに入って `kube-install -init` コマンドを実行する必要があります：<br>
+
+```
+# cd /root/kube-install/
+# ./kube-install -init -ostype "centos7"
+```
+
+注意：kube-installソフトウェアは`rhel7`，rhel8`，`centos7`，`centos8`，`ubuntu20`，`suse15`などのバージョンのオペレーティングシステムをサポートします。初期化操作をする時、`-ostype`パラメータの設定が正しいことを確認してください。
+<br>
+
+## 4.2 ターゲットホストへのSSHチャネル
+
+<br>
+ターゲットホストにkubernetesクラスタをインストールする前に、クビ-innstallソースのインストール機を通じて、ターゲットホストのSSH非密チャンネルにローカルに接続してください。
+あなたは自分で手で目標ホストのSSH通路に通すことができます。また `kube-install -exec sshcontrol` コマンドで通してもいいです。<br>
+
+```
+# cd /root/kube-install/
+# ./kube-install -exec sshcontrol -sship "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -sshpass "cloudnativer"
+```
+
+あなたもkube-installのWeb管理プラットフォームを通じてターゲットホストのSSHチャネルにアクセスできます。<a href="docs/webssh0.7.md">ここをクリックして、Web管理プラットフォームを使ってSSHチャネルを打開する方法を確認してください</a>。<br>
+
+<br>
+
+## 4.3 ワンタッチで配置kubernetesクラスタをインストールします。
+
+<br>
+kube-installソースのインストール機でrootユーザーを使って下記のコマンドを実行すればいいです。
+
+```
+# cd /root/kube-install/
+# ./kube-install -exec install -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -k8sver "1.22" -ostype "centos7" -label "192168001011"
+```
+
+注意：
+
+* kube-installソフトウェアは`rhel 7`，rhel 8`，`centos7`，`centos8`，`ubuntu20`，`suse15`などのバージョンのオペレーティングシステムをサポートしています。セットアップ操作をする時、`-ostype`パラメータの設定が正しいことを確認してください。低いバージョンの`centos 7`と`redhat 7`はカーネルモジュールが不足する可能性があるので、`kube-install`は`centos 7`と`rhel 7`オペレーティングシステムのカーネルに対して自動的に4.19にアップグレードする機能を提供しています。この機能を使って、`-upgradekernel`パラメータを選択することができます。
+* あなたがインストールしたいCNIプラグインを選択してください。現在は、`kube-innstall`が`Flannel`、`Calico`、`Kube-router`、`Weave`、`Cilium`などのCNIプラグインタイプをサポートしています。`Clium`をインストールする必要があれば、Linuxカーネルを4.9以上にアップグレードしてください。
+
+<br>
+
+また、Kubernetesクラスタを目的ホストにインストールするディレクトリパスをカスタマイズする必要があれば `-softdir` パラメータを持って設定することができます。
+
+<br>
+
+
+## 4.4 Kubernetes dashboard画面に登録する
+
+<br>
+loginkey.txtファイルを確認することで、kube-dashboardの登録住所と鍵を取得することができます。<br>
+
+```
+# cat /opt/kube-install/loginkey.txt
+```
+
+
+![loginkey](docs/images/loginkey2.jpg)
+
+以下のスクリーンショットに示すように、kube-dashboardの登録アドレスと鍵：
+
+![kube-dashboard](docs/images/kube-dashboard3.jpg)
+
+
+![kube-dashboard](docs/images/kube-dashboard4.jpg)
+
 <br>
 <br>
 <br>
