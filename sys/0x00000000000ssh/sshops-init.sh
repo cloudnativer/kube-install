@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 
 # $1 is path , $2 is ostype
