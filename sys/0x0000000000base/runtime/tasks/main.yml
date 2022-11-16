@@ -149,7 +149,7 @@
     - "cilium-operator-generic.tar"
 - name: 13.Set runtime images tag and create pushsysimages shell 
   shell: "echo '#!/bin/bash' > {{k8s_install_home}}/image_files/pushsysimages.sh && chmod 755 {{k8s_install_home}}/image_files/pushsysimages.sh"
-- shell: "/usr/local/bin/ctr -n=k8s.io images tag docker.io/cloudnativer/{{item}} {{addons_ip3}}:5000/{{item}} && echo '/usr/local/bin/ctr -n=k8s.io images push {{addons_ip3}}:5000/{{item}}' >> {{k8s_install_home}}/image_files/pushsysimages.sh"
+- shell: "/usr/local/bin/ctr -n=k8s.io images tag docker.io/cloudnativer/{{item}} {{addons_ip3}}:5000/{{item}} && echo '/usr/local/bin/ctr -n=k8s.io images push --plain-http {{addons_ip3}}:5000/{{item}}' >> {{k8s_install_home}}/image_files/pushsysimages.sh"
   with_items:
     - "metrics-server-amd64:v0.5.0"
     - "metrics-scraper:v1.0.7"
