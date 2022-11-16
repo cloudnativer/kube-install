@@ -63,10 +63,10 @@ func GetClusterInfo(label string, Lang string, currentDir string, logName string
         }
         var registryUsage, k8sDashboardUsage string
         if Lang == "cn" {
-                registryUsage = "&nbsp;&nbsp;&nbsp;&nbsp; [root@localhost ~]# docker pull " + registryIp + ":5000/镜像名称:镜像Tag<br>&nbsp;&nbsp;&nbsp;&nbsp; [root@localhost ~]# docker push " + registryIp + ":5000/镜像名称:镜像Tag<br>&nbsp;&nbsp;&nbsp;&nbsp; [root@localhost ~]# ctr -n=k8s.io images pull " + registryIp + ":5000/镜像名称:镜像Tag<br>&nbsp;&nbsp;&nbsp;&nbsp; [root@localhost ~]# ctr -n=k8s.io images push " + registryIp + ":5000/镜像名称:镜像Tag\n"
+                registryUsage = "&nbsp;&nbsp;&nbsp;&nbsp; [root@localhost ~]# docker pull " + registryIp + ":5000/镜像名称:镜像Tag<br>&nbsp;&nbsp;&nbsp;&nbsp; [root@localhost ~]# docker push " + registryIp + ":5000/镜像名称:镜像Tag<br>&nbsp;&nbsp;&nbsp;&nbsp; [root@localhost ~]# ctr -n=k8s.io images pull --plain-http " + registryIp + ":5000/镜像名称:镜像Tag<br>&nbsp;&nbsp;&nbsp;&nbsp; [root@localhost ~]# ctr -n=k8s.io images push --plain-http " + registryIp + ":5000/镜像名称:镜像Tag\n"
                 k8sDashboardUsage = "使用浏览器访问，登录令牌如下: <br> " + k8sdashboardtoken
         } else {
-                registryUsage = "&nbsp;&nbsp;&nbsp;&nbsp; [root@localhost ~]# docker pull " + registryIp + ":5000/Your_image_name:Image_Tag<br>&nbsp;&nbsp;&nbsp;&nbsp; [root@localhost ~]# docker push " + registryIp + ":5000/Your_image_name:Image_Tag<br>&nbsp;&nbsp;&nbsp;&nbsp; [root@localhost ~]# ctr-n=k8s.io images pull " + registryIp + ":5000/Your_image_name:Image_Tag<br>&nbsp;&nbsp;&nbsp;&nbsp; [root@localhost ~]# ctr -n=k8s.io images push " + registryIp + ":5000/Your_image_name:Image_Tag\n"
+                registryUsage = "&nbsp;&nbsp;&nbsp;&nbsp; [root@localhost ~]# docker pull " + registryIp + ":5000/Your_image_name:Image_Tag<br>&nbsp;&nbsp;&nbsp;&nbsp; [root@localhost ~]# docker push " + registryIp + ":5000/Your_image_name:Image_Tag<br>&nbsp;&nbsp;&nbsp;&nbsp; [root@localhost ~]# ctr-n=k8s.io images pull --plain-http " + registryIp + ":5000/Your_image_name:Image_Tag<br>&nbsp;&nbsp;&nbsp;&nbsp; [root@localhost ~]# ctr -n=k8s.io images push --plain-http " + registryIp + ":5000/Your_image_name:Image_Tag\n"
                 k8sDashboardUsage = "Use a browser to access. The login token is as follows: <br> " + k8sdashboardtoken
         }
         return k8sVer, cniPlugin, softDir, osType, status, masterArray, nodeArray, etcdEndpoints, registryIp, registryUsage, k8sDashboardIp, k8sDashboardUsage, kubeCfg, sshPort
