@@ -55,7 +55,6 @@
 
 <br>
 <br>
-<br>
 
 # [3] 通過Web平臺安裝kubernetes集羣
 
