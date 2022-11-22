@@ -55,7 +55,6 @@ Notice: If your network quality is poor and the download package is slow, you ca
 
 <br>
 <br>
-<br>
 
 # [3] Install kubernetes cluster by web platform
 
