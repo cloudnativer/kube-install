@@ -149,7 +149,7 @@
 
 ![kube-dashboard](docs/images/webinstall002.jpg)
 
-你可以<a href="docs/webinstall0.7-zh.md">點擊這裡可以查看更多通過kube-install的Web管理平臺安裝部署的詳細資訊</a>。
+你可以<a href="docs/webinstall0.7-zh.md">點擊這裡查看更多通過kube-install的Web管理平臺安裝部署的詳細資訊</a>。
 <br>
 <br>
 <br>
