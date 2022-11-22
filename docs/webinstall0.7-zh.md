@@ -29,7 +29,7 @@
 
 此时，你就可以使用网页浏览器打开`http://kube-install源安装机IP:9080`，访问kube-install的Web管理平台了。
 <br>
-注意：kube-install的Web管理平台服务默认监听`TCP 9080`。如果你想修改这个监听地址的话，可以通过修改`/etc/systemd/system/kube-install.service`文件中的`kube-install -daemon -listen ip:port`参数来进行设置，<a href="docs/systemd0.7.md">点击这里可以查看详细文档</a>！<br>
+注意：kube-install的Web管理平台服务默认监听`TCP 9080`。如果你想修改这个监听地址的话，可以通过修改`/etc/systemd/system/kube-install.service`文件中的`kube-install -daemon -listen ip:port`参数来进行设置，<a href="systemd0.7.md">点击这里可以查看详细文档</a>！<br>
 
 ## 打通到目标主机的SSH通道
 
@@ -39,7 +39,7 @@
 kube-install -exec sshcontrol -sship "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -sshpass "cloudnativer"
 ```
 
-还可以点击Web管理平台右上角的`Open SSH Channel of Host`按钮来进行打通，<a href="docs/webssh0.7.md">点击这里可以查看更加详细的文档</a>。
+还可以点击Web管理平台右上角的`Open SSH Channel of Host`按钮来进行打通，<a href="webssh0.7.md">点击这里可以查看更加详细的文档</a>。
 
 ![kube-dashboard](images/webssh001.jpg)
 
