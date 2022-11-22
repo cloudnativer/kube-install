@@ -32,7 +32,7 @@
 
 <br>
 注意：kube-install支持CentOS 7、CentOS 8、SUSE 15、RHEL 7和RHEL 8操作系统环境，<a href="docs/os-support.md">点击这里查看kube-install所支持的操作系统发行版的列表</a>。
-
+<br>
 <br>
 <br>
 
@@ -140,8 +140,7 @@
 ![kube-dashboard](docs/images/webinstall002.jpg)
 
 你可以<a href="docs/webinstall0.7-zh.md">点击这里查看更多通过kube-install的Web管理平台安装部署的详细信息</a>。
-
-
+<br>
 <br>
 <br>
 
