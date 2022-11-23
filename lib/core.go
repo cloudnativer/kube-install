@@ -359,7 +359,7 @@ func InstallCore(mode string, master string, masterArray []string, node string, 
         for i := 0; i < len(masterArray); i++ {
             DatabaseUpdate(currentDir+"/data/output"+subProcessDir+"/masters/"+masterArray[i]+"/status.txt", "unknow", currentDir, logName, mode)
         }
-        ShellExecute("echo [Error] "+time.Now().String()+" \"Kubernetes cluster install failed! "+label+" cluster status is unhealthy! \n\n*************************************************************************************\n\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/install.log")
+        ShellExecute("echo [Error] "+time.Now().String()+" \"Kubernetes cluster install failed! "+label+" cluster status is unhealthy! Please check the network or other factors between the kubernetes master and the node. \n\n*************************************************************************************\n\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/install.log")
         ShellExecute("sed -i '1d' "+currentDir+"/data/msg/msg.txt")
         ShellExecute("echo \"<div class='g_12'><div class='error iDialog'>[Error] "+time.Now().String()+" Kubernetes cluster ("+label+") install failed! </div></div>\" >> "+currentDir+"/data/msg/msg.txt")
     }
@@ -518,7 +518,7 @@ func InstallScheduler(label string, masterArray []string, nodeArray []string, ki
         for i := 0; i < len(masterArray); i++ {
             DatabaseUpdate(currentDir+"/data/output"+subProcessDir+"/masters/"+masterArray[i]+"/status.txt", "unknow", currentDir, logName, mode)
         }
-        ShellExecute("echo [Error] "+time.Now().String()+" \"Kubernetes cluster install failed! "+label+" cluster status is unhealthy! \n\n*************************************************************************************\n\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/install.log")
+        ShellExecute("echo [Error] "+time.Now().String()+" \"Kubernetes cluster install failed! "+label+" cluster status is unhealthy! Please check the network or other factors between the kubernetes master and the node. \n\n*************************************************************************************\n\""+logStr+currentDir+"/data/logs"+subProcessDir+"/logs/install.log")
         ShellExecute("sed -i '1d' "+currentDir+"/data/msg/msg.txt")
         ShellExecute("echo \"<div class='g_12'><div class='error iDialog'>[Error] "+time.Now().String()+" Kubernetes cluster ("+label+") install failed! </div></div>\" >> "+currentDir+"/data/msg/msg.txt")
     }
