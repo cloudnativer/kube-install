@@ -96,8 +96,20 @@
                                         <li class="big_button">
                                                 <div class="out_border">
                                                         <div class="button_wrapper">
+                                                            <div class="dropdown in_border">
+                                                                <div class="dropdown-content">
+                                                                    <a href="#">账户管理</a>
+                                                                    <a href="/logoutset?username=admin">退出登录</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                        </li>
+                                        <li class="big_button">
+                                                <div class="out_border">
+                                                        <div class="button_wrapper">
                                                                 <div class="in_border" >
-                                                                        <a {{if eq .Lang "cn"}} href="/clusterinfo?label={{.Label}}&lang=en" {{else}} href="/clusterinfo?label={{.Label}}&lang=cn" {{end}} title="{{if eq .Lang "cn"}}切换语言{{else}}Switch Language{{end}}" class="the_button">
+                                                                        <a {{if eq .Lang "cn"}} href="/optresult?lang=en" {{else}} href="/optresult?lang=cn" {{end}} title="{{if eq .Lang "cn"}}切换语言{{else}}Switch Language{{end}}" class="the_button">
                                                                                 {{if eq .Lang "cn"}}
                                                                                         <span class="i_32_en"></span>
                                                                                 {{else}}
@@ -113,7 +125,6 @@
                                                         <div class="button_wrapper">
                                                                 <div class="in_border">
                                                                         <a href="##" title="{{if eq .Lang "cn"}}版本信息{{else}}Version Information{{end}}" class="the_button bdC"><span class="i_32_info"></span></a>
-                                                                        <div class="dialog bDialog" title="{{if eq .Lang "cn"}}版本信息{{else}}Version Information{{end}}"><span class="label lwParagraph"><b>{{if eq .Lang "cn"}}[版本]{{else}}[Version]{{end}}</b> <br>&nbsp;&nbsp;&nbsp;&nbsp;Version: {{.Version}} <br>&nbsp;&nbsp;&nbsp;&nbsp;Release Date: {{.Releasedate}} <br><br><b>{{if eq .Lang "cn"}}[兼容性]{{else}}[Compatibility]{{end}}</b> <br>&nbsp;&nbsp;&nbsp;&nbsp;Kubernetes: {{.Compatiblek8s}}<br>&nbsp;&nbsp;&nbsp;&nbsp;OS: {{.Compatibleos}} <br>&nbsp;&nbsp;&nbsp;&nbsp;Hardware: X86 | AMD64 <br><br></span></div>
                                                                 </div>
                                                         </div>
                                                 </div>
