@@ -109,7 +109,7 @@
                                                 <div class="out_border">
                                                         <div class="button_wrapper">
                                                                 <div class="in_border" >
-                                                                        <a {{if eq .Lang "cn"}} href="/optresult?lang=en" {{else}} href="/optresult?lang=cn" {{end}} title="{{if eq .Lang "cn"}}切换语言{{else}}Switch Language{{end}}" class="the_button">
+                                                                        <a {{if eq .Lang "cn"}} href="/clusterinfo?label={{.Label}}&lang=en" {{else}} href="/clusterinfo?label={{.Label}}&lang=cn" {{end}} title="{{if eq .Lang "cn"}}切换语言{{else}}Switch Language{{end}}" class="the_button">
                                                                                 {{if eq .Lang "cn"}}
                                                                                         <span class="i_32_en"></span>
                                                                                 {{else}}
