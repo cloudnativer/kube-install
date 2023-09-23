@@ -8,7 +8,7 @@
 
 <br>
 
-<a href="README0.8.md">English Documents</a> | <a href="README0.8-zh-hk.md">繁体中文文档</a> | <a href="README0.8-zh.md">简体中文文档</a> | <a href="README0.8-jp.md">日本語の文書</a>
+<a href="README0.9.md">English Documents</a> | <a href="README0.9-zh-hk.md">繁体中文文档</a> | <a href="README0.9-zh.md">简体中文文档</a> | <a href="README0.9-jp.md">日本語の文書</a>
 
 <br>
 
@@ -43,12 +43,12 @@
 <br>
 
 你可以從https://github.com/cloudnativer/kube-install/releases 這裡下載`kube-install-*.tgz`套裝軟體。<br>
-舉例，下載`kube-install-allinone-v0.8.0.tgz`套裝軟體進行安裝：<br>
+舉例，下載`kube-install-allinone-v0.9.0.tgz`套裝軟體進行安裝：<br>
 
 ```
 # cd /root/
-# curl -O https://github.com/cloudnativer/kube-install/releases/download/v0.8.0/kube-install-allinone-v0.8.0.tgz
-# tar -zxvf kube-install-allinone-v0.8.0.tgz
+# curl -O https://github.com/cloudnativer/kube-install/releases/download/v0.9.0/kube-install-allinone-v0.9.0.tgz
+# tar -zxvf kube-install-allinone-v0.9.0.tgz
 # cd /root/kube-install/
 ```
 
