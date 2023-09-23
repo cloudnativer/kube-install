@@ -7,7 +7,7 @@ The highly available multiple kubernetes cluster can be installed offline with o
 
 <br>
 
-<a href="README0.8.md">English Documents</a> | <a href="README0.8-zh-hk.md">繁体中文文档</a> | <a href="README0.8-zh.md">简体中文文档</a> | <a href="README0.8-jp.md">日本語の文書</a>
+Switch Languages: <a href="README0.8.md">English Documents</a> | <a href="README0.8-zh-hk.md">繁体中文文档</a> | <a href="README0.8-zh.md">简体中文文档</a> | <a href="README0.8-jp.md">日本語の文書</a>
 
 <br>
 
@@ -18,6 +18,7 @@ Compatibility matrix:
 
 <table>
 <tr><td><b>kube-install Version</b></td><td><b>Supported Kubernetes Version</b></td><td><b>Supported OS Version</b></td><td><b>Documentation</b></td></tr>
+<tr><td> kube-install v0.9.* </td><td> kubernetes v1.28, v1.27, v1.26, v1.25, v1.24 </td><td> CentOS 7 , RHEL 7 , CentOS 8 , RHEL 8 , SUSE Linux 15 , Ubuntu 20 </td><td><a href="README0.9.md">Documentation</a>, <br><a href="docs/component0.9.md">Component List</a></td></tr>
 <tr><td> kube-install v0.8.* </td><td> kubernetes v1.24, v1.23, v1.22, v1.20, v1.19, v1.18 </td><td> CentOS 7 , RHEL 7 , CentOS 8 , RHEL 8 , SUSE Linux 15 , Ubuntu 20 </td><td><a href="README0.8.md">View details</a></td></tr>
 <tr><td> kube-install v0.7.* </td><td> kubernetes v1.23, v1.22, v1.20, v1.19, v1.18, v1.17 </td><td> CentOS 7 , RHEL 7 , CentOS 8 , RHEL 8 , SUSE Linux 15 , Ubuntu 20 </td><td><a href="README0.7.md">View details</a></td></tr>
 <tr><td> kube-install v0.6.* </td><td> kubernetes v1.22, v1.21, v1.20, v1.19, v1.18, v1.17, v1.16, v1.15, v1.14 </td><td> CentOS 7 , RHEL 7 , CentOS 8 , RHEL 8 , SUSE Linux 15 </td><td><a href="README0.6.md">View details</a></td></tr>
@@ -188,7 +189,7 @@ Please operate in the root user environment. Execute on the kube-install host se
 
 ```
 # cd /root/kube-install/
-# ./kube-install -exec install -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -k8sver "1.22" -ostype "centos7" -label "192168001011"
+# ./kube-install -exec install -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -k8sver "1.28" -ostype "centos7" -label "192168001011"
 ```
 
 Notice: 
@@ -246,7 +247,7 @@ Suppose you expect to install two servers (192.168.1.15 and 192.168.1.16) as k8s
 Execute the following command on kube-install host:<br>
 
 ```
-# kube-install -exec addnode -node "192.168.1.15,192.168.1.16" -k8sver "1.22" -ostype "centos7" -label "192168001011"
+# kube-install -exec addnode -node "192.168.1.15,192.168.1.16" -k8sver "1.28" -ostype "centos7" -label "192168001011"
 ```
 
 Notice: Please make sure that the `-ostype` flag you entered is correct, only support `rhel7`, `rhel8`, `centos7`, `centos8`, `ubuntu20`, `suse15` these types of "ostype".<br>
