@@ -196,7 +196,7 @@
 
 ```
 # cd /root/kube-install/
-# ./kube-install -exec install -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -k8sver "1.22" -ostype "centos7" -label "192168001011"
+# ./kube-install -exec install -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -k8sver "1.28" -ostype "centos7" -label "192168001011"
 ```
 
 注意：
@@ -258,7 +258,7 @@ Kube-install不僅可以很方便的安裝單機和高可用的kubernetes集羣�
 在kube-install源主機上使用root用戶執行如下命令：<br>
 
 ```
-# kube-install -exec addnode -node "192.168.1.15,192.168.1.16" -k8sver "1.22" -ostype "centos7" -label "192168001011"
+# kube-install -exec addnode -node "192.168.1.15,192.168.1.16" -k8sver "1.28" -ostype "centos7" -label "192168001011"
 ```
 
 注意：kube-install軟體支援`rhel7`，`rhel8`，`centos7`，`centos8`，`ubuntu20`，`suse15`等版本的作業系統，在做安裝部署操作的時候，請確保`-ostype`參數設置正確。<br>
