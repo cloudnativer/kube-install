@@ -96,7 +96,7 @@
 	                var data_arr = [{{.Status1}}, {{.Status2}}, {{.Status3}}, {{.Status4}}, {{.Status5}}];  
 	                var color_arr = ["#009933",'#003366','#CC00FF','#FF0033','#999999'];  
 			{{if eq .Lang "cn"}}
-                        	var text_arr = ["正常", "部署中", "卸载中", "异常", "未知状态"];
+                        	var text_arr = ["正常", "安装中", "卸载中", "异常", "未知状态"];
 			{{else}}
                         	var text_arr = ["OK", "Installing", "Uninstalling", "Error", "Unknow"];
 			{{end}}

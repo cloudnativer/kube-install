@@ -1,5 +1,5 @@
 - name: 1.Save container image to images registry
-  shell: "nohup /tmp/.kubeinstalltemp{{sub_process_dir}}/image_files/pushsysimages.sh 2>&1 &"
+  shell: "nohup /tmp/.kubeinstalltemp{{sub_process_dir}}/images/pushsysimages.sh 2>&1 &"
   ignore_errors: yes
 - wait_for:
     timeout: 50

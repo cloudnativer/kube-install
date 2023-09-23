@@ -30,18 +30,8 @@
   ignore_errors: yes
 - name: 2.1 Copy kube-dashboard file
   template:
-    src: "../templates/2.dashboard/{{item}}.j2"
-    dest: "{{k8s_install_home}}/addons/dashboard/{{item}}"
-  with_items:
-    - kubernetes-dashboard-deployment.yaml
-    - kubernetes-dashboard-service.yaml
-- copy:
-    src: "../templates/2.dashboard/{{item}}"
-    dest: "{{k8s_install_home}}/addons/dashboard/{{item}}"
-  with_items:
-    - kubernetes-dashboard-rbac-admin.yaml
-    - kubernetes-dashboard-rbac-minimal.yaml
-    - kubernetes-dashboard-secret.yaml
+    src: "../templates/2.dashboard/kubernetes-dashboard.yaml.j2"
+    dest: "{{k8s_install_home}}/addons/dashboard/kubernetes-dashboard.yaml"
 - copy:
     src: "../templates/2.dashboard/{{k8sdashboardshell}}.sh"
     dest: "{{k8s_install_home}}/temp/{{k8sdashboardshell}}.sh"

@@ -3,7 +3,7 @@
 
 # Include ipvsadm ipset telnet expect ntp curl net-tools lrzsz gcc gcc-c++ yum-utils psmisc pcre-devel openssl-devel wget tree vim conntrack sysstat libseccomp lsof traceroute
 if [ "{{ostype}}" = "ubuntu20" ];then
-    dpkg --force-depends -i /tmp/.kubeinstalltemp/data{{sub_process_dir}}/pkg/{{ostype}}/basepkg-{{ostype}}/*.deb
+    dpkg --force-depends -i /tmp/.kubeinstalltemp/data{{sub_process_dir}}/pkg/ubuntu20/basepkg-ubuntu20/*.deb
 else
     setenforce 0 >/dev/null 2>&1
     rpm -U /tmp/.kubeinstalltemp/data{{sub_process_dir}}/pkg/{{ostype}}/basepkg-{{ostype}}/*.rpm --force --nodeps

@@ -1,0 +1,57 @@
+[Unit]
+Description=Kubernetes API Server
+Documentation=https://github.com/GoogleCloudPlatform/kubernetes
+After=network.target
+
+[Service]
+WorkingDirectory={{k8s_install_home}}/kubernetes/kube-apiserver
+ExecStart=/usr/local/bin/kube-apiserver \
+--enable-admission-plugins=NamespaceLifecycle,LimitRanger,ServiceAccount,DefaultStorageClass,DefaultTolerationSeconds,NodeRestriction,ResourceQuota,MutatingAdmissionWebhook,ValidatingAdmissionWebhook  \
+--feature-gates=ExpandInUsePersistentVolumes=true \
+--advertise-address={{ip}} \
+--bind-address=0.0.0.0 \
+--secure-port={{k8sapiport}} \
+--runtime-config=rbac.authorization.k8s.io/v1beta1 \
+--authorization-mode=Node,RBAC \
+--anonymous-auth=false \
+--enable-bootstrap-token-auth \
+--token-auth-file=/etc/kubernetes/ssl/token.csv \
+--service-cluster-ip-range={{service_cidr}} \
+--service-node-port-range=5000-32767 \
+--enable-aggregator-routing=true \
+--proxy-client-cert-file=/etc/kubernetes/ssl/kubernetes.pem \
+--proxy-client-key-file=/etc/kubernetes/ssl/kubernetes-key.pem \
+--requestheader-client-ca-file=/etc/kubernetes/ssl/k8s-root-ca.pem \
+--requestheader-allowed-names=aggregator,metrics,front-proxy-client \
+--requestheader-extra-headers-prefix=X-Remote-Extra- \
+--requestheader-group-headers=X-Remote-Group \
+--requestheader-username-headers=X-Remote-User \
+--runtime-config=rbac.authorization.k8s.io/v1beta1 \
+--tls-cert-file=/etc/kubernetes/ssl/kubernetes.pem \
+--tls-private-key-file=/etc/kubernetes/ssl/kubernetes-key.pem \
+--service-account-key-file=/etc/kubernetes/ssl/sa.pub  \
+--service-account-signing-key-file=/etc/kubernetes/ssl/sa.key  \
+--service-account-issuer=https://kubernetes.default.svc.cluster.local \
+--kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname  \
+--kubelet-client-certificate=/etc/kubernetes/ssl/kubernetes.pem \
+--kubelet-client-key=/etc/kubernetes/ssl/kubernetes-key.pem \
+--client-ca-file=/etc/kubernetes/ssl/k8s-root-ca.pem \
+--service-account-key-file=/etc/kubernetes/ssl/k8s-root-ca-key.pem \
+--etcd-cafile=/etc/kubernetes/ssl/k8s-root-ca.pem \
+--etcd-certfile=/etc/kubernetes/ssl/kubernetes.pem \
+--etcd-keyfile=/etc/kubernetes/ssl/kubernetes-key.pem \
+--etcd-servers={{etcd_endpoints}} \
+--allow-privileged=true \
+--apiserver-count=3 \
+--audit-log-maxage=30 \
+--audit-log-maxbackup=3 \
+--audit-log-maxsize=100 \
+--event-ttl=1h \
+--v=2
+Restart=on-failure
+RestartSec=5
+Type=notify
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target

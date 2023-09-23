@@ -7,6 +7,7 @@ Wants=network-online.target
 [Service]
 Type=notify
 ExecStart=/usr/local/bin/ipvsinit.sh
+ExecStop=ipvsadm -C
 LimitNOFILE=infinity
 LimitNPROC=infinity
 TimeoutStartSec=0

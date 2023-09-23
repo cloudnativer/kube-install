@@ -9,7 +9,7 @@ We will add the following features in 0.8.0 version:
 * Add the `-logs` flag to support viewing logs on the command line.
 * Starting to support `kubernetes v1.24`.
 * Since `kubernetes v1.24` has forcibly deleted `dockershim`, we will use `containerd` as runtime by default in `kubernetes v1.24`.
-* In `kubernetes v1.18` to `kubernetes v1.23`, we use `docker` as the runtime by default, but `docker` is deprecated. 
+* In `kubernetes v1.18` to `kubernetes v1.23`, we use `docker` as the runtime by default, but `docker` is deprecated.  If you want to use `kubernetes v1.17`, you can use the <a href="https://github.com/cloudnativer/kube-install/releases/tag/v0.8.4">kube-install v0.8.*</a>.
 * `kubernetes v1.17` is deprecated, it will not be integrated by default. If you want to use `kubernetes v1.17`, you can use the <a href="https://github.com/cloudnativer/kube-install/releases/tag/v0.7.4">kube-install v0.7.*</a>.
 * Add dashboard `metrics-scraper` to solve the problem of `kube-dashboard` monitoring chart. https://github.com/cloudnativer/kube-install/issues/22
 * Set the deployment of `kube-dashboard` as an option, and users can choose not to deploy it. https://github.com/cloudnativer/kube-install/issues/22

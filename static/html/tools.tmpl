@@ -202,13 +202,11 @@
                                         </div>
                                         <div class="g_9">
                                                 <select name="k8sver" class="simple_form">
+                                                  <option value="1.28" >Kubernetes v1.28</option>
+                                                  <option value="1.27" >Kubernetes v1.27</option>
+                                                  <option value="1.26" >Kubernetes v1.26</option>
+                                                  <option value="1.25" >Kubernetes v1.25</option>
                                                   <option value="1.24" >Kubernetes v1.24</option>
-                                                  <option value="1.23" >Kubernetes v1.23</option>
-                                                  <option value="1.22" >Kubernetes v1.22</option>
-                                                  <option value="1.21" >Kubernetes v1.21</option>
-                                                  <option value="1.20" >Kubernetes v1.20</option>
-                                                  <option value="1.19" >Kubernetes v1.19</option>
-                                                  <option value="1.18" >Kubernetes v1.18</option>
                                                 </select>
                                                 <div class="field_notice">{{if eq .Lang "cn"}}选择你要安装的Kubernetes软件版本。<br>注意：Kubernetes 1.24以前的版本，使用"Docker"作为默认容器运行时；从Kubernetes 1.24版开始，将默认使用"Containerd"代替"Docker"作为容器运行时。{{else}}Select the version of kubernetes software you want to install. <br>Notice: Before kubernetes 1.24 uses "docker" as the default container runtime. Starting from kubernetes 1.24, "Containerd" will be used by default instead of "Docker" as the container runtime.{{end}}</div>
                                         </div>

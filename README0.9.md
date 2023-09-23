@@ -18,7 +18,7 @@ Compatibility matrix:
 
 <table>
 <tr><td><b>kube-install Version</b></td><td><b>Supported Kubernetes Version</b></td><td><b>Supported OS Version</b></td><td><b>Documentation</b></td></tr>
-<tr><td> kube-install v0.9.* </td><td> kubernetes v1.28, v1.27, v1.26, v1.25, v1.24 </td><td> CentOS 7 , RHEL 7 , CentOS8 , RHEL 8 , SUSE Linux 15 , Ubuntu 20 </td><td><a href="README0.8.md">View details</a></td></tr>
+<tr><td> kube-install v0.9.* </td><td> kubernetes v1.28, v1.27, v1.26, v1.25, v1.24 </td><td> CentOS 7 , RHEL 7 , CentOS 8 , RHEL 8 , SUSE Linux 15 , Ubuntu 20 </td><td><a href="README0.9.md">Documentation</a><br><a href="docs/component0.9.md">Component List</a></td></tr>
 <tr><td> kube-install v0.8.* </td><td> kubernetes v1.24, v1.23, v1.22, v1.20, v1.19, v1.18 </td><td> CentOS 7 , RHEL 7 , CentOS 8 , RHEL 8 , SUSE Linux 15 , Ubuntu 20 </td><td><a href="README0.8.md">View details</a></td></tr>
 <tr><td> kube-install v0.7.* </td><td> kubernetes v1.23, v1.22, v1.20, v1.19, v1.18, v1.17 </td><td> CentOS 7 , RHEL 7 , CentOS 8 , RHEL 8 , SUSE Linux 15 , Ubuntu 20 </td><td><a href="README0.7.md">View details</a></td></tr>
 <tr><td> kube-install v0.6.* </td><td> kubernetes v1.22, v1.21, v1.20, v1.19, v1.18, v1.17, v1.16, v1.15, v1.14 </td><td> CentOS 7 , RHEL 7 , CentOS 8 , RHEL 8 , SUSE Linux 15 </td><td><a href="README0.6.md">View details</a></td></tr>

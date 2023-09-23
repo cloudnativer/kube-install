@@ -67,14 +67,14 @@ func CheckCNI(cniPlugin string, currentDir string, logName string, mode string) 
 // Check whether the kubernetes version is supported.
 func CheckK8sVersion(Version string, CompatibleK8S string, k8sVer string, currentDir string, logName string, mode string) {
 	logStr := LogStr(mode)
-	if k8sVer == "1.18" || k8sVer == "1.19" || k8sVer == "1.20" || k8sVer == "1.21" || k8sVer == "1.22" || k8sVer == "1.23" || k8sVer == "1.24" {
+	if k8sVer == "1.24" || k8sVer == "1.25" || k8sVer == "1.26" || k8sVer == "1.27" || k8sVer == "1.28" {
 		return
 	} else {
 		if mode == "DAEMON" {
 			ShellExecute("echo [Info] " + time.Now().String() + " \"The \"k8sver\" parameter you entered is incorrect, please check! \n\"" + logStr + currentDir + "/data/logs/kubeinstalld/" + logName + ".log")
 			return
 		} else {
-			panic("Please make sure that the \"-k8sver\" parameter you entered is correct! \n--------------------------------------------------------------------------\nKube-Install " + Version + " only supports " + CompatibleK8S + " versions of kubernetes. \n\nNotice: If you want to install the old version(1.14, 1.15, 1.16) of kubernetes, you can use the historical release of kube-install.\n")
+			panic("Please make sure that the \"-k8sver\" parameter you entered is correct! \n--------------------------------------------------------------------------\nKube-Install " + Version + " only supports " + CompatibleK8S + " versions of kubernetes. \n\nNotice: If you want to install the old version of kubernetes, you can use the historical release of kube-install.\n")
 		}
 	}
 }

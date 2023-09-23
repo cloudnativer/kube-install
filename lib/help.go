@@ -31,8 +31,8 @@ COMMAND:
 OBJECT:
   cniplugin        Specifies the CNI plug-in type: "flannel | calico | kuberouter | weave | cilium".(Default "flannel")
   k8sapiport       The TCP Port of the k8s kube-apiserver. (Default "6443")
-  k8sdashboard     Automatically deploy kube-dashboard to kubernetes cluster. (default "yes")
-  k8sver           Specifies the version of k8s software installed.(Default "1.23")
+  k8sdashboard     Automatically deploy kube-dashboard to kubernetes cluster. (Default "yes")
+  k8sver           Specifies the version(1.24 | 1.25 | 1.26 | 1.27 | 1.28) of k8s software installed.
   label            In the case of deploying and operating multiple kubernetes clusters, it is necessary to specify a label to uniquely identify a kubernetes cluster.(Length must be less than 32 strings)
   listen           Set the IP and port on which the daemon service listens.(Default "0.0.0.0:9080")
   master           The IP address of kubernetes master host.
@@ -41,26 +41,26 @@ OBJECT:
   upgradekernel    Because the lower versions of CentOS 7 and redhat 7 may lack kernel modules, only the kernel automatic upgrade of CentOS 7 and rhel7 operating systems is supported here, and other operating systems do not need to be upgraded.(Default "no")
   softdir          Specifies the installation directory of kubernetes cluster.(Default is "/opt/kube-install")
   sship            The IP address of the target host through which the SSH channel is opened.(Use with "sshcontrol")
-  sshport          The TCP Port of the target host through which the SSH channel is opened. (default "22")
+  sshport          The TCP Port of the target host through which the SSH channel is opened. (Default "22")
   sshpass          The root password of the target host through which the SSH channel is opened.(Use with "sshcontrol")
 
 --------------------------------------------------------------
 
 EXAMPLES:
   Initialize the system environment:
-    kube-install -init -ostype "rhel8" 
+    kube-install -init -ostype "rhel7" 
   Open the SSH channel from the local to the target host (You can also get through manually):
     kube-install -exec sshcontrol -sship "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -sshport 22 -sshpass "cloudnativer"
   Install kubernetes cluster:
-    kube-install -exec install -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -k8sver "1.22" -ostype "rhel8" -label "192168001011"
+    kube-install -exec install -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -k8sver "1.28" -ostype "rhel7" -label "192168001011"
   Add node to the kubernetes cluster:
-    kube-install -exec addnode -node "192.168.1.15,192.168.1.16" -k8sver "1.22" -ostype "rhel8" -label "192168001011"
+    kube-install -exec addnode -node "192.168.1.15,192.168.1.16" -k8sver "1.28" -ostype "rhel7" -label "192168001011"
   Remove the node from the kubernetes cluster:
     kube-install -exec delnode -node "192.168.1.13,192.168.1.15" -label "192168001011"
   Remove the master from the kubernetes cluster:
     kube-install -exec delmaster -master "192.168.1.13" -label "192168001011"
   rebuild the damaged kubernetes master:
-    kube-install -exec rebuildmaster -master "192.168.1.13" -k8sver "1.22" -ostype "rhel8" -label "192168001011"
+    kube-install -exec rebuildmaster -master "192.168.1.13" -k8sver "1.28" -ostype "rhel7" -label "192168001011"
   Uninstall kubernetes cluster:
     kube-install -exec uninstall -master "192.168.1.11,192.168.1.12,192.168.1.13" -node "192.168.1.11,192.168.1.12,192.168.1.13,192.168.1.14" -label "192168001011"
   Enable this switch to use the web console for management:

@@ -18,8 +18,8 @@ func main() {
 
     initFlag := flag.Bool("init",false,"Initialize the local system environment.")
     iFlag := flag.Bool("i",false,"Initialize the local system environment.")
-    daemonFlag := flag.Bool("daemon",false,"Run as a daemon service. (enable this switch to use the web console for management)")
-    dFlag := flag.Bool("d",false,"Run as a daemon service. (enable this switch to use the web console for management)")
+    daemonFlag := flag.Bool("daemon",false,"Run as a daemon service. (Enable this switch to use the web console for management)")
+    dFlag := flag.Bool("d",false,"Run as a daemon service. (Enable this switch to use the web console for management)")
     logsFlag := flag.Bool("logs",false,"View Installation, uninstall, master and node management log information.")
     lFlag := flag.Bool("l",false,"View Installation, uninstall, master and node management log information.")
     showk8sFlag := flag.Bool("showk8s",false,"Display all deployed kubernetes cluster information.")
@@ -28,22 +28,22 @@ func main() {
     vFlag := flag.Bool("v",false,"Display software version information of kube-install.")
     helpFlag := flag.Bool("help",false,"Display usage help information of kube-install.")
     hFlag := flag.Bool("h",false,"Display usage help information of kube-install.")
-    flag.StringVar(&exec,"exec","","Deploy and uninstall kubernetes cluster.(use with \"init | sshcontrol | install | addnode | delnode | delmaster | rebuildmaster | uninstall\")")
-    flag.StringVar(&exec,"e","","Deploy and uninstall kubernetes cluster.(use with \"init | sshcontrol | install | addnode | delnode | delmaster | rebuildmaster | uninstall\")")
-    flag.StringVar(&listen,"listen","","Set the IP and port on which the daemon service listens. (default is \"0.0.0.0:9080\")")
+    flag.StringVar(&exec,"exec","","Deploy and uninstall kubernetes cluster.(Use with \"init | sshcontrol | install | addnode | delnode | delmaster | rebuildmaster | uninstall\")")
+    flag.StringVar(&exec,"e","","Deploy and uninstall kubernetes cluster.(Use with \"init | sshcontrol | install | addnode | delnode | delmaster | rebuildmaster | uninstall\")")
+    flag.StringVar(&listen,"listen","","Set the IP and port on which the daemon service listens. (Default is \"0.0.0.0:9080\")")
     flag.StringVar(&master,"master","","The IP address of k8s master server filled in for the first installation")
     flag.StringVar(&node,"node","","The IP address of k8s node server filled in for the first installation")
     flag.StringVar(&ostype,"ostype","","Specifies the distribution operating system type: \"centos7 | centos8 | rhel7 | rhel8 | ubuntu20 | suse15\".")
-    flag.StringVar(&k8sver,"k8sver","","Specifies the version of k8s software installed.(default is \"kubernetes 1.23\")")
+    flag.StringVar(&k8sver,"k8sver","","Specifies the version(1.24 | 1.25 | 1.26 | 1.27 | 1.28) of k8s software installed.")
     flag.StringVar(&upgradekernel,"upgradekernel","no","Because the lower versions of CentOS 7 and redhat 7 may lack kernel modules, only the kernel automatic upgrade of CentOS 7 and rhel7 operating systems is supported here, and other operating systems do not need to be upgraded.")
     flag.StringVar(&k8sdashboard,"k8sdashboard","yes","Automatically deploy kube-dashboard to kubernetes cluster.")
     flag.StringVar(&k8sapiport,"k8sapiport","6443","The TCP Port of the k8s kube-apiserver.")
     flag.StringVar(&cniplugin,"cniplugin","flannel","Specifies the CNI plug-in type: \"flannel | calico | kuberouter | weave | cilium\".")
-    flag.StringVar(&softdir,"softdir","","Specifies the installation directory of kubernetes cluster.(default is \"/opt/kube-install\")")
-    flag.StringVar(&label,"label",".default","In the case of deploying and operating multiple kubernetes clusters, it is necessary to specify a label to uniquely identify a kubernetes cluster. (length must be less than 32 strings)")
-    flag.StringVar(&sship,"sship","","The IP address of the target host through which the SSH channel is opened.(use with \"sshcontrol\")")
+    flag.StringVar(&softdir,"softdir","","Specifies the installation directory of kubernetes cluster.(Default is \"/opt/kube-install\")")
+    flag.StringVar(&label,"label",".default","In the case of deploying and operating multiple kubernetes clusters, it is necessary to specify a label to uniquely identify a kubernetes cluster. (Length must be less than 32 strings)")
+    flag.StringVar(&sship,"sship","","The IP address of the target host through which the SSH channel is opened.(Use with \"sshcontrol\")")
     flag.StringVar(&sshport,"sshport","22","The TCP Port of the target host through which the SSH channel is opened.")
-    flag.StringVar(&sshpass,"sshpass","","The SSH password of the target host through which the SSH channel is opened.(use with \"sshcontrol\")")
+    flag.StringVar(&sshpass,"sshpass","","The SSH password of the target host through which the SSH channel is opened.(Use with \"sshcontrol\")")
     flag.Parse()
 
     // Get the current execution path and user of the program, and set log file name.
@@ -56,9 +56,9 @@ func main() {
 
     // Set the version number and release date of Kube-Install.
     const (
-        Version string = "v0.8.0"
-        ReleaseDate string = "5/5/2022"
-        CompatibleK8S string = "1.18, 1.19, 1.20, 1.21, 1.22, 1.23, and 1.24"
+        Version string = "v0.9.0-beta"
+        ReleaseDate string = "9/24/2023"
+        CompatibleK8S string = "1.24, 1.25, 1.26, 1.27, and 1.28"
         CompatibleOS string = "CentOS linux 7, CentOS linux 8, RHEL 7, RHEL 8, Ubuntu 20, and SUSE 15"
     )
 

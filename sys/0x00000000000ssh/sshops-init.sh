@@ -6,7 +6,7 @@
 
 # Install the sshpass tool
 if [ "$2" = "ubuntu20" ];then
-    dpkg --force-depends -i /$1/pkg/$2/sshops-$2/*.deb >/dev/null 2>&1
+    dpkg --force-depends -i /$1/pkg/ubuntu20/sshops-ubuntu20/*.deb >/dev/null 2>&1
 else
     rpm -U /$1/pkg/$2/sshops-$2/*.rpm --force --nodeps >/dev/null 2>&1
 fi

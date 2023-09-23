@@ -1,0 +1,27 @@
+[Unit]
+Description=Kubernetes Kubelet
+Documentation=https://github.com/GoogleCloudPlatform/kubernetes
+
+[Service]
+WorkingDirectory={{k8s_install_home}}/kubernetes/kubelet
+ExecStartPre=/usr/local/bin/resolvinit.sh
+ExecStart=/usr/local/bin/kubelet \
+  --bootstrap-kubeconfig=/etc/kubernetes/ssl/bootstrap.kubeconfig \
+  --root-dir={{k8s_install_home}}/kubernetes/kubelet \
+  --cert-dir=/etc/kubernetes/ssl \
+  --kubeconfig=/etc/kubernetes/ssl/kubelet.kubeconfig \
+  --config=/etc/kubernetes/kubelet.config.json \
+  --hostname-override={{ip}} \
+  --pod-infra-container-image={{addons_ip3}}:5000/pause-amd64:3.5 \
+  --container-runtime=remote \
+  --container-runtime-endpoint=unix:///run/containerd/containerd.sock \
+  --alsologtostderr=true \
+  --logtostderr=false \
+  --root-dir={{k8s_install_home}}/kubernetes/kubelet \
+  --log-dir={{k8s_install_home}}/kubernetes/kubelet \
+  --v=2
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
