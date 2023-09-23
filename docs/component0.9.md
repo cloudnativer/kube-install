@@ -1,7 +1,7 @@
 
 # Detailed component and version list
 
-( For kube-install v0.9 )
+Installation component list information for kube-install v0.9：
 
 
 | component                 | version                            | type                                                  | description                                              |
