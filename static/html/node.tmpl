@@ -55,8 +55,8 @@
                         {{ if eq .Ostype "centos8" }} $("#autoupgradekernel").hide(); {{end}}
                         {{ if eq .Ostype "rhel7" }} $("#autoupgradekernel").show(); {{end}}
                         {{ if eq .Ostype "rhel8" }} $("#autoupgradekernel").hide(); {{end}}
-                        {{ if eq .Ostype "ubuntu20" }} $("#autoupgradekernel").hide(); {{end}}
                         {{ if eq .Ostype "suse15" }} $("#autoupgradekernel").hide(); {{end}}
+                        {{ if eq .Ostype "ubuntu20" }} $("#autoupgradekernel").hide(); {{end}}
                         $('#ostype').change(function() {
                                 var val = $(this).children('option:selected').val();
                                 console.log("ostype:",val);

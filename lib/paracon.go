@@ -18,10 +18,10 @@ func ParameterConvert(mode string, master string, node string, softDir string, l
           osType = "rhel8"
       case osType == "rhel8" :
           osType = "rhel8"
-      case osType == "ubuntu20" :
-          osType = "ubuntu20"
       case osType == "suse15" :
           osType = "suse15"
+      case osType == "ubuntu20" :
+          osType = "ubuntu20"
       default:
           osType = "unknow"
     }

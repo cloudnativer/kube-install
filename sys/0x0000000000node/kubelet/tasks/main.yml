@@ -21,7 +21,7 @@
     path: "{{k8s_install_home}}/kubernetes/kubelet"
     state: directory
 - file:
-    path: "/run/systemd/resolv.conf"
+    path: "/run/systemd/resolve/resolv.conf"
     state: touch
     mode: 0755
   ignore_errors: yes

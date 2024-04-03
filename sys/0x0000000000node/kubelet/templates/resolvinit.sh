@@ -1,7 +1,9 @@
 #!/bin/bash
 
 
-touch /run/systemd/resolv.conf
+mkdir -p /run/systemd/resolve
+
+touch /run/systemd/resolve/resolv.conf
 
 exit 0
 

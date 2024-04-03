@@ -9,7 +9,7 @@ Installation component list information for kube-install v0.9：
 | kube-apiserver            | v1.24, v1.25, v1.26,  v1.27, v1.28 | k8s-master                                            | Different versions can be  selected for installation.    |
 | kube-controller-manager   | k8s-master                         | Different versions can be  selected for installation. |                                                          |
 | kube-scheduler            | k8s-master                         | Different versions can be  selected for installation. |                                                          |
-| etcd                      | v3.3.27                            | k8s-master                                            |                                                          |
+| etcd                      | v3.5.13                            | k8s-master                                            |                                                          |
 | kubelet                   | v1.24, v1.25, v1.26,  v1.27, v1.28 | k8s-node                                              | Different versions can be  selected for installation.    |
 | kube-proxy                | k8s-node                           | Different versions can be  selected for installation. |                                                          |
 | pause-amd64               | v3.5                               | k8s-node                                              |                                                          |

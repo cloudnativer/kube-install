@@ -1,0 +1,3 @@
+[Error] 2024-04-03 18:15:57.434547343 +0800 CST m=+2265.311020365 An error occurred: open /go/src/kube-install/data/output/k8s-test-002/masters: no such file or directory
+[Error] 2024-04-03 18:15:57.437687442 +0800 CST m=+2265.314160485 An error occurred: open /go/src/kube-install/data/output/k8s-test-002/masters: no such file or directory
+[Error] 2024-04-03 18:15:58.894290046 +0800 CST m=+2266.770763077 An error occurred: open /go/src/kube-install/data/output/k8s-test-002/nodes: no such file or directory
