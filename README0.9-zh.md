@@ -18,7 +18,7 @@
 
 <table>
 <tr><td><b>kube-install版本</b></td><td><b>支持的Kubernetes版本</b></td><td><b>支持的操作系统</b></td><td><b>说明文档</b></td></tr>
-<tr><td> kube-install v0.9.* </td><td> kubernetes v1.28, v1.27, v1.26, v1.25, v1.24 </td><td> CentOS 7 , RHEL 7 , CentOS 8 , RHEL 8 , SUSE Linux 15 , Ubuntu 20 </td><td><a href="README0.9-zh.md">说明文档</a><br><a href="docs/component0.9.md">组件清单</a></td></tr>
+<tr><td> kube-install v0.9.* </td><td> kubernetes v1.29, v1.28, v1.27, v1.26, v1.25, v1.24 </td><td> CentOS 7 , RHEL 7 , CentOS 8 , RHEL 8 , SUSE Linux 15 , Ubuntu 20 </td><td><a href="README0.9-zh.md">说明文档</a><br><a href="docs/component0.9.md">组件清单</a></td></tr>
 <tr><td> kube-install v0.8.* </td><td> kubernetes v1.24, v1.23, v1.22, v1.20, v1.19, v1.18 </td><td> CentOS 7 , RHEL 7 , CentOS 8 , RHEL 8 , SUSE Linux 15 , Ubuntu 20 </td><td><a href="README0.8-zh.md">查看详情</a></td></tr>
 <tr><td> kube-install v0.7.* </td><td> kubernetes v1.23, v1.22, v1.20, v1.19, v1.18, v1.17 </td><td> CentOS 7 , RHEL 7 , CentOS 8 , RHEL 8 , SUSE Linux 15 , Ubuntu 20 </td><td><a href="README0.7-zh.md">查看详情</a></td></tr>
 <tr><td> kube-install v0.6.* </td><td> kubernetes v1.22, v1.21, v1.20, v1.19, v1.18, v1.17, v1.16, v1.15, v1.14 </td><td> CentOS 7 , RHEL 7 , CentOS 8 , RHEL 8 , SUSE Linux 15 </td><td><a href="README0.6.md">查看详情</a></td></tr>
